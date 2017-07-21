@@ -12,7 +12,7 @@ import "rxjs/add/operator/let";
 
 describe("guard", () => {
 
-    it("should not reject value that pass the guard", marbles((m) => {
+    it("should not reject values that pass the guard", marbles((m) => {
 
         const values = {
             a: 1,
@@ -29,7 +29,7 @@ describe("guard", () => {
         m.expect(source).toHaveSubscriptions(subs);
     }));
 
-    it("should reject value that fail the guard", marbles((m) => {
+    it("should reject values that fail the guard", marbles((m) => {
 
         const values = {
             a: 1,
