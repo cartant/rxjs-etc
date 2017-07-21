@@ -6,4 +6,5 @@
 
 import "./let/endWith-spec";
 import "./let/guard-spec";
+import "./let/rateLimit-spec";
 import "./let/takeWhileInclusive-spec";
