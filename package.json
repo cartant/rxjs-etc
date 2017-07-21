@@ -66,5 +66,5 @@
   },
   "typings": "./dist/index.d.ts",
   "unpkg": "./bundles/rxjs-etc.min.umd.js",
-  "version": "0.0.1-rc.1"
+  "version": "0.0.1-rc.2"
 }
