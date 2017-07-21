@@ -4,6 +4,4 @@
  * found in the LICENSE file at https://github.com/cartant/rxjs-etc
  */
 
-import "./let";
-import "./observable";
-import "./operator";
+export * from "./doIndex";

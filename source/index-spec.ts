@@ -9,6 +9,7 @@ import "./add/observable/concatArray-spec";
 import "./add/observable/forkJoinArray-spec";
 import "./add/observable/mergeArray-spec";
 import "./add/observable/zipArray-spec";
+import "./add/operator/doIndex-spec";
 import "./let/endWith-spec";
 import "./let/guard-spec";
 import "./let/rateLimit-spec";
