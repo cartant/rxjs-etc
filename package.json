@@ -4,7 +4,7 @@
     "url": "https://github.com/cartant/rxjs-etc/issues"
   },
   "dependencies": {},
-  "description": "Observables, operators and testing infrastructure for RxJS",
+  "description": "Observables and operators for RxJS",
   "devDependencies": {
     "@types/chai": "^4.0.0",
     "@types/mocha": "^2.2.41",
