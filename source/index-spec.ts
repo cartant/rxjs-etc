@@ -6,4 +6,4 @@
 
 import "./let/endWith-spec";
 import "./let/guard-spec";
-import "./let/slow-spec";
+import "./let/takeWhileInclusive-spec";

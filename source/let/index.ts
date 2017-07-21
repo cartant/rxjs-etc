@@ -6,4 +6,4 @@
 
 export * from "./endWith";
 export * from "./guard";
-export * from "./slow";
+export * from "./takeWhileInclusive";
