@@ -10,7 +10,7 @@ import { guard } from "./guard";
 
 import "rxjs/add/operator/let";
 
-describe("guard", () => {
+describe("let/guard", () => {
 
     it("should not reject values that pass the guard", marbles((m) => {
 

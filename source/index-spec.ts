@@ -4,6 +4,11 @@
  * found in the LICENSE file at https://github.com/cartant/rxjs-etc
  */
 
+import "./add/observable/combineLatestArray-spec";
+import "./add/observable/concatArray-spec";
+import "./add/observable/forkJoinArray-spec";
+import "./add/observable/mergeArray-spec";
+import "./add/observable/zipArray-spec";
 import "./let/endWith-spec";
 import "./let/guard-spec";
 import "./let/rateLimit-spec";

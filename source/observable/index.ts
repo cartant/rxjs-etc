@@ -4,5 +4,8 @@
  * found in the LICENSE file at https://github.com/cartant/rxjs-etc
  */
 
-import "./let";
-import "./observable";
+export * from "./combineLatestArray";
+export * from "./concatArray";
+export * from "./forkJoinArray";
+export * from "./mergeArray";
+export * from "./zipArray";

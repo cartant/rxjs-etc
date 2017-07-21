@@ -10,7 +10,7 @@ import { endWith } from "./endWith";
 
 import "rxjs/add/operator/let";
 
-describe("endWith", () => {
+describe("let/endWith", () => {
 
     it("should end an observable with a single value", marbles((m) => {
 

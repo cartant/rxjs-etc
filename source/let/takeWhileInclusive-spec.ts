@@ -10,7 +10,7 @@ import { takeWhileInclusive } from "./takeWhileInclusive";
 
 import "rxjs/add/operator/let";
 
-describe("takeWhileInclusive", () => {
+describe("let/takeWhileInclusive", () => {
 
     it("should include the value that fails the predicate", marbles((m) => {
 
