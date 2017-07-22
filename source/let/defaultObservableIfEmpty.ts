@@ -6,24 +6,21 @@
 
 import { Observable } from "rxjs/Observable";
 
-import "rxjs/add/observable/defer";
 import "rxjs/add/observable/empty";
-import "rxjs/add/operator/concat";
-import "rxjs/add/operator/do";
+import "rxjs/add/operator/isEmpty";
+import "rxjs/add/operator/merge";
+import "rxjs/add/operator/mergeMap";
+import "rxjs/add/operator/publish";
 
 export function defaultObservableIfEmpty<T>(
     defaultObservable: Observable<T>
 ): (source: Observable<T>) => Observable<T> {
 
-    return (source) => {
-
-        let isEmpty = true;
-
-        return source
-            .do(() => { isEmpty = false; })
-            .concat(Observable.defer(() => isEmpty ?
+    return (source) => source.publish((sharedSource) => sharedSource.merge(
+        sharedSource.isEmpty().mergeMap((empty) => {
+            return empty ?
                 defaultObservable :
-                Observable.empty<T>()
-            ));
-    };
+                Observable.empty<T>();
+        })
+    ));
 }
