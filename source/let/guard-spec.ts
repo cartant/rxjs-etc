@@ -14,11 +14,7 @@ describe("let/guard", () => {
 
     it("should not reject values that pass the guard", marbles((m) => {
 
-        const values = {
-            a: 1,
-            b: 2,
-            c: 3
-        };
+        const values = { a: 1, b: 2, c: 3 };
 
         const source =   m.cold("-a-b-c-|", values);
         const subs =            "^------!";
@@ -31,11 +27,7 @@ describe("let/guard", () => {
 
     it("should reject values that fail the guard", marbles((m) => {
 
-        const values = {
-            a: 1,
-            b: 2,
-            c: "three"
-        };
+        const values = { a: 1, b: 2, c: "three" };
 
         const source =   m.cold("-a-b-c-|", values);
         const subs =            "^----!";

@@ -24,7 +24,7 @@ npm install rxjs-etc --save
 
 ## What's in it?
 
-### `Observable` Static Methods
+### Static methods for `Observable`
 
 * [combineLatestArray](./source/observable/combineLatestArray.ts)
 * [concatArray](./source/observable/concatArray.ts)
@@ -34,7 +34,7 @@ npm install rxjs-etc --save
 
     A bunch of static methods that behave in a predictable manner when passed empty arrays. Some of these are now redundant, but some aren't.
 
-### `Observable` Methods
+### Instance methods for `Observable`
 
 * [doIndex](./source/operator/doIndex.ts)
 
@@ -42,9 +42,7 @@ npm install rxjs-etc --save
 
 ### Functions for use with `let`
 
-A bunch of functions that can be passed to the `let` operator. Writing these is much simpler than writing an operator.
-
-Use them like this:
+A bunch of functions that can be passed to the `let` operator. Use them like this:
 
     source.let(endWith("this is the end"))
 

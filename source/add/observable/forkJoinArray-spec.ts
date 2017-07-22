@@ -14,9 +14,12 @@ describe("observable/forkJoinArray", () => {
 
     it("should join a single observable", marbles((m) => {
 
-        const source =   m.cold("a----|", { a: 1 });
+        const values = { a: 1 };
+        const results = { x: [values.a] };
+
+        const source =   m.cold("a----|", values);
         const subs =            "^----!";
-        const expected = m.cold("-----(x|)", { x: [1] });
+        const expected = m.cold("-----(x|)", results);
 
         const destination = Observable.forkJoinArray([source]);
         m.expect(destination).toBeObservable(expected);
@@ -25,11 +28,14 @@ describe("observable/forkJoinArray", () => {
 
     it("should join multiple observables", marbles((m) => {
 
-        const source1 =  m.cold("a--|", { a: 1 });
+        const values = { a: 1, b: 2 };
+        const results = { x: [values.a, values.b] };
+
+        const source1 =  m.cold("a--|", values);
         const subs1 =           "^--!";
-        const source2 =  m.cold("b----|", { b: 2 });
+        const source2 =  m.cold("b----|", values);
         const subs2 =           "^----!";
-        const expected = m.cold("-----(x|)", { x: [1, 2] });
+        const expected = m.cold("-----(x|)", results);
 
         const destination = Observable.forkJoinArray([source1, source2]);
         m.expect(destination).toBeObservable(expected);
@@ -47,9 +53,12 @@ describe("observable/forkJoinArray", () => {
 
     it("should support project for a single observable", marbles((m) => {
 
-        const source =   m.cold("a----|", { a: 1 });
+        const values = { a: 1 };
+        const results = { x: [values.a + 1] };
+
+        const source =   m.cold("a----|", values);
         const subs =            "^----!";
-        const expected = m.cold("-----(x|)", { x: [2] });
+        const expected = m.cold("-----(x|)", results);
 
         const destination = Observable.forkJoinArray(
             [source],
@@ -61,11 +70,14 @@ describe("observable/forkJoinArray", () => {
 
     it("should support project for multiple observables", marbles((m) => {
 
-        const source1 =  m.cold("a--|", { a: 1 });
+                const values = { a: 1, b: 2 };
+        const results = { x: [values.a + 1, values.b + 1] };
+
+        const source1 =  m.cold("a--|", values);
         const subs1 =           "^--!";
-        const source2 =  m.cold("b----|", { b: 2 });
+        const source2 =  m.cold("b----|", values);
         const subs2 =           "^----!";
-        const expected = m.cold("-----(x|)", { x: [2, 3] });
+        const expected = m.cold("-----(x|)", results);
 
         const destination = Observable.forkJoinArray(
             [source1, source2],

@@ -14,9 +14,12 @@ describe("observable/zipArray", () => {
 
     it("should zip a single observable", marbles((m) => {
 
-        const source =   m.cold("a-b--|", { a: 1, b: 2 });
+        const values = { a: 1, b: 2 };
+        const results = { x: [values.a], y: [values.b] };
+
+        const source =   m.cold("a-b--|", values);
         const subs =            "^----!";
-        const expected = m.cold("x-y--|", { x: [1], y: [2] });
+        const expected = m.cold("x-y--|", results);
 
         const destination = Observable.zipArray([source]);
         m.expect(destination).toBeObservable(expected);
@@ -25,10 +28,13 @@ describe("observable/zipArray", () => {
 
     it("should zip multiple observables", marbles((m) => {
 
-        const source1 =  m.cold("a-b--|", { a: 1, b: 2 });
-        const source2 =  m.cold("-i---|", { i: 3 });
+        const values = { a: 1, b: 2, c: 3 };
+        const results = { x: [values.a, values.c] };
+
+        const source1 =  m.cold("a-b--|", values);
+        const source2 =  m.cold("-c---|", values);
         const subs =            "^----!";
-        const expected = m.cold("-x---|", { x: [1, 3] });
+        const expected = m.cold("-x---|", results);
 
         const destination = Observable.zipArray([source1, source2]);
         m.expect(destination).toBeObservable(expected);
@@ -46,9 +52,12 @@ describe("observable/zipArray", () => {
 
     it("should support project for a single observable", marbles((m) => {
 
-        const source =   m.cold("a-b--|", { a: 1, b: 2 });
+        const values = { a: 1, b: 2 };
+        const results = { x: [values.a + 1], y: [values.b + 1] };
+
+        const source =   m.cold("a-b--|", values);
         const subs =            "^----!";
-        const expected = m.cold("x-y--|", { x: [2], y: [3] });
+        const expected = m.cold("x-y--|", results);
 
         const destination = Observable.zipArray(
             [source],
@@ -60,10 +69,13 @@ describe("observable/zipArray", () => {
 
     it("should support project for multiple observables", marbles((m) => {
 
-        const source1 =  m.cold("a-b--|", { a: 1, b: 2 });
-        const source2 =  m.cold("-i---|", { i: 3 });
+        const values = { a: 1, b: 2, c: 3 };
+        const results = { x: [values.a + 1, values.c + 1] };
+
+        const source1 =  m.cold("a-b--|", values);
+        const source2 =  m.cold("-c---|", values);
         const subs =            "^----!";
-        const expected = m.cold("-x---|", { x: [2, 4] });
+        const expected = m.cold("-x---|", results);
 
         const destination = Observable.zipArray(
             [source1, source2],
