@@ -5,3 +5,12 @@
  */
 
 import { Observable } from "rxjs/Observable";
+import { defaultObservableIfEmpty } from "../../operator/defaultObservableIfEmpty";
+
+Observable.prototype.defaultObservableIfEmpty = defaultObservableIfEmpty;
+
+declare module "rxjs/Observable" {
+    interface Observable<T> {
+        defaultObservableIfEmpty: typeof defaultObservableIfEmpty;
+    }
+}
