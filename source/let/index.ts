@@ -4,6 +4,10 @@
  * found in the LICENSE file at https://github.com/cartant/rxjs-etc
  */
 
+export * from "./debounceAfter";
+export * from "./defaultObservableIfEmpty";
 export * from "./endWith";
 export * from "./guard";
+export * from "./rateLimit";
 export * from "./takeWhileInclusive";
+export * from "./throttleAfter";

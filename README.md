@@ -9,3 +9,17 @@
 ### What is it?
 
 A bunch of observables and operators for RxJS.
+
+### Why might you need it?
+
+I created this package as a place to put additional RxJS observables, operators and methods. If you are looking for something that's not in the RxJS distribution, there might be something suitable in here - if you're lucky.
+
+## Install
+
+Install the package using NPM:
+
+```
+npm install rxjs-etc --save
+```
+
+## What's in it?

@@ -12,6 +12,8 @@ const fs = require("fs");
 const shims = {
     "rxjs/add/observable/combineLatest": "Rx.unused",
     "rxjs/add/observable/concat": "Rx.unused",
+    "rxjs/add/observable/defer": "Rx.unused",
+    "rxjs/add/observable/empty": "Rx.unused",
     "rxjs/add/observable/from": "Rx.unused",
     "rxjs/add/observable/of": "Rx.unused",
     "rxjs/add/operator/concat": "Rx.unused",
@@ -19,6 +21,7 @@ const shims = {
     "rxjs/add/operator/delay": "Rx.unused",
     "rxjs/add/operator/dematerialize": "Rx.unused",
     "rxjs/add/operator/distinctUntilChanged": "Rx.unused",
+    "rxjs/add/operator/do": "Rx.unused",
     "rxjs/add/operator/filter": "Rx.unused",
     "rxjs/add/operator/let": "Rx.unused",
     "rxjs/add/operator/map": "Rx.unused",
@@ -46,6 +49,7 @@ const shims = {
     "rxjs/observable/of": "Rx.Observable",
     "rxjs/observable/zip": "Rx.Observable",
     "rxjs/ReplaySubject": "Rx",
+    "rxjs/scheduler/asap": "Rx.Scheduler",
     "rxjs/Subject": "Rx",
     "rxjs/Subscriber": "Rx",
     "rxjs/symbol/rxSubscriber": "Rx.Symbol"

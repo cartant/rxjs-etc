@@ -5,12 +5,12 @@
  */
 /*tslint:disable:no-unused-expression*/
 
-import { Observable } from "rxjs/Observable";
 import { marbles } from "rxjs-marbles";
+import { defaultObservableIfEmpty } from "./defaultObservableIfEmpty";
 
-import "./defaultObservableIfEmpty";
+import "rxjs/add/operator/let";
 
-describe("operator/defaultObservableIfEmpty", () => {
+describe("let/defaultObservableIfEmpty", () => {
 
     it("should return the source if not empty", marbles((m) => {
 
@@ -19,7 +19,7 @@ describe("operator/defaultObservableIfEmpty", () => {
         const def =      m.cold("--d--|");
         const expected = m.cold("--a--b--c--|");
 
-        const destination = source.defaultObservableIfEmpty(def);
+        const destination = source.let(defaultObservableIfEmpty(def));
         m.expect(destination).toBeObservable(expected);
         m.expect(source).toHaveSubscriptions(subs);
         m.expect(def).toHaveSubscriptions([]);
@@ -33,7 +33,7 @@ describe("operator/defaultObservableIfEmpty", () => {
         const defSubs =         "----^----!";
         const expected = m.cold("------d--|");
 
-        const destination = source.defaultObservableIfEmpty(def);
+        const destination = source.let(defaultObservableIfEmpty(def));
         m.expect(destination).toBeObservable(expected);
         m.expect(source).toHaveSubscriptions(sourceSubs);
         m.expect(def).toHaveSubscriptions(defSubs);
