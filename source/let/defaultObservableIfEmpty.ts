@@ -17,10 +17,9 @@ export function defaultObservableIfEmpty<T>(
 ): (source: Observable<T>) => Observable<T> {
 
     return (source) => source.publish((sharedSource) => sharedSource.merge(
-        sharedSource.isEmpty().mergeMap((empty) => {
-            return empty ?
-                defaultObservable :
-                Observable.empty<T>();
-        })
+        sharedSource.isEmpty().mergeMap((empty) => empty ?
+            defaultObservable :
+            Observable.empty<T>()
+        )
     ));
 }
