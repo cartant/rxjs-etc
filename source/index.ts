@@ -7,3 +7,4 @@
 import "./let";
 import "./observable";
 import "./operator";
+import "./util";

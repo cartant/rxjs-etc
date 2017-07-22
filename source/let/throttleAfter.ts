@@ -5,8 +5,7 @@
  */
 
 import { Observable } from "rxjs/Observable";
-import { Scheduler } from "rxjs/Scheduler";
-import { asap } from "rxjs/scheduler/asap";
+import { IScheduler } from "rxjs/Scheduler";
 
 import "rxjs/add/observable/concat";
 import "rxjs/add/observable/of";
@@ -23,10 +22,8 @@ import "rxjs/add/operator/takeUntil";
 export function throttleAfter<T, R>(
     notifier: Observable<R>,
     duration: number,
-    scheduler?: Scheduler
+    scheduler?: IScheduler
 ): (source: Observable<T>) => Observable<T> {
-
-    const definedScheduler = scheduler || asap;
 
     return (source) => source.publish((sharedSource) => {
 
@@ -35,7 +32,7 @@ export function throttleAfter<T, R>(
 
         const signal: Observable<any> = notifier.switchMap(() => Observable.concat(
             Observable.of(true),
-            Observable.of(false).delay(duration, definedScheduler)
+            Observable.of(false).delay(duration, scheduler)
         ))
         .startWith(false)
         .distinctUntilChanged();

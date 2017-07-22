@@ -5,7 +5,7 @@
  */
 
 import { Observable } from "rxjs/Observable";
-import { Scheduler } from "rxjs/Scheduler";
+import { IScheduler } from "rxjs/Scheduler";
 import { asap } from "rxjs/scheduler/asap";
 
 import "rxjs/add/observable/of";
@@ -14,22 +14,22 @@ import "rxjs/add/operator/delay";
 import "rxjs/add/operator/map";
 import "rxjs/add/operator/scan";
 
-export function rateLimit<T>(period: number, scheduler?: Scheduler): (source: Observable<T>) => Observable<T>;
-export function rateLimit<T>(period: number, count: number, scheduler?: Scheduler): (source: Observable<T>) => Observable<T>;
-export function rateLimit<T>(period: number, ...args: (Scheduler | number | undefined)[]): (source: Observable<T>) => Observable<T> {
+export function rateLimit<T>(period: number, scheduler?: IScheduler): (source: Observable<T>) => Observable<T>;
+export function rateLimit<T>(period: number, count: number, scheduler?: IScheduler): (source: Observable<T>) => Observable<T>;
+export function rateLimit<T>(period: number, ...args: (number | IScheduler | undefined)[]): (source: Observable<T>) => Observable<T> {
 
     let count = 1;
-    let scheduler: Scheduler = asap;
+    let scheduler: IScheduler = asap;
 
     if (args.length === 1) {
         if (typeof args[0] === "number") {
             count = args[0] as number;
         } else {
-            scheduler = args[0] as Scheduler;
+            scheduler = args[0] as IScheduler;
         }
     } else if (args.length === 2) {
         count = args[0] as number;
-        scheduler = args[1] as Scheduler;
+        scheduler = args[1] as IScheduler;
     }
 
     interface Emission<T> {
