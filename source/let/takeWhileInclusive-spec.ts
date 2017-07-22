@@ -12,7 +12,7 @@ import "rxjs/add/operator/let";
 
 describe("let/takeWhileInclusive", () => {
 
-    it("should include the value that fails the predicate", marbles((m) => {
+    it("should take the value that fails the predicate", marbles((m) => {
 
         const source =   m.cold("-a-b-c-d-|");
         const subs =            "^----!";
@@ -23,7 +23,7 @@ describe("let/takeWhileInclusive", () => {
         m.expect(source).toHaveSubscriptions(subs);
     }));
 
-    it("should include only the value that fails the predicate", marbles((m) => {
+    it("should take only the value that fails the predicate", marbles((m) => {
 
         const source =   m.cold("-a-b-(cd)-|");
         const subs =            "^----!";

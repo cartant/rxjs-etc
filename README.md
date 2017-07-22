@@ -70,7 +70,7 @@ Use them like this:
 
 * [takeWhileInclusive](./source/let/takeWhileInclusive.ts)
 
-    Like [`takeWhile`](http://reactivex.io/rxjs/class/es6/Observable.js~Observable.html#instance-method-takeWhile), but the emitted value that fails the predicate is included.
+    Like [`takeWhile`](http://reactivex.io/rxjs/class/es6/Observable.js~Observable.html#instance-method-takeWhile), but the value that fails the predicate is taken.
 
 * [throttleAfter](./source/let/throttleAfter.ts)
 
