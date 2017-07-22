@@ -24,19 +24,19 @@ npm install rxjs-etc --save
 
 ## What's in it?
 
-### Static Methods
+### `Observable` Static Methods
 
-* [combineLatestArray](./blob/master/source/observable/combineLatestArray.ts)
-* [concatArray](./blob/master/source/observable/concatArray.ts)
-* [forkJoinArray](./blob/master/source/observable/forkJoinArray.ts)
-* [mergeArray](./blob/master/source/observable/mergeArray.ts)
-* [zipArray](./blob/master/source/observable/zipArray.ts)
+* [combineLatestArray](./source/observable/combineLatestArray.ts)
+* [concatArray](./source/observable/concatArray.ts)
+* [forkJoinArray](./source/observable/forkJoinArray.ts)
+* [mergeArray](./source/observable/mergeArray.ts)
+* [zipArray](./source/observable/zipArray.ts)
 
     A bunch of static methods that behave in a predictable manner when passed empty arrays. Some of these are now redundant, but some aren't.
 
-### Methods
+### `Observable` Methods
 
-* [doIndex](./blob/master/source/operator/doIndex.ts)
+* [doIndex](./source/operator/doIndex.ts)
 
     Like [`do`](http://reactivex.io/rxjs/class/es6/Observable.js~Observable.html#instance-method-do), but it receives an index in addition to the emitted value.
 
@@ -48,37 +48,37 @@ Use them like this:
 
     source.let(endWith("this is the end"))
 
-* [debounceAfter](./blob/master/source/let/debounceAfter.ts)
+* [debounceAfter](./source/let/debounceAfter.ts)
 
     Debounce the source observable, but only after the notifier emits a value.
 
-* [defaultObservableIfEmpty](./blob/master/source/let/defaultObservableIfEmpty.ts)
+* [defaultObservableIfEmpty](./source/let/defaultObservableIfEmpty.ts)
 
     Like [`defaultIfEmpty`](http://reactivex.io/rxjs/class/es6/Observable.js~Observable.html#instance-method-defaultIfEmpty), but it takes a default observable instead of a default value.
 
-* [endWith](./blob/master/source/let/endWith.ts)
+* [endWith](./source/let/endWith.ts)
 
     Like [`startWith`](http://reactivex.io/rxjs/class/es6/Observable.js~Observable.html#instance-method-startWith), but for the other end.
 
-* [guard](./blob/master/source/let/guard.ts)
+* [guard](./source/let/guard.ts)
 
     Applies the specified TypeScript guard to change the source observable's type and perform a runtime check. Throws an error if the guard rejects a value.
 
-* [rateLimit](./blob/master/source/let/rateLimit.ts)
+* [rateLimit](./source/let/rateLimit.ts)
 
     A rate limiter with pass through when wating is not necessary.
 
-* [takeWhileInclusive](./blob/master/source/let/takeWhileInclusive.ts)
+* [takeWhileInclusive](./source/let/takeWhileInclusive.ts)
 
     Like [`takeWhile`](http://reactivex.io/rxjs/class/es6/Observable.js~Observable.html#instance-method-takeWhile), but the emitted value that fails the predicate is included.
 
-* [throttleAfter](./blob/master/source/let/throttleAfter.ts)
+* [throttleAfter](./source/let/throttleAfter.ts)
 
     Throttle the source observable, but only after the notifier emits a value.
 
-### Utilities
+### Utility functions
 
-A bunch of utilities that do what their names suggest:
+A bunch of utility functions that do what their names suggest:
 
-* [isObservable](./blob/master/source/util.ts)
-* [isScheduler](./blob/master/source/util.ts)
+* [isObservable](./source/util.ts)
+* [isScheduler](./source/util.ts)
