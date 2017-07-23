@@ -8,6 +8,7 @@ export * from "./debounceAfter";
 export * from "./defaultObservableIfEmpty";
 export * from "./endWith";
 export * from "./guard";
+export * from "./pluck";
 export * from "./rateLimit";
 export * from "./takeWhileInclusive";
 export * from "./throttleAfter";
