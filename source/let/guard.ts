@@ -8,7 +8,10 @@ import { Observable } from "rxjs/Observable";
 
 import "rxjs/add/operator/map";
 
-export function guard<T, R extends T>(guard: (value: T) => value is R): (source: Observable<T>) => Observable<R> {
+export function guard<T, R extends T>(
+    guard: (value: T) => value is R,
+    message?: string
+): (source: Observable<T>) => Observable<R> {
 
     return (source: Observable<T>) => source.map((value) => {
 
@@ -16,7 +19,7 @@ export function guard<T, R extends T>(guard: (value: T) => value is R): (source:
             return value as R;
         }
 
-        const error = new Error("Guard rejection.");
+        const error = new Error(message || "Guard rejection.");
         error["value"] = value;
         throw error;
     });

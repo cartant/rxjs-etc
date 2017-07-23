@@ -37,4 +37,21 @@ describe("let/guard", () => {
         m.expect(destination).toBeObservable(expected);
         m.expect(source).toHaveSubscriptions(subs);
     }));
+
+    it("should support an error messge", marbles((m) => {
+
+        const values = { a: 1, b: 2, c: "three" };
+        const message = "Not a number";
+
+        const source =   m.cold("-a-b-c-|", values);
+        const subs =            "^----!";
+        const expected = m.cold("-a-b-#", values, new Error(message));
+
+        const destination = source.let(guard(
+            (value): value is number => typeof value === "number",
+            message
+        ));
+        m.expect(destination).toBeObservable(expected);
+        m.expect(source).toHaveSubscriptions(subs);
+    }));
 });
