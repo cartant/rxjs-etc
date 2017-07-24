@@ -12,6 +12,7 @@ import "./util";
 import "./add/observable/combineLatestArray";
 import "./add/observable/concatArray";
 import "./add/observable/forkJoinArray";
+import "./add/observable/fromIterable";
 import "./add/observable/mergeArray";
 import "./add/observable/zipArray";
 import "./add/operator/doIndex";

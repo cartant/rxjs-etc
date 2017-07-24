@@ -7,6 +7,7 @@
 import "./add/observable/combineLatestArray-spec";
 import "./add/observable/concatArray-spec";
 import "./add/observable/forkJoinArray-spec";
+import "./add/observable/fromIterable-spec";
 import "./add/observable/mergeArray-spec";
 import "./add/observable/zipArray-spec";
 import "./add/operator/doIndex-spec";

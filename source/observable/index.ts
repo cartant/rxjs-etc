@@ -7,5 +7,6 @@
 export * from "./combineLatestArray";
 export * from "./concatArray";
 export * from "./forkJoinArray";
+export * from "./fromIterable";
 export * from "./mergeArray";
 export * from "./zipArray";
