@@ -16,14 +16,14 @@ describe("let/throttleAfter", () => {
 
         const source =   m.cold("ab-cd---ef-g-----h--|");
         const sourceSubs =      "^-------------------!";
-        const nofitier = m.cold("--n----n--n---------|");
-        const nofitierSubs =    "^-------------------!";
+        const notifier = m.cold("--n----n--n---------|");
+        const notifierSubs =    "^-------------------!";
         const expected = m.cold("ab-c----e--------h--|");
 
         const period = m.time("----|");
-        const destination = source.let(throttleAfter(nofitier, period, m.scheduler));
+        const destination = source.let(throttleAfter(notifier, period, m.scheduler));
         m.expect(destination).toBeObservable(expected);
         m.expect(source).toHaveSubscriptions(sourceSubs);
-        m.expect(nofitier).toHaveSubscriptions(nofitierSubs);
+        m.expect(notifier).toHaveSubscriptions(notifierSubs);
     }));
 });

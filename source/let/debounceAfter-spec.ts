@@ -16,14 +16,14 @@ describe("let/debounceAfter", () => {
 
         const source =   m.cold("ab-cd---ef------gh--|");
         const sourceSubs =      "^-------------------!";
-        const nofitier = m.cold("--n----n--n---------|");
-        const nofitierSubs =    "^-------------------!";
+        const notifier = m.cold("--n----n--n---------|");
+        const notifierSubs =    "^-------------------!";
         const expected = m.cold("ab----d-------f-gh--|");
 
         const period = m.time("----|");
-        const destination = source.let(debounceAfter(nofitier, period, m.scheduler));
+        const destination = source.let(debounceAfter(notifier, period, m.scheduler));
         m.expect(destination).toBeObservable(expected);
         m.expect(source).toHaveSubscriptions(sourceSubs);
-        m.expect(nofitier).toHaveSubscriptions(nofitierSubs);
+        m.expect(notifier).toHaveSubscriptions(notifierSubs);
     }));
 });
