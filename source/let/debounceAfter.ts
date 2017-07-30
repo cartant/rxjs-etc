@@ -19,8 +19,8 @@ import "rxjs/add/operator/switchMap";
 import "rxjs/add/operator/takeLast";
 import "rxjs/add/operator/takeUntil";
 
-export function debounceAfter<T, R>(
-    notifier: Observable<R>,
+export function debounceAfter<T>(
+    notifier: Observable<any>,
     duration: number,
     scheduler?: IScheduler
 ): (source: Observable<T>) => Observable<T> {

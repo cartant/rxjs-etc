@@ -19,8 +19,8 @@ import "rxjs/add/operator/switchMap";
 import "rxjs/add/operator/take";
 import "rxjs/add/operator/takeUntil";
 
-export function throttleAfter<T, R>(
-    notifier: Observable<R>,
+export function throttleAfter<T>(
+    notifier: Observable<any>,
     duration: number,
     scheduler?: IScheduler
 ): (source: Observable<T>) => Observable<T> {
