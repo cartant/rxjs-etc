@@ -34,6 +34,8 @@ npm install rxjs-etc --save
 
     A bunch of static methods that behave in a predictable manner when passed empty arrays. Some of these are now redundant, but some aren't.
 
+    To see how these methods behave, consult their tests.
+
 ### Instance methods for `Observable`
 
 * [doIndex](./source/operator/doIndex.ts)
@@ -61,6 +63,10 @@ A bunch of functions that can be passed to the `let` operator. Use them like thi
 * [guard](./source/let/guard.ts)
 
     Applies the specified TypeScript guard to change the source observable's type and perform a runtime check. Throws an error if the guard rejects a value.
+
+* [pluck](./source/let/pluck.ts)
+
+    Like [`pluck`](http://reactivex.io/rxjs/class/es6/Observable.js~Observable.html#instance-method-pluck), but it's type-safe and only lets you pass a single, valid key. And it returns the appropriate type.
 
 * [rateLimit](./source/let/rateLimit.ts)
 
