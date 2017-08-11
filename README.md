@@ -64,7 +64,7 @@ A bunch of functions that can be passed to the `let` operator. Use them like thi
 
 * [rateLimit](./source/let/rateLimit.ts)
 
-    A rate limiter with pass through when wating is not necessary.
+    A rate limiter with pass through when waiting is not necessary.
 
 * [takeWhileInclusive](./source/let/takeWhileInclusive.ts)
 
