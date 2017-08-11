@@ -62,7 +62,7 @@ A bunch of functions that can be passed to the `let` operator. Use them like thi
 
 * [guard](./source/let/guard.ts)
 
-    Applies the specified TypeScript guard to change the source observable's type and perform a runtime check. Throws an error if the guard rejects a value.
+    Applies the specified TypeScript guard to change the source observable's type and perform a runtime check. Emits an error notification if the guard rejects a value.
 
 * [pluck](./source/let/pluck.ts)
 
