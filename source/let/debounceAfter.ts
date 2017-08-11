@@ -5,19 +5,18 @@
  */
 
 import { Observable } from "rxjs/Observable";
+import { concat } from "rxjs/observable/concat";
+import { of } from "rxjs/observable/of";
+import { concatMap } from "rxjs/operator/concatMap";
+import { delay } from "rxjs/operator/delay";
+import { distinctUntilChanged } from "rxjs/operator/distinctUntilChanged";
+import { filter } from "rxjs/operator/filter";
+import { publish } from "rxjs/operator/publish";
+import { startWith } from "rxjs/operator/startWith";
+import { switchMap } from "rxjs/operator/switchMap";
+import { takeLast } from "rxjs/operator/takeLast";
+import { takeUntil } from "rxjs/operator/takeUntil";
 import { IScheduler } from "rxjs/Scheduler";
-
-import "rxjs/add/observable/concat";
-import "rxjs/add/observable/of";
-import "rxjs/add/operator/concatMap";
-import "rxjs/add/operator/delay";
-import "rxjs/add/operator/distinctUntilChanged";
-import "rxjs/add/operator/filter";
-import "rxjs/add/operator/publish";
-import "rxjs/add/operator/startWith";
-import "rxjs/add/operator/switchMap";
-import "rxjs/add/operator/takeLast";
-import "rxjs/add/operator/takeUntil";
 
 export function debounceAfter<T>(
     notifier: Observable<any>,
@@ -27,21 +26,23 @@ export function debounceAfter<T>(
 
     // https://stackoverflow.com/a/44257656/6680611
 
-    return (source) => source.publish((sharedSource) => {
+    return (source) => publish.call(source, (sharedSource: Observable<T>) => {
 
         // Until this is merged, the selector passed to publish cannot change the type:
         // https://github.com/ReactiveX/rxjs/pull/2616
 
-        const signal: Observable<any> = notifier.switchMap(() => Observable.concat(
-            Observable.of(true),
-            Observable.of(false).delay(duration, scheduler)
-        ))
-        .startWith(false)
-        .distinctUntilChanged();
+        const switched = switchMap.call(notifier, () => concat(
+            of(true),
+            delay.call(of(false), duration, scheduler)
+        ));
+        const started = startWith.call(switched, false);
+        const signal = distinctUntilChanged.call(started);
 
-        return signal.publish((sharedSignal) => sharedSignal.concatMap((signalled) => signalled ?
-            sharedSource.takeUntil(sharedSignal.filter((signalled) => !signalled)).takeLast(1) :
-            sharedSource.takeUntil(sharedSignal.filter((signalled) => signalled))
+        return publish.call(signal, (sharedSignal: Observable<boolean>) => concatMap.call(
+            sharedSignal,
+            (signalled: boolean) => signalled ?
+                takeLast.call(takeUntil.call(sharedSource, filter.call(sharedSignal, (signalled: boolean) => !signalled)), 1) :
+                takeUntil.call(sharedSource, filter.call(sharedSignal, (signalled: boolean) => signalled))
         ));
     });
 }

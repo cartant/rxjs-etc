@@ -5,11 +5,10 @@
  */
 
 import { Observable } from "rxjs/Observable";
+import { from } from "rxjs/observable/from";
+import { concat } from "rxjs/operator/concat";
 import { IScheduler } from "rxjs/Scheduler";
 import { isScheduler } from "../util";
-
-import "rxjs/add/observable/from";
-import "rxjs/add/operator/concat";
 
 export function endWith<T>(v1: T, scheduler?: IScheduler): (source: Observable<T>) => Observable<T>;
 export function endWith<T>(v1: T, v2: T, scheduler?: IScheduler): (source: Observable<T>) => Observable<T>;
@@ -26,5 +25,5 @@ export function endWith<T>(...args: (T | IScheduler)[]): (source: Observable<T>)
     } else {
         scheduler = null;
     }
-    return (source) => source.concat(Observable.from(args as T[], scheduler as any));
+    return (source) => concat.call(source, from(args as T[], scheduler as any));
 }

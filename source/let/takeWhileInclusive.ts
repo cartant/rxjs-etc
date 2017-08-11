@@ -5,19 +5,21 @@
  */
 
 import { Observable } from "rxjs/Observable";
+import { multicast } from "rxjs/operator/multicast";
+import { concat } from "rxjs/operator/concat";
+import { take } from "rxjs/operator/take";
+import { takeWhile } from "rxjs/operator/takeWhile";
 import { ReplaySubject } from "rxjs/ReplaySubject";
-
-import "rxjs/add/operator/multicast";
-import "rxjs/add/operator/concat";
-import "rxjs/add/operator/take";
-import "rxjs/add/operator/takeWhile";
 
 export function takeWhileInclusive<T>(predicate: (value: T) => boolean): (source: Observable<T>) => Observable<T> {
 
     // https://stackoverflow.com/a/44644237/6680611
 
-    return (source) => source.multicast(
+    return (source) => multicast.call(source,
         () => new ReplaySubject<T>(1),
-        (values) => values.takeWhile(predicate).concat(values.take(1))
+        (sharedSource: Observable<T>) => concat.call(
+            takeWhile.call(sharedSource, predicate),
+            take.call(sharedSource, 1)
+        )
     );
 }

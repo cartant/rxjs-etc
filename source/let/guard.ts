@@ -5,15 +5,14 @@
  */
 
 import { Observable } from "rxjs/Observable";
-
-import "rxjs/add/operator/map";
+import { map } from "rxjs/operator/map";
 
 export function guard<T, R extends T>(
     guard: (value: T) => value is R,
     message?: string
 ): (source: Observable<T>) => Observable<R> {
 
-    return (source: Observable<T>) => source.map((value) => {
+    return (source: Observable<T>) => map.call(source, (value: any) => {
 
         if (guard(value)) {
             return value as R;

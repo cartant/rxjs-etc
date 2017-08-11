@@ -5,10 +5,9 @@
  */
 
 import { Observable } from "rxjs/Observable";
-
-import "rxjs/add/operator/map";
+import { map } from "rxjs/operator/map";
 
 export function pluck<T, K extends keyof T>(key: K): (source: Observable<T>) => Observable<T[K]> {
 
-    return (source) => source.map((value) => value[key]);
+    return (source) => map.call(source, (value: T) => value[key]);
 }

@@ -5,14 +5,13 @@
  */
 
 import { Observable } from "rxjs/Observable";
+import { of } from "rxjs/observable/of";
+import { concatMap } from "rxjs/operator/concatMap";
+import { delay } from "rxjs/operator/delay";
+import { map } from "rxjs/operator/map";
+import { scan } from "rxjs/operator/scan";
 import { IScheduler } from "rxjs/Scheduler";
 import { asap } from "rxjs/scheduler/asap";
-
-import "rxjs/add/observable/of";
-import "rxjs/add/operator/concatMap";
-import "rxjs/add/operator/delay";
-import "rxjs/add/operator/map";
-import "rxjs/add/operator/scan";
 
 export function rateLimit<T>(period: number, scheduler?: IScheduler): (source: Observable<T>) => Observable<T>;
 export function rateLimit<T>(period: number, count: number, scheduler?: IScheduler): (source: Observable<T>) => Observable<T>;
@@ -40,8 +39,9 @@ export function rateLimit<T>(period: number, ...args: (number | IScheduler | und
 
     const definedCount = count || 1;
 
-    return (source) => source
-        .scan((emissions: Emission<T>[], value: T) => {
+    return (source) => {
+
+        const scanned = scan.call(source, (emissions: Emission<T>[], value: T) => {
 
             const now = scheduler.now();
             const since = now - period;
@@ -71,11 +71,15 @@ export function rateLimit<T>(period: number, ...args: (number | IScheduler | und
             }
             return emissions;
 
-        }, [])
-        .map((emissions: Emission<T>[]) => emissions[emissions.length - 1])
-        .concatMap((emission: Emission<T>) => {
+        }, []);
 
-            const observable = Observable.of(emission.value);
-            return emission.delay ? observable.delay(emission.delay, scheduler) : observable;
+        const mapped = map.call(scanned, (emissions: Emission<T>[]) => emissions[emissions.length - 1]);
+
+        const concatted = concatMap.call(mapped, (emission: Emission<T>) => {
+
+            const observable = of(emission.value);
+            return emission.delay ? delay.call(observable, emission.delay, scheduler) : observable;
         });
+        return concatted;
+    };
 }

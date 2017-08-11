@@ -7,9 +7,9 @@
 
 import { expect } from "chai";
 import { Observable } from "rxjs/Observable";
+import { from } from "rxjs/observable/from";
 import { marbles } from "rxjs-marbles";
 
-import "rxjs/add/observable/from";
 import "./doIndex";
 
 describe("operator/doIndex", () => {
@@ -40,8 +40,7 @@ describe("operator/doIndex", () => {
 
         let seen: any[] = [];
 
-        Observable
-            .from(["alice", "bob"])
+        from(["alice", "bob"])
             .doIndex((value, index) => seen.push({ index, value }))
             .subscribe();
 
@@ -58,8 +57,7 @@ describe("operator/doIndex", () => {
 
         let seen: any[] = [];
 
-        let observable = Observable
-            .from(["alice", "bob"])
+        let observable = from(["alice", "bob"])
             .doIndex((value, index) => seen.push({ index, value }));
 
         observable.subscribe();

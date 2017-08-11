@@ -5,21 +5,18 @@
  */
 
 import { Observable } from "rxjs/Observable";
-
-import "rxjs/add/observable/empty";
-import "rxjs/add/operator/isEmpty";
-import "rxjs/add/operator/merge";
-import "rxjs/add/operator/mergeMap";
-import "rxjs/add/operator/publish";
+import { empty } from "rxjs/observable/empty";
+import { isEmpty } from "rxjs/operator/isEmpty";
+import { merge } from "rxjs/operator/merge";
+import { mergeMap } from "rxjs/operator/mergeMap";
+import { publish } from "rxjs/operator/publish";
 
 export function defaultObservableIfEmpty<T>(
     defaultObservable: Observable<T>
 ): (source: Observable<T>) => Observable<T> {
 
-    return (source) => source.publish((sharedSource) => sharedSource.merge(
-        sharedSource.isEmpty().mergeMap((empty) => empty ?
-            defaultObservable :
-            Observable.empty<T>()
-        )
+    return (source) => publish.call(source, (sharedSource: Observable<T>) => merge.call(
+        sharedSource,
+        mergeMap.call(isEmpty.call(sharedSource), (b: boolean) => b ? defaultObservable : empty<T>())
     ));
 }

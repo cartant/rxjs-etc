@@ -9,7 +9,7 @@ import { from } from "rxjs/observable/from";
 
 // https://github.com/ReactiveX/rxjs/issues/2306
 
-interface IterableLike<T> {
+export interface IterableLike<T> {
     [Symbol.iterator]: () => Iterator<T> | IterableIterator<T>;
 }
 
