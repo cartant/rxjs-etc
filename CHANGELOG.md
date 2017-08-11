@@ -1,7 +1,7 @@
 <a name="2.0.0"></a>
 ## [2.0.0](https://github.com/cartant/rxjs-etc/compare/v1.1.0...v2.0.0) (2017-08-11)
 
-### Bug Fixes
+### Breaking Changes
 
 * **let**: Remove patching of `Observable` prototype from within the `let` methods. ([25a8db8](https://github.com/cartant/rxjs-etc/commit/25a8db8))
 
