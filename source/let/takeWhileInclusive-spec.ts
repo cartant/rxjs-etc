@@ -33,4 +33,15 @@ describe("let/takeWhileInclusive", () => {
         m.expect(destination).toBeObservable(expected);
         m.expect(source).toHaveSubscriptions(subs);
     }));
+
+    it("should support hot sources", marbles((m) => {
+
+        const source =    m.hot("-a-b-c-d-|");
+        const subs =            "^----!";
+        const expected = m.cold("-a-b-(c|)");
+
+        const destination = source.let(takeWhileInclusive((value) => value !== "c"));
+        m.expect(destination).toBeObservable(expected);
+        m.expect(source).toHaveSubscriptions(subs);
+    }));
 });
