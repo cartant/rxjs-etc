@@ -44,4 +44,26 @@ describe("let/takeWhileInclusive", () => {
         m.expect(destination).toBeObservable(expected);
         m.expect(source).toHaveSubscriptions(subs);
     }));
+
+    it("should support sources that don't emit", marbles((m) => {
+
+        const source =   m.cold("-----|");
+        const subs =            "^----!";
+        const expected = m.cold("-----|");
+
+        const destination = source.let(takeWhileInclusive((value) => value !== "c"));
+        m.expect(destination).toBeObservable(expected);
+        m.expect(source).toHaveSubscriptions(subs);
+    }));
+
+    it("should support sources that complete before a value fails the predicate", marbles((m) => {
+
+        const source =   m.cold("-a-b-|");
+        const subs =            "^----!";
+        const expected = m.cold("-a-b-|");
+
+        const destination = source.let(takeWhileInclusive((value) => value !== "c"));
+        m.expect(destination).toBeObservable(expected);
+        m.expect(source).toHaveSubscriptions(subs);
+    }));
 });
