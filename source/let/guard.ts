@@ -15,7 +15,7 @@ export function guard<T, R extends T>(
     return (source: Observable<T>) => map.call(source, (value: any) => {
 
         if (guard(value)) {
-            return value as R;
+            return value;
         }
 
         const error = new Error(message || "Guard rejection.");
