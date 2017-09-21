@@ -1,12 +1,11 @@
 # rxjs-etc
 
-[![Greenkeeper badge](https://badges.greenkeeper.io/cartant/rxjs-etc.svg)](https://greenkeeper.io/)
-
 [![NPM version](https://img.shields.io/npm/v/rxjs-etc.svg)](https://www.npmjs.com/package/rxjs-etc)
 [![Build status](https://img.shields.io/travis/cartant/rxjs-etc.svg)](http://travis-ci.org/cartant/rxjs-etc)
 [![dependency status](https://img.shields.io/david/cartant/rxjs-etc.svg)](https://david-dm.org/cartant/rxjs-etc)
 [![devDependency Status](https://img.shields.io/david/dev/cartant/rxjs-etc.svg)](https://david-dm.org/cartant/rxjs-etc#info=devDependencies)
 [![peerDependency Status](https://img.shields.io/david/peer/cartant/rxjs-etc.svg)](https://david-dm.org/cartant/rxjs-etc#info=peerDependencies)
+[![Greenkeeper badge](https://badges.greenkeeper.io/cartant/rxjs-etc.svg)](https://greenkeeper.io/)
 
 ### What is it?
 
