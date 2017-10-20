@@ -6,10 +6,10 @@
 
 import { Observable } from "rxjs/Observable";
 import { of } from "rxjs/observable/of";
-import { concatMap } from "rxjs/operator/concatMap";
-import { delay } from "rxjs/operator/delay";
-import { map } from "rxjs/operator/map";
-import { scan } from "rxjs/operator/scan";
+import { concatMap } from "rxjs/operators/concatMap";
+import { delay } from "rxjs/operators/delay";
+import { map } from "rxjs/operators/map";
+import { scan } from "rxjs/operators/scan";
 import { IScheduler } from "rxjs/Scheduler";
 import { asap } from "rxjs/scheduler/asap";
 
@@ -39,9 +39,8 @@ export function rateLimit<T>(period: number, ...args: (number | IScheduler | und
 
     const definedCount = count || 1;
 
-    return (source) => {
-
-        const scanned = scan.call(source, (emissions: Emission<T>[], value: T) => {
+    return (source: Observable<T>) => source.pipe(
+        scan((emissions: Emission<T>[], value: T) => {
 
             const now = scheduler.now();
             const since = now - period;
@@ -71,15 +70,12 @@ export function rateLimit<T>(period: number, ...args: (number | IScheduler | und
             }
             return emissions;
 
-        }, []);
-
-        const mapped = map.call(scanned, (emissions: Emission<T>[]) => emissions[emissions.length - 1]);
-
-        const concatted = concatMap.call(mapped, (emission: Emission<T>) => {
+        }, []),
+        map((emissions: Emission<T>[]) => emissions[emissions.length - 1]),
+        concatMap((emission: Emission<T>) => {
 
             const observable = of(emission.value);
-            return emission.delay ? delay.call(observable, emission.delay, scheduler) : observable;
-        });
-        return concatted;
-    };
+            return emission.delay ? delay<T>(emission.delay, scheduler)(observable) : observable;
+        })
+    );
 }

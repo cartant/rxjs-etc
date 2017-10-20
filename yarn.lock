@@ -2880,7 +2880,7 @@ rxjs-tslint-rules@^3.0.0:
   dependencies:
     resolve "^1.4.0"
 
-rxjs@^5.4.2:
+rxjs@^5.5.0:
   version "5.5.0"
   resolved "https://registry.yarnpkg.com/rxjs/-/rxjs-5.5.0.tgz#26d8f3866eb700e247e0728a147c3d628993d812"
   dependencies:

@@ -7,15 +7,15 @@
 import { Observable } from "rxjs/Observable";
 import { concat } from "rxjs/observable/concat";
 import { of } from "rxjs/observable/of";
-import { concatMap } from "rxjs/operator/concatMap";
-import { delay } from "rxjs/operator/delay";
-import { distinctUntilChanged } from "rxjs/operator/distinctUntilChanged";
-import { filter } from "rxjs/operator/filter";
-import { publish } from "rxjs/operator/publish";
-import { startWith } from "rxjs/operator/startWith";
-import { switchMap } from "rxjs/operator/switchMap";
-import { take } from "rxjs/operator/take";
-import { takeUntil } from "rxjs/operator/takeUntil";
+import { concatMap } from "rxjs/operators/concatMap";
+import { delay } from "rxjs/operators/delay";
+import { distinctUntilChanged } from "rxjs/operators/distinctUntilChanged";
+import { filter } from "rxjs/operators/filter";
+import { publish } from "rxjs/operators/publish";
+import { startWith } from "rxjs/operators/startWith";
+import { switchMap } from "rxjs/operators/switchMap";
+import { take } from "rxjs/operators/take";
+import { takeUntil } from "rxjs/operators/takeUntil";
 import { IScheduler } from "rxjs/Scheduler";
 
 export function throttleAfter<T>(
@@ -24,23 +24,25 @@ export function throttleAfter<T>(
     scheduler?: IScheduler
 ): (source: Observable<T>) => Observable<T> {
 
-    return (source) => publish.call(source, (sharedSource: Observable<T>) => {
-
-        // Until this is merged, the selector passed to publish cannot change the type:
-        // https://github.com/ReactiveX/rxjs/pull/2616
-
-        const switched = switchMap.call(notifier, () => concat(
-            of(true),
-            delay.call(of(false), duration, scheduler)
-        ));
-        const started = startWith.call(switched, false);
-        const signal = distinctUntilChanged.call(started);
-
-        return publish.call(signal, (sharedSignal: Observable<boolean>) => concatMap.call(
-            sharedSignal,
-            (signalled: boolean) => signalled ?
-                take.call(takeUntil.call(sharedSource, filter.call(sharedSignal, (signalled: boolean) => !signalled)), 1) :
-                takeUntil.call(sharedSource, filter.call(sharedSignal, (signalled: boolean) => signalled))
-        ));
-    });
+    return (source: Observable<T>) => source.pipe(
+        publish((sharedSource) => notifier.pipe(
+            switchMap(() => concat(
+                of(true),
+                delay<boolean>(duration, scheduler)(of(false))
+            )),
+            startWith(false),
+            distinctUntilChanged(),
+            publish<boolean, T>((sharedSignal: Observable<boolean>) => sharedSignal.pipe(
+                concatMap((signalled: boolean) => signalled ?
+                    sharedSource.pipe(
+                        takeUntil(sharedSignal.pipe(filter((signalled: boolean) => !signalled))),
+                        take(1)
+                    ) :
+                    sharedSource.pipe(
+                        takeUntil(sharedSignal.pipe(filter((signalled: boolean) => signalled)))
+                    )
+                )
+            ))
+        ))
+    );
 }
