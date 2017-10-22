@@ -1,3 +1,10 @@
+<a name="3.1.0"></a>
+## [3.1.0](https://github.com/cartant/rxjs-etc/compare/v3.0.0...v3.1.0) (2017-10-22)
+
+### Features
+
+* **tapIndex**: Add a lettable/pipeable equivalent to `doIndex`. ([0b76d5b](https://github.com/cartant/rxjs-etc/commit/0b76d5b))
+
 <a name="3.0.0"></a>
 ## [3.0.0](https://github.com/cartant/rxjs-etc/compare/v2.0.2...v3.0.0) (2017-10-20)
 
