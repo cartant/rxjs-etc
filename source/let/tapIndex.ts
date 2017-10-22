@@ -18,11 +18,11 @@ export function tapIndex<T>(
 ): (source: Observable<T>) => Observable<T> {
 
     return function tapIndexOperatorFunction(source: Observable<T>): Observable<T> {
-        return source.lift(new DoIndexOperator(next, error, complete));
+        return source.lift(new TapIndexOperator(next, error, complete));
     };
 }
 
-class DoIndexOperator<T> implements Operator<T, T> {
+class TapIndexOperator<T> implements Operator<T, T> {
 
     constructor(
         private next?: (value: T, index: number) => void,
@@ -32,7 +32,7 @@ class DoIndexOperator<T> implements Operator<T, T> {
 
     call(subscriber: Subscriber<T>, source: any): TeardownLogic {
 
-        return source.subscribe(new DoSubscriber(
+        return source.subscribe(new TapIndexSubscriber(
             subscriber,
             this.next,
             this.error,
@@ -41,7 +41,7 @@ class DoIndexOperator<T> implements Operator<T, T> {
     }
 }
 
-class DoSubscriber<T> extends Subscriber<T> {
+class TapIndexSubscriber<T> extends Subscriber<T> {
 
     private count: number = 0;
     private safeSubscriber: Subscriber<T>;
