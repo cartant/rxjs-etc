@@ -8,8 +8,6 @@
 import { marbles } from "rxjs-marbles";
 import { throttleAfter } from "./throttleAfter";
 
-import "rxjs/add/operator/let";
-
 describe("let/throttleAfter", () => {
 
     it("should throttle after the notifier emits", marbles((m) => {
@@ -21,7 +19,7 @@ describe("let/throttleAfter", () => {
         const expected = m.cold("ab-c----e--------h--|");
 
         const period = m.time("----|");
-        const destination = source.let(throttleAfter(notifier, period, m.scheduler));
+        const destination = source.pipe(throttleAfter(notifier, period, m.scheduler));
         m.expect(destination).toBeObservable(expected);
         m.expect(source).toHaveSubscriptions(sourceSubs);
         m.expect(notifier).toHaveSubscriptions(notifierSubs);

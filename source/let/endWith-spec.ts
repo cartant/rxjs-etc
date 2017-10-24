@@ -8,8 +8,6 @@
 import { marbles } from "rxjs-marbles";
 import { endWith } from "./endWith";
 
-import "rxjs/add/operator/let";
-
 describe("let/endWith", () => {
 
     it("should end an observable with a single value", marbles((m) => {
@@ -18,7 +16,7 @@ describe("let/endWith", () => {
         const subs =            "^------!";
         const expected = m.cold("-a-b-c-(d|)");
 
-        const destination = source.let(endWith("d"));
+        const destination = source.pipe(endWith("d"));
         m.expect(destination).toBeObservable(expected);
         m.expect(source).toHaveSubscriptions(subs);
     }));
@@ -29,7 +27,7 @@ describe("let/endWith", () => {
         const subs =            "^------!";
         const expected = m.cold("-a-b-c-(de|)");
 
-        const destination = source.let(endWith("d", "e"));
+        const destination = source.pipe(endWith("d", "e"));
         m.expect(destination).toBeObservable(expected);
         m.expect(source).toHaveSubscriptions(subs);
     }));

@@ -8,8 +8,6 @@
 import { marbles } from "rxjs-marbles";
 import { pluck } from "./pluck";
 
-import "rxjs/add/operator/let";
-
 describe("let/pluck", () => {
 
     it("should pluck the specified key", marbles((m) => {
@@ -20,7 +18,7 @@ describe("let/pluck", () => {
         const subs =                    "^--!";
         const expected = m.cold<string>("-n-|", { n: "alice" });
 
-        const destination = source.let(pluck("name"));
+        const destination = source.pipe(pluck("name"));
         m.expect(destination).toBeObservable(expected);
         m.expect(source).toHaveSubscriptions(subs);
     }));

@@ -8,8 +8,6 @@
 import { marbles } from "rxjs-marbles";
 import { guard } from "./guard";
 
-import "rxjs/add/operator/let";
-
 describe("let/guard", () => {
 
     it("should not reject values that pass the guard", marbles((m) => {
@@ -20,7 +18,7 @@ describe("let/guard", () => {
         const subs =            "^------!";
         const expected = m.cold("-a-b-c-|", values);
 
-        const destination = source.let(guard((value): value is number => typeof value === "number"));
+        const destination = source.pipe(guard((value): value is number => typeof value === "number"));
         m.expect(destination).toBeObservable(expected);
         m.expect(source).toHaveSubscriptions(subs);
     }));
@@ -33,7 +31,7 @@ describe("let/guard", () => {
         const subs =            "^----!";
         const expected = m.cold("-a-b-#", values, new Error("Guard rejection."));
 
-        const destination = source.let(guard((value): value is number => typeof value === "number"));
+        const destination = source.pipe(guard((value): value is number => typeof value === "number"));
         m.expect(destination).toBeObservable(expected);
         m.expect(source).toHaveSubscriptions(subs);
     }));
@@ -47,7 +45,7 @@ describe("let/guard", () => {
         const subs =            "^----!";
         const expected = m.cold("-a-b-#", values, new Error(message));
 
-        const destination = source.let(guard(
+        const destination = source.pipe(guard(
             (value): value is number => typeof value === "number",
             message
         ));

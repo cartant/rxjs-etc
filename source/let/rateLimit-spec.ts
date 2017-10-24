@@ -8,8 +8,6 @@
 import { marbles } from "rxjs-marbles";
 import { rateLimit } from "./rateLimit";
 
-import "rxjs/add/operator/let";
-
 describe("let/rateLimit", () => {
 
     it("should emit synchronous pass-though values immediately", marbles((m) => {
@@ -19,7 +17,7 @@ describe("let/rateLimit", () => {
         const expected = m.cold("(ab)----|");
 
         const period = m.time("------|");
-        const destination = source.let(rateLimit(period, 2, m.scheduler));
+        const destination = source.pipe(rateLimit(period, 2, m.scheduler));
         m.expect(destination).toBeObservable(expected);
         m.expect(source).toHaveSubscriptions(subs);
     }));
@@ -31,7 +29,7 @@ describe("let/rateLimit", () => {
         const expected = m.cold("ab----|");
 
         const period = m.time("------|");
-        const destination = source.let(rateLimit(period, 2, m.scheduler));
+        const destination = source.pipe(rateLimit(period, 2, m.scheduler));
         m.expect(destination).toBeObservable(expected);
         m.expect(source).toHaveSubscriptions(subs);
     }));
@@ -43,7 +41,7 @@ describe("let/rateLimit", () => {
         const expected = m.cold("(ab)--c--|");
 
         const period = m.time("------|");
-        const destination = source.let(rateLimit(period, 2, m.scheduler));
+        const destination = source.pipe(rateLimit(period, 2, m.scheduler));
         m.expect(destination).toBeObservable(expected);
         m.expect(source).toHaveSubscriptions(subs);
     }));
@@ -55,7 +53,7 @@ describe("let/rateLimit", () => {
         const expected = m.cold("ab----c--|");
 
         const period = m.time("------|");
-        const destination = source.let(rateLimit(period, 2, m.scheduler));
+        const destination = source.pipe(rateLimit(period, 2, m.scheduler));
         m.expect(destination).toBeObservable(expected);
         m.expect(source).toHaveSubscriptions(subs);
     }));
@@ -67,7 +65,7 @@ describe("let/rateLimit", () => {
         const expected = m.cold("(ab)--(c|)");
 
         const period = m.time("------|");
-        const destination = source.let(rateLimit(period, 2, m.scheduler));
+        const destination = source.pipe(rateLimit(period, 2, m.scheduler));
         m.expect(destination).toBeObservable(expected);
         m.expect(source).toHaveSubscriptions(subs);
     }));
@@ -79,7 +77,7 @@ describe("let/rateLimit", () => {
         const expected = m.cold("ab----(c|)");
 
         const period = m.time("------|");
-        const destination = source.let(rateLimit(period, 2, m.scheduler));
+        const destination = source.pipe(rateLimit(period, 2, m.scheduler));
         m.expect(destination).toBeObservable(expected);
         m.expect(source).toHaveSubscriptions(subs);
     }));
@@ -91,7 +89,7 @@ describe("let/rateLimit", () => {
         const expected = m.cold("(ab)----(cd)----e|");
 
         const period = m.time("--------|");
-        const destination = source.let(rateLimit(period, 2, m.scheduler));
+        const destination = source.pipe(rateLimit(period, 2, m.scheduler));
         m.expect(destination).toBeObservable(expected);
         m.expect(source).toHaveSubscriptions(subs);
     }));
@@ -103,7 +101,7 @@ describe("let/rateLimit", () => {
         const expected = m.cold("ab------(cd)----e|");
 
         const period = m.time("--------|");
-        const destination = source.let(rateLimit(period, 2, m.scheduler));
+        const destination = source.pipe(rateLimit(period, 2, m.scheduler));
         m.expect(destination).toBeObservable(expected);
         m.expect(source).toHaveSubscriptions(subs);
     }));

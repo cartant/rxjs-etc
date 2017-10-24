@@ -8,8 +8,6 @@
 import { marbles } from "rxjs-marbles";
 import { debounceAfter } from "./debounceAfter";
 
-import "rxjs/add/operator/let";
-
 describe("let/debounceAfter", () => {
 
     it("should debounce after the notifier emits", marbles((m) => {
@@ -21,7 +19,7 @@ describe("let/debounceAfter", () => {
         const expected = m.cold("ab----d-------f-gh--|");
 
         const period = m.time("----|");
-        const destination = source.let(debounceAfter(notifier, period, m.scheduler));
+        const destination = source.pipe(debounceAfter(notifier, period, m.scheduler));
         m.expect(destination).toBeObservable(expected);
         m.expect(source).toHaveSubscriptions(sourceSubs);
         m.expect(notifier).toHaveSubscriptions(notifierSubs);

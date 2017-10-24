@@ -8,8 +8,6 @@
 import { marbles } from "rxjs-marbles";
 import { takeWhileInclusive } from "./takeWhileInclusive";
 
-import "rxjs/add/operator/let";
-
 describe("let/takeWhileInclusive", () => {
 
     it("should take the value that fails the predicate", marbles((m) => {
@@ -18,7 +16,7 @@ describe("let/takeWhileInclusive", () => {
         const subs =            "^----!";
         const expected = m.cold("-a-b-(c|)");
 
-        const destination = source.let(takeWhileInclusive((value) => value !== "c"));
+        const destination = source.pipe(takeWhileInclusive((value) => value !== "c"));
         m.expect(destination).toBeObservable(expected);
         m.expect(source).toHaveSubscriptions(subs);
     }));
@@ -29,7 +27,7 @@ describe("let/takeWhileInclusive", () => {
         const subs =            "^----!";
         const expected = m.cold("-a-b-(c|)");
 
-        const destination = source.let(takeWhileInclusive((value) => value !== "c"));
+        const destination = source.pipe(takeWhileInclusive((value) => value !== "c"));
         m.expect(destination).toBeObservable(expected);
         m.expect(source).toHaveSubscriptions(subs);
     }));
@@ -40,7 +38,7 @@ describe("let/takeWhileInclusive", () => {
         const subs =            "^----!";
         const expected = m.cold("-a-b-(c|)");
 
-        const destination = source.let(takeWhileInclusive((value) => value !== "c"));
+        const destination = source.pipe(takeWhileInclusive((value) => value !== "c"));
         m.expect(destination).toBeObservable(expected);
         m.expect(source).toHaveSubscriptions(subs);
     }));
@@ -51,7 +49,7 @@ describe("let/takeWhileInclusive", () => {
         const subs =            "^----!";
         const expected = m.cold("-----|");
 
-        const destination = source.let(takeWhileInclusive((value) => value !== "c"));
+        const destination = source.pipe(takeWhileInclusive((value) => value !== "c"));
         m.expect(destination).toBeObservable(expected);
         m.expect(source).toHaveSubscriptions(subs);
     }));
@@ -62,7 +60,7 @@ describe("let/takeWhileInclusive", () => {
         const subs =            "^----!";
         const expected = m.cold("-a-b-|");
 
-        const destination = source.let(takeWhileInclusive((value) => value !== "c"));
+        const destination = source.pipe(takeWhileInclusive((value) => value !== "c"));
         m.expect(destination).toBeObservable(expected);
         m.expect(source).toHaveSubscriptions(subs);
     }));

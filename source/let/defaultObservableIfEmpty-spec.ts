@@ -8,8 +8,6 @@
 import { marbles } from "rxjs-marbles";
 import { defaultObservableIfEmpty } from "./defaultObservableIfEmpty";
 
-import "rxjs/add/operator/let";
-
 describe("let/defaultObservableIfEmpty", () => {
 
     it("should return the source if not empty", marbles((m) => {
@@ -19,7 +17,7 @@ describe("let/defaultObservableIfEmpty", () => {
         const def =      m.cold("--d--|");
         const expected = m.cold("--a--b--c--|");
 
-        const destination = source.let(defaultObservableIfEmpty(def));
+        const destination = source.pipe(defaultObservableIfEmpty(def));
         m.expect(destination).toBeObservable(expected);
         m.expect(source).toHaveSubscriptions(subs);
         m.expect(def).toHaveSubscriptions([]);
@@ -33,7 +31,7 @@ describe("let/defaultObservableIfEmpty", () => {
         const defSubs =         "----^----!";
         const expected = m.cold("------d--|");
 
-        const destination = source.let(defaultObservableIfEmpty(def));
+        const destination = source.pipe(defaultObservableIfEmpty(def));
         m.expect(destination).toBeObservable(expected);
         m.expect(source).toHaveSubscriptions(sourceSubs);
         m.expect(def).toHaveSubscriptions(defSubs);
