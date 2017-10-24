@@ -17,5 +17,6 @@ import "./let/endWith-spec";
 import "./let/guard-spec";
 import "./let/pluck-spec";
 import "./let/rateLimit-spec";
+import "./let/refCountAuditTime-spec";
 import "./let/takeWhileInclusive-spec";
 import "./let/throttleAfter-spec";
