@@ -16,6 +16,7 @@ import "./let/defaultObservableIfEmpty-spec";
 import "./let/endWith-spec";
 import "./let/guard-spec";
 import "./let/pluck-spec";
+import "./let/prioritize-spec";
 import "./let/rateLimit-spec";
 import "./let/refCountAuditTime-spec";
 import "./let/takeWhileInclusive-spec";
