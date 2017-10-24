@@ -32,21 +32,30 @@ export function refCountAuditTime<T>(
         const notifier = new Subject<number>();
         const controller = notifier.pipe(
             scan((acc, step) => acc + step, 0),
-            switchMap(count => (count === 0) ?
-                timer(duration, scheduler).pipe(
-                    tap(() => {
-                        subscription!.unsubscribe();
-                        subscription = null;
-                    })
-                ) :
-                never()
-            )
+            switchMap(count => {
+                switch (count) {
+                case 0:
+                    return timer(duration, scheduler).pipe(
+                        tap(() => {
+                            subscription!.unsubscribe();
+                            subscription = null;
+                        })
+                    );
+                case 1:
+                    return timer(0, scheduler).pipe(
+                        tap(() => {
+                            subscription!.add(connectable.connect());
+                        })
+                    );
+                default:
+                    return never();
+                }
+            })
         );
 
         return using(() => {
             if (subscription === null) {
                 subscription = controller.subscribe();
-                subscription.add(connectable.connect());
             }
             notifier.next(1);
             return { unsubscribe: () => notifier.next(-1) };

@@ -5,8 +5,11 @@
  */
 /*tslint:disable:no-unused-expression*/
 
+import { expect } from "chai";
+import { of } from "rxjs/observable/of";
 import { mergeMapTo } from "rxjs/operators/mergeMapTo";
 import { publish } from "rxjs/operators/publish";
+import { toArray } from "rxjs/operators/toArray";
 import { marbles } from "rxjs-marbles";
 import { refCountAuditTime } from "./refCountAuditTime";
 
@@ -122,4 +125,11 @@ describe("let/refCountAuditTime", () => {
         m.expect(subscriber3, unsub3).toBeObservable(expected3);
         m.expect(source).toHaveSubscriptions(sourceSubs);
     }));
+
+    it("should support synchronous sources", () => {
+
+        const source = of(1, 2, 3);
+        const published = source.pipe(publish(), refCountAuditTime(0), toArray());
+        return published.toPromise().then(value => expect(value).to.deep.equal([1, 2, 3]));
+    });
 });
