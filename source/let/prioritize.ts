@@ -19,7 +19,7 @@ export function prioritize<T, R>(
         const sharedSource = share<T>()(source);
         const connectableSource = publish<T>()(sharedSource) as ConnectableObservable<T>;
         const subscription = selector(sharedSource, connectableSource).subscribe(observer);
-        connectableSource.connect();
+        subscription.add(connectableSource.connect());
         return subscription;
     });
 }

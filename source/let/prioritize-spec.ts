@@ -14,9 +14,11 @@ import { bufferCount } from "rxjs/operators/bufferCount";
 import { concatMap } from "rxjs/operators/concatMap";
 import { filter } from "rxjs/operators/filter";
 import { mapTo } from "rxjs/operators/mapTo";
+import { mergeMapTo } from "rxjs/operators/mergeMapTo";
 import { toArray } from "rxjs/operators/toArray";
 import { window } from "rxjs/operators/window";
 import { async } from "rxjs/scheduler/async";
+import { marbles } from "rxjs-marbles";
 import { prioritize } from "./prioritize";
 
 describe("let/prioritize", () => {
@@ -51,4 +53,19 @@ describe("let/prioritize", () => {
             [["a", "a"], ["b", "b"], ["c", "c"], ["d", "d"], ["e", "e"], []]
         ));
     });
+
+    it("should unsubscribe from the source", marbles(m => {
+
+        const source =    m.cold(   "-1-2-3----4--");
+        const sourceSubs =       "   ^      !     ";
+
+        const result = source.pipe(prioritize(merge), filter(() => false));
+
+        const subscriber = m.hot("   a|           ").pipe(mergeMapTo(result));
+        const unsub  =           "          !     ";
+        const expected   =       "   --------     ";
+
+        m.expect(subscriber, unsub).toBeObservable(expected);
+        m.expect(source).toHaveSubscriptions(sourceSubs);
+    }));
 });
