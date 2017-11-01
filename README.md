@@ -77,6 +77,10 @@ A bunch of functions that can be passed to the `let` operator. Use them like thi
 
     Like [`takeWhile`](http://reactivex.io/rxjs/class/es6/Observable.js~Observable.html#instance-method-takeWhile), but the value that fails the predicate is taken.
 
+* [tapIndex](./source/operators/tagIndex.ts)
+
+    Like [`tap`](https://github.com/ReactiveX/rxjs/blob/5.5.2/src/operators/tap.ts#L54-L60), but it receives an index in addition to the emitted value. (Note that `tap` is the lettable/pipeable version of the `do` operator. It was renamed because `do` is a keyword.)
+
 * [throttleAfter](./source/let/throttleAfter.ts)
 
     Throttle the source observable, but only after the notifier emits a value.
