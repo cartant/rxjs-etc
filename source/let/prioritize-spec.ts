@@ -54,6 +54,24 @@ describe("let/prioritize", () => {
         ));
     });
 
+    it("should support synchronous sources", () => {
+
+        const source = from("aabbccddee");
+        const result = source.pipe(
+            prioritize((first, second) => second.pipe(
+                window(first.pipe(
+                    bufferCount(2, 1),
+                    filter(([previous, current]) => current !== previous)
+                )),
+                concatMap(w => w.pipe(toArray())),
+                toArray()
+            ))
+        );
+        return result.toPromise().then(value => expect(value).to.deep.equal(
+            [["a", "a"], ["b", "b"], ["c", "c"], ["d", "d"], ["e", "e"], []]
+        ));
+    });
+
     it("should unsubscribe from the source", marbles(m => {
 
         const source =    m.cold(   "-1-2-3----4--");

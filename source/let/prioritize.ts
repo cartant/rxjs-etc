@@ -9,6 +9,7 @@ import { Observer } from "rxjs/Observer";
 import { ConnectableObservable } from "rxjs/observable/ConnectableObservable";
 import { publish } from "rxjs/operators/publish";
 import { share } from "rxjs/operators/share";
+import { Subject } from "rxjs/Subject";
 
 export function prioritize<T, R>(
     selector: (prioritized: Observable<T>, deprioritized: Observable<T>) => Observable<T | R>
@@ -16,9 +17,11 @@ export function prioritize<T, R>(
 
     return (source: Observable<T>) => Observable.create((observer: Observer<T | R>) => {
 
-        const sharedSource = share<T>()(source);
-        const connectableSource = publish<T>()(sharedSource) as ConnectableObservable<T>;
-        const subscription = selector(sharedSource, connectableSource).subscribe(observer);
+        const connectableSource = publish<T>()(source) as ConnectableObservable<T>;
+        const prioritySource = new Subject<T>();
+        const prioritySubscription = connectableSource.subscribe(prioritySource);
+        const subscription = selector(prioritySource, connectableSource).subscribe(observer);
+        subscription.add(prioritySubscription);
         subscription.add(connectableSource.connect());
         return subscription;
     });
