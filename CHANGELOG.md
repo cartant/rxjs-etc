@@ -1,3 +1,10 @@
+<a name="3.1.1"></a>
+## [3.1.1](https://github.com/cartant/rxjs-etc/compare/v3.1.0...v3.1.1) (2017-11-29)
+
+### Bug Fixes
+
+* **prioritize**: Support synchronous sources. ([a5f09b4](https://github.com/cartant/rxjs-etc/commit/a5f09b4))
+
 <a name="3.1.0"></a>
 ## [3.1.0](https://github.com/cartant/rxjs-etc/compare/v3.0.0...v3.1.0) (2017-10-22)
 
