@@ -8,7 +8,6 @@ import { Observable } from "rxjs/Observable";
 import { Observer } from "rxjs/Observer";
 import { ConnectableObservable } from "rxjs/observable/ConnectableObservable";
 import { publish } from "rxjs/operators/publish";
-import { share } from "rxjs/operators/share";
 import { Subject } from "rxjs/Subject";
 
 export function prioritize<T, R>(
