@@ -48,7 +48,7 @@ export function refCountAuditTime<T>(
                         })
                     );
                 default:
-                    return never();
+                    return never<number>();
                 }
             })
         );
