@@ -62,7 +62,7 @@
     "test:build": "yarn run test:clean && tsc -p tsconfig.json && node scripts/bundle-test.js",
     "test:clean": "rimraf build && rimraf bundles/rxjs-etc-test.* && mkdirp bundles"
   },
-  "typings": "./dist/index.d.ts",
+  "types": "./dist/index.d.ts",
   "unpkg": "./bundles/rxjs-etc.min.umd.js",
   "version": "3.1.1"
 }

@@ -5,6 +5,6 @@
   "module": "./index.js",
   "private": false,
   "scripts": {},
-  "typings": "./index.d.ts",
+  "types": "./index.d.ts",
   "unpkg": "./bundles/rxjs-etc.min.umd.js"
 }
