@@ -25,6 +25,9 @@ export function refCountAuditTime<T>(
 
         // This implementation is based upon:
         // https://medium.com/@volkeron/rxjs-unsubscribe-delay-218a9ab2672e
+        //
+        // Which was based upon:
+        // https://github.com/ReactiveX/rxjs/issues/171#issuecomment-131218605
 
         const connectable: ConnectableObservable<T> = source as any;
         let subscription: Subscription | null = null;
