@@ -21,7 +21,7 @@
     "karma-spec-reporter": "^0.0.32",
     "mkdirp": "^0.5.1",
     "mocha": "^4.0.0",
-    "puppeteer": "^0.13.0",
+    "puppeteer": "^1.0.0",
     "rimraf": "^2.6.1",
     "rxjs": "^5.5.0",
     "rxjs-marbles": "^2.0.0",
