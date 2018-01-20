@@ -22,4 +22,17 @@ describe("let/pluck", () => {
         m.expect(destination).toBeObservable(expected);
         m.expect(source).toHaveSubscriptions(subs);
     }));
+
+    it("should pluck the specified nested key", marbles((m) => {
+
+        interface Letters { a: { b: { c: { d: { e: { f: string } } } } }; }
+
+        const source =  m.cold<Letters>("-t-|", { t: { a: { b: { c: { d: { e: { f: "F" } } } } } } });
+        const subs =                    "^--!";
+        const expected = m.cold<string>("-f-|", { f: "F" });
+
+        const destination = source.pipe(pluck("a", "b", "c", "d", "e", "f"));
+        m.expect(destination).toBeObservable(expected);
+        m.expect(source).toHaveSubscriptions(subs);
+    }));
 });
