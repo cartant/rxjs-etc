@@ -37,6 +37,10 @@ npm install rxjs-etc --save
 
     To see how these methods behave, consult their tests.
 
+* [forkJoinConcurrent](./source/observable/forkJoinConcurrent.ts)
+
+    Like `forkJoin` but only runs the specified number of observables concurrently.
+
 * [zipPadded](./source/observable/zipPadded.ts)
 
     Works like `zipArray`, but if some sources complete whilst others continue to emit values, those the complete are 'padded' with the specified `padValue` (which defaults to `undefined`).
