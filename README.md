@@ -73,6 +73,10 @@ A bunch of functions that can be passed to the `let` operator. Use them like thi
 
     A rate limiter with pass through when waiting is not necessary.
 
+* [refCountAuditTime](./source/let/refCountAuditTime.ts)
+
+    Can be used with a `ConnectableObservable` instead of `refCount`. Works kinda like [`auditTime`](http://reactivex.io/rxjs/class/es6/Observable.js~Observable.html#instance-method-auditTime) does for values, but for unsubscriptions instead. That is, when the reference count drops to zero, it waits the specified duration and then if the reference count is zero, it unsubscribes. If the reference count is incremented within the duration, no unsubscription occurs.
+
 * [reschedule](./source/let/reschedule.ts)
 
     Emits values using the specified scheduler.
