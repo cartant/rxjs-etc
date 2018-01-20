@@ -67,7 +67,7 @@ A bunch of functions that can be passed to the `let` operator. Use them like thi
 
 * [pluck](./source/let/pluck.ts)
 
-    Like [`pluck`](http://reactivex.io/rxjs/class/es6/Observable.js~Observable.html#instance-method-pluck), but it's type-safe and only lets you pass a single, valid key. And it returns the appropriate type.
+    Like [`pluck`](http://reactivex.io/rxjs/class/es6/Observable.js~Observable.html#instance-method-pluck), but it's type-safe and only lets you valid keys. And it returns the appropriate type.
 
 * [rateLimit](./source/let/rateLimit.ts)
 
