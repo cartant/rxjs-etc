@@ -73,6 +73,10 @@ A bunch of functions that can be passed to the `let` operator. Use them like thi
 
     A rate limiter with pass through when waiting is not necessary.
 
+* [reschedule](./source/let/reschedule.ts)
+
+    Emits values using the specified scheduler.
+
 * [takeWhileInclusive](./source/let/takeWhileInclusive.ts)
 
     Like [`takeWhile`](http://reactivex.io/rxjs/class/es6/Observable.js~Observable.html#instance-method-takeWhile), but the value that fails the predicate is taken.
