@@ -10,3 +10,4 @@ export * from "./forkJoinArray";
 export * from "./fromIterable";
 export * from "./mergeArray";
 export * from "./zipArray";
+export * from "./zipPadded";

@@ -37,6 +37,10 @@ npm install rxjs-etc --save
 
     To see how these methods behave, consult their tests.
 
+* [zipPadded](./source/observable/zipPadded.ts)
+
+    Works like `zipArray`, but if some sources complete whilst others continue to emit values, those the complete are 'padded' with the specified `padValue` (which defaults to `undefined`).
+
 ### Instance methods for `Observable`
 
 * [doIndex](./source/operator/doIndex.ts)
