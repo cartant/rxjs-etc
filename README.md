@@ -49,6 +49,10 @@ A bunch of functions that can be passed to the `let` operator. Use them like thi
 
     source.let(endWith("this is the end"))
 
+They can also be used with `pipe`, like this:
+
+    source.pipe(endWith("this is the end"))
+
 * [debounceAfter](./source/let/debounceAfter.ts)
 
     Debounce the source observable, but only after the notifier emits a value.
