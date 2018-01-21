@@ -39,18 +39,14 @@ export function refCountAuditTime<T>(
             switchMap(count => {
                 switch (count) {
                 case 0:
-                    return timer(duration, scheduler).pipe(
-                        tap(() => {
-                            subscription!.unsubscribe();
-                            subscription = null;
-                        })
-                    );
+                    return timer(duration, scheduler).pipe(tap(() => {
+                        subscription!.unsubscribe();
+                        subscription = null;
+                    }));
                 case 1:
-                    return timer(0, scheduler).pipe(
-                        tap(() => {
-                            subscription!.add(connectable.connect());
-                        })
-                    );
+                    return timer(0, scheduler).pipe(tap(() => {
+                        subscription!.add(connectable.connect());
+                    }));
                 default:
                     return never<number>();
                 }
