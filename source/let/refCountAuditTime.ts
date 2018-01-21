@@ -33,8 +33,8 @@ export function refCountAuditTime<T>(
         let subscription: Subscription | null = null;
 
         const notifier = new Subject<number>();
-        const controller = notifier.pipe(
-            scan((acc, step) => acc + step, 0),
+        const connector = notifier.pipe(
+            scan((count, step) => count + step, 0),
             switchMap(count => {
                 switch (count) {
                 case 0:
@@ -58,7 +58,7 @@ export function refCountAuditTime<T>(
 
         return using(() => {
             if (subscription === null) {
-                subscription = controller.subscribe();
+                subscription = connector.subscribe();
             }
             notifier.next(1);
             return { unsubscribe: () => notifier.next(-1) };
