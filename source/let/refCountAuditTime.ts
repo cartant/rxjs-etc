@@ -28,6 +28,7 @@ export function refCountAuditTime<T>(
         //
         // Which was based upon:
         // https://github.com/ReactiveX/rxjs/issues/171#issuecomment-131218605
+        // https://github.com/ReactiveX/rxjs/issues/171#issuecomment-267881847
 
         const connectable: ConnectableObservable<T> = source as any;
         let subscription: Subscription | null = null;
