@@ -81,6 +81,10 @@ They can also be used with `pipe`, like this:
 
     Like [`pluck`](http://reactivex.io/rxjs/class/es6/Observable.js~Observable.html#instance-method-pluck), but it's type-safe and only lets you valid keys. And it returns the appropriate type.
 
+* [prioritize](./source/let/prioritize.ts)
+
+    When creating signals from a source observable - for use with operators that take a notifier, like `buffer` and `window` - the order in which subscriptions are made is important. `prioritize` can be used to ensure that the notifier subscribes to the source first.
+
 * [rateLimit](./source/let/rateLimit.ts)
 
     A rate limiter with pass through when waiting is not necessary.
