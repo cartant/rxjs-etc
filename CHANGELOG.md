@@ -1,3 +1,13 @@
+<a name="3.2.0"></a>
+## [3.2.0](https://github.com/cartant/rxjs-etc/compare/v3.1.1...v3.2.0) (2018-01-28)
+
+### Features
+
+* **pluck**: Support nested keys. ([04d1766](https://github.com/cartant/rxjs-etc/commit/04d1766))
+* **reschedule**: Force notifications to be emitted using a specifed scheduler. ([97a583e](https://github.com/cartant/rxjs-etc/commit/97a583e))
+* **zipPadded**: Pads observables that complete whilst others continue to emit. ([d671b95](https://github.com/cartant/rxjs-etc/commit/d671b95))
+* **forkJoinConcurrent**: Like `forkJoin`, but with a maximum concurrency. ([026f0ed](https://github.com/cartant/rxjs-etc/commit/026f0ed))
+
 <a name="3.1.1"></a>
 ## [3.1.1](https://github.com/cartant/rxjs-etc/compare/v3.1.0...v3.1.1) (2017-11-29)
 
