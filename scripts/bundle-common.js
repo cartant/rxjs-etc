@@ -21,6 +21,7 @@ const shims = {
     "rxjs/observable/forkJoin": "Rx.Observable",
     "rxjs/observable/merge": "Rx.Observable",
     "rxjs/observable/of": "Rx.Observable",
+    "rxjs/observable/using": "Rx.Observable",
     "rxjs/observable/zip": "Rx.Observable",
     "rxjs/operator/let": "Rx.Observable.prototype",
     "rxjs/operators/concat": "Rx.operators",
@@ -31,12 +32,14 @@ const shims = {
     "rxjs/operators/do": "Rx.operators",
     "rxjs/operators/filter": "Rx.operators",
     "rxjs/operators/isEmpty": "Rx.operators",
+    "rxjs/operators/last": "Rx.operators",
     "rxjs/operators/map": "Rx.operators",
     "rxjs/operators/mapTo": "Rx.operators",
     "rxjs/operators/materialize": "Rx.operators",
     "rxjs/operators/merge": "Rx.operators",
     "rxjs/operators/mergeMap": "Rx.operators",
     "rxjs/operators/multicast": "Rx.operators",
+    "rxjs/operators/pluck": "Rx.operators",
     "rxjs/operators/publish": "Rx.operators",
     "rxjs/operators/scan": "Rx.operators",
     "rxjs/operators/startWith": "Rx.operators",
@@ -74,6 +77,6 @@ function verify(path) {
 
     const content = fs.readFileSync(path).toString();
     if (/require\s*\(\s*['"]rxjs/.test(content)) {
-        throw new Error(`Found an unshimmed require in ${path}`);
+        throw new Error(`Found an unshimmed require in ${path}.\nTo find the offending import, search in the bundle for "rxjs/".`);
     }
 }
