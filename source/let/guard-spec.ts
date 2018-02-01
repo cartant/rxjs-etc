@@ -15,7 +15,7 @@ describe("let/guard", () => {
 
         const source =   m.cold("-a-b-c-|", values);
         const subs =            "^------!";
-        const expected = m.cold("-a-b-c-|", values);
+        const expected = m.cold<any>("-a-b-c-|", values);
 
         const destination = source.pipe(guard((value): value is number => typeof value === "number"));
         m.expect(destination).toBeObservable(expected);
@@ -28,7 +28,7 @@ describe("let/guard", () => {
 
         const source =   m.cold("-a-b-c-|", values);
         const subs =            "^----!";
-        const expected = m.cold("-a-b-#", values, new Error("Guard rejection."));
+        const expected = m.cold<any>("-a-b-#", values, new Error("Guard rejection."));
 
         const destination = source.pipe(guard((value): value is number => typeof value === "number"));
         m.expect(destination).toBeObservable(expected);
@@ -42,7 +42,7 @@ describe("let/guard", () => {
 
         const source =   m.cold("-a-b-c-|", values);
         const subs =            "^----!";
-        const expected = m.cold("-a-b-#", values, new Error(message));
+        const expected = m.cold<any>("-a-b-#", values, new Error(message));
 
         const destination = source.pipe(guard(
             (value): value is number => typeof value === "number",
