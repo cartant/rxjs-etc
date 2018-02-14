@@ -1,3 +1,12 @@
+<a name="4.0.0"></a>
+## [4.0.0](https://github.com/cartant/rxjs-etc/compare/v3.3.0...v4.0.0) (2018-02-14)
+
+### Breaking Changes
+
+* The distribution now includes CommonJS, ES5 and ES2015 versions of the package.
+* The `jsnext:main` entry point has been removed from the `package.json` and an `es2015` entry point has been added for the ES2015 files.
+* The `let` directory has been renamed to `operators`.
+
 <a name="3.3.0"></a>
 ## [3.3.0](https://github.com/cartant/rxjs-etc/compare/v3.2.0...v3.3.0) (2018-02-14)
 
