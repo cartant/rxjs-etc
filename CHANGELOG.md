@@ -1,3 +1,10 @@
+<a name="3.3.0"></a>
+## [3.3.0](https://github.com/cartant/rxjs-etc/compare/v3.2.0...v3.3.0) (2018-02-14)
+
+### Features
+
+* **debounceTimeSubsequent**: Add `debounceTimeSubsequent` for situations in which the first notification should not be debounced. ([1d771c9](https://github.com/cartant/rxjs-etc/commit/1d771c9))
+
 <a name="3.2.0"></a>
 ## [3.2.0](https://github.com/cartant/rxjs-etc/compare/v3.1.1...v3.2.0) (2018-01-28)
 

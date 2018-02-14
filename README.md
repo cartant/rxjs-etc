@@ -66,6 +66,10 @@ They can also be used with `pipe`, like this:
 
     Debounce the source observable, but only after the notifier emits a value.
 
+* [debounceTimeSubsequent](./source/let/debounceTimeSubsequent.ts)
+
+    Debounce the source observable, but don't debounce the first notification - only the subsequent notifications.
+
 * [defaultObservableIfEmpty](./source/let/defaultObservableIfEmpty.ts)
 
     Like [`defaultIfEmpty`](http://reactivex.io/rxjs/class/es6/Observable.js~Observable.html#instance-method-defaultIfEmpty), but it takes a default observable instead of a default value.
