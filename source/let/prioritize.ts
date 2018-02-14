@@ -8,6 +8,7 @@ import { Observer } from "rxjs/Observer";
 import { ConnectableObservable } from "rxjs/observable/ConnectableObservable";
 import { publish } from "rxjs/operators/publish";
 import { Subject } from "rxjs/Subject";
+import { Subscription } from "rxjs/Subscription";
 
 export function prioritize<T, R>(
     selector: (prioritized: Observable<T>, deprioritized: Observable<T>) => Observable<T | R>
@@ -17,9 +18,9 @@ export function prioritize<T, R>(
 
         const publishedSource = publish<T>()(source) as ConnectableObservable<T>;
         const prioritizedSource = new Subject<T>();
-        const prioritizedSubscription = publishedSource.subscribe(prioritizedSource);
-        const subscription = selector(prioritizedSource, publishedSource).subscribe(observer);
-        subscription.add(prioritizedSubscription);
+        const subscription = new Subscription();
+        subscription.add(publishedSource.subscribe(prioritizedSource));
+        subscription.add(selector(prioritizedSource, publishedSource).subscribe(observer));
         subscription.add(publishedSource.connect());
         return subscription;
     });
