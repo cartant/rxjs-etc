@@ -15,12 +15,12 @@ export function prioritize<T, R>(
 
     return (source: Observable<T>) => Observable.create((observer: Observer<T | R>) => {
 
-        const connectableSource = publish<T>()(source) as ConnectableObservable<T>;
-        const prioritySource = new Subject<T>();
-        const prioritySubscription = connectableSource.subscribe(prioritySource);
-        const subscription = selector(prioritySource, connectableSource).subscribe(observer);
-        subscription.add(prioritySubscription);
-        subscription.add(connectableSource.connect());
+        const publishedSource = publish<T>()(source) as ConnectableObservable<T>;
+        const prioritizedSource = new Subject<T>();
+        const prioritizedSubscription = publishedSource.subscribe(prioritizedSource);
+        const subscription = selector(prioritizedSource, publishedSource).subscribe(observer);
+        subscription.add(prioritizedSubscription);
+        subscription.add(publishedSource.connect());
         return subscription;
     });
 }
