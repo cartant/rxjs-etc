@@ -4,6 +4,7 @@
  */
 
 export * from "./debounceAfter";
+export * from "./debounceTimeSubsequent";
 export * from "./defaultObservableIfEmpty";
 export * from "./endWith";
 export * from "./guard";

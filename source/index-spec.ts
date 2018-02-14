@@ -11,6 +11,7 @@ import "./add/observable/mergeArray-spec";
 import "./add/observable/zipArray-spec";
 import "./add/operator/doIndex-spec";
 import "./let/debounceAfter-spec";
+import "./let/debounceTimeSubsequent-spec";
 import "./let/defaultObservableIfEmpty-spec";
 import "./let/endWith-spec";
 import "./let/guard-spec";
