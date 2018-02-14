@@ -7,7 +7,7 @@
 import { marbles } from "rxjs-marbles";
 import { pluck } from "./pluck";
 
-describe("let/pluck", () => {
+describe("pluck", () => {
 
     it("should pluck the specified key", marbles((m) => {
 

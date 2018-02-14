@@ -7,7 +7,7 @@
 import { marbles } from "rxjs-marbles";
 import { debounceTimeSubsequent } from "./debounceTimeSubsequent";
 
-describe("let/debounceTimeSubsequent", () => {
+describe("debounceTimeSubsequent", () => {
 
     it("should debounce only subsequent notifications", marbles((m) => {
 

@@ -9,7 +9,7 @@ import { asap } from "rxjs/scheduler/asap";
 import { marbles } from "rxjs-marbles";
 import { reschedule } from "./reschedule";
 
-describe("let/reschedule", () => {
+describe("reschedule", () => {
 
     it("should reschedule to emit using the specified scheduler", marbles((m) => {
 

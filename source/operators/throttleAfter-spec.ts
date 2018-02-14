@@ -7,7 +7,7 @@
 import { marbles } from "rxjs-marbles";
 import { throttleAfter } from "./throttleAfter";
 
-describe("let/throttleAfter", () => {
+describe("throttleAfter", () => {
 
     it("should throttle after the notifier emits", marbles((m) => {
 

@@ -7,7 +7,7 @@
 import { marbles } from "rxjs-marbles";
 import { debounceAfter } from "./debounceAfter";
 
-describe("let/debounceAfter", () => {
+describe("debounceAfter", () => {
 
     it("should debounce after the notifier emits", marbles((m) => {
 

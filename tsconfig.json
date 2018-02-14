@@ -1,11 +1,11 @@
 {
   "compilerOptions": {
     "declaration": false,
-    "importHelpers": true,
-    "lib": ["dom", "es2015"],
+    "importHelpers": false,
+    "lib": ["es2015"],
     "module": "commonjs",
     "moduleResolution": "node",
-    "noEmitHelpers": true,
+    "noEmitHelpers": false,
     "noImplicitAny": true,
     "outDir": "build",
     "removeComments": true,
@@ -13,7 +13,7 @@
     "sourceMap": false,
     "strict": true,
     "suppressImplicitAnyIndexErrors": true,
-    "target": "es5"
+    "target": "es2015"
   },
   "exclude": [],
   "include": [

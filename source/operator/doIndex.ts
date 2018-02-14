@@ -6,7 +6,7 @@
 /*tslint:disable:no-use-before-declare*/
 
 import { Observable } from "rxjs/Observable";
-import { tapIndex as higherOrder } from "../let/tapIndex";
+import { tapIndex as higherOrder } from "../operators/tapIndex";
 
 export function doIndex<T>(
     this: Observable<T>,

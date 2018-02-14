@@ -7,7 +7,7 @@
 import { marbles } from "rxjs-marbles";
 import { endWith } from "./endWith";
 
-describe("let/endWith", () => {
+describe("endWith", () => {
 
     it("should end an observable with a single value", marbles((m) => {
 

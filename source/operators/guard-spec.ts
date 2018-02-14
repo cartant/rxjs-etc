@@ -7,7 +7,7 @@
 import { marbles } from "rxjs-marbles";
 import { guard } from "./guard";
 
-describe("let/guard", () => {
+describe("guard", () => {
 
     it("should not reject values that pass the guard", marbles((m) => {
 

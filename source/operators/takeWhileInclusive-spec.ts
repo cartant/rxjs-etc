@@ -7,7 +7,7 @@
 import { marbles } from "rxjs-marbles";
 import { takeWhileInclusive } from "./takeWhileInclusive";
 
-describe("let/takeWhileInclusive", () => {
+describe("takeWhileInclusive", () => {
 
     it("should take the value that fails the predicate", marbles((m) => {
 

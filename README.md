@@ -52,7 +52,7 @@ npm install rxjs-etc --save
 
     Like [`do`](http://reactivex.io/rxjs/class/es6/Observable.js~Observable.html#instance-method-do), but it receives an index in addition to the emitted value.
 
-### Functions for use with `let`
+### Functions for use with `pipe` or `let`
 
 A bunch of functions that can be passed to the `let` operator. Use them like this:
 
@@ -62,47 +62,47 @@ They can also be used with `pipe`, like this:
 
     source.pipe(endWith("this is the end"))
 
-* [debounceAfter](./source/let/debounceAfter.ts)
+* [debounceAfter](./source/operators/debounceAfter.ts)
 
     Debounce the source observable, but only after the notifier emits a value.
 
-* [debounceTimeSubsequent](./source/let/debounceTimeSubsequent.ts)
+* [debounceTimeSubsequent](./source/operators/debounceTimeSubsequent.ts)
 
     Debounce the source observable, but don't debounce the first notification - only the subsequent notifications.
 
-* [defaultObservableIfEmpty](./source/let/defaultObservableIfEmpty.ts)
+* [defaultObservableIfEmpty](./source/operators/defaultObservableIfEmpty.ts)
 
     Like [`defaultIfEmpty`](http://reactivex.io/rxjs/class/es6/Observable.js~Observable.html#instance-method-defaultIfEmpty), but it takes a default observable instead of a default value.
 
-* [endWith](./source/let/endWith.ts)
+* [endWith](./source/operators/endWith.ts)
 
     Like [`startWith`](http://reactivex.io/rxjs/class/es6/Observable.js~Observable.html#instance-method-startWith), but for the other end.
 
-* [guard](./source/let/guard.ts)
+* [guard](./source/operators/guard.ts)
 
     Applies the specified TypeScript guard to change the source observable's type and perform a runtime check. Emits an error notification if the guard rejects a value.
 
-* [pluck](./source/let/pluck.ts)
+* [pluck](./source/operators/pluck.ts)
 
     Like [`pluck`](http://reactivex.io/rxjs/class/es6/Observable.js~Observable.html#instance-method-pluck), but it's type-safe and only lets you valid keys. And it returns the appropriate type.
 
-* [prioritize](./source/let/prioritize.ts)
+* [prioritize](./source/operators/prioritize.ts)
 
     When creating signals from a source observable - for use with operators that take a notifier, like `buffer` and `window` - the order in which subscriptions are made is important. `prioritize` can be used to ensure that the notifier subscribes to the source first.
 
-* [rateLimit](./source/let/rateLimit.ts)
+* [rateLimit](./source/operators/rateLimit.ts)
 
     A rate limiter with pass through when waiting is not necessary.
 
-* [refCountAuditTime](./source/let/refCountAuditTime.ts)
+* [refCountAuditTime](./source/operators/refCountAuditTime.ts)
 
     Can be used with a `ConnectableObservable` instead of `refCount`. Works kinda like [`auditTime`](http://reactivex.io/rxjs/class/es6/Observable.js~Observable.html#instance-method-auditTime) does for values, but for unsubscriptions instead. That is, when the reference count drops to zero, it waits the specified duration and then if the reference count is zero, it unsubscribes. If the reference count is incremented within the duration, no unsubscription occurs.
 
-* [reschedule](./source/let/reschedule.ts)
+* [reschedule](./source/operators/reschedule.ts)
 
     Emits values using the specified scheduler.
 
-* [takeWhileInclusive](./source/let/takeWhileInclusive.ts)
+* [takeWhileInclusive](./source/operators/takeWhileInclusive.ts)
 
     Like [`takeWhile`](http://reactivex.io/rxjs/class/es6/Observable.js~Observable.html#instance-method-takeWhile), but the value that fails the predicate is taken.
 
@@ -110,7 +110,7 @@ They can also be used with `pipe`, like this:
 
     Like [`tap`](https://github.com/ReactiveX/rxjs/blob/5.5.2/src/operators/tap.ts#L54-L60), but it receives an index in addition to the emitted value. (Note that `tap` is the lettable/pipeable version of the `do` operator. It was renamed because `do` is a keyword.)
 
-* [throttleAfter](./source/let/throttleAfter.ts)
+* [throttleAfter](./source/operators/throttleAfter.ts)
 
     Throttle the source observable, but only after the notifier emits a value.
 

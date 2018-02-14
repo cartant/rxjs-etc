@@ -7,7 +7,7 @@
 import { marbles } from "rxjs-marbles";
 import { rateLimit } from "./rateLimit";
 
-describe("let/rateLimit", () => {
+describe("rateLimit", () => {
 
     it("should emit synchronous pass-though values immediately", marbles((m) => {
 

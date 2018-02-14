@@ -7,7 +7,7 @@
 import { marbles } from "rxjs-marbles";
 import { defaultObservableIfEmpty } from "./defaultObservableIfEmpty";
 
-describe("let/defaultObservableIfEmpty", () => {
+describe("defaultObservableIfEmpty", () => {
 
     it("should return the source if not empty", marbles((m) => {
 

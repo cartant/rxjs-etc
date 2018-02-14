@@ -32,15 +32,15 @@
     "typescript": "~2.7.1",
     "uglify-js": "^3.0.10"
   },
+  "es2015": "./dist/esm2015/index.js",
   "homepage": "https://github.com/cartant/rxjs-etc",
-  "jsnext:main": "./dist/index.js",
   "keywords": [
     "observable",
     "rxjs"
   ],
   "license": "MIT",
-  "main": "./bundles/rxjs-etc.umd.js",
-  "module": "./dist/index.js",
+  "main": "./dist/index.js",
+  "module": "./dist/esm5/index.js",
   "name": "rxjs-etc",
   "optionalDependencies": {},
   "peerDependencies": {
@@ -53,7 +53,10 @@
   },
   "scripts": {
     "dist": "yarn run dist:build && yarn run dist:uglify && yarn run dist:copy",
-    "dist:build": "yarn run dist:clean && tsc -p tsconfig-dist.json && node scripts/bundle-dist.js",
+    "dist:build": "yarn run dist:clean && yarn run dist:build:cjs && yarn run dist:build:esm2015 && yarn run dist:build:esm5 && node scripts/bundle-dist.js",
+    "dist:build:cjs": "tsc -p tsconfig-dist-cjs.json",
+    "dist:build:esm2015": "tsc -p tsconfig-dist-esm2015.json",
+    "dist:build:esm5": "tsc -p tsconfig-dist-esm5.json",
     "dist:clean": "rimraf dist && rimraf bundles/rxjs-etc.* && mkdirp bundles",
     "dist:copy": "node scripts/pack.js && cpy bundles/rxjs-etc.* dist/bundles/ && cpy CHANGELOG.md LICENSE README.md dist/",
     "dist:uglify": "uglifyjs -c --comments /license/ -m -o bundles/rxjs-etc.min.umd.js bundles/rxjs-etc.umd.js",

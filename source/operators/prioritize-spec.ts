@@ -20,7 +20,7 @@ import { async } from "rxjs/scheduler/async";
 import { marbles } from "rxjs-marbles";
 import { prioritize } from "./prioritize";
 
-describe("let/prioritize", () => {
+describe("prioritize", () => {
 
     it("should control the subscription order", () => {
 

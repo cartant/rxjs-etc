@@ -1,8 +1,8 @@
 {
   "devDependencies": {},
-  "jsnext:main": "./index.js",
-  "main": "./bundles/rxjs-etc.umd.js",
-  "module": "./index.js",
+  "es2015": "./esm2015/index.js",
+  "main": "./index.js",
+  "module": "./esm5/index.js",
   "private": false,
   "scripts": {},
   "types": "./index.d.ts",

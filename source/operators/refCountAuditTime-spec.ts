@@ -12,7 +12,7 @@ import { toArray } from "rxjs/operators/toArray";
 import { marbles } from "rxjs-marbles";
 import { refCountAuditTime } from "./refCountAuditTime";
 
-describe("let/refCountAuditTime", () => {
+describe("refCountAuditTime", () => {
 
     it("should multicast to multiple observers and complete", marbles(m => {
 
