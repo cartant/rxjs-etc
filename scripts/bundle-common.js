@@ -26,6 +26,7 @@ const shims = {
     "rxjs/operator/let": "Rx.Observable.prototype",
     "rxjs/operators/concat": "Rx.operators",
     "rxjs/operators/concatMap": "Rx.operators",
+    "rxjs/operators/debounceTime": "Rx.operators",
     "rxjs/operators/delay": "Rx.operators",
     "rxjs/operators/dematerialize": "Rx.operators",
     "rxjs/operators/distinctUntilChanged": "Rx.operators",
