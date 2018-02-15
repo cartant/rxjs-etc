@@ -20,7 +20,9 @@ const shims = {
     "rxjs/observable/from": "Rx.Observable",
     "rxjs/observable/forkJoin": "Rx.Observable",
     "rxjs/observable/merge": "Rx.Observable",
+    "rxjs/observable/never": "Rx.Observable",
     "rxjs/observable/of": "Rx.Observable",
+    "rxjs/observable/timer": "Rx.Observable",
     "rxjs/observable/using": "Rx.Observable",
     "rxjs/observable/zip": "Rx.Observable",
     "rxjs/operator/let": "Rx.Observable.prototype",
@@ -49,12 +51,14 @@ const shims = {
     "rxjs/operators/takeLast": "Rx.operators",
     "rxjs/operators/takeUntil": "Rx.operators",
     "rxjs/operators/takeWhile": "Rx.operators",
+    "rxjs/operators/tap": "Rx.operators",
     "rxjs/operators/toArray": "Rx.operators",
     "rxjs/operators/toPromise": "Rx.operators",
     "rxjs/ReplaySubject": "Rx",
     "rxjs/scheduler/asap": "Rx.Scheduler",
     "rxjs/Subject": "Rx",
     "rxjs/Subscriber": "Rx",
+    "rxjs/Subscription": "Rx",
     "rxjs/symbol/rxSubscriber": "Rx.Symbol"
 };
 

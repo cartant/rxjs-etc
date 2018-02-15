@@ -17,8 +17,8 @@ describe("throttleAfter", () => {
         const notifierSubs =    "^-------------------!";
         const expected = m.cold("ab-c----e--------h--|");
 
-        const period = m.time("----|");
-        const destination = source.pipe(throttleAfter(notifier, period, m.scheduler));
+        const duration = m.time("----|");
+        const destination = source.pipe(throttleAfter(notifier, duration, m.scheduler));
         m.expect(destination).toBeObservable(expected);
         m.expect(source).toHaveSubscriptions(sourceSubs);
         m.expect(notifier).toHaveSubscriptions(notifierSubs);

@@ -19,5 +19,6 @@ import "./operators/pluck-spec";
 import "./operators/prioritize-spec";
 import "./operators/rateLimit-spec";
 import "./operators/refCountAuditTime-spec";
+import "./operators/subsequent-spec";
 import "./operators/takeWhileInclusive-spec";
 import "./operators/throttleAfter-spec";

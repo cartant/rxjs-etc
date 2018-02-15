@@ -11,16 +11,16 @@ import { Subject } from "rxjs/Subject";
 import { Subscription } from "rxjs/Subscription";
 
 export function prioritize<T, R>(
-    selector: (prioritized: Observable<T>, deprioritized: Observable<T>) => Observable<T | R>
-): (source: Observable<T>) => Observable<T | R>;
+    selector: (prioritized: Observable<T>, deprioritized: Observable<T>) => Observable<R>
+): (source: Observable<T>) => Observable<R>;
 
 export function prioritize<T>(
     selector: (prioritized: Observable<T>, deprioritized: Observable<T>) => Observable<T>
 ): (source: Observable<T>) => Observable<T>;
 
 export function prioritize<T, R>(
-    selector: (prioritized: Observable<T>, deprioritized: Observable<T>) => Observable<T | R>
-): (source: Observable<T>) => Observable<T | R> {
+    selector: (prioritized: Observable<T>, deprioritized: Observable<T>) => Observable<R>
+): (source: Observable<T>) => Observable<R> {
 
     return (source: Observable<T>) => Observable.create((observer: Observer<T | R>) => {
 

@@ -17,8 +17,8 @@ describe("debounceAfter", () => {
         const notifierSubs =    "^-------------------!";
         const expected = m.cold("ab----d-------f-gh--|");
 
-        const period = m.time("----|");
-        const destination = source.pipe(debounceAfter(notifier, period, m.scheduler));
+        const duration = m.time("----|");
+        const destination = source.pipe(debounceAfter(notifier, duration, m.scheduler));
         m.expect(destination).toBeObservable(expected);
         m.expect(source).toHaveSubscriptions(sourceSubs);
         m.expect(notifier).toHaveSubscriptions(notifierSubs);

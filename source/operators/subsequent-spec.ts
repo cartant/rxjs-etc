@@ -4,10 +4,11 @@
  */
 /*tslint:disable:no-unused-expression*/
 
+import { debounceTime } from "rxjs/operators/debounceTime";
 import { marbles } from "rxjs-marbles";
-import { debounceTimeSubsequent } from "./debounceTimeSubsequent";
+import { subsequent } from "./subsequent";
 
-describe("debounceTimeSubsequent", () => {
+describe("subsequent", () => {
 
     it("should debounce only subsequent notifications", marbles((m) => {
 
@@ -16,7 +17,7 @@ describe("debounceTimeSubsequent", () => {
         const expected = m.cold("a------d----f-|");
 
         const duration = m.time("---|");
-        const destination = source.pipe(debounceTimeSubsequent(duration, m.scheduler));
+        const destination = source.pipe(subsequent(s => s.pipe(debounceTime(duration, m.scheduler))));
         m.expect(destination).toBeObservable(expected);
         m.expect(source).toHaveSubscriptions(sourceSubs);
     }));
@@ -28,7 +29,7 @@ describe("debounceTimeSubsequent", () => {
         const expected = m.cold("ab-----d----f-|");
 
         const duration = m.time("---|");
-        const destination = source.pipe(debounceTimeSubsequent(duration, 2, m.scheduler));
+        const destination = source.pipe(subsequent(2, s => s.pipe(debounceTime(duration, m.scheduler))));
         m.expect(destination).toBeObservable(expected);
         m.expect(source).toHaveSubscriptions(sourceSubs);
     }));
