@@ -1,3 +1,10 @@
+<a name="4.1.0"></a>
+## [4.1.0](https://github.com/cartant/rxjs-etc/compare/v4.0.0...v4.1.0) (2018-02-15)
+
+### Features
+
+* **subsequent**: Split out `subsequent` from within the `debounceTimeSubsequent` operator. ([6112da1](https://github.com/cartant/rxjs-etc/commit/6112da1))
+
 <a name="4.0.0"></a>
 ## [4.0.0](https://github.com/cartant/rxjs-etc/compare/v3.3.0...v4.0.0) (2018-02-14)
 

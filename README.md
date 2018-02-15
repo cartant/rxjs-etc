@@ -68,7 +68,7 @@ They can also be used with `pipe`, like this:
 
 * [debounceTimeSubsequent](./source/operators/debounceTimeSubsequent.ts)
 
-    Debounce the source observable, but don't debounce the first notification - only the subsequent notifications.
+    Debounce the source observable, but don't debounce the first `count` notifications - only the subsequent notifications.
 
 * [defaultObservableIfEmpty](./source/operators/defaultObservableIfEmpty.ts)
 
@@ -101,6 +101,10 @@ They can also be used with `pipe`, like this:
 * [reschedule](./source/operators/reschedule.ts)
 
     Emits values using the specified scheduler.
+
+* [subsequent](./source/operators/subsequent.ts)
+
+    Apply the selector to the source observable, but don't select the first `count` notifications - only the subsequent notifications.
 
 * [takeWhileInclusive](./source/operators/takeWhileInclusive.ts)
 
