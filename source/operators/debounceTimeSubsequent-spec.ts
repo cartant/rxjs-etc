@@ -20,4 +20,16 @@ describe("debounceTimeSubsequent", () => {
         m.expect(destination).toBeObservable(expected);
         m.expect(source).toHaveSubscriptions(sourceSubs);
     }));
+
+    it("should support count", marbles((m) => {
+
+        const source =   m.cold("ab-cd---ef----|");
+        const sourceSubs =      "^-------------!";
+        const expected = m.cold("ab-----d----f-|");
+
+        const period = m.time("---|");
+        const destination = source.pipe(debounceTimeSubsequent(period, 2, m.scheduler));
+        m.expect(destination).toBeObservable(expected);
+        m.expect(source).toHaveSubscriptions(sourceSubs);
+    }));
 });

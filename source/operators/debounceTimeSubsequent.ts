@@ -14,13 +14,33 @@ import { IScheduler } from "rxjs/Scheduler";
 
 export function debounceTimeSubsequent<T>(
     duration: number,
+    count: number,
+    scheduler?: IScheduler
+): (source: Observable<T>) => Observable<T>;
+
+export function debounceTimeSubsequent<T>(
+    duration: number,
+    scheduler?: IScheduler
+): (source: Observable<T>) => Observable<T>;
+
+export function debounceTimeSubsequent<T>(
+    duration: number,
+    countOrScheduler?: number | IScheduler,
     scheduler?: IScheduler
 ): (source: Observable<T>) => Observable<T> {
+
+    let count: number;
+    if (typeof countOrScheduler === "number") {
+        count = countOrScheduler;
+    } else {
+        count = 1;
+        scheduler = countOrScheduler;
+    }
 
     return (source: Observable<T>) => Observable.create((observer: Observer<T>) => {
         const published = source.pipe(publish()) as ConnectableObservable<T>;
         const subscription = concat(
-            published.pipe(take(1)),
+            published.pipe(take(count)),
             published.pipe(debounceTime(duration, scheduler))
         ).subscribe(observer);
         subscription.add(published.connect());
