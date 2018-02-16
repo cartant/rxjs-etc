@@ -10,19 +10,28 @@ import { concat } from "rxjs/observable/concat";
 import { publish } from "rxjs/operators/publish";
 import { take } from "rxjs/operators/take";
 
+export function subsequent<T, R>(
+    count: number,
+    selector: (source: Observable<T>) => Observable<R>
+): (source: Observable<T>) => Observable<T | R>;
+
 export function subsequent<T>(
     count: number,
     selector: (source: Observable<T>) => Observable<T>
 ): (source: Observable<T>) => Observable<T>;
 
+export function subsequent<T, R>(
+    selector: (source: Observable<T>) => Observable<R>
+): (source: Observable<T>) => Observable<T | R>;
+
 export function subsequent<T>(
     selector: (source: Observable<T>) => Observable<T>
 ): (source: Observable<T>) => Observable<T>;
 
-export function subsequent<T>(
-    countOrSelector: number | ((source: Observable<T>) => Observable<T>),
-    selector?: (source: Observable<T>) => Observable<T>
-): (source: Observable<T>) => Observable<T> {
+export function subsequent<T, R>(
+    countOrSelector: number | ((source: Observable<T>) => Observable<R>),
+    selector?: (source: Observable<T>) => Observable<R>
+): (source: Observable<T>) => Observable<T | R> {
 
     let count: number;
     if (typeof countOrSelector === "number") {
@@ -32,7 +41,7 @@ export function subsequent<T>(
         selector = countOrSelector;
     }
 
-    return (source: Observable<T>) => Observable.create((observer: Observer<T>) => {
+    return (source: Observable<T>) => Observable.create((observer: Observer<T | R>) => {
         const published = source.pipe(publish()) as ConnectableObservable<T>;
         const subscription = concat(
             published.pipe(take(count)),
