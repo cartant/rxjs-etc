@@ -37,7 +37,7 @@ describe("prioritize", () => {
 
     it("should support self notifications", () => {
 
-        const source = from("aabbccddee", async);
+        const source = from("aabccdee", async);
         const result = source.pipe(
             prioritize((first, second) => second.pipe(
                 window(first.pipe(
@@ -49,13 +49,13 @@ describe("prioritize", () => {
             ))
         );
         return result.toPromise().then(value => expect(value).to.deep.equal(
-            [["a", "a"], ["b", "b"], ["c", "c"], ["d", "d"], ["e", "e"], []]
+            [["a", "a"], ["b"], ["c", "c"], ["d"], ["e", "e"], []]
         ));
     });
 
     it("should support synchronous sources", () => {
 
-        const source = from("aabbccddee");
+        const source = from("aabccdee");
         const result = source.pipe(
             prioritize((first, second) => second.pipe(
                 window(first.pipe(
@@ -67,7 +67,7 @@ describe("prioritize", () => {
             ))
         );
         return result.toPromise().then(value => expect(value).to.deep.equal(
-            [["a", "a"], ["b", "b"], ["c", "c"], ["d", "d"], ["e", "e"], []]
+            [["a", "a"], ["b"], ["c", "c"], ["d"], ["e", "e"], []]
         ));
     });
 
