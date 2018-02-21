@@ -1,3 +1,15 @@
+<a name="4.1.1"></a>
+## [4.1.1](https://github.com/cartant/rxjs-etc/compare/v4.1.0...v4.1.1) (2018-02-21)
+
+### Bug Fixes
+
+* **forkJoinConcurrent**: Fixed the sort order of the emitted array. ([b34ffcc](https://github.com/cartant/rxjs-etc/commit/b34ffcc))
+* Fixed a number of tests that were incorrect and were running.
+
+### Build
+
+* Switch to Webpack.
+
 <a name="4.1.0"></a>
 ## [4.1.0](https://github.com/cartant/rxjs-etc/compare/v4.0.0...v4.1.0) (2018-02-15)
 
