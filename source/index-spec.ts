@@ -22,3 +22,5 @@ import "./operators/refCountAuditTime-spec";
 import "./operators/subsequent-spec";
 import "./operators/takeWhileInclusive-spec";
 import "./operators/throttleAfter-spec";
+import "./scheduler/enterZone-spec";
+import "./scheduler/leaveZone-spec";
