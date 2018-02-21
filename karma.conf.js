@@ -17,13 +17,23 @@ exports = module.exports = function (config) {
         },
         exclude: [],
         files: [
-            "bundles/rxjs-etc-test.umd.js"
+            { pattern: "source/**/*-spec.ts", watched: false }
         ],
         frameworks: ["mocha"],
         logLevel: config.LOG_INFO,
+        mime : {
+            "text/x-typescript": ["ts"]
+        },
         port: 9876,
-        preprocessors: {},
+        preprocessors: {
+            "source/**/*-spec.ts": ["webpack"]
+        },
         proxies: {},
-        reporters: ["spec"]
+        reporters: ["spec"],
+        webpack: require("./webpack.config.test")({}),
+        webpackMiddleware: {
+            noInfo: true,
+            stats: "errors-only"
+        }
     });
 };
