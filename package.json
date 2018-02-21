@@ -30,7 +30,6 @@
     "ts-loader": "^3.5.0",
     "tslint": "^5.1.0",
     "typescript": "~2.7.1",
-    "uglify-js": "^3.0.10",
     "uglifyjs-webpack-plugin": "^1.2.0",
     "webpack": "^3.11.0",
     "webpack-rxjs-externals": "^1.1.0"
@@ -55,7 +54,7 @@
     "url": "https://github.com/cartant/rxjs-etc.git"
   },
   "scripts": {
-    "dist": "yarn run dist:build && yarn run dist:uglify && yarn run dist:copy",
+    "dist": "yarn run dist:build && yarn run dist:copy",
     "dist:build": "yarn run dist:clean && yarn run dist:build:cjs && yarn run dist:build:esm2015 && yarn run dist:build:esm5 && yarn run dist:build:bundle",
     "dist:build:bundle": "webpack --config webpack.config.js && webpack --config webpack.config.js --env.production",
     "dist:build:cjs": "tsc -p tsconfig-dist-cjs.json",
@@ -63,7 +62,6 @@
     "dist:build:esm5": "tsc -p tsconfig-dist-esm5.json",
     "dist:clean": "rimraf dist && rimraf bundles/rxjs-etc.* && mkdirp bundles",
     "dist:copy": "node scripts/pack.js && cpy bundles/rxjs-etc.* dist/bundles/ && cpy CHANGELOG.md LICENSE README.md dist/",
-    "dist:uglify": "uglifyjs -c --comments /license/ -m -o bundles/rxjs-etc.min.umd.js bundles/rxjs-etc.umd.js",
     "lint": "tslint --project tsconfig.json source/**/*.ts",
     "test": "yarn run lint && yarn run test:build && yarn run test:karma && yarn run test:mocha",
     "test:build": "yarn run test:clean && tsc -p tsconfig.json",
