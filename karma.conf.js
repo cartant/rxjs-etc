@@ -17,8 +17,6 @@ exports = module.exports = function (config) {
         },
         exclude: [],
         files: [
-            "node_modules/core-js/client/core.js",
-            "node_modules/tslib/tslib.js",
             "bundles/rxjs-etc-test.umd.js"
         ],
         frameworks: ["mocha"],
