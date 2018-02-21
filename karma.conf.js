@@ -5,7 +5,6 @@ process.env.CHROME_BIN = require("puppeteer").executablePath();
 exports = module.exports = function (config) {
 
     config.set({
-        autoWatch: false,
         basePath: "",
         browsers: ["ChromeHeadlessNoSandbox"],
         colors: true,
@@ -27,7 +26,6 @@ exports = module.exports = function (config) {
         port: 9876,
         preprocessors: {},
         proxies: {},
-        reporters: ["spec"],
-        singleRun: true
+        reporters: ["spec"]
     });
 };

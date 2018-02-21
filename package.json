@@ -63,9 +63,11 @@
     "dist:copy": "node scripts/pack.js && cpy bundles/rxjs-etc.* dist/bundles/ && cpy CHANGELOG.md LICENSE README.md dist/",
     "dist:uglify": "uglifyjs -c --comments /license/ -m -o bundles/rxjs-etc.min.umd.js bundles/rxjs-etc.umd.js",
     "lint": "tslint --project tsconfig.json source/**/*.ts",
-    "test": "yarn run lint && yarn run test:build && karma start",
+    "test": "yarn run lint && yarn run test:build && yarn run test:karma && yarn run test:mocha",
     "test:build": "yarn run test:clean && tsc -p tsconfig.json && node scripts/bundle-test.js",
-    "test:clean": "rimraf build && rimraf bundles/rxjs-etc-test.* && mkdirp bundles"
+    "test:clean": "rimraf build && rimraf bundles/rxjs-etc-test.* && mkdirp bundles",
+    "test:karma": "karma start --single-run",
+    "test:mocha": "mocha build/**/*-spec.js"
   },
   "types": "./dist/index.d.ts",
   "unpkg": "./bundles/rxjs-etc.min.umd.js",
