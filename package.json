@@ -31,7 +31,7 @@
     "tslint": "^5.1.0",
     "typescript": "~2.7.1",
     "uglifyjs-webpack-plugin": "^1.2.0",
-    "webpack": "^3.11.0",
+    "webpack": "^4.0.0",
     "webpack-rxjs-externals": "^1.1.0"
   },
   "es2015": "./dist/esm2015/index.js",
