@@ -1,37 +1,26 @@
 "use strict";
 
 const path = require("path");
-const UglifyJsWebpackPlugin = require("uglifyjs-webpack-plugin");
 const webpack = require("webpack");
 const webpackRxjsExternals = require("webpack-rxjs-externals");
 
 module.exports = env => {
 
-    let filename;
-    let plugins;
+    let filename = "rxjs-etc.umd.js";
+    let mode = "development";
 
     if (env && env.production) {
         filename = "rxjs-etc.min.umd.js";
-        plugins = [new UglifyJsWebpackPlugin({
-            uglifyOptions: {
-                beautify: false,
-                ecma: 6,
-                compress: true,
-                comments: false
-            }
-        })];
-    } else {
-        filename = "rxjs-etc.umd.js";
-        plugins = []
+        mode = "production";
     }
 
     return {
         context: path.join(__dirname, "./"),
-        devtool: undefined,
         entry: {
             index: "./source/index.ts"
         },
         externals: webpackRxjsExternals(),
+        mode,
         module: {
             rules: [{
                 test: /\.ts$/,
@@ -52,7 +41,6 @@ module.exports = env => {
             libraryTarget: "umd",
             path: path.resolve(__dirname, "./bundles")
         },
-        plugins,
         resolve: {
             extensions: [".ts", ".js"]
         }
