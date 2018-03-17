@@ -4,10 +4,8 @@
  */
 /*tslint:disable:no-unused-expression*/
 
-import { Observable } from "rxjs/Observable";
 import { marbles } from "rxjs-marbles";
-
-import "./combineLatestArray";
+import { combineLatestArray } from "./combineLatestArray";
 
 describe("observable/combineLatestArray", () => {
 
@@ -20,7 +18,7 @@ describe("observable/combineLatestArray", () => {
         const subs =            "^-----!";
         const expected = m.cold("xy----|", results);
 
-        const destination = Observable.combineLatestArray([source]);
+        const destination = combineLatestArray([source]);
         m.expect(destination).toBeObservable(expected);
         m.expect(source).toHaveSubscriptions(subs);
     }));
@@ -39,7 +37,7 @@ describe("observable/combineLatestArray", () => {
         const subs =            "^-----!";
         const expected = m.cold("-xyz--|", results);
 
-        const destination = Observable.combineLatestArray([source1, source2]);
+        const destination = combineLatestArray([source1, source2]);
         m.expect(destination).toBeObservable(expected);
         m.expect(source1).toHaveSubscriptions(subs);
         m.expect(source2).toHaveSubscriptions(subs);
@@ -49,7 +47,7 @@ describe("observable/combineLatestArray", () => {
 
         const expected = m.cold("(x|)", { x: [] });
 
-        const destination = Observable.combineLatestArray([]);
+        const destination = combineLatestArray([]);
         m.expect(destination).toBeObservable(expected);
     }));
 
@@ -65,7 +63,7 @@ describe("observable/combineLatestArray", () => {
         const subs =            "^----!";
         const expected = m.cold("xy---|", results);
 
-        const destination = Observable.combineLatestArray(
+        const destination = combineLatestArray(
             [source],
             (values) => values.map((value) => value + 1)
         );
@@ -87,7 +85,7 @@ describe("observable/combineLatestArray", () => {
         const subs =            "^-----!";
         const expected = m.cold("-xyz--|", results);
 
-        const destination = Observable.combineLatestArray(
+        const destination = combineLatestArray(
             [source1, source2],
             (values) => values.map((value) => value + 1)
         );
@@ -100,7 +98,7 @@ describe("observable/combineLatestArray", () => {
 
         const expected = m.cold("(x|)", { x: ["empty"] });
 
-        const destination = Observable.combineLatestArray(
+        const destination = combineLatestArray(
             [],
             (values) => ["empty"]
         );

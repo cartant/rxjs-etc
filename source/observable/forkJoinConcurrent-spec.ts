@@ -4,10 +4,8 @@
  */
 /*tslint:disable:no-unused-expression*/
 
-import { Observable } from "rxjs/Observable";
 import { marbles } from "rxjs-marbles";
-
-import "./forkJoinConcurrent";
+import { forkJoinConcurrent } from "./forkJoinConcurrent";
 
 describe("observable/forkJoinConcurrent", () => {
 
@@ -20,7 +18,7 @@ describe("observable/forkJoinConcurrent", () => {
         const subs =            "^----!";
         const expected = m.cold("-----(x|)", results);
 
-        const destination = Observable.forkJoinConcurrent([source], 1);
+        const destination = forkJoinConcurrent([source], 1);
         m.expect(destination).toBeObservable(expected);
         m.expect(source).toHaveSubscriptions(subs);
     }));
@@ -36,7 +34,7 @@ describe("observable/forkJoinConcurrent", () => {
         const subs2 =           "---^-!";
         const expected = m.cold("-----(x|)", results);
 
-        const destination = Observable.forkJoinConcurrent([source1, source2], 1);
+        const destination = forkJoinConcurrent([source1, source2], 1);
         m.expect(destination).toBeObservable(expected);
         m.expect(source1).toHaveSubscriptions(subs1);
         m.expect(source2).toHaveSubscriptions(subs2);

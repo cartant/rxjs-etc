@@ -5,11 +5,9 @@
 /*tslint:disable:no-unused-expression*/
 
 import { expect } from "chai";
-import { Observable } from "rxjs/Observable";
 import { from } from "rxjs/observable/from";
 import { marbles } from "rxjs-marbles";
-
-import "./doIndex";
+import { doIndex } from "./doIndex";
 
 describe("operator/doIndex", () => {
 
@@ -19,7 +17,7 @@ describe("operator/doIndex", () => {
         const subs =            "^----------!";
         const expected = m.cold("--1--2--3--|");
 
-        const destination = source.doIndex(() => {});
+        const destination = doIndex.call(source, () => {});
         m.expect(destination).toBeObservable(expected);
         m.expect(source).toHaveSubscriptions(subs);
     }));
@@ -30,7 +28,7 @@ describe("operator/doIndex", () => {
         const subs =            "^----------!";
         const expected = m.cold("--1--2--3--#");
 
-        const destination = source.doIndex(() => {});
+        const destination = doIndex.call(source, () => {});
         m.expect(destination).toBeObservable(expected);
         m.expect(source).toHaveSubscriptions(subs);
     }));
@@ -39,9 +37,10 @@ describe("operator/doIndex", () => {
 
         let seen: any[] = [];
 
-        from(["alice", "bob"])
-            .doIndex((value, index) => seen.push({ index, value }))
-            .subscribe();
+        doIndex.call(
+            from(["alice", "bob"]),
+            (value: string, index: number) => seen.push({ index, value })
+        ).subscribe();
 
         expect(seen).to.deep.equal([{
             index: 0,
@@ -56,8 +55,10 @@ describe("operator/doIndex", () => {
 
         let seen: any[] = [];
 
-        let observable = from(["alice", "bob"])
-            .doIndex((value, index) => seen.push({ index, value }));
+        let observable = doIndex.call(
+            from(["alice", "bob"]),
+            (value: string, index: number) => seen.push({ index, value })
+        );
 
         observable.subscribe();
         observable.subscribe();

@@ -4,10 +4,8 @@
  */
 /*tslint:disable:no-unused-expression*/
 
-import { Observable } from "rxjs/Observable";
 import { marbles } from "rxjs-marbles";
-
-import "./fromIterable";
+import { fromIterable } from "./fromIterable";
 
 describe("observable/fromIterable", () => {
 
@@ -20,7 +18,7 @@ describe("observable/fromIterable", () => {
 
         const expected = m.cold("(abc|)");
 
-        const destination = Observable.fromIterable(map.keys());
+        const destination = fromIterable(map.keys());
         m.expect(destination).toBeObservable(expected);
     }));
 });

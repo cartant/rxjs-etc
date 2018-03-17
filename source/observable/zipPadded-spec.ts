@@ -4,10 +4,8 @@
  */
 /*tslint:disable:no-unused-expression*/
 
-import { Observable } from "rxjs/Observable";
 import { marbles } from "rxjs-marbles";
-
-import "./zipPadded";
+import { zipPadded } from "./zipPadded";
 
 describe("observable/zipPadded", () => {
 
@@ -20,7 +18,7 @@ describe("observable/zipPadded", () => {
         const subs =            "^----!";
         const expected = m.cold("x-y--|", results);
 
-        const destination = Observable.zipPadded([source]);
+        const destination = zipPadded([source]);
         m.expect(destination).toBeObservable(expected);
         m.expect(source).toHaveSubscriptions(subs);
     }));
@@ -36,7 +34,7 @@ describe("observable/zipPadded", () => {
         const subs2 =           "^-!";
         const expected = m.cold("-x-y--|", results);
 
-        const destination = Observable.zipPadded<number | undefined>([source1, source2]);
+        const destination = zipPadded<number | undefined>([source1, source2]);
         m.expect(destination).toBeObservable(expected);
         m.expect(source1).toHaveSubscriptions(subs1);
         m.expect(source2).toHaveSubscriptions(subs2);
@@ -53,7 +51,7 @@ describe("observable/zipPadded", () => {
         const subs2 =           "^-!";
         const expected = m.cold("-x-y--|", results);
 
-        const destination = Observable.zipPadded<number | null>([source1, source2], null);
+        const destination = zipPadded<number | null>([source1, source2], null);
         m.expect(destination).toBeObservable(expected);
         m.expect(source1).toHaveSubscriptions(subs1);
         m.expect(source2).toHaveSubscriptions(subs2);

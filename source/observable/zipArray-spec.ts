@@ -4,10 +4,8 @@
  */
 /*tslint:disable:no-unused-expression*/
 
-import { Observable } from "rxjs/Observable";
 import { marbles } from "rxjs-marbles";
-
-import "./zipArray";
+import { zipArray } from "./zipArray";
 
 describe("observable/zipArray", () => {
 
@@ -20,7 +18,7 @@ describe("observable/zipArray", () => {
         const subs =            "^----!";
         const expected = m.cold("x-y--|", results);
 
-        const destination = Observable.zipArray([source]);
+        const destination = zipArray([source]);
         m.expect(destination).toBeObservable(expected);
         m.expect(source).toHaveSubscriptions(subs);
     }));
@@ -35,7 +33,7 @@ describe("observable/zipArray", () => {
         const subs =            "^----!";
         const expected = m.cold("-x---|", results);
 
-        const destination = Observable.zipArray([source1, source2]);
+        const destination = zipArray([source1, source2]);
         m.expect(destination).toBeObservable(expected);
         m.expect(source1).toHaveSubscriptions(subs);
         m.expect(source2).toHaveSubscriptions(subs);
@@ -45,7 +43,7 @@ describe("observable/zipArray", () => {
 
         const expected = m.cold("(x|)", { x: [] });
 
-        const destination = Observable.zipArray([]);
+        const destination = zipArray([]);
         m.expect(destination).toBeObservable(expected);
     }));
 
@@ -58,7 +56,7 @@ describe("observable/zipArray", () => {
         const subs =            "^----!";
         const expected = m.cold("x-y--|", results);
 
-        const destination = Observable.zipArray(
+        const destination = zipArray(
             [source],
             (values) => values.map((value) => value + 1)
         );
@@ -76,7 +74,7 @@ describe("observable/zipArray", () => {
         const subs =            "^----!";
         const expected = m.cold("-x---|", results);
 
-        const destination = Observable.zipArray(
+        const destination = zipArray(
             [source1, source2],
             (values) => values.map((value) => value + 1)
         );
@@ -89,7 +87,7 @@ describe("observable/zipArray", () => {
 
         const expected = m.cold("(x|)", { x: ["empty"] });
 
-        const destination = Observable.zipArray(
+        const destination = zipArray(
             [],
             (values) => ["empty"]
         );

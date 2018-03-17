@@ -4,33 +4,31 @@
  */
 /*tslint:disable:no-unused-expression*/
 
-import { Observable } from "rxjs/Observable";
 import { marbles } from "rxjs-marbles";
+import { mergeArray } from "./mergeArray";
 
-import "./concatArray";
+describe("observable/mergeArray", () => {
 
-describe("observable/concatArray", () => {
+    it("should merge a single observable", marbles((m) => {
 
-    it("should concat a single observable", marbles((m) => {
+        const source =   m.cold("a--|");
+        const subs =            "^--!";
+        const expected = m.cold("a--|");
 
-        const source =   m.cold("a----|");
-        const subs =            "^----!";
-        const expected = m.cold("a----|");
-
-        const destination = Observable.concatArray([source]);
+        const destination = mergeArray([source]);
         m.expect(destination).toBeObservable(expected);
         m.expect(source).toHaveSubscriptions(subs);
     }));
 
-    it("should concat multiple observables", marbles((m) => {
+    it("should merge multiple observables", marbles((m) => {
 
         const source1 =  m.cold("a--|");
         const subs1 =           "^--!";
-        const source2 =     m.cold("b----|");
-        const subs2 =           "---^----!";
-        const expected = m.cold("a--b----|");
+        const source2 =  m.cold("--b--|");
+        const subs2 =           "^----!";
+        const expected = m.cold("a-b--|");
 
-        const destination = Observable.concatArray([source1, source2]);
+        const destination = mergeArray([source1, source2]);
         m.expect(destination).toBeObservable(expected);
         m.expect(source1).toHaveSubscriptions(subs1);
         m.expect(source2).toHaveSubscriptions(subs2);
@@ -40,7 +38,7 @@ describe("observable/concatArray", () => {
 
         const expected = m.cold("|");
 
-        const destination = Observable.concatArray([]);
+        const destination = mergeArray([]);
         m.expect(destination).toBeObservable(expected);
     }));
 });

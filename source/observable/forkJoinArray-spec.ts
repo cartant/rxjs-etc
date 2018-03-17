@@ -4,10 +4,8 @@
  */
 /*tslint:disable:no-unused-expression*/
 
-import { Observable } from "rxjs/Observable";
 import { marbles } from "rxjs-marbles";
-
-import "./forkJoinArray";
+import { forkJoinArray } from "./forkJoinArray";
 
 describe("observable/forkJoinArray", () => {
 
@@ -20,7 +18,7 @@ describe("observable/forkJoinArray", () => {
         const subs =            "^----!";
         const expected = m.cold("-----(x|)", results);
 
-        const destination = Observable.forkJoinArray([source]);
+        const destination = forkJoinArray([source]);
         m.expect(destination).toBeObservable(expected);
         m.expect(source).toHaveSubscriptions(subs);
     }));
@@ -36,7 +34,7 @@ describe("observable/forkJoinArray", () => {
         const subs2 =           "^----!";
         const expected = m.cold("-----(x|)", results);
 
-        const destination = Observable.forkJoinArray([source1, source2]);
+        const destination = forkJoinArray([source1, source2]);
         m.expect(destination).toBeObservable(expected);
         m.expect(source1).toHaveSubscriptions(subs1);
         m.expect(source2).toHaveSubscriptions(subs2);
@@ -46,7 +44,7 @@ describe("observable/forkJoinArray", () => {
 
         const expected = m.cold("(x|)", { x: [] });
 
-        const destination = Observable.forkJoinArray([]);
+        const destination = forkJoinArray([]);
         m.expect(destination).toBeObservable(expected);
     }));
 
@@ -59,7 +57,7 @@ describe("observable/forkJoinArray", () => {
         const subs =            "^----!";
         const expected = m.cold("-----(x|)", results);
 
-        const destination = Observable.forkJoinArray(
+        const destination = forkJoinArray(
             [source],
             (values) => values.map((value) => value + 1)
         );
@@ -78,7 +76,7 @@ describe("observable/forkJoinArray", () => {
         const subs2 =           "^----!";
         const expected = m.cold("-----(x|)", results);
 
-        const destination = Observable.forkJoinArray(
+        const destination = forkJoinArray(
             [source1, source2],
             (values) => values.map((value) => value + 1)
         );
@@ -91,7 +89,7 @@ describe("observable/forkJoinArray", () => {
 
         const expected = m.cold("(x|)", { x: ["empty"] });
 
-        const destination = Observable.forkJoinArray(
+        const destination = forkJoinArray(
             [],
             (values) => ["empty"]
         );
