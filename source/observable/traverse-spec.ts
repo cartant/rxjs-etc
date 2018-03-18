@@ -17,7 +17,7 @@ import { traverse } from "./traverse";
 
 describe("observable/traverse", () => {
 
-    const createFactory = (max: number = Infinity, time?: number, scheduler?: IScheduler) =>
+    const createProducer = (max: number = Infinity, time?: number, scheduler?: IScheduler) =>
         (marker: number | undefined): Observable<{ marker: number, value: Observable<string> }> => {
             const at = (marker === undefined) ? 0 : marker + 1;
             const source = (at <= max) ? of({ marker: at, value: of(at.toString()) }) : empty<never>();
@@ -32,8 +32,8 @@ describe("observable/traverse", () => {
         const notifierSubs =    "^----!";
         const expected = m.cold("-----|");
 
-        const factory = createFactory(-1, m.time("-----|"), m.scheduler);
-        const traversed = traverse(factory, notifier);
+        const producer = createProducer(-1, m.time("-----|"), m.scheduler);
+        const traversed = traverse(producer, notifier);
         m.expect(traversed).toBeObservable(expected);
         m.expect(notifier).toHaveSubscriptions(notifierSubs);
     }));
@@ -43,8 +43,8 @@ describe("observable/traverse", () => {
         const notifier =  m.hot("--");
         const expected = m.cold("0-");
 
-        const factory = createFactory();
-        const traversed = traverse(factory, notifier);
+        const producer = createProducer();
+        const traversed = traverse(producer, notifier);
         m.expect(traversed).toBeObservable(expected);
     }));
 
@@ -53,8 +53,8 @@ describe("observable/traverse", () => {
         const notifier =  m.hot("--n----n--n--");
         const expected = m.cold("0-1----2--3--");
 
-        const factory = createFactory();
-        const traversed = traverse(factory, notifier);
+        const producer = createProducer();
+        const traversed = traverse(producer, notifier);
         m.expect(traversed).toBeObservable(expected);
     }));
 
@@ -63,8 +63,8 @@ describe("observable/traverse", () => {
         const notifier =  m.hot("-nn------------");
         const expected = m.cold("----0---1---2--");
 
-        const factory = createFactory(Infinity, m.time("----|"), m.scheduler);
-        const traversed = traverse(factory, notifier);
+        const producer = createProducer(Infinity, m.time("----|"), m.scheduler);
+        const traversed = traverse(producer, notifier);
         m.expect(traversed).toBeObservable(expected);
     }));
 
@@ -72,8 +72,8 @@ describe("observable/traverse", () => {
 
         const expected = m.cold("----0---1---2---|");
 
-        const factory = createFactory(2, m.time("----|"), m.scheduler);
-        const traversed = traverse(factory);
+        const producer = createProducer(2, m.time("----|"), m.scheduler);
+        const traversed = traverse(producer);
         m.expect(traversed).toBeObservable(expected);
     }));
 
@@ -87,8 +87,8 @@ describe("observable/traverse", () => {
         ];
         const expected = m.cold("----0---1---2---|");
 
-        const factory = createFactory(2, m.time("----|"), m.scheduler);
-        const traversed = traverse(factory, source => concat(source, other));
+        const producer = createProducer(2, m.time("----|"), m.scheduler);
+        const traversed = traverse(producer, source => concat(source, other));
         m.expect(traversed).toBeObservable(expected);
         m.expect(other).toHaveSubscriptions(subs);
     }));
@@ -103,8 +103,8 @@ describe("observable/traverse", () => {
         ];
         const expected = m.cold("0---1---2---|");
 
-        const factory = createFactory(2);
-        const traversed = traverse(factory, source => concat(source, other));
+        const producer = createProducer(2);
+        const traversed = traverse(producer, source => concat(source, other));
         m.expect(traversed).toBeObservable(expected);
         m.expect(other).toHaveSubscriptions(subs);
     }));
@@ -123,13 +123,13 @@ describe("observable/traverse", () => {
         };
         const expected = m.cold("------(abc)-(def)-|");
 
-        const factory = (marker: any, index: number) => {
+        const producer = (marker: any, index: number) => {
             const node = (index === 0) ? data : marker;
             const pairs = Object.keys(node).map(key => ({ marker: node[key], value: of(key) }));
             return from(pairs).pipe(delay(m.time("------|"), m.scheduler));
         };
 
-        const traversed = traverse(factory);
+        const traversed = traverse(producer);
         m.expect(traversed).toBeObservable(expected);
     }));
 
@@ -137,7 +137,7 @@ describe("observable/traverse", () => {
 
         const expected = m.cold("------a-b---(c|)");
 
-        const factory = (marker: any, index: number) => {
+        const producer = (marker: any, index: number) => {
             return (index === 0) ? merge(
                 of({ marker: undefined, value: of("a").pipe(delay(m.time("------|"), m.scheduler)) }),
                 of({ marker: undefined, value: of("b").pipe(delay(m.time("--|"), m.scheduler)) }),
@@ -145,7 +145,7 @@ describe("observable/traverse", () => {
             ) : empty<never>();
         };
 
-        const traversed = traverse(factory);
+        const traversed = traverse(producer);
         m.expect(traversed).toBeObservable(expected);
     }));
 });

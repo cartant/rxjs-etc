@@ -19,24 +19,24 @@ import { pipeFromArray } from "rxjs/util/pipe";
 import { isObservable } from "../util";
 
 export type TraverseConsumer<T, R> = (source: Observable<T>) => Observable<R>;
-export type TraverseFactory<T, M> = (marker: M | undefined, index: number) => Observable<{ marker: M, value: ObservableInput<T> }>;
+export type TraverseProducer<T, M> = (marker: M | undefined, index: number) => Observable<{ marker: M, value: ObservableInput<T> }>;
 
 export function traverse<T, M>(
-    factory: TraverseFactory<T, M>,
+    producer: TraverseProducer<T, M>,
     notifier: Observable<any>
 ): Observable<T>;
 
 export function traverse<T, M, R>(
-    factory: TraverseFactory<T, M>,
+    producer: TraverseProducer<T, M>,
     consumer: TraverseConsumer<T, R>
 ): Observable<R>;
 
 export function traverse<T, M>(
-    factory: TraverseFactory<T, M>
+    producer: TraverseProducer<T, M>
 ): Observable<T>;
 
 export function traverse<T, M, R>(
-    factory: TraverseFactory<T, M>,
+    producer: TraverseProducer<T, M>,
     notifierOrConsumer?: Observable<any> | TraverseConsumer<T, R>
 ): Observable<T | R> {
     return Observable.create((observer: Observer<T | R>) => {
@@ -57,11 +57,11 @@ export function traverse<T, M, R>(
         let notifications = 0;
         const subscription = new Subscription();
         subscription.add(notifier.subscribe(() => ++notifications));
-        subscription.add(factory(undefined, index).pipe(
+        subscription.add(producer(undefined, index).pipe(
             expand(({ marker, value }) => {
                 const more = defer(() => {
                     --notifications;
-                    return factory(marker, ++index);
+                    return producer(marker, ++index);
                 });
                 if (notifications > 0) {
                     return more;
