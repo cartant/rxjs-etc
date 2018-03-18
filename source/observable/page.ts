@@ -3,6 +3,7 @@
  * can be found in the LICENSE file at https://github.com/cartant/rxjs-etc
  */
 
+import { UnaryFunction } from "rxjs/interfaces";
 import { Observable, ObservableInput } from "rxjs/Observable";
 import { Observer } from "rxjs/Observer";
 import { Subject } from "rxjs/Subject";
@@ -40,7 +41,7 @@ export function page<T, M, R>(
 ): Observable<T | R> {
     return Observable.create((observer: Observer<T | R>) => {
         let notifier: Observable<any>;
-        let operators: any[];
+        let operators: UnaryFunction<any, any>[];
         if (isObservable(notifierOrConsumer)) {
             notifier = notifierOrConsumer;
             operators = [];
