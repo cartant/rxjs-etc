@@ -13,9 +13,9 @@ import { merge } from "rxjs/observable/merge";
 import { delay } from "rxjs/operators/delay";
 import { IScheduler } from "rxjs/Scheduler";
 import { marbles } from "rxjs-marbles";
-import { page } from "./page";
+import { traverse } from "./traverse";
 
-describe("observable/page", () => {
+describe("observable/traverse", () => {
 
     const createFactory = (max: number = Infinity, time?: number, scheduler?: IScheduler) =>
         (marker: number | undefined): Observable<{ marker: number, value: Observable<string> }> => {
@@ -26,36 +26,36 @@ describe("observable/page", () => {
                 source;
         };
 
-    it("should complete if there are no pages", marbles((m) => {
+    it("should complete if there is no data", marbles((m) => {
 
         const notifier =  m.hot("--n--|");
         const notifierSubs =    "^----!";
         const expected = m.cold("-----|");
 
         const factory = createFactory(-1, m.time("-----|"), m.scheduler);
-        const paged = page(factory, notifier);
-        m.expect(paged).toBeObservable(expected);
+        const traversed = traverse(factory, notifier);
+        m.expect(traversed).toBeObservable(expected);
         m.expect(notifier).toHaveSubscriptions(notifierSubs);
     }));
 
-    it("should emit the first page", marbles((m) => {
+    it("should traverse the first chunk of data", marbles((m) => {
 
         const notifier =  m.hot("--");
         const expected = m.cold("0-");
 
         const factory = createFactory();
-        const paged = page(factory, notifier);
-        m.expect(paged).toBeObservable(expected);
+        const traversed = traverse(factory, notifier);
+        m.expect(traversed).toBeObservable(expected);
     }));
 
-    it("should further pages in response to the notifier", marbles((m) => {
+    it("should traverse further chunks in response to the notifier", marbles((m) => {
 
         const notifier =  m.hot("--n----n--n--");
         const expected = m.cold("0-1----2--3--");
 
         const factory = createFactory();
-        const paged = page(factory, notifier);
-        m.expect(paged).toBeObservable(expected);
+        const traversed = traverse(factory, notifier);
+        m.expect(traversed).toBeObservable(expected);
     }));
 
     it("should queue notifications", marbles((m) => {
@@ -64,20 +64,20 @@ describe("observable/page", () => {
         const expected = m.cold("----0---1---2--");
 
         const factory = createFactory(Infinity, m.time("----|"), m.scheduler);
-        const paged = page(factory, notifier);
-        m.expect(paged).toBeObservable(expected);
+        const traversed = traverse(factory, notifier);
+        m.expect(traversed).toBeObservable(expected);
     }));
 
-    it("should page without a notifier", marbles((m) => {
+    it("should traverse without a notifier", marbles((m) => {
 
         const expected = m.cold("----0---1---2---|");
 
         const factory = createFactory(2, m.time("----|"), m.scheduler);
-        const paged = page(factory);
-        m.expect(paged).toBeObservable(expected);
+        const traversed = traverse(factory);
+        m.expect(traversed).toBeObservable(expected);
     }));
 
-    it("should page with a consumer", marbles((m) => {
+    it("should traverse with a consumer", marbles((m) => {
 
         const other =    m.cold("|");
         const subs = [
@@ -88,12 +88,12 @@ describe("observable/page", () => {
         const expected = m.cold("----0---1---2---|");
 
         const factory = createFactory(2, m.time("----|"), m.scheduler);
-        const paged = page(factory, source => concat(source, other));
-        m.expect(paged).toBeObservable(expected);
+        const traversed = traverse(factory, source => concat(source, other));
+        m.expect(traversed).toBeObservable(expected);
         m.expect(other).toHaveSubscriptions(subs);
     }));
 
-    it("should support asynchonous consumers", marbles((m) => {
+    it("should traverse with asynchonous consumers", marbles((m) => {
 
         const other =    m.cold("----|");
         const subs = [
@@ -104,12 +104,12 @@ describe("observable/page", () => {
         const expected = m.cold("0---1---2---|");
 
         const factory = createFactory(2);
-        const paged = page(factory, source => concat(source, other));
-        m.expect(paged).toBeObservable(expected);
+        const traversed = traverse(factory, source => concat(source, other));
+        m.expect(traversed).toBeObservable(expected);
         m.expect(other).toHaveSubscriptions(subs);
     }));
 
-    it("should support graphs", marbles((m) => {
+    it("should traverse graphs", marbles((m) => {
 
         const data = {
             a: {
@@ -129,11 +129,11 @@ describe("observable/page", () => {
             return from(pairs).pipe(delay(m.time("------|"), m.scheduler));
         };
 
-        const paged = page(factory);
-        m.expect(paged).toBeObservable(expected);
+        const traversed = traverse(factory);
+        m.expect(traversed).toBeObservable(expected);
     }));
 
-    it("should preserve the page ordering", marbles((m) => {
+    it("should preserve the order", marbles((m) => {
 
         const expected = m.cold("------a-b---(c|)");
 
@@ -145,7 +145,7 @@ describe("observable/page", () => {
             ) : empty<never>();
         };
 
-        const paged = page(factory);
-        m.expect(paged).toBeObservable(expected);
+        const traversed = traverse(factory);
+        m.expect(traversed).toBeObservable(expected);
     }));
 });

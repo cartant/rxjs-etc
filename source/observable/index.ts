@@ -9,6 +9,6 @@ export * from "./forkJoinArray";
 export * from "./forkJoinConcurrent";
 export * from "./fromIterable";
 export * from "./mergeArray";
-export * from "./page";
+export * from "./traverse";
 export * from "./zipArray";
 export * from "./zipPadded";

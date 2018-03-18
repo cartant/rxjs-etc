@@ -4,12 +4,12 @@
  */
 
 import { Observable } from "rxjs/Observable";
-import { page as staticPage } from "../../observable/page";
+import { traverse as staticTraverse } from "../../observable/traverse";
 
-Observable.page = staticPage;
+Observable.traverse = staticTraverse;
 
 declare module "rxjs/Observable" {
     namespace Observable {
-        export let page: typeof staticPage;
+        export let traverse: typeof staticTraverse;
     }
 }

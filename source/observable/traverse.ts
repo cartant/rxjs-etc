@@ -18,26 +18,26 @@ import { tap } from "rxjs/operators/tap";
 import { pipeFromArray } from "rxjs/util/pipe";
 import { isObservable } from "../util";
 
-export type PageConsumer<T, R> = (source: Observable<T>) => Observable<R>;
-export type PageFactory<T, M> = (marker: M | undefined, index: number) => Observable<{ marker: M, value: ObservableInput<T> }>;
+export type TraverseConsumer<T, R> = (source: Observable<T>) => Observable<R>;
+export type TraverseFactory<T, M> = (marker: M | undefined, index: number) => Observable<{ marker: M, value: ObservableInput<T> }>;
 
-export function page<T, M>(
-    factory: PageFactory<T, M>,
+export function traverse<T, M>(
+    factory: TraverseFactory<T, M>,
     notifier: Observable<any>
 ): Observable<T>;
 
-export function page<T, M, R>(
-    factory: PageFactory<T, M>,
-    consumer: PageConsumer<T, R>
+export function traverse<T, M, R>(
+    factory: TraverseFactory<T, M>,
+    consumer: TraverseConsumer<T, R>
 ): Observable<R>;
 
-export function page<T, M>(
-    factory: PageFactory<T, M>
+export function traverse<T, M>(
+    factory: TraverseFactory<T, M>
 ): Observable<T>;
 
-export function page<T, M, R>(
-    factory: PageFactory<T, M>,
-    notifierOrConsumer?: Observable<any> | PageConsumer<T, R>
+export function traverse<T, M, R>(
+    factory: TraverseFactory<T, M>,
+    notifierOrConsumer?: Observable<any> | TraverseConsumer<T, R>
 ): Observable<T | R> {
     return Observable.create((observer: Observer<T | R>) => {
         let notifier: Observable<any>;
