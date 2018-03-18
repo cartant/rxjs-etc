@@ -67,7 +67,8 @@
     "test:build": "yarn run test:clean && tsc -p tsconfig.json",
     "test:clean": "rimraf build",
     "test:karma": "karma start --single-run",
-    "test:mocha": "mocha build/**/*-spec.js"
+    "test:mocha": "mocha build/**/*-spec.js",
+    "test:watch": "yarn run lint && yarn run test:build && karma start"
   },
   "types": "./dist/index.d.ts",
   "unpkg": "./bundles/rxjs-etc.min.umd.js",
