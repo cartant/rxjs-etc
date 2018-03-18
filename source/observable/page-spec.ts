@@ -9,6 +9,7 @@ import { concat } from "rxjs/observable/concat";
 import { empty } from "rxjs/observable/empty";
 import { from } from "rxjs/observable/from";
 import { of } from "rxjs/observable/of";
+import { merge } from "rxjs/observable/merge";
 import { delay } from "rxjs/operators/delay";
 import { IScheduler } from "rxjs/Scheduler";
 import { marbles } from "rxjs-marbles";
@@ -126,6 +127,22 @@ describe("observable/page", () => {
             const node = (index === 0) ? data : marker;
             const pairs = Object.keys(node).map(key => ({ marker: node[key], value: of(key) }));
             return from(pairs).pipe(delay(m.time("------|"), m.scheduler));
+        };
+
+        const paged = page(factory);
+        m.expect(paged).toBeObservable(expected);
+    }));
+
+    it("should preserve the page ordering", marbles((m) => {
+
+        const expected = m.cold("------a-b---(c|)");
+
+        const factory = (marker: any, index: number) => {
+            return (index === 0) ? merge(
+                of({ marker: undefined, value: of("a").pipe(delay(m.time("------|"), m.scheduler)) }),
+                of({ marker: undefined, value: of("b").pipe(delay(m.time("--|"), m.scheduler)) }),
+                of({ marker: undefined, value: of("c").pipe(delay(m.time("----|"), m.scheduler)) })
+            ) : empty<never>();
         };
 
         const paged = page(factory);

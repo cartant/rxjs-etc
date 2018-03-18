@@ -12,7 +12,6 @@ import { empty } from "rxjs/observable/empty";
 import { from } from "rxjs/observable/from";
 import { concatMap } from "rxjs/operators/concatMap";
 import { expand } from "rxjs/operators/expand";
-import { mergeMap } from "rxjs/operators/mergeMap";
 import { take } from "rxjs/operators/take";
 import { tap } from "rxjs/operators/tap";
 import { pipeFromArray } from "rxjs/util/pipe";
@@ -71,7 +70,7 @@ export function page<T, M, R>(
                     concatMap(() => more)
                 );
             }),
-            mergeMap(({ value }) => from(value).pipe<T | R>(pipeFromArray(operators)))
+            concatMap(({ value }) => from(value).pipe<T | R>(pipeFromArray(operators)))
         ).subscribe(observer));
         return subscription;
     });
