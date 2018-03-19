@@ -56,25 +56,21 @@ export function traverse<T, M, R>(
             const subject = new Subject<any>();
             notifier = subject;
             postExpandOperators = [
-                concatMap(({ last, value }) => from<T>(value).pipe(
+                concatMap(({ next, value }) => from<T>(value).pipe(
                     consumer,
-                    tap(() => {
-                        if (last) {
-                            subject.next();
-                        }
-                    })
+                    tap(() => next && next())
                 ))
             ];
             producerWithOperators = (marker: M | undefined, index: number) => producer(marker, index).pipe(
                 toArray(),
-                concatMap(pairs => {
-                    const length = pairs.length;
+                concatMap(produced => {
+                    const length = produced.length;
                     if (length) {
-                        pairs[length - 1]["last"] = true;
+                        produced[length - 1]["next"] = () => subject.next();
                     } else {
                         subject.next();
                     }
-                    return pairs;
+                    return produced;
                 })
             );
         }
@@ -91,10 +87,7 @@ export function traverse<T, M, R>(
                     --notifications;
                     return producerWithOperators(markers.shift(), ++index);
                 });
-                if (notifications > 0) {
-                    return more;
-                }
-                return notifier.pipe(
+                return (notifications > 0) ? more : notifier.pipe(
                     filter(() => length === markers.length),
                     take(1),
                     concatMap(() => more)
