@@ -9,7 +9,6 @@ import { Observer } from "rxjs/Observer";
 import { Subject } from "rxjs/Subject";
 import { Subscription } from "rxjs/Subscription";
 import { defer } from "rxjs/observable/defer";
-import { empty } from "rxjs/observable/empty";
 import { from } from "rxjs/observable/from";
 import { concatMap } from "rxjs/operators/concatMap";
 import { expand } from "rxjs/operators/expand";
@@ -52,12 +51,11 @@ export function traverse<T, M, R>(
             ];
             producerWithOperators = producer;
         } else {
-            const consumer = notifierOrConsumer || defaultConsumer;
             const subject = new Subject<any>();
             notifier = subject;
             postExpandOperators = [
                 concatMap(({ next, value }) => from<T>(value).pipe(
-                    consumer,
+                    notifierOrConsumer || defaultConsumer,
                     tap(() => next && next())
                 ))
             ];
