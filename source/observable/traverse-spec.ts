@@ -135,6 +135,43 @@ describe("observable/traverse", () => {
         m.expect(traversed).toBeObservable(expected);
     }));
 
+    it("should serialize production", marbles((m) => {
+
+        const values = {
+            x: { marker: undefined, value: ["a", "b"] },
+            y: { marker: undefined, value: ["c", "d"] },
+            z: { marker: undefined, value: ["e", "f"] }
+        };
+
+        const x = m.cold("x----|", values);
+        const y = m.cold("y----|", values);
+        const z = m.cold("z----|", values);
+
+        const expected = m.cold("-----(ab)-(cd)-(ef|)");
+        const xSubs =           "^----!--------------";
+        const ySubs =           "-----^----!---------";
+        const zSubs =           "----------^----!----";
+
+        const producer = (marker: any, index: number) => {
+            switch (index) {
+            case 0:
+                return x;
+            case 1:
+                return y;
+            case 2:
+                return z;
+            default:
+                return empty<never>();
+            }
+        };
+
+        const traversed = traverse(producer);
+        m.expect(traversed).toBeObservable(expected);
+        m.expect(x).toHaveSubscriptions(xSubs);
+        m.expect(y).toHaveSubscriptions(ySubs);
+        m.expect(z).toHaveSubscriptions(zSubs);
+    }));
+
     it("should queue notifications for graphs", marbles((m) => {
 
         const data = {
