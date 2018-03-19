@@ -13,8 +13,10 @@ import { empty } from "rxjs/observable/empty";
 import { from } from "rxjs/observable/from";
 import { concatMap } from "rxjs/operators/concatMap";
 import { expand } from "rxjs/operators/expand";
+import { filter } from "rxjs/operators/filter";
 import { take } from "rxjs/operators/take";
 import { tap } from "rxjs/operators/tap";
+import { toArray } from "rxjs/operators/toArray";
 import { pipeFromArray } from "rxjs/util/pipe";
 import { isObservable } from "../util";
 
@@ -41,38 +43,69 @@ export function traverse<T, M, R>(
 ): Observable<T | R> {
     return Observable.create((observer: Observer<T | R>) => {
         let notifier: Observable<any>;
-        let operators: UnaryFunction<any, any>[];
+        let postExpandOperators: UnaryFunction<any, any>[];
+        let producerWithOperators: TraverseProducer<T, M>;
         if (isObservable(notifierOrConsumer)) {
             notifier = notifierOrConsumer;
-            operators = [];
+            postExpandOperators = [
+                concatMap(({ value }) => from(value))
+            ];
+            producerWithOperators = producer;
         } else {
+            const consumer = notifierOrConsumer || defaultConsumer;
             const subject = new Subject<any>();
             notifier = subject;
-            operators = [tap(undefined!, undefined!, () => subject.next())];
-            if (notifierOrConsumer !== undefined) {
-                operators.unshift(notifierOrConsumer);
-            }
+            postExpandOperators = [
+                concatMap(({ last, value }) => from<T>(value).pipe(
+                    consumer,
+                    tap(() => {
+                        if (last) {
+                            subject.next();
+                        }
+                    })
+                ))
+            ];
+            producerWithOperators = (marker: M | undefined, index: number) => producer(marker, index).pipe(
+                toArray(),
+                concatMap(pairs => {
+                    const length = pairs.length;
+                    if (length) {
+                        pairs[length - 1]["last"] = true;
+                    } else {
+                        subject.next();
+                    }
+                    return pairs;
+                })
+            );
         }
         let index = 0;
+        const markers: M[] = [];
         let notifications = 0;
         const subscription = new Subscription();
         subscription.add(notifier.subscribe(() => ++notifications));
-        subscription.add(producer(undefined, index).pipe(
-            expand(({ marker, value }) => {
+        subscription.add(producerWithOperators(undefined, index).pipe(
+            expand(({ marker }) => {
+                markers.push(marker);
+                const length = markers.length;
                 const more = defer(() => {
                     --notifications;
-                    return producer(marker, ++index);
+                    return producerWithOperators(markers.shift(), ++index);
                 });
                 if (notifications > 0) {
                     return more;
                 }
                 return notifier.pipe(
+                    filter(() => length === markers.length),
                     take(1),
                     concatMap(() => more)
                 );
             }),
-            concatMap(({ value }) => from(value).pipe<T | R>(pipeFromArray(operators)))
+            pipeFromArray(postExpandOperators) as UnaryFunction<Observable<any>, Observable<T | R>>
         ).subscribe(observer));
         return subscription;
     });
+}
+
+function defaultConsumer<T>(source: Observable<T>): Observable<any> {
+    return source;
 }

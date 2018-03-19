@@ -109,7 +109,7 @@ describe("observable/traverse", () => {
         m.expect(other).toHaveSubscriptions(subs);
     }));
 
-    it("should traverse graphs", marbles((m) => {
+    it("should traverse graphs with a notifier", marbles((m) => {
 
         const data = {
             a: {
@@ -121,12 +121,69 @@ describe("observable/traverse", () => {
             },
             c: {}
         };
-        const expected = m.cold("------(abc)-(def)-|");
+
+        const notifier =  m.hot("------n-----n--");
+        const expected = m.cold("(abc)-(de)--f--");
 
         const producer = (marker: any, index: number) => {
             const node = (index === 0) ? data : marker;
             const pairs = Object.keys(node).map(key => ({ marker: node[key], value: of(key) }));
-            return from(pairs).pipe(delay(m.time("------|"), m.scheduler));
+            return from(pairs);
+        };
+
+        const traversed = traverse(producer, notifier);
+        m.expect(traversed).toBeObservable(expected);
+    }));
+
+    it("should queue notifications for graphs", marbles((m) => {
+
+        const data = {
+            a: {
+                d: {},
+                e: {}
+            },
+            b: {
+                f: {}
+            },
+            c: {}
+        };
+
+        const notifier =  m.hot("nn-----------------");
+        const expected = m.cold("------(abc)-(def)--");
+
+        const producer = (marker: any, index: number) => {
+            const node = (index === 0) ? data : marker;
+            const pairs = Object.keys(node).map(key => ({ marker: node[key], value: of(key) }));
+            return pairs.length ?
+                from(pairs).pipe(delay(m.time("------|"), m.scheduler)) :
+                empty<never>();
+        };
+
+        const traversed = traverse(producer, notifier);
+        m.expect(traversed).toBeObservable(expected);
+    }));
+
+    it("should traverse graphs without a notifier", marbles((m) => {
+
+        const data = {
+            a: {
+                d: {},
+                e: {}
+            },
+            b: {
+                f: {}
+            },
+            c: {}
+        };
+
+        const expected = m.cold("------(abc)-(de)--(f|)");
+
+        const producer = (marker: any, index: number) => {
+            const node = (index === 0) ? data : marker;
+            const pairs = Object.keys(node).map(key => ({ marker: node[key], value: of(key) }));
+            return pairs.length ?
+                from(pairs).pipe(delay(m.time("------|"), m.scheduler)) :
+                empty<never>();
         };
 
         const traversed = traverse(producer);
