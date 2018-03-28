@@ -17,10 +17,15 @@ import { traverse } from "./traverse";
 
 describe("observable/traverse", () => {
 
-    const createProducer = (max: number = Infinity, time?: number, scheduler?: IScheduler) =>
+    const createProducer = (max: number = Infinity, count?: number, time?: number, scheduler?: IScheduler) =>
         (marker: number | undefined): Observable<{ markers: number[], values: ObservableInput<string> }> => {
             const at = (marker === undefined) ? 0 : marker + 1;
-            const source = (at <= max) ? of({ markers: [at], values: [at.toString()] }) : empty<never>();
+            const markers = [at];
+            const values: string[] = [];
+            for (let c = 0; c < (count || 1); ++c) {
+                values.push((at + c).toString());
+            }
+            const source = (at <= max) ? of({ markers, values }) : empty<never>();
             return (time !== undefined) && (scheduler !== undefined) ?
                 source.pipe(delay(time, scheduler)) :
                 source;
@@ -32,7 +37,7 @@ describe("observable/traverse", () => {
         const notifierSubs =    "^----!";
         const expected = m.cold("-----|");
 
-        const producer = createProducer(-1, m.time("-----|"), m.scheduler);
+        const producer = createProducer(-1, 1, m.time("-----|"), m.scheduler);
         const traversed = traverse(producer, notifier);
         m.expect(traversed).toBeObservable(expected);
         m.expect(notifier).toHaveSubscriptions(notifierSubs);
@@ -58,12 +63,22 @@ describe("observable/traverse", () => {
         m.expect(traversed).toBeObservable(expected);
     }));
 
+    it("should flatten values within chunks", marbles((m) => {
+
+        const notifier =  m.hot("-----n-------n-----n-----");
+        const expected = m.cold("(01)-(12)----(23)--(34)--");
+
+        const producer = createProducer(Infinity, 2);
+        const traversed = traverse(producer, notifier);
+        m.expect(traversed).toBeObservable(expected);
+    }));
+
     it("should queue notifications", marbles((m) => {
 
         const notifier =  m.hot("-nn------------");
         const expected = m.cold("----0---1---2--");
 
-        const producer = createProducer(Infinity, m.time("----|"), m.scheduler);
+        const producer = createProducer(Infinity, 1, m.time("----|"), m.scheduler);
         const traversed = traverse(producer, notifier);
         m.expect(traversed).toBeObservable(expected);
     }));
@@ -72,7 +87,7 @@ describe("observable/traverse", () => {
 
         const expected = m.cold("----0---1---2---|");
 
-        const producer = createProducer(2, m.time("----|"), m.scheduler);
+        const producer = createProducer(2, 1, m.time("----|"), m.scheduler);
         const traversed = traverse(producer);
         m.expect(traversed).toBeObservable(expected);
     }));
@@ -87,7 +102,7 @@ describe("observable/traverse", () => {
         ];
         const expected = m.cold("----0---1---2---|");
 
-        const producer = createProducer(2, m.time("----|"), m.scheduler);
+        const producer = createProducer(2, 1, m.time("----|"), m.scheduler);
         const traversed = traverse(producer, source => concat(source, other));
         m.expect(traversed).toBeObservable(expected);
         m.expect(other).toHaveSubscriptions(subs);
