@@ -20,7 +20,8 @@ import { pipeFromArray } from "rxjs/util/pipe";
 import { isObservable } from "../util";
 
 export type TraverseConsumer<T, R> = (source: Observable<T>) => Observable<R>;
-export type TraverseProducer<T, M> = (marker: M | undefined, index: number) => Observable<{ marker: M, value: ObservableInput<T> }>;
+export type TraverseElement<T, M> = { markers: ObservableInput<M>, values: ObservableInput<T> };
+export type TraverseProducer<T, M> = (marker: M | undefined, index: number) => Observable<TraverseElement<T, M>>;
 
 export function traverse<T, M>(
     producer: TraverseProducer<T, M>,
@@ -42,24 +43,18 @@ export function traverse<T, M, R>(
 ): Observable<T | R> {
     return Observable.create((observer: Observer<T | R>) => {
         let notifier: Observable<any>;
+        let producerWithPreExpandOperators: TraverseProducer<T, M>;
         let postExpandOperators: UnaryFunction<any, any>[];
-        let producerWithOperators: TraverseProducer<T, M>;
         if (isObservable(notifierOrConsumer)) {
             notifier = notifierOrConsumer;
+            producerWithPreExpandOperators = producer;
             postExpandOperators = [
-                concatMap(({ value }) => from(value))
+                concatMap(({ values }) => from(values))
             ];
-            producerWithOperators = producer;
         } else {
             const subject = new Subject<any>();
             notifier = subject;
-            postExpandOperators = [
-                concatMap(({ next, value }) => from<T>(value).pipe(
-                    notifierOrConsumer || defaultConsumer,
-                    tap(() => next && next())
-                ))
-            ];
-            producerWithOperators = (marker: M | undefined, index: number) => producer(marker, index).pipe(
+            producerWithPreExpandOperators = (marker: M | undefined, index: number) => producer(marker, index).pipe(
                 toArray(),
                 concatMap(produced => {
                     const length = produced.length;
@@ -71,26 +66,34 @@ export function traverse<T, M, R>(
                     return produced;
                 })
             );
+            postExpandOperators = [
+                concatMap(({ next, values }) => from<T>(values).pipe(
+                    notifierOrConsumer || defaultConsumer,
+                    tap(undefined!, undefined!, () => next && next())
+                ))
+            ];
         }
         let index = 0;
-        const markers: M[] = [];
         let notifications = 0;
+        const queue: M[] = [];
         const subscription = new Subscription();
         subscription.add(notifier.subscribe(() => ++notifications));
-        subscription.add(producerWithOperators(undefined, index).pipe(
-            expand(({ marker }) => {
-                markers.push(marker);
-                const length = markers.length;
-                const more = defer(() => {
-                    --notifications;
-                    return producerWithOperators(markers.shift(), ++index);
-                });
-                return (notifications > 0) ? more : notifier.pipe(
-                    filter(() => length === markers.length),
-                    take(1),
-                    concatMap(() => more)
-                );
-            }),
+        subscription.add(producerWithPreExpandOperators(undefined, index).pipe(
+            expand(({ markers }) => from<M>(markers).pipe(
+                concatMap(marker => {
+                    queue.push(marker);
+                    const length = queue.length;
+                    const more = defer(() => {
+                        --notifications;
+                        return producerWithPreExpandOperators(queue.shift(), ++index);
+                    });
+                    return (notifications > 0) ? more : notifier.pipe(
+                        filter(() => length === queue.length),
+                        take(1),
+                        concatMap(() => more)
+                    );
+                })
+            )),
             pipeFromArray(postExpandOperators) as UnaryFunction<Observable<any>, Observable<T | R>>
         ).subscribe(observer));
         return subscription;

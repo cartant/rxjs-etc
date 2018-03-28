@@ -4,7 +4,7 @@
  */
 /*tslint:disable:no-unused-expression*/
 
-import { Observable } from "rxjs/Observable";
+import { Observable, ObservableInput } from "rxjs/Observable";
 import { concat } from "rxjs/observable/concat";
 import { empty } from "rxjs/observable/empty";
 import { from } from "rxjs/observable/from";
@@ -18,9 +18,9 @@ import { traverse } from "./traverse";
 describe("observable/traverse", () => {
 
     const createProducer = (max: number = Infinity, time?: number, scheduler?: IScheduler) =>
-        (marker: number | undefined): Observable<{ marker: number, value: Observable<string> }> => {
+        (marker: number | undefined): Observable<{ markers: number[], values: ObservableInput<string> }> => {
             const at = (marker === undefined) ? 0 : marker + 1;
-            const source = (at <= max) ? of({ marker: at, value: of(at.toString()) }) : empty<never>();
+            const source = (at <= max) ? of({ markers: [at], values: [at.toString()] }) : empty<never>();
             return (time !== undefined) && (scheduler !== undefined) ?
                 source.pipe(delay(time, scheduler)) :
                 source;
@@ -127,7 +127,7 @@ describe("observable/traverse", () => {
 
         const producer = (marker: any, index: number) => {
             const node = (index === 0) ? data : marker;
-            const pairs = Object.keys(node).map(key => ({ marker: node[key], value: of(key) }));
+            const pairs = Object.keys(node).map(key => ({ markers: [node[key]], values: [key] }));
             return from(pairs);
         };
 
@@ -138,11 +138,13 @@ describe("observable/traverse", () => {
     it("should serialize production", marbles((m) => {
 
         const values = {
-            x: { marker: undefined, value: ["a", "b"] },
-            y: { marker: undefined, value: ["c", "d"] },
-            z: { marker: undefined, value: ["e", "f"] }
+            w: { markers: ["x", "y", "z"], values: [] },
+            x: { markers: [], values: ["a", "b"] },
+            y: { markers: [], values: ["c", "d"] },
+            z: { markers: [], values: ["e", "f"] }
         };
 
+        const w = m.cold("(w|)", values);
         const x = m.cold("x----|", values);
         const y = m.cold("y----|", values);
         const z = m.cold("z----|", values);
@@ -152,13 +154,15 @@ describe("observable/traverse", () => {
         const ySubs =           "-----^----!---------";
         const zSubs =           "----------^----!----";
 
-        const producer = (marker: any, index: number) => {
-            switch (index) {
-            case 0:
+        const producer = (marker: string | undefined, index: number) => {
+            switch (marker) {
+            case undefined:
+                return w;
+            case "x":
                 return x;
-            case 1:
+            case "y":
                 return y;
-            case 2:
+            case "z":
                 return z;
             default:
                 return empty<never>();
@@ -190,7 +194,7 @@ describe("observable/traverse", () => {
 
         const producer = (marker: any, index: number) => {
             const node = (index === 0) ? data : marker;
-            const pairs = Object.keys(node).map(key => ({ marker: node[key], value: of(key) }));
+            const pairs = Object.keys(node).map(key => ({ markers: [node[key]], values: [key] }));
             return pairs.length ?
                 from(pairs).pipe(delay(m.time("------|"), m.scheduler)) :
                 empty<never>();
@@ -217,7 +221,7 @@ describe("observable/traverse", () => {
 
         const producer = (marker: any, index: number) => {
             const node = (index === 0) ? data : marker;
-            const pairs = Object.keys(node).map(key => ({ marker: node[key], value: of(key) }));
+            const pairs = Object.keys(node).map(key => ({ markers: [node[key]], values: [key] }));
             return pairs.length ?
                 from(pairs).pipe(delay(m.time("------|"), m.scheduler)) :
                 empty<never>();
@@ -233,9 +237,9 @@ describe("observable/traverse", () => {
 
         const producer = (marker: any, index: number) => {
             return (index === 0) ? merge(
-                of({ marker: undefined, value: of("a").pipe(delay(m.time("------|"), m.scheduler)) }),
-                of({ marker: undefined, value: of("b").pipe(delay(m.time("--|"), m.scheduler)) }),
-                of({ marker: undefined, value: of("c").pipe(delay(m.time("----|"), m.scheduler)) })
+                of({ markers: [], values: of("a").pipe(delay(m.time("------|"), m.scheduler)) }),
+                of({ markers: [], values: of("b").pipe(delay(m.time("--|"), m.scheduler)) }),
+                of({ markers: [], values: of("c").pipe(delay(m.time("----|"), m.scheduler)) })
             ) : empty<never>();
         };
 
