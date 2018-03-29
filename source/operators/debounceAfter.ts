@@ -29,7 +29,7 @@ export function debounceAfter<T>(
         publish((sharedSource) => notifier.pipe(
             switchMap(() => concat(
                 of(true),
-                delay<boolean>(duration, scheduler)(of(false))
+                of(false).pipe(delay(duration, scheduler))
             )),
             startWith(false),
             distinctUntilChanged(),

@@ -74,7 +74,7 @@ export function rateLimit<T>(period: number, ...args: (number | IScheduler | und
         concatMap((emission: Emission<T>) => {
 
             const observable = of(emission.value);
-            return emission.delay ? delay<T>(emission.delay, scheduler)(observable) : observable;
+            return emission.delay ? observable.pipe(delay(emission.delay, scheduler)) : observable;
         })
     );
 }
