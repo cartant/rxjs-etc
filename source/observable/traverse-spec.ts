@@ -5,13 +5,13 @@
 /*tslint:disable:no-unused-expression*/
 
 import { expect } from "chai";
-import { Observable, ObservableInput } from "rxjs/Observable";
+import { Observable } from "rxjs/Observable";
 import { concat } from "rxjs/observable/concat";
 import { empty } from "rxjs/observable/empty";
-import { from } from "rxjs/observable/from";
 import { of } from "rxjs/observable/of";
-import { merge } from "rxjs/observable/merge";
+import { timer } from "rxjs/observable/timer";
 import { delay } from "rxjs/operators/delay";
+import { ignoreElements } from "rxjs/operators/ignoreElements";
 import { map } from "rxjs/operators/map";
 import { IScheduler } from "rxjs/Scheduler";
 import { Subject } from "rxjs/Subject";
@@ -20,10 +20,10 @@ import { traverse } from "./traverse";
 
 describe("observable/traverse", () => {
 
-    describe("general", () => {
+    describe("lists", () => {
 
         const createProducer = (max: number = Infinity, count?: number, time?: number, scheduler?: IScheduler) =>
-            (marker: number | undefined): Observable<{ markers: number[], values: ObservableInput<string> }> => {
+            (marker: number | undefined): Observable<{ markers: number[], values: string[] }> => {
                 const at = (marker === undefined) ? 0 : marker + 1;
                 const markers = [at];
                 const values: string[] = [];
@@ -129,32 +129,6 @@ describe("observable/traverse", () => {
             m.expect(other).toHaveSubscriptions(subs);
         }));
 
-        it("should traverse graphs with a notifier", marbles((m) => {
-
-            const data = {
-                a: {
-                    d: {},
-                    e: {}
-                },
-                b: {
-                    f: {}
-                },
-                c: {}
-            };
-
-            const notifier =  m.hot("------n-----n--");
-            const expected = m.cold("(abc)-(de)--f--");
-
-            const producer = (marker: any, index: number) => {
-                const node = (index === 0) ? data : marker;
-                const pairs = Object.keys(node).map(key => ({ markers: [node[key]], values: [key] }));
-                return from(pairs);
-            };
-
-            const traversed = traverse(producer, notifier);
-            m.expect(traversed).toBeObservable(expected);
-        }));
-
         it("should serialize production", marbles((m) => {
 
             const values = {
@@ -164,15 +138,16 @@ describe("observable/traverse", () => {
                 z: { markers: [], values: ["e", "f"] }
             };
 
-            const w = m.cold("(w|)", values);
-            const x = m.cold("x----|", values);
-            const y = m.cold("y----|", values);
-            const z = m.cold("z----|", values);
+            const w = m.cold("-----(w|)", values);
+            const x = m.cold("-----(x|)", values);
+            const y = m.cold("-----(y|)", values);
+            const z = m.cold("-----(z|)", values);
 
-            const expected = m.cold("-----(ab)-(cd)-(ef|)");
-            const xSubs =           "^----!--------------";
-            const ySubs =           "-----^----!---------";
-            const zSubs =           "----------^----!----";
+            const expected = m.cold("----------(ab)-(cd)-(ef|)");
+            const wSubs =           "^-------------------!----";
+            const xSubs =           "-----^----!--------------";
+            const ySubs =           "----------^----!---------";
+            const zSubs =           "---------------^----!----";
 
             const producer = (marker: string | undefined, index: number) => {
                 switch (marker) {
@@ -191,78 +166,66 @@ describe("observable/traverse", () => {
 
             const traversed = traverse(producer);
             m.expect(traversed).toBeObservable(expected);
+            m.expect(w).toHaveSubscriptions(wSubs);
             m.expect(x).toHaveSubscriptions(xSubs);
             m.expect(y).toHaveSubscriptions(ySubs);
             m.expect(z).toHaveSubscriptions(zSubs);
         }));
+    });
+
+    describe("graphs", () => {
+
+        const createProducer = (time?: number, scheduler?: IScheduler) =>
+            (marker: any): Observable<{ markers: any[], values: string[] }> => {
+                const data = {
+                    a: {
+                        d: {},
+                        e: {}
+                    },
+                    b: {
+                        f: {}
+                    },
+                    c: {}
+                };
+                const node = marker ? marker : data;
+                const element: any = { markers: [], values: [] };
+                Object.keys(node).forEach(key => {
+                    if (Object.keys(node[key]).length) {
+                        element.markers.push(node[key]);
+                    }
+                    element.values.push(key);
+                });
+                return (time && scheduler) ? concat(
+                    timer(time, scheduler).pipe(ignoreElements()) as Observable<never>,
+                    of(element)
+                ) : of(element);
+            };
+
+        it("should traverse graphs with a notifier", marbles((m) => {
+
+            const notifier =  m.hot("------n-----n---");
+            const expected = m.cold("(abc)-(de)--(f|)");
+
+            const producer = createProducer();
+            const traversed = traverse(producer, notifier);
+            m.expect(traversed).toBeObservable(expected);
+        }));
 
         it("should queue notifications for graphs", marbles((m) => {
 
-            const data = {
-                a: {
-                    d: {},
-                    e: {}
-                },
-                b: {
-                    f: {}
-                },
-                c: {}
-            };
+            const notifier =  m.hot("nn--------------------");
+            const expected = m.cold("------(abc)-(de)--(f|)");
 
-            const notifier =  m.hot("nn-----------------");
-            const expected = m.cold("------(abc)-(def)--");
-
-            const producer = (marker: any, index: number) => {
-                const node = (index === 0) ? data : marker;
-                const pairs = Object.keys(node).map(key => ({ markers: [node[key]], values: [key] }));
-                return pairs.length ?
-                    from(pairs).pipe(delay(m.time("------|"), m.scheduler)) :
-                    empty<never>();
-            };
-
+            const producer = createProducer(m.time("------|"), m.scheduler);
             const traversed = traverse(producer, notifier);
             m.expect(traversed).toBeObservable(expected);
         }));
 
         it("should traverse graphs without a notifier", marbles((m) => {
 
-            const data = {
-                a: {
-                    d: {},
-                    e: {}
-                },
-                b: {
-                    f: {}
-                },
-                c: {}
-            };
-
             const expected = m.cold("------(abc)-(de)--(f|)");
 
-            const producer = (marker: any, index: number) => {
-                const node = (index === 0) ? data : marker;
-                const pairs = Object.keys(node).map(key => ({ markers: [node[key]], values: [key] }));
-                return pairs.length ?
-                    from(pairs).pipe(delay(m.time("------|"), m.scheduler)) :
-                    empty<never>();
-            };
-
-            const traversed = traverse(producer);
-            m.expect(traversed).toBeObservable(expected);
-        }));
-
-        it("should preserve the order", marbles((m) => {
-
-            const expected = m.cold("------a-b---(c|)");
-
-            const producer = (marker: any, index: number) => {
-                return (index === 0) ? merge(
-                    of({ markers: [], values: of("a").pipe(delay(m.time("------|"), m.scheduler)) }),
-                    of({ markers: [], values: of("b").pipe(delay(m.time("--|"), m.scheduler)) }),
-                    of({ markers: [], values: of("c").pipe(delay(m.time("----|"), m.scheduler)) })
-                ) : empty<never>();
-            };
-
+            const producer = createProducer(m.time("------|"), m.scheduler);
             const traversed = traverse(producer);
             m.expect(traversed).toBeObservable(expected);
         }));

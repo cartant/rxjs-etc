@@ -3,18 +3,17 @@
  * can be found in the LICENSE file at https://github.com/cartant/rxjs-etc
  */
 
-import { UnaryFunction } from "rxjs/interfaces";
 import { Observable, ObservableInput } from "rxjs/Observable";
 import { Observer } from "rxjs/Observer";
 import { Subject } from "rxjs/Subject";
 import { Subscription } from "rxjs/Subscription";
+import { concat } from "rxjs/observable/concat";
 import { from } from "rxjs/observable/from";
 import { concatMap } from "rxjs/operators/concatMap";
 import { expand } from "rxjs/operators/expand";
-import { finalize } from "rxjs/operators/finalize";
-import { mergeMap } from "rxjs/operators/mergeMap";
-import { toArray } from "rxjs/operators/toArray";
-import { pipeFromArray } from "rxjs/util/pipe";
+import { ignoreElements } from "rxjs/operators/ignoreElements";
+import { tap } from "rxjs/operators/tap";
+import { identity } from "rxjs/util/identity";
 import { NotificationQueue } from "./NotificationQueue";
 import { isObservable } from "../util";
 
@@ -44,54 +43,45 @@ export function traverse<T, M, R>(
 ): Observable<T | R> {
     return Observable.create((observer: Observer<T | R>) => {
 
-        let notifier: Observable<any>;
-        let producerWithPreExpandOperators: TraverseProducer<T, M>;
-        let postExpandOperators: UnaryFunction<any, any>[];
+        let consumerOperation: (source: Observable<T>) => Observable<T | R>;
+        let producerOperation: (source: Observable<M>) => Observable<M>;
+        let queue: NotificationQueue;
+
         if (isObservable(notifierOrConsumer)) {
-            notifier = notifierOrConsumer;
-            producerWithPreExpandOperators = producer;
-            postExpandOperators = [
-                concatMap(({ values }) => from(values))
-            ];
+            consumerOperation = identity;
+            producerOperation = identity;
+            queue = new NotificationQueue(notifierOrConsumer);
         } else {
             const subject = new Subject<any>();
-            notifier = subject;
-            producerWithPreExpandOperators = (marker: M | undefined, index: number) => producer(marker, index).pipe(
-                toArray(),
-                concatMap(produced => {
-                    const length = produced.length;
-                    if (length) {
-                        produced[length - 1][nextSymbol] = () => subject.next();
-                    } else {
-                        subject.next();
-                    }
-                    return produced;
-                })
-            );
-            postExpandOperators = [
-                concatMap(({ [nextSymbol]: next, values }) => from<T>(values).pipe(
-                    notifierOrConsumer || defaultConsumer,
-                    finalize(() => next && next())
-                ))
-            ];
+            consumerOperation = notifierOrConsumer || identity;
+            producerOperation = tap<M>(() => subject.next());
+            queue = new NotificationQueue(subject);
         }
 
-        const concurrency = 1;
-        const queue = new NotificationQueue(notifier);
+        const destination = new Subject<T | R>();
         const subscription = new Subscription();
+        subscription.add(destination.subscribe(observer));
         subscription.add(queue.connect());
-        subscription.add(producerWithPreExpandOperators(undefined, 0).pipe(
-            expand(({ markers }) => from<M>(markers).pipe(
-                mergeMap(marker => queue.pipe(
-                    concatMap(index => producerWithPreExpandOperators(marker, index + 1))
-                ), concurrency)
+        subscription.add(producer(undefined, 0).pipe(
+            expand(({ markers, values }, index) => concat(
+                from<T>(values).pipe(
+                    consumerOperation,
+                    tap(value => destination.next(value)),
+                    ignoreElements()
+                ),
+                from<M>(markers).pipe(
+                    producerOperation,
+                    concatMap(marker => queue.pipe(
+                        concatMap(index => producer(marker, index + 1))
+                    ))
+                )
             )),
-            pipeFromArray(postExpandOperators) as UnaryFunction<Observable<any>, Observable<T | R>>
-        ).subscribe(observer));
+            tap(
+                () => {},
+                error => destination.error(error),
+                () => destination.complete()
+            )
+        ).subscribe());
         return subscription;
     });
-}
-
-function defaultConsumer<T>(source: Observable<T>): Observable<any> {
-    return source;
 }
