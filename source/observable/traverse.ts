@@ -18,6 +18,8 @@ import { pipeFromArray } from "rxjs/util/pipe";
 import { NotificationQueue } from "./NotificationQueue";
 import { isObservable } from "../util";
 
+const nextSymbol = Symbol.for("next");
+
 export type TraverseConsumer<T, R> = (source: Observable<T>) => Observable<R>;
 export type TraverseElement<T, M> = { markers: ObservableInput<M>, values: ObservableInput<T> };
 export type TraverseProducer<T, M> = (marker: M | undefined, index: number) => Observable<TraverseElement<T, M>>;
@@ -59,7 +61,7 @@ export function traverse<T, M, R>(
                 concatMap(produced => {
                     const length = produced.length;
                     if (length) {
-                        produced[length - 1]["next"] = () => subject.next();
+                        produced[length - 1][nextSymbol] = () => subject.next();
                     } else {
                         subject.next();
                     }
@@ -67,7 +69,7 @@ export function traverse<T, M, R>(
                 })
             );
             postExpandOperators = [
-                concatMap(({ next, values }) => from<T>(values).pipe(
+                concatMap(({ [nextSymbol]: next, values }) => from<T>(values).pipe(
                     notifierOrConsumer || defaultConsumer,
                     finalize(() => next && next())
                 ))
