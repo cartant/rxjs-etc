@@ -311,7 +311,7 @@ describe("observable/traverse", () => {
                             values: response.content
                         }))
                     ),
-                    source => source.pipe(
+                    repos => repos.pipe(
                         map(repo => repo.html_url)
                     )
                 );
