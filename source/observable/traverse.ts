@@ -8,15 +8,13 @@ import { Observable, ObservableInput } from "rxjs/Observable";
 import { Observer } from "rxjs/Observer";
 import { Subject } from "rxjs/Subject";
 import { Subscription } from "rxjs/Subscription";
-import { defer } from "rxjs/observable/defer";
 import { from } from "rxjs/observable/from";
 import { concatMap } from "rxjs/operators/concatMap";
 import { expand } from "rxjs/operators/expand";
-import { filter } from "rxjs/operators/filter";
-import { take } from "rxjs/operators/take";
-import { tap } from "rxjs/operators/tap";
+import { finalize } from "rxjs/operators/finalize";
 import { toArray } from "rxjs/operators/toArray";
 import { pipeFromArray } from "rxjs/util/pipe";
+import { NotificationQueue } from "./NotificationQueue";
 import { isObservable } from "../util";
 
 export type TraverseConsumer<T, R> = (source: Observable<T>) => Observable<R>;
@@ -42,6 +40,7 @@ export function traverse<T, M, R>(
     notifierOrConsumer?: Observable<any> | TraverseConsumer<T, R>
 ): Observable<T | R> {
     return Observable.create((observer: Observer<T | R>) => {
+
         let notifier: Observable<any>;
         let producerWithPreExpandOperators: TraverseProducer<T, M>;
         let postExpandOperators: UnaryFunction<any, any>[];
@@ -69,30 +68,19 @@ export function traverse<T, M, R>(
             postExpandOperators = [
                 concatMap(({ next, values }) => from<T>(values).pipe(
                     notifierOrConsumer || defaultConsumer,
-                    tap(undefined!, undefined!, () => next && next())
+                    finalize(() => next && next())
                 ))
             ];
         }
-        let index = 0;
-        let notifications = 0;
-        const queue: M[] = [];
+
+        const queue = new NotificationQueue(notifier);
         const subscription = new Subscription();
-        subscription.add(notifier.subscribe(() => ++notifications));
-        subscription.add(producerWithPreExpandOperators(undefined, index).pipe(
+        subscription.add(queue.connect());
+        subscription.add(producerWithPreExpandOperators(undefined, 0).pipe(
             expand(({ markers }) => from<M>(markers).pipe(
-                concatMap(marker => {
-                    queue.push(marker);
-                    const length = queue.length;
-                    const more = defer(() => {
-                        --notifications;
-                        return producerWithPreExpandOperators(queue.shift(), ++index);
-                    });
-                    return (notifications > 0) ? more : notifier.pipe(
-                        filter(() => length === queue.length),
-                        take(1),
-                        concatMap(() => more)
-                    );
-                })
+                concatMap(marker => queue.pipe(
+                    concatMap(index => producerWithPreExpandOperators(marker, index + 1))
+                ))
             )),
             pipeFromArray(postExpandOperators) as UnaryFunction<Observable<any>, Observable<T | R>>
         ).subscribe(observer));
