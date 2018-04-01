@@ -1,3 +1,10 @@
+<a name="4.2.0"></a>
+## [4.2.0](https://github.com/cartant/rxjs-etc/compare/v4.1.1...v4.2.0) (2018-04-01)
+
+### Features
+
+* **traverse**: Add `traverse` observable.
+
 <a name="4.1.1"></a>
 ## [4.1.1](https://github.com/cartant/rxjs-etc/compare/v4.1.0...v4.1.1) (2018-02-21)
 
