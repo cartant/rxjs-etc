@@ -42,6 +42,10 @@ npm install rxjs-etc --save
 
     Like `forkJoin` but only runs the specified number of observables concurrently.
 
+* [traverse](./source/observable/traverse.ts)
+
+    Based on `expand`. Traverses a graph with backpressure applied using either a notifier or a consumer.
+
 * [zipPadded](./source/observable/zipPadded.ts)
 
     Works like `zipArray`, but if some sources complete whilst others continue to emit values, those the complete are 'padded' with the specified `padValue` (which defaults to `undefined`).
