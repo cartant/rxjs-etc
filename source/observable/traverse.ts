@@ -68,7 +68,7 @@ export function traverse<T, M, R>(
                     consumerOperation,
                     tap(value => destination.next(value)),
                     ignoreElements()
-                ),
+                ) as Observable<never>,
                 from<M>(markers).pipe(
                     producerOperation,
                     concatMap(marker => queue.pipe(
