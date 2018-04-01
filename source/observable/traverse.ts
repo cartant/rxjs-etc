@@ -12,6 +12,7 @@ import { from } from "rxjs/observable/from";
 import { concatMap } from "rxjs/operators/concatMap";
 import { expand } from "rxjs/operators/expand";
 import { finalize } from "rxjs/operators/finalize";
+import { mergeMap } from "rxjs/operators/mergeMap";
 import { toArray } from "rxjs/operators/toArray";
 import { pipeFromArray } from "rxjs/util/pipe";
 import { NotificationQueue } from "./NotificationQueue";
@@ -73,14 +74,15 @@ export function traverse<T, M, R>(
             ];
         }
 
+        const concurrency = 1;
         const queue = new NotificationQueue(notifier);
         const subscription = new Subscription();
         subscription.add(queue.connect());
         subscription.add(producerWithPreExpandOperators(undefined, 0).pipe(
             expand(({ markers }) => from<M>(markers).pipe(
-                concatMap(marker => queue.pipe(
+                mergeMap(marker => queue.pipe(
                     concatMap(index => producerWithPreExpandOperators(marker, index + 1))
-                ))
+                ), concurrency)
             )),
             pipeFromArray(postExpandOperators) as UnaryFunction<Observable<any>, Observable<T | R>>
         ).subscribe(observer));
