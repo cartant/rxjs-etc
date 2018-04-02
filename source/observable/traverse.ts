@@ -59,8 +59,7 @@ export function traverse<T, M, R>(
         }
 
         const destination = new Subject<T | R>();
-        const subscription = new Subscription();
-        subscription.add(destination.subscribe(observer));
+        const subscription = destination.subscribe(observer);
         subscription.add(queue.connect());
         subscription.add(producer(undefined, 0).pipe(
             expand(({ markers, values }, index) => concat(
