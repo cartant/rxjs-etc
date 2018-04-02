@@ -9,6 +9,7 @@ import { Subject } from "rxjs/Subject";
 import { Subscription } from "rxjs/Subscription";
 import { concat } from "rxjs/observable/concat";
 import { from } from "rxjs/observable/from";
+import { of } from "rxjs/observable/of";
 import { expand } from "rxjs/operators/expand";
 import { ignoreElements } from "rxjs/operators/ignoreElements";
 import { mergeMap } from "rxjs/operators/mergeMap";
@@ -44,7 +45,7 @@ export function traverse<T, M, R>(
     return Observable.create((observer: Observer<T | R>) => {
 
         let consumerOperation: (source: Observable<T>) => Observable<T | R>;
-        let producerOperation: (source: Observable<M>) => Observable<M>;
+        let producerOperation: (source: Observable<M | undefined>) => Observable<M | undefined>;
         let queue: NotificationQueue;
 
         if (isObservable(notifierOrConsumer)) {
@@ -54,7 +55,7 @@ export function traverse<T, M, R>(
         } else {
             const subject = new Subject<any>();
             consumerOperation = notifierOrConsumer || identity;
-            producerOperation = tap<M>(() => subject.next());
+            producerOperation = source => { subject.next(); return source; };
             queue = new NotificationQueue(subject);
         }
 
@@ -62,26 +63,24 @@ export function traverse<T, M, R>(
         const destination = new Subject<T | R>();
         const subscription = destination.subscribe(observer);
         subscription.add(queue.connect());
-        subscription.add(producer(undefined, 0).pipe(
-            expand(({ markers, values }, index) => concat(
-                from<T>(values).pipe(
-                    consumerOperation,
-                    tap(value => destination.next(value)),
-                    ignoreElements()
-                ) as Observable<never>,
-                from<M>(markers).pipe(
-                    producerOperation,
-                    mergeMap(marker => queue.pipe(
-                        mergeMap(index => producer(marker, index + 1))
-                    ), concurrency)
-                )
-            )),
-            tap(
-                () => {},
-                error => destination.error(error),
-                () => destination.complete()
-            )
-        ).subscribe());
+        subscription.add(of(undefined).pipe(
+            expand((marker: M | undefined) => producerOperation(queue.pipe(
+                mergeMap(index => producer(marker, index).pipe(
+                    mergeMap(({ markers, values }) => concat(
+                        from<T>(values).pipe(
+                            consumerOperation,
+                            tap(value => destination.next(value)),
+                            ignoreElements()
+                        ) as Observable<never>,
+                        from<M>(markers)
+                    ))
+                ))
+            )), concurrency)
+        ).subscribe(
+            () => {},
+            error => destination.error(error),
+            () => destination.complete()
+        ));
         return subscription;
     });
 }

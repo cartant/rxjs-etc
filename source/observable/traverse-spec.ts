@@ -38,11 +38,11 @@ describe("observable/traverse", () => {
 
         it("should complete if there is no data", marbles((m) => {
 
-            const notifier =  m.hot("--n--|");
-            const notifierSubs =    "^----!";
-            const expected = m.cold("-----|");
+            const notifier =  m.hot("--n----|");
+            const notifierSubs =    "^---!";
+            const expected = m.cold("----|");
 
-            const producer = createProducer(-1, 1, m.time("-----|"), m.scheduler);
+            const producer = createProducer(-1, 1, m.time("--|"), m.scheduler);
             const traversed = traverse(producer, notifier);
             m.expect(traversed).toBeObservable(expected);
             m.expect(notifier).toHaveSubscriptions(notifierSubs);
@@ -50,7 +50,7 @@ describe("observable/traverse", () => {
 
         it("should traverse the first chunk of data", marbles((m) => {
 
-            const notifier =  m.hot("--");
+            const notifier =  m.hot("n-");
             const expected = m.cold("0-");
 
             const producer = createProducer();
@@ -60,7 +60,7 @@ describe("observable/traverse", () => {
 
         it("should traverse further chunks in response to the notifier", marbles((m) => {
 
-            const notifier =  m.hot("--n----n--n--");
+            const notifier =  m.hot("n-n----n--n--");
             const expected = m.cold("0-1----2--3--");
 
             const producer = createProducer();
@@ -70,7 +70,7 @@ describe("observable/traverse", () => {
 
         it("should flatten values within chunks", marbles((m) => {
 
-            const notifier =  m.hot("-----n-------n-----n-----");
+            const notifier =  m.hot("n----n-------n-----n-----");
             const expected = m.cold("(01)-(12)----(23)--(34)--");
 
             const producer = createProducer(Infinity, 2);
@@ -80,7 +80,7 @@ describe("observable/traverse", () => {
 
         it("should queue notifications", marbles((m) => {
 
-            const notifier =  m.hot("-nn------------");
+            const notifier =  m.hot("nnn------------");
             const expected = m.cold("----0---1---2--");
 
             const producer = createProducer(Infinity, 1, m.time("----|"), m.scheduler);
@@ -144,7 +144,7 @@ describe("observable/traverse", () => {
             const z = m.cold("-----(z|)", values);
 
             const expected = m.cold("----------(ab)-(cd)-(ef|)");
-            const wSubs =           "^-------------------!----";
+            const wSubs =           "^----!-------------------";
             const xSubs =           "-----^----!--------------";
             const ySubs =           "----------^----!---------";
             const zSubs =           "---------------^----!----";
@@ -203,7 +203,7 @@ describe("observable/traverse", () => {
 
         it("should traverse graphs with a notifier", marbles((m) => {
 
-            const notifier =  m.hot("------n-----n---");
+            const notifier =  m.hot("n-----n-----n---");
             const expected = m.cold("(abc)-(de)--(f|)");
 
             const producer = createProducer();
@@ -213,7 +213,7 @@ describe("observable/traverse", () => {
 
         it("should queue notifications for graphs", marbles((m) => {
 
-            const notifier =  m.hot("nn--------------------");
+            const notifier =  m.hot("nnn-------------------");
             const expected = m.cold("------(abc)-(de)--(f|)");
 
             const producer = createProducer(m.time("------|"), m.scheduler);
@@ -296,6 +296,7 @@ describe("observable/traverse", () => {
                         callback();
                     }
                 );
+                notifier.next();
                 notifier.next();
             });
         });
