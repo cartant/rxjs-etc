@@ -1,3 +1,10 @@
+<a name="5.0.0"></a>
+## [5.0.0](https://github.com/cartant/rxjs-etc/compare/v4.2.0...v5.0.0) (2018-04-02)
+
+### Breaking Changes
+
+* **traverse**: A notification is now required for the traversal of the first node/page. ([4b7bed2](https://github.com/cartant/rxjs-etc/commit/4b7bed2))
+
 <a name="4.2.0"></a>
 ## [4.2.0](https://github.com/cartant/rxjs-etc/compare/v4.1.1...v4.2.0) (2018-04-01)
 

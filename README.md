@@ -26,7 +26,7 @@ npm install rxjs-etc --save
 
 ## What's in it?
 
-### Static methods for `Observable`
+### `Observable` factories
 
 * [combineLatestArray](./source/observable/combineLatestArray.ts)
 * [concatArray](./source/observable/concatArray.ts)
