@@ -3,6 +3,7 @@
  * can be found in the LICENSE file at https://github.com/cartant/rxjs-etc
  */
 
+import { MonoTypeOperatorFunction, OperatorFunction } from "rxjs/interfaces";
 import { Observable, ObservableInput } from "rxjs/Observable";
 import { Observer } from "rxjs/Observer";
 import { Subject } from "rxjs/Subject";
@@ -44,18 +45,18 @@ export function traverse<T, M, R>(
 ): Observable<T | R> {
     return Observable.create((observer: Observer<T | R>) => {
 
-        let consumerOperation: (source: Observable<T>) => Observable<T | R>;
-        let producerOperation: (source: Observable<M | undefined>) => Observable<M | undefined>;
+        let consumerOperator: OperatorFunction<T, T | R>;
+        let producerOperator: MonoTypeOperatorFunction<M | undefined>;
         let queue: NotificationQueue;
 
         if (isObservable(notifierOrConsumer)) {
-            consumerOperation = identity;
-            producerOperation = identity;
+            consumerOperator = identity;
+            producerOperator = identity;
             queue = new NotificationQueue(notifierOrConsumer);
         } else {
             const subject = new Subject<any>();
-            consumerOperation = notifierOrConsumer || identity;
-            producerOperation = source => { subject.next(); return source; };
+            consumerOperator = notifierOrConsumer || identity;
+            producerOperator = source => { subject.next(); return source; };
             queue = new NotificationQueue(subject);
         }
 
@@ -64,11 +65,11 @@ export function traverse<T, M, R>(
         const subscription = destination.subscribe(observer);
         subscription.add(queue.connect());
         subscription.add(of(undefined).pipe(
-            expand((marker: M | undefined) => producerOperation(queue.pipe(
+            expand((marker: M | undefined) => producerOperator(queue.pipe(
                 mergeMap(index => producer(marker, index).pipe(
                     mergeMap(({ markers, values }) => concat(
                         from<T>(values).pipe(
-                            consumerOperation,
+                            consumerOperator,
                             tap(value => destination.next(value)),
                             ignoreElements()
                         ) as Observable<never>,
