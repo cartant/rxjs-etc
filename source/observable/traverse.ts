@@ -9,9 +9,9 @@ import { Subject } from "rxjs/Subject";
 import { Subscription } from "rxjs/Subscription";
 import { concat } from "rxjs/observable/concat";
 import { from } from "rxjs/observable/from";
-import { concatMap } from "rxjs/operators/concatMap";
 import { expand } from "rxjs/operators/expand";
 import { ignoreElements } from "rxjs/operators/ignoreElements";
+import { mergeMap } from "rxjs/operators/mergeMap";
 import { tap } from "rxjs/operators/tap";
 import { identity } from "rxjs/util/identity";
 import { NotificationQueue } from "./NotificationQueue";
@@ -58,6 +58,7 @@ export function traverse<T, M, R>(
             queue = new NotificationQueue(subject);
         }
 
+        const concurrency = 1;
         const destination = new Subject<T | R>();
         const subscription = destination.subscribe(observer);
         subscription.add(queue.connect());
@@ -70,9 +71,9 @@ export function traverse<T, M, R>(
                 ) as Observable<never>,
                 from<M>(markers).pipe(
                     producerOperation,
-                    concatMap(marker => queue.pipe(
-                        concatMap(index => producer(marker, index + 1))
-                    ))
+                    mergeMap(marker => queue.pipe(
+                        mergeMap(index => producer(marker, index + 1))
+                    ), concurrency)
                 )
             )),
             tap(
