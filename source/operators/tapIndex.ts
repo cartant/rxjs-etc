@@ -5,10 +5,7 @@
 /*tslint:disable:no-invalid-this*/
 /*tslint:disable:no-use-before-declare*/
 
-import { Observable } from "rxjs/Observable";
-import { Operator } from "rxjs/Operator";
-import { Subscriber } from "rxjs/Subscriber";
-import { TeardownLogic } from "rxjs/Subscription";
+import { Observable, Operator, Subscriber, TeardownLogic } from "rxjs";
 
 export function tapIndex<T>(
     next: (value: T, index?: number) => void,

@@ -3,12 +3,15 @@
  * can be found in the LICENSE file at https://github.com/cartant/rxjs-etc
  */
 
-import { Observable } from "rxjs/Observable";
-import { Observer } from "rxjs/Observer";
-import { ConnectableObservable } from "rxjs/observable/ConnectableObservable";
-import { publish } from "rxjs/operators/publish";
-import { Subject } from "rxjs/Subject";
-import { Subscription } from "rxjs/Subscription";
+import {
+    ConnectableObservable,
+    Observable,
+    Observer,
+    Subject,
+    Subscription
+} from "rxjs";
+
+import { publish } from "rxjs/operators";
 
 export function prioritize<T, R>(
     selector: (prioritized: Observable<T>, deprioritized: Observable<T>) => Observable<R>

@@ -3,31 +3,25 @@
  * can be found in the LICENSE file at https://github.com/cartant/rxjs-etc
  */
 
-import { Observable } from "rxjs/Observable";
-import { of } from "rxjs/observable/of";
-import { concatMap } from "rxjs/operators/concatMap";
-import { delay } from "rxjs/operators/delay";
-import { map } from "rxjs/operators/map";
-import { scan } from "rxjs/operators/scan";
-import { IScheduler } from "rxjs/Scheduler";
-import { asap } from "rxjs/scheduler/asap";
+import { asapScheduler, Observable, of, SchedulerLike } from "rxjs";
+import { concatMap, delay, map, scan } from "rxjs/operators";
 
-export function rateLimit<T>(period: number, scheduler?: IScheduler): (source: Observable<T>) => Observable<T>;
-export function rateLimit<T>(period: number, count: number, scheduler?: IScheduler): (source: Observable<T>) => Observable<T>;
-export function rateLimit<T>(period: number, ...args: (number | IScheduler | undefined)[]): (source: Observable<T>) => Observable<T> {
+export function rateLimit<T>(period: number, scheduler?: SchedulerLike): (source: Observable<T>) => Observable<T>;
+export function rateLimit<T>(period: number, count: number, scheduler?: SchedulerLike): (source: Observable<T>) => Observable<T>;
+export function rateLimit<T>(period: number, ...args: (number | SchedulerLike | undefined)[]): (source: Observable<T>) => Observable<T> {
 
     let count = 1;
-    let scheduler: IScheduler = asap;
+    let scheduler: SchedulerLike = asapScheduler;
 
     if (args.length === 1) {
         if (typeof args[0] === "number") {
             count = args[0] as number;
         } else {
-            scheduler = args[0] as IScheduler;
+            scheduler = args[0] as SchedulerLike;
         }
     } else if (args.length === 2) {
         count = args[0] as number;
-        scheduler = args[1] as IScheduler;
+        scheduler = args[1] as SchedulerLike;
     }
 
     interface Emission<T> {

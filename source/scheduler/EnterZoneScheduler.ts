@@ -3,15 +3,14 @@
  * can be found in the LICENSE file at https://github.com/cartant/rxjs-etc
  */
 
-import { IScheduler, Scheduler } from "rxjs/Scheduler";
-import { Subscription } from "rxjs/Subscription";
+import { SchedulerLike, Subscription } from "rxjs";
 import { Zone } from "./Zone";
 
 export class EnterZoneScheduler {
 
     constructor(
         private zone: Zone,
-        private scheduler: IScheduler
+        private scheduler: SchedulerLike
     ) {}
 
     schedule(...args: any[]): Subscription {

@@ -4,7 +4,7 @@
  */
 /*tslint:disable:no-unused-expression*/
 
-import { debounceTime } from "rxjs/operators/debounceTime";
+import { debounceTime } from "rxjs/operators";
 import { marbles } from "rxjs-marbles";
 import { subsequent } from "./subsequent";
 

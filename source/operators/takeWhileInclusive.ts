@@ -3,13 +3,8 @@
  * can be found in the LICENSE file at https://github.com/cartant/rxjs-etc
  */
 
-import { Observable } from "rxjs/Observable";
-import { multicast } from "rxjs/operators/multicast";
-import { concat } from "rxjs/operators/concat";
-import { filter } from "rxjs/operators/filter";
-import { take } from "rxjs/operators/take";
-import { takeWhile } from "rxjs/operators/takeWhile";
-import { ReplaySubject } from "rxjs/ReplaySubject";
+import { Observable, ReplaySubject } from "rxjs";
+import { concat, multicast, filter, take, takeWhile } from "rxjs/operators";
 
 export function takeWhileInclusive<T>(predicate: (value: T) => boolean): (source: Observable<T>) => Observable<T> {
 

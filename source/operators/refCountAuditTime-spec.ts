@@ -5,10 +5,8 @@
 /*tslint:disable:no-unused-expression*/
 
 import { expect } from "chai";
-import { of } from "rxjs/observable/of";
-import { mergeMapTo } from "rxjs/operators/mergeMapTo";
-import { publish } from "rxjs/operators/publish";
-import { toArray } from "rxjs/operators/toArray";
+import { of } from "rxjs";
+import { mergeMapTo, publish, toArray } from "rxjs/operators";
 import { marbles } from "rxjs-marbles";
 import { refCountAuditTime } from "./refCountAuditTime";
 

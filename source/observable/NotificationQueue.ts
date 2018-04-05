@@ -3,15 +3,15 @@
  * can be found in the LICENSE file at https://github.com/cartant/rxjs-etc
  */
 
-import { Observable } from "rxjs/Observable";
-import { Subject } from "rxjs/Subject";
-import { Subscriber } from "rxjs/Subscriber";
-import { Subscription } from "rxjs/Subscription";
-import { ConnectableObservable } from "rxjs/observable/ConnectableObservable";
-import { zip } from "rxjs/observable/zip";
-import { first } from "rxjs/operators/first";
-import { map } from "rxjs/operators/map";
-import { publish } from "rxjs/operators/publish";
+import {
+    ConnectableObservable,
+    Observable,
+    Subject,
+    Subscriber,
+    Subscription,
+    zip
+} from "rxjs";
+import { first, map, publish } from "rxjs/operators";
 
 export class NotificationQueue extends Observable<number> {
 

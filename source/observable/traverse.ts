@@ -3,19 +3,27 @@
  * can be found in the LICENSE file at https://github.com/cartant/rxjs-etc
  */
 
-import { MonoTypeOperatorFunction, OperatorFunction } from "rxjs/interfaces";
-import { Observable, ObservableInput } from "rxjs/Observable";
-import { Observer } from "rxjs/Observer";
-import { Subject } from "rxjs/Subject";
-import { Subscription } from "rxjs/Subscription";
-import { concat } from "rxjs/observable/concat";
-import { from } from "rxjs/observable/from";
-import { of } from "rxjs/observable/of";
-import { expand } from "rxjs/operators/expand";
-import { ignoreElements } from "rxjs/operators/ignoreElements";
-import { mergeMap } from "rxjs/operators/mergeMap";
-import { tap } from "rxjs/operators/tap";
-import { identity } from "rxjs/util/identity";
+import {
+    concat,
+    from,
+    identity,
+    MonoTypeOperatorFunction,
+    Observable,
+    ObservableInput,
+    Observer,
+    of,
+    OperatorFunction,
+    Subject,
+    Subscription
+} from "rxjs";
+
+import {
+    expand,
+    ignoreElements,
+    mergeMap,
+    tap
+} from "rxjs/operators";
+
 import { NotificationQueue } from "./NotificationQueue";
 import { isObservable } from "../util";
 

@@ -3,12 +3,8 @@
  * can be found in the LICENSE file at https://github.com/cartant/rxjs-etc
  */
 
-import { Observable } from "rxjs/Observable";
-import { Observer } from "rxjs/Observer";
-import { ConnectableObservable } from "rxjs/observable/ConnectableObservable";
-import { concat } from "rxjs/observable/concat";
-import { publish } from "rxjs/operators/publish";
-import { take } from "rxjs/operators/take";
+import { concat, ConnectableObservable, Observable, Observer } from "rxjs/";
+import { publish, take } from "rxjs/operators";
 
 export function subsequent<T, R>(
     count: number,

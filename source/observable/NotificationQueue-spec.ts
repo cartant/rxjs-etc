@@ -5,8 +5,8 @@
 /*tslint:disable:no-unused-expression*/
 
 import { expect } from "chai";
-import { AsyncSubject } from "rxjs/AsyncSubject";
-import { concatMap } from "rxjs/operators/concatMap";
+import { AsyncSubject } from "rxjs";
+import { concatMap } from "rxjs/operators";
 import { marbles } from "rxjs-marbles";
 import { NotificationQueue } from "./NotificationQueue";
 

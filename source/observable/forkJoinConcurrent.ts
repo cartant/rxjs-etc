@@ -3,12 +3,8 @@
  * can be found in the LICENSE file at https://github.com/cartant/rxjs-etc
  */
 
-import { Observable } from "rxjs/Observable";
-import { from } from "rxjs/observable/from";
-import { last } from "rxjs/operators/last";
-import { map } from "rxjs/operators/map";
-import { mergeMap } from "rxjs/operators/mergeMap";
-import { toArray } from "rxjs/operators/toArray";
+import { from, Observable } from "rxjs";
+import { last, map, mergeMap, toArray } from "rxjs/operators";
 
 export function forkJoinConcurrent<T>(
     observables: Observable<T>[],

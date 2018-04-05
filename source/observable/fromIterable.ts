@@ -3,8 +3,7 @@
  * can be found in the LICENSE file at https://github.com/cartant/rxjs-etc
  */
 
-import { Observable } from "rxjs/Observable";
-import { from } from "rxjs/observable/from";
+import { from, Observable } from "rxjs";
 
 // https://github.com/ReactiveX/rxjs/issues/2306
 

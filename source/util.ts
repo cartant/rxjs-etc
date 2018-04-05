@@ -3,15 +3,14 @@
  * can be found in the LICENSE file at https://github.com/cartant/rxjs-etc
  */
 
-import { Observable } from "rxjs/Observable";
-import { IScheduler } from "rxjs/Scheduler";
+import { Observable, SchedulerLike } from "rxjs";
 
 export function isObservable(value: any): value is Observable<any> {
 
      return value && (typeof value["subscribe"] === "function");
 }
 
-export function isScheduler(value: any): value is IScheduler {
+export function isScheduler(value: any): value is SchedulerLike {
 
     return value && (typeof value["schedule"] === "function");
 }

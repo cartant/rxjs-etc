@@ -3,16 +3,14 @@
  * can be found in the LICENSE file at https://github.com/cartant/rxjs-etc
  */
 
-import { Observable } from "rxjs/Observable";
-import { concat } from "rxjs/observable/concat";
-import { empty } from "rxjs/observable/empty";
+import { concat, EMPTY, Observable } from "rxjs";
 
 export function concatArray<T, R>(
     observables: Observable<T>[]
 ): Observable<R> {
 
     if (observables.length === 0) {
-        return empty();
+        return EMPTY;
     }
 
     return concat.apply(null, observables);

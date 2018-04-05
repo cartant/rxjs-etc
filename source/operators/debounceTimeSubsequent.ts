@@ -3,27 +3,25 @@
  * can be found in the LICENSE file at https://github.com/cartant/rxjs-etc
  */
 
-import { Observable } from "rxjs/Observable";
-import { Observer } from "rxjs/Observer";
-import { debounceTime } from "rxjs/operators/debounceTime";
-import { IScheduler } from "rxjs/Scheduler";
+import { Observable, Observer, SchedulerLike } from "rxjs";
+import { debounceTime } from "rxjs/operators";
 import { subsequent } from "./subsequent";
 
 export function debounceTimeSubsequent<T>(
     duration: number,
     count: number,
-    scheduler?: IScheduler
+    scheduler?: SchedulerLike
 ): (source: Observable<T>) => Observable<T>;
 
 export function debounceTimeSubsequent<T>(
     duration: number,
-    scheduler?: IScheduler
+    scheduler?: SchedulerLike
 ): (source: Observable<T>) => Observable<T>;
 
 export function debounceTimeSubsequent<T>(
     duration: number,
-    countOrScheduler?: number | IScheduler,
-    scheduler?: IScheduler
+    countOrScheduler?: number | SchedulerLike,
+    scheduler?: SchedulerLike
 ): (source: Observable<T>) => Observable<T> {
 
     let count: number;

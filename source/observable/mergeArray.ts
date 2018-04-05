@@ -3,9 +3,7 @@
  * can be found in the LICENSE file at https://github.com/cartant/rxjs-etc
  */
 
-import { Observable } from "rxjs/Observable";
-import { empty } from "rxjs/observable/empty";
-import { merge } from "rxjs/observable/merge";
+import { EMPTY, merge, Observable } from "rxjs";
 
 export function mergeArray<T, R>(
     observables: Observable<T>[],
@@ -13,7 +11,7 @@ export function mergeArray<T, R>(
 ): Observable<R> {
 
     if (observables.length === 0) {
-        return empty();
+        return EMPTY;
     }
 
     const applyArgs: any[] = [...observables];

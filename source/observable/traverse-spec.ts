@@ -5,16 +5,18 @@
 /*tslint:disable:no-unused-expression*/
 
 import { expect } from "chai";
-import { Observable } from "rxjs/Observable";
-import { concat } from "rxjs/observable/concat";
-import { empty } from "rxjs/observable/empty";
-import { of } from "rxjs/observable/of";
-import { timer } from "rxjs/observable/timer";
-import { delay } from "rxjs/operators/delay";
-import { ignoreElements } from "rxjs/operators/ignoreElements";
-import { map } from "rxjs/operators/map";
-import { IScheduler } from "rxjs/Scheduler";
-import { Subject } from "rxjs/Subject";
+
+import {
+    concat,
+    EMPTY,
+    Observable,
+    of,
+    SchedulerLike,
+    Subject,
+    timer
+} from "rxjs";
+
+import { delay, ignoreElements, map } from "rxjs/operators";
 import { marbles } from "rxjs-marbles";
 import { traverse } from "./traverse";
 
@@ -22,7 +24,7 @@ describe("observable/traverse", () => {
 
     describe("lists", () => {
 
-        const createProducer = (max: number = Infinity, count?: number, time?: number, scheduler?: IScheduler) =>
+        const createProducer = (max: number = Infinity, count?: number, time?: number, scheduler?: SchedulerLike) =>
             (marker: number | undefined): Observable<{ markers: number[], values: string[] }> => {
                 const at = (marker === undefined) ? 0 : marker + 1;
                 const markers = [at];
@@ -30,7 +32,7 @@ describe("observable/traverse", () => {
                 for (let c = 0; c < (count || 1); ++c) {
                     values.push((at + c).toString());
                 }
-                const source = (at <= max) ? of({ markers, values }) : empty<never>();
+                const source = (at <= max) ? of({ markers, values }) : EMPTY;
                 return (time !== undefined) && (scheduler !== undefined) ?
                     source.pipe(delay(time, scheduler)) :
                     source;
@@ -160,7 +162,7 @@ describe("observable/traverse", () => {
                 case "z":
                     return z;
                 default:
-                    return empty<never>();
+                    return EMPTY;
                 }
             };
 
@@ -175,7 +177,7 @@ describe("observable/traverse", () => {
 
     describe("graphs", () => {
 
-        const createProducer = (time?: number, scheduler?: IScheduler) =>
+        const createProducer = (time?: number, scheduler?: SchedulerLike) =>
             (marker: any): Observable<{ markers: any[], values: string[] }> => {
                 const data = {
                     a: {
