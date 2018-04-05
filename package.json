@@ -49,6 +49,9 @@
     "rxjs": "^6.0.0-rc.0"
   },
   "private": true,
+  "publishConfig": {
+    "tag": "rc"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/cartant/rxjs-etc.git"
