@@ -4,6 +4,8 @@
  */
 
 export * from "./observable";
-export * from "./operators";
 export * from "./scheduler";
 export * from "./util";
+
+import * as _operators from "./operators";
+export const operators = _operators;
