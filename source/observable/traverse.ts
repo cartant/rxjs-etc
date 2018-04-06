@@ -17,17 +17,11 @@ import {
     Subscription
 } from "rxjs";
 
-import {
-    expand,
-    ignoreElements,
-    mergeMap,
-    tap
-} from "rxjs/operators";
-
+import { expand, ignoreElements, mergeMap, tap } from "rxjs/operators";
 import { NotificationQueue } from "./NotificationQueue";
 import { isObservable } from "../util";
 
-const nextSymbol = Symbol.for("next");
+const nextSymbol = Symbol("next");
 
 export type TraverseConsumer<T, R> = (source: Observable<T>) => Observable<R>;
 export type TraverseElement<T, M> = { markers: ObservableInput<M>, values: ObservableInput<T> };
