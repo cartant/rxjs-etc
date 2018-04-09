@@ -29,40 +29,56 @@ export type TraverseProducer<T, M> = (marker: M | undefined, index: number) => O
 
 export function traverse<T, M>(
     producer: TraverseProducer<T, M>,
-    notifier: Observable<any>
+    notifier: Observable<any>,
+    concurrency?: number
 ): Observable<T>;
 
 export function traverse<T, M, R>(
     producer: TraverseProducer<T, M>,
-    consumer: TraverseConsumer<T, R>
+    consumer: TraverseConsumer<T, R>,
+    concurrency?: number
 ): Observable<R>;
 
 export function traverse<T, M>(
-    producer: TraverseProducer<T, M>
+    producer: TraverseProducer<T, M>,
+    concurrency?: number
 ): Observable<T>;
 
 export function traverse<T, M, R>(
     producer: TraverseProducer<T, M>,
-    notifierOrConsumer?: Observable<any> | TraverseConsumer<T, R>
+    optionalNotifierOrConsumerOrConcurrency?: Observable<any> | TraverseConsumer<T, R> | number,
+    optionalConcurrency?: number
 ): Observable<T | R> {
     return Observable.create((observer: Observer<T | R>) => {
 
+        let concurrency: number;
         let consumerOperator: OperatorFunction<T, T | R>;
         let producerOperator: MonoTypeOperatorFunction<M | undefined>;
         let queue: NotificationQueue;
 
-        if (isObservable(notifierOrConsumer)) {
+        if (isObservable(optionalNotifierOrConsumerOrConcurrency)) {
             consumerOperator = identity;
             producerOperator = identity;
-            queue = new NotificationQueue(notifierOrConsumer);
+            queue = new NotificationQueue(optionalNotifierOrConsumerOrConcurrency);
         } else {
             const subject = new Subject<any>();
-            consumerOperator = notifierOrConsumer || identity;
+            if (typeof optionalNotifierOrConsumerOrConcurrency === "function") {
+                consumerOperator = optionalNotifierOrConsumerOrConcurrency;
+            } else {
+                consumerOperator = identity;
+            }
             producerOperator = source => { subject.next(); return source; };
             queue = new NotificationQueue(subject);
         }
 
-        const concurrency = 1;
+        if (typeof optionalConcurrency === "number") {
+            concurrency = optionalConcurrency;
+        } else if (typeof optionalNotifierOrConsumerOrConcurrency === "number") {
+            concurrency = optionalNotifierOrConsumerOrConcurrency;
+        } else {
+            concurrency = 1;
+        }
+
         const destination = new Subject<T | R>();
         const subscription = destination.subscribe(observer);
         subscription.add(queue.connect());
