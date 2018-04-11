@@ -4,8 +4,8 @@
  */
 
 import { Observable } from "rxjs/Observable";
+import { Observer } from "rxjs/Observer";
 import { Subject } from "rxjs/Subject";
-import { Subscriber } from "rxjs/Subscriber";
 import { Subscription } from "rxjs/Subscription";
 import { ConnectableObservable } from "rxjs/observable/ConnectableObservable";
 import { zip } from "rxjs/observable/zip";
@@ -20,7 +20,16 @@ export class NotificationQueue extends Observable<number> {
     private _queuer = new Subject<number>();
 
     constructor(notifier: Observable<any>) {
-        super();
+
+        super((observer: Observer<number>) => {
+            const index = this._count++;
+            const subscription = this._notifications.pipe(
+                first(value => value === index)
+            ).subscribe(observer);
+            this._queuer.next(index);
+            return subscription;
+        });
+
         this._notifications = zip(notifier, this._queuer).pipe(
             map(([, index]) => index),
             publish()
@@ -29,14 +38,5 @@ export class NotificationQueue extends Observable<number> {
 
     connect(): Subscription {
         return this._notifications.connect();
-    }
-
-    protected _subscribe(subscriber: Subscriber<number>): Subscription {
-        const index = this._count++;
-        const subscription = this._notifications.pipe(
-            first(value => value === index)
-        ).subscribe(subscriber);
-        this._queuer.next(index);
-        return subscription;
     }
 }
