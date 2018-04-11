@@ -1,3 +1,10 @@
+<a name="5.0.1"></a>
+## [5.0.1](https://github.com/cartant/rxjs-etc/compare/v5.0.0...v5.0.1) (2018-04-11)
+
+### Fixes
+
+* **traverse**: The `NotificationQueue` no longer overrides the internal `_subscribe` method. ([1341b26](https://github.com/cartant/rxjs-etc/commit/1341b26))
+
 <a name="5.0.0"></a>
 ## [5.0.0](https://github.com/cartant/rxjs-etc/compare/v4.2.0...v5.0.0) (2018-04-02)
 
