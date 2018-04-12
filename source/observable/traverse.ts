@@ -95,11 +95,10 @@ export function traverse<T, M, R>(
                     ))
                 ))
             )), concurrency)
-        ).subscribe(
-            () => {},
-            error => destination.error(error),
-            () => destination.complete()
-        ));
+        ).subscribe({
+            complete: () => destination.complete(),
+            error: error => destination.error(error)
+        }));
         return subscription;
     });
 }
