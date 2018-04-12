@@ -231,6 +231,15 @@ describe("observable/traverse", () => {
             const traversed = traverse(producer);
             m.expect(traversed).toBeObservable(expected);
         }));
+
+        it("should support concurrency", marbles((m) => {
+
+            const expected = m.cold("------(abc)-(def|)");
+
+            const producer = createProducer(m.time("------|"), m.scheduler);
+            const traversed = traverse(producer, Infinity);
+            m.expect(traversed).toBeObservable(expected);
+        }));
     });
 
     describe("GitHub usage example", () => {
