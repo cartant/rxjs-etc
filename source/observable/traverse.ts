@@ -23,7 +23,7 @@ import { isObservable } from "../util";
 
 const nextSymbol = Symbol("next");
 
-export type TraverseConsumer<T, R> = (source: Observable<T>) => Observable<R>;
+export type TraverseConsumer<T, R> = (values: Observable<T>) => Observable<R>;
 export type TraverseElement<T, M> = { markers: ObservableInput<M>, values: ObservableInput<T> };
 export type TraverseProducer<T, M> = (marker: M | undefined, index: number) => Observable<TraverseElement<T, M>>;
 
@@ -67,7 +67,7 @@ export function traverse<T, M, R>(
             } else {
                 consumerOperator = identity;
             }
-            producerOperator = source => { subject.next(); return source; };
+            producerOperator = markers => { subject.next(); return markers; };
             queue = new NotificationQueue(subject);
         }
 
@@ -83,7 +83,7 @@ export function traverse<T, M, R>(
         const subscription = destination.subscribe(observer);
         subscription.add(queue.connect());
         subscription.add(of(undefined).pipe(
-            expand((marker: M | undefined) => producerOperator(queue.pipe(
+            expand((marker: M | undefined) => queue.pipe(
                 mergeMap(index => producer(marker, index).pipe(
                     mergeMap(({ markers, values }) => concat(
                         from<T>(values).pipe(
@@ -93,8 +93,9 @@ export function traverse<T, M, R>(
                         ) as Observable<never>,
                         from<M>(markers)
                     ))
-                ))
-            )), concurrency)
+                )),
+                producerOperator
+            ), concurrency)
         ).subscribe({
             complete: () => destination.complete(),
             error: error => destination.error(error)
