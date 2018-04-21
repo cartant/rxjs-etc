@@ -3,31 +3,39 @@
  * can be found in the LICENSE file at https://github.com/cartant/rxjs-etc
  */
 
-import { concat, ConnectableObservable, Observable, Observer } from "rxjs/";
+import {
+    concat,
+    ConnectableObservable,
+    MonoTypeOperatorFunction,
+    Observable,
+    Observer,
+    OperatorFunction
+} from "rxjs/";
+
 import { publish, take } from "rxjs/operators";
 
 export function subsequent<T, R>(
     count: number,
     selector: (source: Observable<T>) => Observable<R>
-): (source: Observable<T>) => Observable<T | R>;
+): OperatorFunction<T, T | R>;
 
 export function subsequent<T>(
     count: number,
     selector: (source: Observable<T>) => Observable<T>
-): (source: Observable<T>) => Observable<T>;
+): MonoTypeOperatorFunction<T>;
 
 export function subsequent<T, R>(
     selector: (source: Observable<T>) => Observable<R>
-): (source: Observable<T>) => Observable<T | R>;
+): OperatorFunction<T, T | R>;
 
 export function subsequent<T>(
     selector: (source: Observable<T>) => Observable<T>
-): (source: Observable<T>) => Observable<T>;
+): MonoTypeOperatorFunction<T>;
 
 export function subsequent<T, R>(
     countOrSelector: number | ((source: Observable<T>) => Observable<R>),
     selector?: (source: Observable<T>) => Observable<R>
-): (source: Observable<T>) => Observable<T | R> {
+): OperatorFunction<T, T | R> {
 
     let count: number;
     if (typeof countOrSelector === "number") {

@@ -3,12 +3,12 @@
  * can be found in the LICENSE file at https://github.com/cartant/rxjs-etc
  */
 
-import { asapScheduler, Observable, of, SchedulerLike } from "rxjs";
+import { asapScheduler, MonoTypeOperatorFunction, Observable, of, SchedulerLike } from "rxjs";
 import { concatMap, delay, map, scan } from "rxjs/operators";
 
-export function rateLimit<T>(period: number, scheduler?: SchedulerLike): (source: Observable<T>) => Observable<T>;
-export function rateLimit<T>(period: number, count: number, scheduler?: SchedulerLike): (source: Observable<T>) => Observable<T>;
-export function rateLimit<T>(period: number, ...args: (number | SchedulerLike | undefined)[]): (source: Observable<T>) => Observable<T> {
+export function rateLimit<T>(period: number, scheduler?: SchedulerLike): MonoTypeOperatorFunction<T>;
+export function rateLimit<T>(period: number, count: number, scheduler?: SchedulerLike): MonoTypeOperatorFunction<T>;
+export function rateLimit<T>(period: number, ...args: (number | SchedulerLike | undefined)[]): MonoTypeOperatorFunction<T> {
 
     let count = 1;
     let scheduler: SchedulerLike = asapScheduler;

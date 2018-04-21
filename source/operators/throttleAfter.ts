@@ -3,7 +3,13 @@
  * can be found in the LICENSE file at https://github.com/cartant/rxjs-etc
  */
 
-import { concat, Observable, of, SchedulerLike } from "rxjs";
+import {
+    concat,
+    MonoTypeOperatorFunction,
+    Observable,
+    of,
+    SchedulerLike
+} from "rxjs";
 
 import {
     concatMap,
@@ -21,7 +27,7 @@ export function throttleAfter<T>(
     notifier: Observable<any>,
     duration: number,
     scheduler?: SchedulerLike
-): (source: Observable<T>) => Observable<T> {
+): MonoTypeOperatorFunction<T> {
 
     return (source: Observable<T>) => source.pipe(
         publish((sharedSource) => notifier.pipe(

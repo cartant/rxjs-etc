@@ -3,12 +3,12 @@
  * can be found in the LICENSE file at https://github.com/cartant/rxjs-etc
  */
 
-import { EMPTY, Observable } from "rxjs";
+import { EMPTY, MonoTypeOperatorFunction, Observable } from "rxjs";
 import { isEmpty, merge, mergeMap, publish } from "rxjs/operators";
 
 export function defaultObservableIfEmpty<T>(
     defaultObservable: Observable<T>
-): (source: Observable<T>) => Observable<T> {
+): MonoTypeOperatorFunction<T> {
 
     return (source: Observable<T>) => source.pipe(
         publish((sharedSource) => sharedSource.pipe(

@@ -5,6 +5,7 @@
 
 import {
     ConnectableObservable,
+    MonoTypeOperatorFunction,
     NEVER,
     Observable,
     SchedulerLike,
@@ -19,7 +20,7 @@ import { scan, switchMap, tap } from "rxjs/operators";
 export function refCountAuditTime<T>(
     duration: number,
     scheduler?: SchedulerLike
-): (source: Observable<T>) => Observable<T> {
+): MonoTypeOperatorFunction<T> {
 
     return (source: Observable<T>) => {
 

@@ -3,13 +3,13 @@
  * can be found in the LICENSE file at https://github.com/cartant/rxjs-etc
  */
 
-import { Observable } from "rxjs";
+import { Observable, OperatorFunction } from "rxjs";
 import { map } from "rxjs/operators";
 
 export function guard<T, R extends T>(
     guard: (value: T) => value is R,
     message?: string
-): (source: Observable<T>) => Observable<R> {
+): OperatorFunction<T, R> {
 
     return (source: Observable<T>) => source.pipe(map((value: any) => {
 

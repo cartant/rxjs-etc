@@ -3,7 +3,7 @@
  * can be found in the LICENSE file at https://github.com/cartant/rxjs-etc
  */
 
-import { Observable, Observer, SchedulerLike } from "rxjs";
+import { MonoTypeOperatorFunction, Observable, Observer, SchedulerLike } from "rxjs";
 import { debounceTime } from "rxjs/operators";
 import { subsequent } from "./subsequent";
 
@@ -11,18 +11,18 @@ export function debounceTimeSubsequent<T>(
     duration: number,
     count: number,
     scheduler?: SchedulerLike
-): (source: Observable<T>) => Observable<T>;
+): MonoTypeOperatorFunction<T>;
 
 export function debounceTimeSubsequent<T>(
     duration: number,
     scheduler?: SchedulerLike
-): (source: Observable<T>) => Observable<T>;
+): MonoTypeOperatorFunction<T>;
 
 export function debounceTimeSubsequent<T>(
     duration: number,
     countOrScheduler?: number | SchedulerLike,
     scheduler?: SchedulerLike
-): (source: Observable<T>) => Observable<T> {
+): MonoTypeOperatorFunction<T> {
 
     let count: number;
     if (typeof countOrScheduler === "number") {
