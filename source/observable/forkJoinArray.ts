@@ -27,5 +27,6 @@ export function forkJoinArray<T, R>(
 
     const applyArgs: any[] = observables.slice();
     if (project) { applyArgs.push((...values: any[]) => project(values)); }
+    /*tslint:disable-next-line:deprecation*/
     return forkJoin.apply(null, applyArgs);
 }

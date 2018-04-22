@@ -4,6 +4,7 @@
  */
 
 import {
+    concat,
     ConnectableObservable,
     merge,
     Observable,
@@ -13,7 +14,6 @@ import {
 } from "rxjs";
 
 import {
-    concat,
     distinctUntilChanged,
     map,
     mapTo,
@@ -41,7 +41,7 @@ export function zipPadded<T>(
         ) as ConnectableObservable<number>;
 
         const subscription = zip<T>(...publishedSources.map(
-            source => source.pipe(concat(indices.pipe(mapTo(padValue))))
+            source => concat(source, indices.pipe(mapTo(padValue)))
         )).subscribe(observer);
 
         subscription.add(indices.connect());

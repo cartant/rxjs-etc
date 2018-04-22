@@ -3,8 +3,7 @@
  * can be found in the LICENSE file at https://github.com/cartant/rxjs-etc
  */
 
-import { from, MonoTypeOperatorFunction, Observable, SchedulerLike } from "rxjs";
-import { concat } from "rxjs/operators";
+import { concat, from, MonoTypeOperatorFunction, Observable, SchedulerLike } from "rxjs";
 import { isScheduler } from "../util";
 
 export function endWith<T>(v1: T, scheduler?: SchedulerLike): MonoTypeOperatorFunction<T>;
@@ -22,5 +21,5 @@ export function endWith<T>(...args: (T | SchedulerLike)[]): MonoTypeOperatorFunc
     } else {
         scheduler = null;
     }
-    return (source) => source.pipe(concat(from(args as T[], scheduler as any)));
+    return source => concat(source, from(args as T[], scheduler as any));
 }
