@@ -4,6 +4,7 @@
 ### Breaking Changes
 
 * Upgrade to RxJS version 6.
+* Rename the UMD global to `rxjsEtc`.
 
 <a name="5.0.1"></a>
 ## [5.0.1](https://github.com/cartant/rxjs-etc/compare/v5.0.0...v5.0.1) (2018-04-11)
