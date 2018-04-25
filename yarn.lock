@@ -5375,16 +5375,16 @@ rx-lite@*, rx-lite@^4.0.8:
   version "4.0.8"
   resolved "https://registry.yarnpkg.com/rx-lite/-/rx-lite-4.0.8.tgz#0b1e11af8bc44836f04a6407e92da42467b79444"
 
-rxjs-marbles@^3.0.0-rc.1:
-  version "3.0.0-rc.4"
-  resolved "https://registry.yarnpkg.com/rxjs-marbles/-/rxjs-marbles-3.0.0-rc.4.tgz#d13fc1a7dd5edcc6e1a623cf254355f93aa60097"
+rxjs-marbles@^3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/rxjs-marbles/-/rxjs-marbles-3.0.0.tgz#7969f499a1c9054ddd1a9cf7ac1772ba5590482d"
   dependencies:
     "@types/lodash" "^4.0.0"
     lodash "^4.0.0"
 
-rxjs-spy@^7.0.0-rc.0:
-  version "7.0.0-rc.0"
-  resolved "https://registry.yarnpkg.com/rxjs-spy/-/rxjs-spy-7.0.0-rc.0.tgz#1638ac38358a1cb983f725bdd8b50878c7e6cbd6"
+rxjs-spy@^7.0.0:
+  version "7.0.0"
+  resolved "https://registry.yarnpkg.com/rxjs-spy/-/rxjs-spy-7.0.0.tgz#a85b834244e7cd6d0fb04e40256048e507fa91bd"
   dependencies:
     "@types/circular-json" "^0.4.0"
     "@types/stacktrace-js" "^0.0.32"
@@ -5392,7 +5392,7 @@ rxjs-spy@^7.0.0-rc.0:
     error-stack-parser "^2.0.1"
     stacktrace-gps "^3.0.2"
 
-rxjs-tslint-rules@^4.0.0-rc.0:
+rxjs-tslint-rules@^4.0.0:
   version "4.0.0"
   resolved "https://registry.yarnpkg.com/rxjs-tslint-rules/-/rxjs-tslint-rules-4.0.0.tgz#60f60a2884b2a790403796e714f28e2e7ece391f"
   dependencies:
@@ -5406,7 +5406,7 @@ rxjs@^5.4.2, rxjs@^5.5.2:
   dependencies:
     symbol-observable "1.0.1"
 
-rxjs@^6.0.0-rc.0:
+rxjs@^6.0.0:
   version "6.0.0"
   resolved "https://registry.yarnpkg.com/rxjs/-/rxjs-6.0.0.tgz#d647e029b5854617f994c82fe57a4c6747b352da"
   dependencies:
