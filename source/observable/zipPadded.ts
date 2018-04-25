@@ -3,18 +3,23 @@
  * can be found in the LICENSE file at https://github.com/cartant/rxjs-etc
  */
 
-import { ConnectableObservable } from "rxjs/observable/ConnectableObservable";
-import { Observable } from "rxjs/Observable";
-import { Observer } from "rxjs/Observer";
-import { merge } from "rxjs/observable/merge";
-import { of } from "rxjs/observable/of";
-import { zip } from "rxjs/observable/zip";
-import { concat } from "rxjs/operators/concat";
-import { distinctUntilChanged } from "rxjs/operators/distinctUntilChanged";
-import { map } from "rxjs/operators/map";
-import { mapTo } from "rxjs/operators/mapTo";
-import { publish } from "rxjs/operators/publish";
-import { scan } from "rxjs/operators/scan";
+import {
+    concat,
+    ConnectableObservable,
+    merge,
+    Observable,
+    Observer,
+    of,
+    zip
+} from "rxjs";
+
+import {
+    distinctUntilChanged,
+    map,
+    mapTo,
+    publish,
+    scan
+} from "rxjs/operators";
 
 export function zipPadded<T>(
     sources: Observable<T>[],
@@ -36,7 +41,7 @@ export function zipPadded<T>(
         ) as ConnectableObservable<number>;
 
         const subscription = zip<T>(...publishedSources.map(
-            source => source.pipe(concat(indices.pipe(mapTo(padValue))))
+            source => concat(source, indices.pipe(mapTo(padValue)))
         )).subscribe(observer);
 
         subscription.add(indices.connect());

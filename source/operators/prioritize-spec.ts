@@ -5,18 +5,18 @@
 /*tslint:disable:no-unused-expression*/
 
 import { expect } from "chai";
-import { Observable } from "rxjs/Observable";
-import { from } from "rxjs/observable/from";
-import { of } from "rxjs/observable/of";
-import { merge } from "rxjs/observable/merge";
-import { bufferCount } from "rxjs/operators/bufferCount";
-import { concatMap } from "rxjs/operators/concatMap";
-import { filter } from "rxjs/operators/filter";
-import { mapTo } from "rxjs/operators/mapTo";
-import { mergeMapTo } from "rxjs/operators/mergeMapTo";
-import { toArray } from "rxjs/operators/toArray";
-import { window } from "rxjs/operators/window";
-import { async } from "rxjs/scheduler/async";
+import { asyncScheduler, from, of, merge } from "rxjs";
+
+import {
+    bufferCount,
+    concatMap,
+    filter,
+    mapTo,
+    mergeMapTo,
+    toArray,
+    window
+} from "rxjs/operators";
+
 import { marbles } from "rxjs-marbles";
 import { prioritize } from "./prioritize";
 
@@ -37,7 +37,7 @@ describe("prioritize", () => {
 
     it("should support self notifications", () => {
 
-        const source = from("aabccdee", async);
+        const source = from("aabccdee", asyncScheduler);
         const result = source.pipe(
             prioritize((first, second) => second.pipe(
                 window(first.pipe(
@@ -76,7 +76,7 @@ describe("prioritize", () => {
         const source =    m.cold(   "-1-2-3----4--");
         const sourceSubs =       "   ^      !     ";
 
-        const result = source.pipe(prioritize(merge), filter(() => false));
+        const result = source.pipe(prioritize<any>(merge), filter(() => false));
 
         const subscriber = m.hot("   a|           ").pipe(mergeMapTo(result));
         const unsub  =           "          !     ";

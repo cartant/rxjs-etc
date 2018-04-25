@@ -3,22 +3,24 @@
  * can be found in the LICENSE file at https://github.com/cartant/rxjs-etc
  */
 
-import { Observable } from "rxjs/Observable";
-import { ConnectableObservable } from "rxjs/observable/ConnectableObservable";
-import { never } from "rxjs/observable/never";
-import { timer } from "rxjs/observable/timer";
-import { using } from "rxjs/observable/using";
-import { scan } from "rxjs/operators/scan";
-import { switchMap } from "rxjs/operators/switchMap";
-import { tap } from "rxjs/operators/tap";
-import { IScheduler } from "rxjs/Scheduler";
-import { Subject } from "rxjs/Subject";
-import { Subscription } from "rxjs/Subscription";
+import {
+    ConnectableObservable,
+    MonoTypeOperatorFunction,
+    NEVER,
+    Observable,
+    SchedulerLike,
+    Subject,
+    Subscription,
+    timer,
+    using
+} from "rxjs";
+
+import { scan, switchMap, tap } from "rxjs/operators";
 
 export function refCountAuditTime<T>(
     duration: number,
-    scheduler?: IScheduler
-): (source: Observable<T>) => Observable<T> {
+    scheduler?: SchedulerLike
+): MonoTypeOperatorFunction<T> {
 
     return (source: Observable<T>) => {
 
@@ -47,7 +49,7 @@ export function refCountAuditTime<T>(
                         subscription!.add(connectable.connect());
                     }));
                 default:
-                    return never<number>();
+                    return NEVER;
                 }
             })
         );

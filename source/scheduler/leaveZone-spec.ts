@@ -5,7 +5,7 @@
 /*tslint:disable:no-unused-expression*/
 
 import { expect } from "chai";
-import { of } from "rxjs/observable/of";
+import { of } from "rxjs";
 import { marbles } from "rxjs-marbles";
 import * as sinon from "sinon";
 import { leaveZone } from "./leaveZone";

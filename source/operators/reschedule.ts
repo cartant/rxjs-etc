@@ -3,12 +3,9 @@
  * can be found in the LICENSE file at https://github.com/cartant/rxjs-etc
  */
 
-import { Observable } from "rxjs/Observable";
-import { of } from "rxjs/observable/of";
-import { concatMap } from "rxjs/operators/concatMap";
-import { IScheduler } from "rxjs/Scheduler";
-import { asap } from "rxjs/scheduler/asap";
+import { asapScheduler, MonoTypeOperatorFunction, Observable, of, SchedulerLike } from "rxjs";
+import { concatMap } from "rxjs/operators";
 
-export function reschedule<T>(scheduler: IScheduler = asap): (source: Observable<T>) => Observable<T> {
+export function reschedule<T>(scheduler: SchedulerLike = asapScheduler): MonoTypeOperatorFunction<T> {
     return concatMap<T, T>(value => of(value, scheduler));
 }

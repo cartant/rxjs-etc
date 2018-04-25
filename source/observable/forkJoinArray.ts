@@ -3,9 +3,7 @@
  * can be found in the LICENSE file at https://github.com/cartant/rxjs-etc
  */
 
-import { Observable } from "rxjs/Observable";
-import { forkJoin } from "rxjs/observable/forkJoin";
-import { of } from "rxjs/observable/of";
+import { forkJoin, Observable, of } from "rxjs";
 
 export function forkJoinArray<T>(
     observables: Observable<T>[]
@@ -29,5 +27,6 @@ export function forkJoinArray<T, R>(
 
     const applyArgs: any[] = observables.slice();
     if (project) { applyArgs.push((...values: any[]) => project(values)); }
+    /*tslint:disable-next-line:deprecation*/
     return forkJoin.apply(null, applyArgs);
 }

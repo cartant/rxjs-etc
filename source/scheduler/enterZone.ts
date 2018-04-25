@@ -3,11 +3,10 @@
  * can be found in the LICENSE file at https://github.com/cartant/rxjs-etc
  */
 
-import { IScheduler } from "rxjs/Scheduler";
-import { asap } from "rxjs/scheduler/asap";
+import { asapScheduler, SchedulerLike } from "rxjs";
 import { EnterZoneScheduler } from "./EnterZoneScheduler";
 import { Zone } from "./Zone";
 
-export function enterZone(zone: Zone, scheduler: IScheduler = asap): IScheduler {
+export function enterZone(zone: Zone, scheduler: SchedulerLike = asapScheduler): SchedulerLike {
     return new EnterZoneScheduler(zone, scheduler) as any;
 }

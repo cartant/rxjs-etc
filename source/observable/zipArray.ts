@@ -3,9 +3,7 @@
  * can be found in the LICENSE file at https://github.com/cartant/rxjs-etc
  */
 
-import { Observable } from "rxjs/Observable";
-import { zip } from "rxjs/observable/zip";
-import { of } from "rxjs/observable/of";
+import { Observable, of, zip } from "rxjs";
 
 export function zipArray<T>(
     observables: Observable<T>[]
@@ -29,5 +27,6 @@ export function zipArray<T, R>(
 
     const applyArgs: any[] = observables.slice();
     if (project) { applyArgs.push((...values: any[]) => project(values)); }
+    /*tslint:disable-next-line:deprecation*/
     return zip.apply(null, applyArgs);
 }

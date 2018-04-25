@@ -3,25 +3,31 @@
  * can be found in the LICENSE file at https://github.com/cartant/rxjs-etc
  */
 
-import { Observable } from "rxjs/Observable";
-import { concat } from "rxjs/observable/concat";
-import { of } from "rxjs/observable/of";
-import { concatMap } from "rxjs/operators/concatMap";
-import { delay } from "rxjs/operators/delay";
-import { distinctUntilChanged } from "rxjs/operators/distinctUntilChanged";
-import { filter } from "rxjs/operators/filter";
-import { publish } from "rxjs/operators/publish";
-import { startWith } from "rxjs/operators/startWith";
-import { switchMap } from "rxjs/operators/switchMap";
-import { take } from "rxjs/operators/take";
-import { takeUntil } from "rxjs/operators/takeUntil";
-import { IScheduler } from "rxjs/Scheduler";
+import {
+    concat,
+    MonoTypeOperatorFunction,
+    Observable,
+    of,
+    SchedulerLike
+} from "rxjs";
+
+import {
+    concatMap,
+    delay,
+    distinctUntilChanged,
+    filter,
+    publish,
+    startWith,
+    switchMap,
+    take,
+    takeUntil
+} from "rxjs/operators";
 
 export function throttleAfter<T>(
     notifier: Observable<any>,
     duration: number,
-    scheduler?: IScheduler
-): (source: Observable<T>) => Observable<T> {
+    scheduler?: SchedulerLike
+): MonoTypeOperatorFunction<T> {
 
     return (source: Observable<T>) => source.pipe(
         publish((sharedSource) => notifier.pipe(
