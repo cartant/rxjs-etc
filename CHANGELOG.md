@@ -1,3 +1,10 @@
+<a name="6.0.0"></a>
+## [6.0.0](https://github.com/cartant/rxjs-etc/compare/v5.0.1...v6.0.0) (2018-04-25)
+
+### Breaking Changes
+
+* Upgrade to RxJS version 6.
+
 <a name="5.0.1"></a>
 ## [5.0.1](https://github.com/cartant/rxjs-etc/compare/v5.0.0...v5.0.1) (2018-04-11)
 
