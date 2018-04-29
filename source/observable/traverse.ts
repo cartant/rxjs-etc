@@ -49,7 +49,7 @@ export function traverse<T, M, R>(
     optionalNotifierOrConsumerOrConcurrency?: Observable<any> | TraverseConsumer<T, R> | number,
     optionalConcurrency?: number
 ): Observable<T | R> {
-    return Observable.create((observer: Observer<T | R>) => {
+    return new Observable<T | R>(observer => {
 
         let concurrency: number;
         let consumerOperator: OperatorFunction<T, T | R>;
