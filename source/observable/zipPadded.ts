@@ -26,7 +26,7 @@ export function zipPadded<T>(
     padValue?: any
 ): Observable<T[]> {
 
-    return Observable.create((observer: Observer<T[]>) => {
+    return new Observable<T[]>(observer => {
 
         const publishedSources = sources.map(
             source => source.pipe(publish()) as ConnectableObservable<T>

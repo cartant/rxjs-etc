@@ -45,7 +45,7 @@ export function subsequent<T, R>(
         selector = countOrSelector;
     }
 
-    return (source: Observable<T>) => Observable.create((observer: Observer<T | R>) => {
+    return (source: Observable<T>) => new Observable<T | R>(observer => {
         const published = source.pipe(publish()) as ConnectableObservable<T>;
         const subscription = concat(
             published.pipe(take(count)),

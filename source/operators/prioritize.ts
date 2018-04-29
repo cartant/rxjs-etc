@@ -27,7 +27,7 @@ export function prioritize<T, R>(
     selector: (prioritized: Observable<T>, deprioritized: Observable<T>) => Observable<R>
 ): OperatorFunction<T, R> {
 
-    return (source: Observable<T>) => Observable.create((observer: Observer<R>) => {
+    return (source: Observable<T>) => new Observable<R>(observer => {
 
         const publishedSource = publish<T>()(source) as ConnectableObservable<T>;
         const prioritizedSource = new Subject<T>();
