@@ -38,6 +38,11 @@ npm install rxjs-etc --save
 
     To see how these methods behave, consult their tests.
 
+* [combineLatestObject](./source/observable/combineLatestObject.ts)
+* [forkJoinObject](./source/observable/forkJoinObject.ts)
+
+    Like the array versions, but these take objects. Observable properties are combined using either `combineLatest` or `forkJoin`.
+
 * [forkJoinConcurrent](./source/observable/forkJoinConcurrent.ts)
 
     Like `forkJoin` but only runs the specified number of observables concurrently.
