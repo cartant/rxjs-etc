@@ -1,3 +1,10 @@
+<a name="6.1.0"></a>
+## [6.1.0](https://github.com/cartant/rxjs-etc/compare/v6.0.0...v6.1.0) (2018-05-03)
+
+### Features
+
+* Added `combineLatestObject` and `forkJoinObject`.
+
 <a name="6.0.0"></a>
 ## [6.0.0](https://github.com/cartant/rxjs-etc/compare/v5.0.1...v6.0.0) (2018-04-25)
 
