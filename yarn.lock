@@ -6200,6 +6200,12 @@ ts-loader@^4.0.0:
     micromatch "^3.1.4"
     semver "^5.0.1"
 
+ts-snippet@^3.0.0:
+  version "3.1.1"
+  resolved "https://registry.yarnpkg.com/ts-snippet/-/ts-snippet-3.1.1.tgz#f92a6e16e02e06c46de507cb25541c18dbfae8bc"
+  dependencies:
+    tsutils "^2.25.0"
+
 tslib@^1.8.0, tslib@^1.8.1, tslib@^1.9.0:
   version "1.9.0"
   resolved "https://registry.yarnpkg.com/tslib/-/tslib-1.9.0.tgz#e37a86fda8cbbaf23a057f473c9f4dc64e5fc2e8"
@@ -6225,7 +6231,7 @@ tsscmp@~1.0.0:
   version "1.0.5"
   resolved "https://registry.yarnpkg.com/tsscmp/-/tsscmp-1.0.5.tgz#7dc4a33af71581ab4337da91d85ca5427ebd9a97"
 
-tsutils@^2.12.1:
+tsutils@^2.12.1, tsutils@^2.25.0:
   version "2.26.2"
   resolved "https://registry.yarnpkg.com/tsutils/-/tsutils-2.26.2.tgz#a9f9f63434a456a5e0c95a45d9a59181cb32d3bf"
   dependencies:
