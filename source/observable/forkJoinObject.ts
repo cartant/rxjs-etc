@@ -3,7 +3,7 @@
  * can be found in the LICENSE file at https://github.com/cartant/rxjs-etc
  */
 
-import { combineLatest, Observable, of } from "rxjs";
+import { Observable, of } from "rxjs";
 import { map } from "rxjs/operators";
 import { forkJoinArray } from "./forkJoinArray";
 import { isObservable } from "../util";

@@ -8,6 +8,7 @@ export * from "./combineLatestObject";
 export * from "./concatArray";
 export * from "./forkJoinArray";
 export * from "./forkJoinConcurrent";
+export * from "./forkJoinObject";
 export * from "./fromIterable";
 export * from "./mergeArray";
 export * from "./NotificationQueue";
