@@ -127,6 +127,10 @@ They can also be used with `pipe`, like this:
 
     Throttle the source observable, but only after the notifier emits a value.
 
+* [unsubscribeOn](./source/operators/unsubscribeOn.ts)
+
+    Like [`subscribeOn`](http://reactivex.io/rxjs/class/es6/Observable.js~Observable.html#instance-method-subscribeOn), but for unsubscription.
+
 ### Utility functions
 
 A bunch of utility functions that do what their names suggest:
