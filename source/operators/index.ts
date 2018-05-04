@@ -18,3 +18,4 @@ export * from "./subsequent";
 export * from "./takeWhileInclusive";
 export * from "./tapIndex";
 export * from "./throttleAfter";
+export * from "./unsubscribeOn";
