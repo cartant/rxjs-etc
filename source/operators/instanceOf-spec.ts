@@ -8,11 +8,12 @@ import { of } from "rxjs";
 import { marbles } from "rxjs-marbles";
 import { expecter } from "ts-snippet";
 import { instanceOf } from "./instanceOf";
+import { timeout } from "../timeout-spec";
 
 describe("instanceOf", function (): void {
 
     /*tslint:disable-next-line:no-invalid-this*/
-    this.timeout(5000);
+    this.timeout(timeout);
 
     describe("functionality", () => {
 
