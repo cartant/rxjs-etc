@@ -35,7 +35,7 @@ describe("queue", function (): void {
         describe("types", () => {
 
             const expectSnippet = expecter(code => `
-                import { of } from "rxjs";
+                import { of, merge } from "rxjs";
                 import * as p from "./source/placeholders-spec";
                 import { queue } from "./source/observable";
                 ${code}
@@ -59,6 +59,17 @@ describe("queue", function (): void {
                 snippet.toInfer("q5", "[Observable<T1>, Observable<T2>, Observable<T3>, Observable<T4>, Observable<T5>]");
                 snippet.toInfer("q6", "[Observable<T1>, Observable<T2>, Observable<T3>, Observable<T4>, Observable<T5>, Observable<T6>]");
                 snippet.toInfer("q7", "Observable<any>[]");
+            });
+
+            it("should play nice with merge's concurrency parameter", () => {
+
+                // It seems that TypeScript does not match signatures using tuples:
+                // https://github.com/Microsoft/TypeScript/issues/4130
+
+                const snippet = expectSnippet(`
+                    const m2 = merge<p.T1 | p.T2>(...queue(p.o1, p.o2), 1);
+                `);
+                snippet.toInfer("m2", "Observable<T1 | T2>");
             });
         });
     }
