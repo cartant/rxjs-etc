@@ -4,7 +4,7 @@
  */
 
 import { concat, MonoTypeOperatorFunction, Observable, ReplaySubject } from "rxjs";
-import { multicast, filter, take, takeWhile } from "rxjs/operators";
+import { filter, multicast, take, takeWhile } from "rxjs/operators";
 
 export function takeWhileInclusive<T>(predicate: (value: T) => boolean): MonoTypeOperatorFunction<T> {
 

@@ -127,10 +127,10 @@
     "only-arrow-functions": { "severity": "off" },
     "ordered-imports": {
       "options": [{
-        "import-sources-order": "case-insensitive",
+        "import-sources-order": "any",
         "named-imports-order": "case-insensitive"
       }],
-      "severity": "off"
+      "severity": "error"
     },
     "prefer-const": { "severity": "off" },
     "prefer-for-of": { "severity": "off" },

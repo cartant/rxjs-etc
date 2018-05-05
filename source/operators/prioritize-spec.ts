@@ -5,7 +5,7 @@
 /*tslint:disable:no-unused-expression*/
 
 import { expect } from "chai";
-import { asyncScheduler, from, of, merge } from "rxjs";
+import { asyncScheduler, from, merge, of } from "rxjs";
 
 import {
     bufferCount,
