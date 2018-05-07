@@ -7,7 +7,6 @@ import {
     ConnectableObservable,
     MonoTypeOperatorFunction,
     Observable,
-    Observer,
     OperatorFunction,
     Subject,
     Subscription

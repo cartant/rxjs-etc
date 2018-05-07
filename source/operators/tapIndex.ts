@@ -18,6 +18,7 @@ export function tapIndex<T>(
     };
 }
 
+/*tslint:disable-next-line:no-unused-declaration*/
 class TapIndexOperator<T> implements Operator<T, T> {
 
     constructor(
@@ -37,6 +38,7 @@ class TapIndexOperator<T> implements Operator<T, T> {
     }
 }
 
+/*tslint:disable-next-line:no-unused-declaration*/
 class TapIndexSubscriber<T> extends Subscriber<T> {
 
     private count: number = 0;

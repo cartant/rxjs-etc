@@ -8,8 +8,6 @@ import {
     ConnectableObservable,
     merge,
     Observable,
-    Observer,
-    of,
     zip
 } from "rxjs";
 

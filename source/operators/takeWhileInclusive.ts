@@ -3,7 +3,7 @@
  * can be found in the LICENSE file at https://github.com/cartant/rxjs-etc
  */
 
-import { concat, MonoTypeOperatorFunction, Observable, ReplaySubject } from "rxjs";
+import { concat, MonoTypeOperatorFunction, ReplaySubject } from "rxjs";
 import { filter, multicast, take, takeWhile } from "rxjs/operators";
 
 export function takeWhileInclusive<T>(predicate: (value: T) => boolean): MonoTypeOperatorFunction<T> {

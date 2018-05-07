@@ -8,7 +8,6 @@ import {
     ConnectableObservable,
     MonoTypeOperatorFunction,
     Observable,
-    Observer,
     OperatorFunction
 } from "rxjs/";
 

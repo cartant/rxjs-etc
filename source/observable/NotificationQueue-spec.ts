@@ -4,7 +4,6 @@
  */
 /*tslint:disable:no-unused-expression*/
 
-import { expect } from "chai";
 import { AsyncSubject } from "rxjs";
 import { concatMap } from "rxjs/operators";
 import { marbles } from "rxjs-marbles";
@@ -19,7 +18,7 @@ describe("NotificationQueue", () => {
         const expected = m.cold("--");
 
         const queue = new NotificationQueue(notifier);
-        const subscription = queue.connect();
+        queue.connect();
 
         const result = queuings.pipe(
             concatMap(() => {
@@ -43,7 +42,7 @@ describe("NotificationQueue", () => {
         const expected = m.cold("-0");
 
         const queue = new NotificationQueue(notifier);
-        const subscription = queue.connect();
+        queue.connect();
 
         const result = queuings.pipe(
             concatMap(() => {
@@ -67,7 +66,7 @@ describe("NotificationQueue", () => {
         const expected = m.cold("-----0-1");
 
         const queue = new NotificationQueue(notifier);
-        const subscription = queue.connect();
+        queue.connect();
 
         const result = queuings.pipe(
             concatMap(() => {
@@ -91,7 +90,7 @@ describe("NotificationQueue", () => {
         const expected = m.cold("-----0-1");
 
         const queue = new NotificationQueue(notifier);
-        const subscription = queue.connect();
+        queue.connect();
 
         const result = queuings.pipe(
             concatMap(() => {

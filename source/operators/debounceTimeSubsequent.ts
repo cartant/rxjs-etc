@@ -3,7 +3,7 @@
  * can be found in the LICENSE file at https://github.com/cartant/rxjs-etc
  */
 
-import { MonoTypeOperatorFunction, Observable, Observer, SchedulerLike } from "rxjs";
+import { MonoTypeOperatorFunction, SchedulerLike } from "rxjs";
 import { debounceTime } from "rxjs/operators";
 import { subsequent } from "./subsequent";
 

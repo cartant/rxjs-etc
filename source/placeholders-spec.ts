@@ -3,7 +3,7 @@
  * can be found in the LICENSE file at https://github.com/cartant/rxjs-etc
  */
 
-import { Observable, Subject } from "rxjs";
+import { Observable } from "rxjs";
 import * as p from "ts-snippet/placeholders";
 
 export * from "ts-snippet/placeholders";

@@ -6,7 +6,6 @@
 
 import { expect } from "chai";
 import { of } from "rxjs";
-import { marbles } from "rxjs-marbles";
 import * as sinon from "sinon";
 import { enterZone } from "./enterZone";
 

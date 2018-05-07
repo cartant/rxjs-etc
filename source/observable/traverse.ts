@@ -10,18 +10,14 @@ import {
     MonoTypeOperatorFunction,
     Observable,
     ObservableInput,
-    Observer,
     of,
     OperatorFunction,
-    Subject,
-    Subscription
+    Subject
 } from "rxjs";
 
 import { expand, ignoreElements, mergeMap, tap } from "rxjs/operators";
 import { NotificationQueue } from "./NotificationQueue";
 import { isObservable } from "../util";
-
-const nextSymbol = Symbol("next");
 
 export type TraverseConsumer<T, R> = (values: Observable<T>) => Observable<R>;
 export type TraverseElement<T, M> = { markers: ObservableInput<M>, values: ObservableInput<T> };

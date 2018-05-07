@@ -3,7 +3,7 @@
  * can be found in the LICENSE file at https://github.com/cartant/rxjs-etc
  */
 
-import { Observable, OperatorFunction } from "rxjs";
+import { OperatorFunction } from "rxjs";
 import { pluck as untypedPluck } from "rxjs/operators";
 
 export function pluck<T, K1 extends keyof T>(

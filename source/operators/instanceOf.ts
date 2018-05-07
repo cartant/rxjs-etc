@@ -3,7 +3,7 @@
  * can be found in the LICENSE file at https://github.com/cartant/rxjs-etc
  */
 
-import { Observable, OperatorFunction } from "rxjs";
+import { OperatorFunction } from "rxjs";
 import { filter } from "rxjs/operators";
 
 export function instanceOf<T, R extends T>(ctor: new (...args: any[]) => R): OperatorFunction<T, R>;

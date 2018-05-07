@@ -4,7 +4,6 @@
  */
 /*tslint:disable:no-unused-expression*/
 
-import { of } from "rxjs";
 import { marbles } from "rxjs-marbles";
 import { expecter } from "ts-snippet";
 import { instanceOf } from "./instanceOf";
