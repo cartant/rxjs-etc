@@ -91,6 +91,10 @@ They can also be used with `pipe`, like this:
 
     Applies the specified TypeScript guard to change the source observable's type and perform a runtime check. Emits an error notification if the guard rejects a value.
 
+* [initial](./source/operators/initial.ts)
+
+    Apply the selector to the source observable, but select only the initial `count` notifications - don't select the subsequent notifications.
+
 * [pluck](./source/operators/pluck.ts)
 
     Like [`pluck`](http://reactivex.io/rxjs/class/es6/Observable.js~Observable.html#instance-method-pluck), but it's type-safe and only lets you valid keys. And it returns the appropriate type.
