@@ -1,3 +1,10 @@
+<a name="6.4.0"></a>
+## [6.4.0](https://github.com/cartant/rxjs-etc/compare/v6.3.0...v6.4.0) (2018-05-10)
+
+### Features
+
+* **initial**: Add `initial` - the reverse of the `subsequent` operator. ([c5a0b84](https://github.com/cartant/rxjs-etc/commit/c5a0b84))
+
 <a name="6.3.0"></a>
 ## [6.3.0](https://github.com/cartant/rxjs-etc/compare/v6.2.0...v6.3.0) (2018-05-05)
 
