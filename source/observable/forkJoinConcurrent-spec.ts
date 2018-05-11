@@ -7,7 +7,7 @@
 import { marbles } from "rxjs-marbles";
 import { forkJoinConcurrent } from "./forkJoinConcurrent";
 
-describe("observable/forkJoinConcurrent", () => {
+describe("forkJoinConcurrent", () => {
 
     it("should join a single observable", marbles((m) => {
 

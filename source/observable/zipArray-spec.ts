@@ -7,7 +7,7 @@
 import { marbles } from "rxjs-marbles";
 import { zipArray } from "./zipArray";
 
-describe("observable/zipArray", () => {
+describe("zipArray", () => {
 
     it("should zip a single observable", marbles((m) => {
 

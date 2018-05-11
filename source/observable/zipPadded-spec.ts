@@ -7,7 +7,7 @@
 import { marbles } from "rxjs-marbles";
 import { zipPadded } from "./zipPadded";
 
-describe("observable/zipPadded", () => {
+describe("zipPadded", () => {
 
     it("should zip a single observable", marbles((m) => {
 

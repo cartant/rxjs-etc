@@ -7,7 +7,7 @@
 import { marbles } from "rxjs-marbles";
 import { combineLatestArray } from "./combineLatestArray";
 
-describe("observable/combineLatestArray", () => {
+describe("combineLatestArray", () => {
 
     it("should combine a single observable", marbles((m) => {
 

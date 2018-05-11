@@ -7,7 +7,7 @@
 import { marbles } from "rxjs-marbles";
 import { mergeArray } from "./mergeArray";
 
-describe("observable/mergeArray", () => {
+describe("mergeArray", () => {
 
     it("should merge a single observable", marbles((m) => {
 

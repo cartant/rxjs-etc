@@ -7,7 +7,7 @@
 import { marbles } from "rxjs-marbles";
 import { forkJoinArray } from "./forkJoinArray";
 
-describe("observable/forkJoinArray", () => {
+describe("forkJoinArray", () => {
 
     it("should join a single observable", marbles((m) => {
 

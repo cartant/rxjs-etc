@@ -7,7 +7,7 @@
 import { marbles } from "rxjs-marbles";
 import { forkJoinObject } from "./forkJoinObject";
 
-describe("observable/forkJoinObject", () => {
+describe("forkJoinObject", () => {
 
     it("should support empty objects", marbles(m => {
 

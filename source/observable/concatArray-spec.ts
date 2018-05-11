@@ -7,7 +7,7 @@
 import { marbles } from "rxjs-marbles";
 import { concatArray } from "./concatArray";
 
-describe("observable/concatArray", () => {
+describe("concatArray", () => {
 
     it("should concat a single observable", marbles((m) => {
 

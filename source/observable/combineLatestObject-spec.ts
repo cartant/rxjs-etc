@@ -7,7 +7,7 @@
 import { marbles } from "rxjs-marbles";
 import { combineLatestObject } from "./combineLatestObject";
 
-describe("observable/combineLatestObject", () => {
+describe("combineLatestObject", () => {
 
     it("should support empty objects", marbles(m => {
 

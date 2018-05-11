@@ -7,7 +7,7 @@
 import { marbles } from "rxjs-marbles";
 import { fromIterable } from "./fromIterable";
 
-describe("observable/fromIterable", () => {
+describe("fromIterable", () => {
 
     it("should accept an iterable", marbles((m) => {
 

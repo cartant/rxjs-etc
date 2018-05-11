@@ -20,7 +20,7 @@ import { delay, ignoreElements, map } from "rxjs/operators";
 import { marbles } from "rxjs-marbles";
 import { traverse } from "./traverse";
 
-describe("observable/traverse", () => {
+describe("traverse", () => {
 
     describe("lists", () => {
 
