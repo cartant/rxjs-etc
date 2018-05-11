@@ -10,6 +10,7 @@ export * from "./forkJoinArray";
 export * from "./forkJoinConcurrent";
 export * from "./forkJoinObject";
 export * from "./fromIterable";
+export * from "./handler";
 export * from "./mergeArray";
 export * from "./NotificationQueue";
 export * from "./queue";
