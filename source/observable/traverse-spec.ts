@@ -24,7 +24,7 @@ describe("traverse", () => {
 
     describe("lists", () => {
 
-        const createProducer = (max: number = Infinity, count?: number, time?: number, scheduler?: SchedulerLike) =>
+        const createFactory = (max: number = Infinity, count?: number, time?: number, scheduler?: SchedulerLike) =>
             (marker: number | undefined): Observable<{ markers: number[], values: string[] }> => {
                 const at = (marker === undefined) ? 0 : marker + 1;
                 const markers = [at];
@@ -44,8 +44,8 @@ describe("traverse", () => {
             const notifierSubs =    "^---!";
             const expected = m.cold("----|");
 
-            const producer = createProducer(-1, 1, m.time("--|"), m.scheduler);
-            const traversed = traverse(producer, notifier);
+            const factory = createFactory(-1, 1, m.time("--|"), m.scheduler);
+            const traversed = traverse(factory, notifier);
             m.expect(traversed).toBeObservable(expected);
             m.expect(notifier).toHaveSubscriptions(notifierSubs);
         }));
@@ -55,8 +55,8 @@ describe("traverse", () => {
             const notifier =  m.hot("n-");
             const expected = m.cold("0-");
 
-            const producer = createProducer();
-            const traversed = traverse(producer, notifier);
+            const factory = createFactory();
+            const traversed = traverse(factory, notifier);
             m.expect(traversed).toBeObservable(expected);
         }));
 
@@ -65,8 +65,8 @@ describe("traverse", () => {
             const notifier =  m.hot("n-n----n--n--");
             const expected = m.cold("0-1----2--3--");
 
-            const producer = createProducer();
-            const traversed = traverse(producer, notifier);
+            const factory = createFactory();
+            const traversed = traverse(factory, notifier);
             m.expect(traversed).toBeObservable(expected);
         }));
 
@@ -75,8 +75,8 @@ describe("traverse", () => {
             const notifier =  m.hot("n----n-------n-----n-----");
             const expected = m.cold("(01)-(12)----(23)--(34)--");
 
-            const producer = createProducer(Infinity, 2);
-            const traversed = traverse(producer, notifier);
+            const factory = createFactory(Infinity, 2);
+            const traversed = traverse(factory, notifier);
             m.expect(traversed).toBeObservable(expected);
         }));
 
@@ -85,8 +85,8 @@ describe("traverse", () => {
             const notifier =  m.hot("nnn------------");
             const expected = m.cold("----0---1---2--");
 
-            const producer = createProducer(Infinity, 1, m.time("----|"), m.scheduler);
-            const traversed = traverse(producer, notifier);
+            const factory = createFactory(Infinity, 1, m.time("----|"), m.scheduler);
+            const traversed = traverse(factory, notifier);
             m.expect(traversed).toBeObservable(expected);
         }));
 
@@ -94,12 +94,12 @@ describe("traverse", () => {
 
             const expected = m.cold("----0---1---2---|");
 
-            const producer = createProducer(2, 1, m.time("----|"), m.scheduler);
-            const traversed = traverse(producer);
+            const factory = createFactory(2, 1, m.time("----|"), m.scheduler);
+            const traversed = traverse(factory);
             m.expect(traversed).toBeObservable(expected);
         }));
 
-        it("should traverse with a consumer", marbles((m) => {
+        it("should traverse with an operator", marbles((m) => {
 
             const other =    m.cold("|");
             const subs = [
@@ -109,13 +109,13 @@ describe("traverse", () => {
             ];
             const expected = m.cold("----0---1---2---|");
 
-            const producer = createProducer(2, 1, m.time("----|"), m.scheduler);
-            const traversed = traverse(producer, source => concat(source, other));
+            const factory = createFactory(2, 1, m.time("----|"), m.scheduler);
+            const traversed = traverse(factory, source => concat(source, other));
             m.expect(traversed).toBeObservable(expected);
             m.expect(other).toHaveSubscriptions(subs);
         }));
 
-        it("should traverse with asynchonous consumers", marbles((m) => {
+        it("should traverse with an asynchonous operator", marbles((m) => {
 
             const other =    m.cold("----|");
             const subs = [
@@ -125,8 +125,8 @@ describe("traverse", () => {
             ];
             const expected = m.cold("0---1---2---|");
 
-            const producer = createProducer(2);
-            const traversed = traverse(producer, source => concat(source, other));
+            const factory = createFactory(2);
+            const traversed = traverse(factory, source => concat(source, other));
             m.expect(traversed).toBeObservable(expected);
             m.expect(other).toHaveSubscriptions(subs);
         }));
@@ -151,7 +151,7 @@ describe("traverse", () => {
             const ySubs =           "----------^----!---------";
             const zSubs =           "---------------^----!----";
 
-            const producer = (marker: string | undefined, index: number) => {
+            const factory = (marker: string | undefined, index: number) => {
                 switch (marker) {
                 case undefined:
                     return w;
@@ -166,7 +166,7 @@ describe("traverse", () => {
                 }
             };
 
-            const traversed = traverse(producer);
+            const traversed = traverse(factory);
             m.expect(traversed).toBeObservable(expected);
             m.expect(w).toHaveSubscriptions(wSubs);
             m.expect(x).toHaveSubscriptions(xSubs);
@@ -177,7 +177,7 @@ describe("traverse", () => {
 
     describe("graphs", () => {
 
-        const createProducer = (time?: number, scheduler?: SchedulerLike) =>
+        const createFactory = (time?: number, scheduler?: SchedulerLike) =>
             (marker: any): Observable<{ markers: any[], values: string[] }> => {
                 const data = {
                     a: {
@@ -208,8 +208,8 @@ describe("traverse", () => {
             const notifier =  m.hot("n-----n-----n---");
             const expected = m.cold("(abc)-(de)--(f|)");
 
-            const producer = createProducer();
-            const traversed = traverse(producer, notifier);
+            const factory = createFactory();
+            const traversed = traverse(factory, notifier);
             m.expect(traversed).toBeObservable(expected);
         }));
 
@@ -218,8 +218,8 @@ describe("traverse", () => {
             const notifier =  m.hot("nnn-------------------");
             const expected = m.cold("------(abc)-(de)--(f|)");
 
-            const producer = createProducer(m.time("------|"), m.scheduler);
-            const traversed = traverse(producer, notifier);
+            const factory = createFactory(m.time("------|"), m.scheduler);
+            const traversed = traverse(factory, notifier);
             m.expect(traversed).toBeObservable(expected);
         }));
 
@@ -227,8 +227,8 @@ describe("traverse", () => {
 
             const expected = m.cold("------(abc)-(de)--(f|)");
 
-            const producer = createProducer(m.time("------|"), m.scheduler);
-            const traversed = traverse(producer);
+            const factory = createFactory(m.time("------|"), m.scheduler);
+            const traversed = traverse(factory);
             m.expect(traversed).toBeObservable(expected);
         }));
 
@@ -236,8 +236,8 @@ describe("traverse", () => {
 
             const expected = m.cold("------(abc)-(def|)");
 
-            const producer = createProducer(m.time("------|"), m.scheduler);
-            const traversed = traverse(producer, Infinity);
+            const factory = createFactory(m.time("------|"), m.scheduler);
+            const traversed = traverse(factory, Infinity);
             m.expect(traversed).toBeObservable(expected);
         }));
     });
@@ -312,7 +312,7 @@ describe("traverse", () => {
             });
         });
 
-        describe("with consumer", () => {
+        describe("with an operator", () => {
 
             it("should traverse the pages", (callback: any) => {
 

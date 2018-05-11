@@ -19,58 +19,57 @@ import { expand, ignoreElements, mergeMap, tap } from "rxjs/operators";
 import { NotificationQueue } from "./NotificationQueue";
 import { isObservable } from "../util";
 
-export type TraverseConsumer<T, R> = (values: Observable<T>) => Observable<R>;
 export type TraverseElement<T, M> = { markers: ObservableInput<M>, values: ObservableInput<T> };
-export type TraverseProducer<T, M> = (marker: M | undefined, index: number) => Observable<TraverseElement<T, M>>;
+export type TraverseFactory<T, M> = (marker: M | undefined, index: number) => Observable<TraverseElement<T, M>>;
 
 export function traverse<T, M>(
-    producer: TraverseProducer<T, M>,
+    factory: TraverseFactory<T, M>,
     notifier: Observable<any>,
     concurrency?: number
 ): Observable<T>;
 
 export function traverse<T, M, R>(
-    producer: TraverseProducer<T, M>,
-    consumer: TraverseConsumer<T, R>,
+    factory: TraverseFactory<T, M>,
+    operator: OperatorFunction<T, R>,
     concurrency?: number
 ): Observable<R>;
 
 export function traverse<T, M>(
-    producer: TraverseProducer<T, M>,
+    factory: TraverseFactory<T, M>,
     concurrency?: number
 ): Observable<T>;
 
 export function traverse<T, M, R>(
-    producer: TraverseProducer<T, M>,
-    optionalNotifierOrConsumerOrConcurrency?: Observable<any> | TraverseConsumer<T, R> | number,
+    factory: TraverseFactory<T, M>,
+    optionalNotifierOrOperatorOrConcurrency?: Observable<any> | OperatorFunction<T, R> | number,
     optionalConcurrency?: number
 ): Observable<T | R> {
     return new Observable<T | R>(observer => {
 
         let concurrency: number;
-        let consumerOperator: OperatorFunction<T, T | R>;
-        let producerOperator: MonoTypeOperatorFunction<M | undefined>;
+        let operator: OperatorFunction<T, T | R>;
         let queue: NotificationQueue;
+        let queueOperator: MonoTypeOperatorFunction<M | undefined>;
 
-        if (isObservable(optionalNotifierOrConsumerOrConcurrency)) {
-            consumerOperator = identity;
-            producerOperator = identity;
-            queue = new NotificationQueue(optionalNotifierOrConsumerOrConcurrency);
+        if (isObservable(optionalNotifierOrOperatorOrConcurrency)) {
+            operator = identity;
+            queue = new NotificationQueue(optionalNotifierOrOperatorOrConcurrency);
+            queueOperator = identity;
         } else {
             const subject = new Subject<any>();
-            if (typeof optionalNotifierOrConsumerOrConcurrency === "function") {
-                consumerOperator = optionalNotifierOrConsumerOrConcurrency;
+            if (typeof optionalNotifierOrOperatorOrConcurrency === "function") {
+                operator = optionalNotifierOrOperatorOrConcurrency;
             } else {
-                consumerOperator = identity;
+                operator = identity;
             }
-            producerOperator = markers => { subject.next(); return markers; };
             queue = new NotificationQueue(subject);
+            queueOperator = markers => { subject.next(); return markers; };
         }
 
         if (typeof optionalConcurrency === "number") {
             concurrency = optionalConcurrency;
-        } else if (typeof optionalNotifierOrConsumerOrConcurrency === "number") {
-            concurrency = optionalNotifierOrConsumerOrConcurrency;
+        } else if (typeof optionalNotifierOrOperatorOrConcurrency === "number") {
+            concurrency = optionalNotifierOrOperatorOrConcurrency;
         } else {
             concurrency = 1;
         }
@@ -80,17 +79,17 @@ export function traverse<T, M, R>(
         subscription.add(queue.connect());
         subscription.add(of(undefined).pipe(
             expand((marker: M | undefined) => queue.pipe(
-                mergeMap(index => producer(marker, index).pipe(
+                mergeMap(index => factory(marker, index).pipe(
                     mergeMap(({ markers, values }) => concat(
                         from<T>(values).pipe(
-                            consumerOperator,
+                            operator,
                             tap(value => destination.next(value)),
                             ignoreElements()
                         ) as Observable<never>,
                         from<M>(markers)
                     ))
                 )),
-                producerOperator
+                queueOperator
             ), concurrency)
         ).subscribe({
             complete: () => destination.complete(),
