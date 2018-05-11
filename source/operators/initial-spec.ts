@@ -4,7 +4,8 @@
  */
 /*tslint:disable:no-unused-expression*/
 
-import { delay } from "rxjs/operators";
+import { pipe } from "rxjs";
+import { delay, mapTo } from "rxjs/operators";
 import { marbles } from "rxjs-marbles";
 import { initial } from "./initial";
 
@@ -17,7 +18,7 @@ describe("initial", () => {
         const expected = m.cold("-bca--d|");
 
         const duration = m.time("---|");
-        const destination = source.pipe(initial(s => s.pipe(delay(duration, m.scheduler))));
+        const destination = source.pipe(initial(delay(duration, m.scheduler)));
         m.expect(destination).toBeObservable(expected);
         m.expect(source).toHaveSubscriptions(sourceSubs);
     }));
@@ -29,7 +30,19 @@ describe("initial", () => {
         const expected = m.cold("--cab-d|");
 
         const duration = m.time("---|");
-        const destination = source.pipe(initial(2, s => s.pipe(delay(duration, m.scheduler))));
+        const destination = source.pipe(initial(2, delay(duration, m.scheduler)));
+        m.expect(destination).toBeObservable(expected);
+        m.expect(source).toHaveSubscriptions(sourceSubs);
+    }));
+
+    it("should support a piped operator", marbles((m) => {
+
+        const source =   m.cold("abc---d|");
+        const sourceSubs =      "^------!";
+        const expected = m.cold("-bcx--d|");
+
+        const duration = m.time("---|");
+        const destination = source.pipe(initial(pipe(delay(duration, m.scheduler), mapTo("x"))));
         m.expect(destination).toBeObservable(expected);
         m.expect(source).toHaveSubscriptions(sourceSubs);
     }));

@@ -15,39 +15,39 @@ import { publish, skip, take } from "rxjs/operators";
 
 export function initial<T, R>(
     count: number,
-    selector: (source: Observable<T>) => Observable<R>
+    operator: (source: Observable<T>) => Observable<R>
 ): OperatorFunction<T, T | R>;
 
 export function initial<T>(
     count: number,
-    selector: (source: Observable<T>) => Observable<T>
+    operator: (source: Observable<T>) => Observable<T>
 ): MonoTypeOperatorFunction<T>;
 
 export function initial<T, R>(
-    selector: (source: Observable<T>) => Observable<R>
+    operator: (source: Observable<T>) => Observable<R>
 ): OperatorFunction<T, T | R>;
 
 export function initial<T>(
-    selector: (source: Observable<T>) => Observable<T>
+    operator: (source: Observable<T>) => Observable<T>
 ): MonoTypeOperatorFunction<T>;
 
 export function initial<T, R>(
-    countOrSelector: number | ((source: Observable<T>) => Observable<R>),
-    selector?: (source: Observable<T>) => Observable<R>
+    countOrOperator: number | ((source: Observable<T>) => Observable<R>),
+    operator?: (source: Observable<T>) => Observable<R>
 ): OperatorFunction<T, T | R> {
 
     let count: number;
-    if (typeof countOrSelector === "number") {
-        count = countOrSelector;
+    if (typeof countOrOperator === "number") {
+        count = countOrOperator;
     } else {
         count = 1;
-        selector = countOrSelector;
+        operator = countOrOperator;
     }
 
     return (source: Observable<T>) => new Observable<T | R>(observer => {
         const published = source.pipe(publish()) as ConnectableObservable<T>;
         const subscription = merge(
-            selector!(published.pipe(take(count))),
+            published.pipe(take(count), operator!),
             published.pipe(skip(count))
         ).subscribe(observer);
         subscription.add(published.connect());

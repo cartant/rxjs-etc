@@ -93,7 +93,7 @@ They can also be used with `pipe`, like this:
 
 * [initial](./source/operators/initial.ts)
 
-    Apply the selector to the source observable, but select only the initial `count` notifications - don't select the subsequent notifications.
+    Apply the operator to the source observable, but select only the initial `count` notifications - don't select the subsequent notifications.
 
 * [pluck](./source/operators/pluck.ts)
 
@@ -117,7 +117,7 @@ They can also be used with `pipe`, like this:
 
 * [subsequent](./source/operators/subsequent.ts)
 
-    Apply the selector to the source observable, but don't select the first `count` notifications - only the subsequent notifications.
+    Apply the operator to the source observable, but don't select the first `count` notifications - only the subsequent notifications.
 
 * [takeWhileInclusive](./source/operators/takeWhileInclusive.ts)
 

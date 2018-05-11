@@ -4,7 +4,8 @@
  */
 /*tslint:disable:no-unused-expression*/
 
-import { debounceTime } from "rxjs/operators";
+import { pipe } from "rxjs";
+import { debounceTime, mapTo } from "rxjs/operators";
 import { marbles } from "rxjs-marbles";
 import { subsequent } from "./subsequent";
 
@@ -17,7 +18,7 @@ describe("subsequent", () => {
         const expected = m.cold("a------d----f-|");
 
         const duration = m.time("---|");
-        const destination = source.pipe(subsequent(s => s.pipe(debounceTime(duration, m.scheduler))));
+        const destination = source.pipe(subsequent(debounceTime(duration, m.scheduler)));
         m.expect(destination).toBeObservable(expected);
         m.expect(source).toHaveSubscriptions(sourceSubs);
     }));
@@ -29,7 +30,19 @@ describe("subsequent", () => {
         const expected = m.cold("ab-----d----f-|");
 
         const duration = m.time("---|");
-        const destination = source.pipe(subsequent(2, s => s.pipe(debounceTime(duration, m.scheduler))));
+        const destination = source.pipe(subsequent(2, debounceTime(duration, m.scheduler)));
+        m.expect(destination).toBeObservable(expected);
+        m.expect(source).toHaveSubscriptions(sourceSubs);
+    }));
+
+    it("should support a piped operator", marbles((m) => {
+
+        const source =   m.cold("ab-cd---ef----|");
+        const sourceSubs =      "^-------------!";
+        const expected = m.cold("a------x----x-|");
+
+        const duration = m.time("---|");
+        const destination = source.pipe(subsequent(pipe(debounceTime(duration, m.scheduler), mapTo("x"))));
         m.expect(destination).toBeObservable(expected);
         m.expect(source).toHaveSubscriptions(sourceSubs);
     }));

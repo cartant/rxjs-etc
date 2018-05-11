@@ -15,40 +15,40 @@ import { publish, take } from "rxjs/operators";
 
 export function subsequent<T, R>(
     count: number,
-    selector: (source: Observable<T>) => Observable<R>
+    operator: (source: Observable<T>) => Observable<R>
 ): OperatorFunction<T, T | R>;
 
 export function subsequent<T>(
     count: number,
-    selector: (source: Observable<T>) => Observable<T>
+    operator: (source: Observable<T>) => Observable<T>
 ): MonoTypeOperatorFunction<T>;
 
 export function subsequent<T, R>(
-    selector: (source: Observable<T>) => Observable<R>
+    operator: (source: Observable<T>) => Observable<R>
 ): OperatorFunction<T, T | R>;
 
 export function subsequent<T>(
-    selector: (source: Observable<T>) => Observable<T>
+    operator: (source: Observable<T>) => Observable<T>
 ): MonoTypeOperatorFunction<T>;
 
 export function subsequent<T, R>(
-    countOrSelector: number | ((source: Observable<T>) => Observable<R>),
-    selector?: (source: Observable<T>) => Observable<R>
+    countOrOperator: number | ((source: Observable<T>) => Observable<R>),
+    operator?: (source: Observable<T>) => Observable<R>
 ): OperatorFunction<T, T | R> {
 
     let count: number;
-    if (typeof countOrSelector === "number") {
-        count = countOrSelector;
+    if (typeof countOrOperator === "number") {
+        count = countOrOperator;
     } else {
         count = 1;
-        selector = countOrSelector;
+        operator = countOrOperator;
     }
 
     return (source: Observable<T>) => new Observable<T | R>(observer => {
         const published = source.pipe(publish()) as ConnectableObservable<T>;
         const subscription = concat(
             published.pipe(take(count)),
-            selector!(published)
+            published.pipe(operator!)
         ).subscribe(observer);
         subscription.add(published.connect());
         return subscription;
