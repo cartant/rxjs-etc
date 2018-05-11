@@ -31,5 +31,5 @@ export function debounceTimeSubsequent<T>(
         count = 1;
         scheduler = countOrScheduler;
     }
-    return subsequent(count, s => s.pipe(debounceTime(duration, scheduler)));
+    return subsequent(count, debounceTime(duration, scheduler));
 }
