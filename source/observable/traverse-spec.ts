@@ -45,7 +45,7 @@ describe("traverse", () => {
             const expected = m.cold("----|");
 
             const factory = createFactory(-1, 1, m.time("--|"), m.scheduler);
-            const traversed = traverse(factory, notifier);
+            const traversed = traverse({ factory, notifier });
             m.expect(traversed).toBeObservable(expected);
             m.expect(notifier).toHaveSubscriptions(notifierSubs);
         }));
@@ -56,7 +56,7 @@ describe("traverse", () => {
             const expected = m.cold("0-");
 
             const factory = createFactory();
-            const traversed = traverse(factory, notifier);
+            const traversed = traverse({ factory, notifier });
             m.expect(traversed).toBeObservable(expected);
         }));
 
@@ -66,7 +66,7 @@ describe("traverse", () => {
             const expected = m.cold("0-1----2--3--");
 
             const factory = createFactory();
-            const traversed = traverse(factory, notifier);
+            const traversed = traverse({ factory, notifier });
             m.expect(traversed).toBeObservable(expected);
         }));
 
@@ -76,7 +76,7 @@ describe("traverse", () => {
             const expected = m.cold("(01)-(12)----(23)--(34)--");
 
             const factory = createFactory(Infinity, 2);
-            const traversed = traverse(factory, notifier);
+            const traversed = traverse({ factory, notifier });
             m.expect(traversed).toBeObservable(expected);
         }));
 
@@ -86,7 +86,7 @@ describe("traverse", () => {
             const expected = m.cold("----0---1---2--");
 
             const factory = createFactory(Infinity, 1, m.time("----|"), m.scheduler);
-            const traversed = traverse(factory, notifier);
+            const traversed = traverse({ factory, notifier });
             m.expect(traversed).toBeObservable(expected);
         }));
 
@@ -95,7 +95,7 @@ describe("traverse", () => {
             const expected = m.cold("----0---1---2---|");
 
             const factory = createFactory(2, 1, m.time("----|"), m.scheduler);
-            const traversed = traverse(factory);
+            const traversed = traverse({ factory });
             m.expect(traversed).toBeObservable(expected);
         }));
 
@@ -110,7 +110,10 @@ describe("traverse", () => {
             const expected = m.cold("----0---1---2---|");
 
             const factory = createFactory(2, 1, m.time("----|"), m.scheduler);
-            const traversed = traverse(factory, source => concat(source, other));
+            const traversed = traverse({
+                factory,
+                operator: source => concat(source, other)
+            });
             m.expect(traversed).toBeObservable(expected);
             m.expect(other).toHaveSubscriptions(subs);
         }));
@@ -126,7 +129,10 @@ describe("traverse", () => {
             const expected = m.cold("0---1---2---|");
 
             const factory = createFactory(2);
-            const traversed = traverse(factory, source => concat(source, other));
+            const traversed = traverse({
+                factory,
+                operator: source => concat(source, other)
+            });
             m.expect(traversed).toBeObservable(expected);
             m.expect(other).toHaveSubscriptions(subs);
         }));
@@ -166,7 +172,7 @@ describe("traverse", () => {
                 }
             };
 
-            const traversed = traverse(factory);
+            const traversed = traverse({ factory });
             m.expect(traversed).toBeObservable(expected);
             m.expect(w).toHaveSubscriptions(wSubs);
             m.expect(x).toHaveSubscriptions(xSubs);
@@ -209,7 +215,7 @@ describe("traverse", () => {
             const expected = m.cold("(abc)-(de)--(f|)");
 
             const factory = createFactory();
-            const traversed = traverse(factory, notifier);
+            const traversed = traverse({ factory, notifier });
             m.expect(traversed).toBeObservable(expected);
         }));
 
@@ -219,7 +225,7 @@ describe("traverse", () => {
             const expected = m.cold("------(abc)-(de)--(f|)");
 
             const factory = createFactory(m.time("------|"), m.scheduler);
-            const traversed = traverse(factory, notifier);
+            const traversed = traverse({ factory, notifier });
             m.expect(traversed).toBeObservable(expected);
         }));
 
@@ -228,7 +234,7 @@ describe("traverse", () => {
             const expected = m.cold("------(abc)-(de)--(f|)");
 
             const factory = createFactory(m.time("------|"), m.scheduler);
-            const traversed = traverse(factory);
+            const traversed = traverse({ factory });
             m.expect(traversed).toBeObservable(expected);
         }));
 
@@ -237,7 +243,7 @@ describe("traverse", () => {
             const expected = m.cold("------(abc)-(def|)");
 
             const factory = createFactory(m.time("------|"), m.scheduler);
-            const traversed = traverse(factory, Infinity);
+            const traversed = traverse({ factory, concurrency: Infinity });
             m.expect(traversed).toBeObservable(expected);
         }));
     });
@@ -281,15 +287,15 @@ describe("traverse", () => {
             it("should traverse the pages", (callback: any) => {
 
                 const notifier = new Subject<any>();
-                const urls = traverse(
-                    (marker?: string) => get(marker || "https://api.github.com/users/cartant/repos").pipe(
+                const urls = traverse({
+                    factory: (marker?: string) => get(marker || "https://api.github.com/users/cartant/repos").pipe(
                         map(response => ({
                             markers: response.next ? [response.next] : [],
                             values: response.content
                         }))
                     ),
                     notifier
-                ).pipe(
+                }).pipe(
                     map(repo => repo.html_url)
                 );
 
@@ -316,17 +322,17 @@ describe("traverse", () => {
 
             it("should traverse the pages", (callback: any) => {
 
-                const urls = traverse(
-                    (marker?: string) => get(marker || "https://api.github.com/users/cartant/repos").pipe(
+                const urls = traverse({
+                    factory: (marker?: string) => get(marker || "https://api.github.com/users/cartant/repos").pipe(
                         map(response => ({
                             markers: response.next ? [response.next] : [],
                             values: response.content
                         }))
                     ),
-                    repos => repos.pipe(
+                    operator: repos => repos.pipe(
                         map(repo => repo.html_url)
                     )
-                );
+                });
 
                 const received: string[] = [];
                 urls.subscribe(

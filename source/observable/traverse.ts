@@ -17,61 +17,54 @@ import {
 
 import { expand, ignoreElements, mergeMap, tap } from "rxjs/operators";
 import { NotificationQueue } from "./NotificationQueue";
-import { isObservable } from "../util";
 
 export type TraverseElement<T, M> = { markers: ObservableInput<M>, values: ObservableInput<T> };
 export type TraverseFactory<T, M> = (marker: M | undefined, index: number) => Observable<TraverseElement<T, M>>;
 
-export function traverse<T, M>(
+export function traverse<T, M>(options: {
+    concurrency?: number,
     factory: TraverseFactory<T, M>,
-    notifier: Observable<any>,
-    concurrency?: number
-): Observable<T>;
+    notifier: Observable<any>
+}): Observable<T>;
 
-export function traverse<T, M, R>(
+export function traverse<T, M, R>(options: {
+    concurrency?: number,
     factory: TraverseFactory<T, M>,
-    operator: OperatorFunction<T, R>,
-    concurrency?: number
-): Observable<R>;
+    operator: OperatorFunction<T, R>
+}): Observable<R>;
 
-export function traverse<T, M>(
-    factory: TraverseFactory<T, M>,
-    concurrency?: number
-): Observable<T>;
+export function traverse<T, M>(options: {
+    concurrency?: number,
+    factory: TraverseFactory<T, M>
+}): Observable<T>;
 
-export function traverse<T, M, R>(
+// https://github.com/palantir/tslint/issues/3906
+
+export function traverse<T, M, R>({
+    concurrency: optionalConcurrency, // tslint:disable-line:no-use-before-declare
+    factory,
+    operator: optionalOperator, // tslint:disable-line:no-use-before-declare
+    notifier: optionalNotifier // tslint:disable-line:no-use-before-declare
+}: {
+    concurrency?: number,
     factory: TraverseFactory<T, M>,
-    optionalNotifierOrOperatorOrConcurrency?: Observable<any> | OperatorFunction<T, R> | number,
-    optionalConcurrency?: number
-): Observable<T | R> {
+    operator?: OperatorFunction<T, T | R>,
+    notifier?: Observable<any>
+}): Observable<T | R> {
     return new Observable<T | R>(observer => {
 
-        let concurrency: number;
-        let operator: OperatorFunction<T, T | R>;
+        const concurrency = (optionalConcurrency !== undefined) ? optionalConcurrency : 1;
+        const operator = optionalOperator || identity;
         let queue: NotificationQueue;
         let queueOperator: MonoTypeOperatorFunction<M | undefined>;
 
-        if (isObservable(optionalNotifierOrOperatorOrConcurrency)) {
-            operator = identity;
-            queue = new NotificationQueue(optionalNotifierOrOperatorOrConcurrency);
+        if (optionalNotifier) {
+            queue = new NotificationQueue(optionalNotifier);
             queueOperator = identity;
         } else {
             const subject = new Subject<any>();
-            if (typeof optionalNotifierOrOperatorOrConcurrency === "function") {
-                operator = optionalNotifierOrOperatorOrConcurrency;
-            } else {
-                operator = identity;
-            }
             queue = new NotificationQueue(subject);
             queueOperator = markers => { subject.next(); return markers; };
-        }
-
-        if (typeof optionalConcurrency === "number") {
-            concurrency = optionalConcurrency;
-        } else if (typeof optionalNotifierOrOperatorOrConcurrency === "number") {
-            concurrency = optionalNotifierOrOperatorOrConcurrency;
-        } else {
-            concurrency = 1;
         }
 
         const destination = new Subject<T | R>();
