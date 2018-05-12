@@ -1,3 +1,10 @@
+<a name="7.0.0"></a>
+## [7.0.0](https://github.com/cartant/rxjs-etc/compare/v6.4.0...v7.0.0) (2018-05-12)
+
+### Breaking Changes
+
+* Refactor `traverse` to use an `options` parameter. ([07f9812](https://github.com/cartant/rxjs-etc/commit/07f9812))
+
 <a name="6.4.0"></a>
 ## [6.4.0](https://github.com/cartant/rxjs-etc/compare/v6.3.0...v6.4.0) (2018-05-10)
 
