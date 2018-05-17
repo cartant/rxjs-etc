@@ -74,13 +74,13 @@ describe("prioritize", () => {
     it("should unsubscribe from the source", marbles(m => {
 
         const source =    m.cold(   "-1-2-3----4--");
-        const sourceSubs =       "   ^      !     ";
+        const sourceSubs =       "---^------!-----";
 
         const result = source.pipe(prioritize<any>(merge), filter(() => false));
 
-        const subscriber = m.hot("   a|           ").pipe(mergeMapTo(result));
-        const unsub  =           "          !     ";
-        const expected   =       "   --------     ";
+        const subscriber = m.hot("---a|-----------").pipe(mergeMapTo(result));
+        const unsub  =           "----------!-----";
+        const expected   =       "----------------";
 
         m.expect(subscriber, unsub).toBeObservable(expected);
         m.expect(source).toHaveSubscriptions(sourceSubs);
