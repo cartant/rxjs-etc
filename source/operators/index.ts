@@ -8,6 +8,7 @@ export * from "./debounceTimeSubsequent";
 export * from "./defaultObservableIfEmpty";
 export * from "./endWith";
 export * from "./guard";
+export * from "./inexorably";
 export * from "./initial";
 export * from "./instanceOf";
 export * from "./pluck";
