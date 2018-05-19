@@ -91,6 +91,10 @@ They can also be used with `pipe`, like this:
 
     Applies the specified TypeScript guard to change the source observable's type and perform a runtime check. Emits an error notification if the guard rejects a value.
 
+* [inexorably](./source/operators/inexorably.ts)
+
+    Like `finalize` (which is also exported as an alias), but passes the callback the `Notification` that effected the teardown, or `undefined` if explicitly unsubscribed.
+
 * [initial](./source/operators/initial.ts)
 
     Apply the operator to the source observable, but select only the initial `count` notifications - don't select the subsequent notifications.
