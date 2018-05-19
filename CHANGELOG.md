@@ -1,3 +1,8 @@
+<a name="7.1.0"></a>
+## [7.1.0](https://github.com/cartant/rxjs-etc/compare/v7.0.0...v7.1.0) (2018-05-19)
+
+* Added the `inexorably`/`finalize` operator. ([e0e6ed0](https://github.com/cartant/rxjs-etc/commit/e0e6ed0))
+
 <a name="7.0.0"></a>
 ## [7.0.0](https://github.com/cartant/rxjs-etc/compare/v6.4.0...v7.0.0) (2018-05-12)
 
