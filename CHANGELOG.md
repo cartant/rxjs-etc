@@ -1,3 +1,8 @@
+<a name="7.2.0"></a>
+## [7.2.0](https://github.com/cartant/rxjs-etc/compare/v7.1.0...v7.2.0) (2018-05-20)
+
+* Added the static `genericPipe`/`pipe` helper. ([239cfd1](https://github.com/cartant/rxjs-etc/commit/239cfd1))
+
 <a name="7.1.0"></a>
 ## [7.1.0](https://github.com/cartant/rxjs-etc/compare/v7.0.0...v7.1.0) (2018-05-19)
 
