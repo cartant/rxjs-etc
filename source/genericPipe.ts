@@ -20,4 +20,5 @@ export function genericPipe<T, R>(...operations: UnaryFunction<any, any>[]): Una
 export function genericPipe<T, R>(...operations: UnaryFunction<any, any>[]): UnaryFunction<T, R> {
     return _pipe.apply(undefined, operations);
 }
+
 export const pipe = genericPipe;

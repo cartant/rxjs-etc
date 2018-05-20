@@ -20,3 +20,5 @@ export function defaultObservableIfEmpty<T>(
         ))
     );
 }
+
+export const switchIfEmpty = defaultObservableIfEmpty;

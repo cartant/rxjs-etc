@@ -4,10 +4,16 @@
  */
 /*tslint:disable:no-unused-expression*/
 
+import { expect } from "chai";
 import { marbles } from "rxjs-marbles";
-import { defaultObservableIfEmpty } from "./defaultObservableIfEmpty";
+import { defaultObservableIfEmpty, switchIfEmpty } from "./defaultObservableIfEmpty";
 
 describe("defaultObservableIfEmpty", () => {
+
+    it("should export an alias", () => {
+
+        expect(switchIfEmpty).to.equal(defaultObservableIfEmpty);
+    });
 
     it("should return the source if not empty", marbles((m) => {
 

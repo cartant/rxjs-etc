@@ -17,6 +17,7 @@ import {
 export function inexorably<T>(callback: (notification: Notification<T> | undefined) => void): MonoTypeOperatorFunction<T> {
     return (source: Observable<T>) => source.lift(new InexorablyOperator(callback));
 }
+
 export const finalize = inexorably;
 
 /*tslint:disable-next-line:no-unused-declaration*/

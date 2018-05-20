@@ -4,11 +4,12 @@
  */
 /*tslint:disable:no-unused-expression*/
 
+import { expect } from "chai";
 import { delay, distinctUntilChanged } from "rxjs/operators";
 import { marbles } from "rxjs-marbles";
 import { expecter } from "ts-snippet";
 import { timeout } from "./timeout-spec";
-import { genericPipe } from "./genericPipe";
+import { genericPipe, pipe } from "./genericPipe";
 
 describe("genericPipe", function (): void {
 
@@ -16,6 +17,11 @@ describe("genericPipe", function (): void {
     this.timeout(timeout);
 
     describe("functionality", () => {
+
+        it("should export an alias", () => {
+
+            expect(pipe).to.equal(genericPipe);
+        });
 
         it("should pipe a mono-type operator", marbles(m => {
 
