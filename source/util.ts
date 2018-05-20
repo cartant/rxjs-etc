@@ -6,11 +6,9 @@
 import { Observable, SchedulerLike } from "rxjs";
 
 export function isObservable(value: any): value is Observable<any> {
-
      return value && (typeof value["subscribe"] === "function");
 }
 
 export function isScheduler(value: any): value is SchedulerLike {
-
     return value && (typeof value["schedule"] === "function");
 }
