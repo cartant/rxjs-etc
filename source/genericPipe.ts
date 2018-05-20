@@ -5,7 +5,8 @@
 
 import { Observable, pipe as _pipe, UnaryFunction } from "rxjs";
 
-export function genericPipe<T>(...operations: UnaryFunction<T, T>[]): <R>(source: Observable<R>) => Observable<R>;
+export function genericPipe<T>(...operations: UnaryFunction<Observable<T>, Observable<T>>[]): <R extends T>(source: Observable<R>) => Observable<R>;
+export function genericPipe<T>(...operations: UnaryFunction<T, T>[]): <R extends T>(source: R) => R;
 export function genericPipe<T, A>(op1: UnaryFunction<T, A>): UnaryFunction<T, A>;
 export function genericPipe<T, A, B>(op1: UnaryFunction<T, A>, op2: UnaryFunction<A, B>): UnaryFunction<T, B>;
 export function genericPipe<T, A, B, C>(op1: UnaryFunction<T, A>, op2: UnaryFunction<A, B>, op3: UnaryFunction<B, C>): UnaryFunction<T, C>;
