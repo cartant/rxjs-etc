@@ -28,18 +28,13 @@ npm install rxjs-etc --save
 
 ### `Observable` factories
 
-* [combineLatestArray](./source/observable/combineLatestArray.ts)
-* [concatArray](./source/observable/concatArray.ts)
-* [forkJoinArray](./source/observable/forkJoinArray.ts)
-* [mergeArray](./source/observable/mergeArray.ts)
-* [zipArray](./source/observable/zipArray.ts)
+* [combineLatestArray](./source/observable/combineLatestArray.ts), [concatArray](./source/observable/concatArray.ts), [forkJoinArray](./source/observable/forkJoinArray.ts), [mergeArray](./source/observable/mergeArray.ts), [zipArray](./source/observable/zipArray.ts)
 
     A bunch of static methods that behave in a predictable manner when passed empty arrays. Some of these are now redundant, but some aren't.
 
     To see how these methods behave, consult their tests.
 
-* [combineLatestObject](./source/observable/combineLatestObject.ts)
-* [forkJoinObject](./source/observable/forkJoinObject.ts)
+* [combineLatestObject](./source/observable/combineLatestObject.ts), [forkJoinObject](./source/observable/forkJoinObject.ts)
 
     Like the array versions, but these take objects. Observable properties are combined using either `combineLatest` or `forkJoin`.
 
