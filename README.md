@@ -146,8 +146,10 @@ A bunch of utility functions that do what their names suggest:
     const debounce = genericPipe(
       debounceTime(400),
       distinctUntilChanged()
-    ); // <R>(source: Observable<R>) => Observable<R>
+    ); // <R extends {}>(source: Observable<R>) => Observable<R>
     ```
+
+    The returned, generic `debounce` function can then be used in `pipe` calls made on observables of any type. And it's type-safe.
 
 * [isObservable](./source/util.ts)
 * [isScheduler](./source/util.ts)
