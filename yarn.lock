@@ -2608,8 +2608,8 @@ follow-redirects@1.0.0:
     debug "^2.2.0"
 
 follow-redirects@^1.0.0:
-  version "1.4.1"
-  resolved "https://registry.yarnpkg.com/follow-redirects/-/follow-redirects-1.4.1.tgz#d8120f4518190f55aac65bb6fc7b85fcd666d6aa"
+  version "1.5.0"
+  resolved "https://registry.yarnpkg.com/follow-redirects/-/follow-redirects-1.5.0.tgz#234f49cf770b7f35b40e790f636ceba0c3a0ab77"
   dependencies:
     debug "^3.1.0"
 
@@ -5552,8 +5552,8 @@ rx-lite@*, rx-lite@^4.0.8:
   resolved "https://registry.yarnpkg.com/rx-lite/-/rx-lite-4.0.8.tgz#0b1e11af8bc44836f04a6407e92da42467b79444"
 
 rxjs-marbles@^4.0.0:
-  version "4.0.2"
-  resolved "https://registry.yarnpkg.com/rxjs-marbles/-/rxjs-marbles-4.0.2.tgz#a02ec3c5d28ad2bf8b21b86d6cb529aab7819e73"
+  version "4.1.0"
+  resolved "https://registry.yarnpkg.com/rxjs-marbles/-/rxjs-marbles-4.1.0.tgz#f73fe49553bfcbe91c0085b4aa6dadb99bb4a6c1"
   dependencies:
     "@types/lodash" "^4.0.0"
     lodash "^4.0.0"
@@ -5569,8 +5569,8 @@ rxjs-spy@^7.0.0:
     stacktrace-gps "^3.0.2"
 
 rxjs-tslint-rules@^4.0.0:
-  version "4.2.0"
-  resolved "https://registry.yarnpkg.com/rxjs-tslint-rules/-/rxjs-tslint-rules-4.2.0.tgz#886920301ee1f404ddc4cd9ddbbb3b95f8439659"
+  version "4.2.1"
+  resolved "https://registry.yarnpkg.com/rxjs-tslint-rules/-/rxjs-tslint-rules-4.2.1.tgz#488ba6aeea42e11df85aecc1b533eb6b47c8aca6"
   dependencies:
     decamelize "^2.0.0"
     resolve "^1.4.0"
@@ -6415,8 +6415,8 @@ unset-value@^1.0.0:
     isobject "^3.0.0"
 
 untildify@^3.0.2:
-  version "3.0.2"
-  resolved "https://registry.yarnpkg.com/untildify/-/untildify-3.0.2.tgz#7f1f302055b3fea0f3e81dc78eb36766cb65e3f1"
+  version "3.0.3"
+  resolved "https://registry.yarnpkg.com/untildify/-/untildify-3.0.3.tgz#1e7b42b140bcfd922b22e70ca1265bfe3634c7c9"
 
 upath@^1.0.0:
   version "1.1.0"
