@@ -1,10 +1,21 @@
+<a name="7.2.1"></a>
+## [7.2.1](https://github.com/cartant/rxjs-etc/compare/v7.2.0...v7.2.1) (2018-05-20)
+
+### Fixes
+
+* Improve the type safety of the static `genericPipe`/`pipe` helper. ([a52491e](https://github.com/cartant/rxjs-etc/commit/a52491e))
+
 <a name="7.2.0"></a>
 ## [7.2.0](https://github.com/cartant/rxjs-etc/compare/v7.1.0...v7.2.0) (2018-05-20)
+
+### Features
 
 * Added the static `genericPipe`/`pipe` helper. ([239cfd1](https://github.com/cartant/rxjs-etc/commit/239cfd1))
 
 <a name="7.1.0"></a>
 ## [7.1.0](https://github.com/cartant/rxjs-etc/compare/v7.0.0...v7.1.0) (2018-05-19)
+
+### Features
 
 * Added the `inexorably`/`finalize` operator. ([e0e6ed0](https://github.com/cartant/rxjs-etc/commit/e0e6ed0))
 
