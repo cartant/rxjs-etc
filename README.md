@@ -138,5 +138,16 @@ They can also be used with `pipe`, like this:
 
 A bunch of utility functions that do what their names suggest:
 
+* [genericPipe](./source/genericPipe.ts)
+
+    Like the static `pipe` (which is also exported as an alias), but with an overload signature that will return a generic operator if all parameter types are the same. For example, the `debounceTime` and `distinctUntilChanged` operators don't alter the observable type, so it's possible to return a generic type:
+
+    ```ts
+    const debounce = genericPipe(
+      debounceTime(400),
+      distinctUntilChanged()
+    ); // <R>(source: Observable<R>) => Observable<R>
+    ```
+
 * [isObservable](./source/util.ts)
 * [isScheduler](./source/util.ts)
