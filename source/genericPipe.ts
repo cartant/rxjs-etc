@@ -3,9 +3,14 @@
  * can be found in the LICENSE file at https://github.com/cartant/rxjs-etc
  */
 
-import { Observable, pipe as _pipe, UnaryFunction } from "rxjs";
+import {
+    MonoTypeOperatorFunction,
+    Observable,
+    pipe as _pipe,
+    UnaryFunction
+} from "rxjs";
 
-export function genericPipe<T>(...operations: UnaryFunction<Observable<T>, Observable<T>>[]): <R extends T>(source: Observable<R>) => Observable<R>;
+export function genericPipe<T>(...operations: MonoTypeOperatorFunction<T>[]): <R extends T>(source: Observable<R>) => Observable<R>;
 export function genericPipe<T>(...operations: UnaryFunction<T, T>[]): <R extends T>(source: R) => R;
 export function genericPipe<T, A>(op1: UnaryFunction<T, A>): UnaryFunction<T, A>;
 export function genericPipe<T, A, B>(op1: UnaryFunction<T, A>, op2: UnaryFunction<A, B>): UnaryFunction<T, B>;
