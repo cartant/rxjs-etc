@@ -13,10 +13,10 @@ export function isNullish<T>(value: T | null | undefined): value is null | undef
     return (value === null) || (value === undefined);
 }
 
-export function isObservable(value: any): value is Observable<any> {
-     return value && (typeof value["subscribe"] === "function");
+export function isObservable(value: object | null | undefined): value is Observable<any> {
+     return Boolean(value && (typeof value["subscribe"] === "function"));
 }
 
-export function isScheduler(value: any): value is SchedulerLike {
-    return value && (typeof value["schedule"] === "function");
+export function isScheduler(value: object | null | undefined): value is SchedulerLike {
+    return Boolean(value && (typeof value["schedule"] === "function"));
 }

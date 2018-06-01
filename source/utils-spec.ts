@@ -5,7 +5,8 @@
 /*tslint:disable:no-unused-expression*/
 
 import { expect } from "chai";
-import { isNotNullish, isNullish } from "./util";
+import { asapScheduler, EMPTY } from "rxjs";
+import { isNotNullish, isNullish, isObservable, isScheduler } from "./util";
 
 describe("util", () => {
 
@@ -30,6 +31,28 @@ describe("util", () => {
             expect(isNullish(false)).to.be.false;
             expect(isNullish(0)).to.be.false;
             expect(isNullish("")).to.be.false;
+        });
+    });
+
+    describe("isObservable", () => {
+
+        it("should determine whether a value is an observable", () => {
+
+            expect(isObservable(null)).to.be.false;
+            expect(isObservable(undefined)).to.be.false;
+            expect(isObservable({})).to.be.false;
+            expect(isObservable(EMPTY)).to.be.true;
+        });
+    });
+
+    describe("isScheduler", () => {
+
+        it("should determine whether a value is a scheduler", () => {
+
+            expect(isScheduler(null)).to.be.false;
+            expect(isScheduler(undefined)).to.be.false;
+            expect(isScheduler({})).to.be.false;
+            expect(isScheduler(asapScheduler)).to.be.true;
         });
     });
 });
