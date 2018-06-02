@@ -14,7 +14,13 @@ import {
     timer
 } from "rxjs";
 
-import { debounce, publish, startWith, switchMap } from "rxjs/operators";
+import {
+    debounce,
+    mapTo,
+    publish,
+    startWith,
+    switchMap
+} from "rxjs/operators";
 
 export function debounceTimeWithinReason<T>(
     debounceDuration: number,
@@ -34,7 +40,8 @@ export function debounceTimeWithinReason<T>(
         );
 
         reasonableTimer = debounced.pipe(
-            startWith<T>(undefined!),
+            mapTo(undefined),
+            startWith(undefined),
             switchMap(() => timer(reasonableDuration, scheduler)),
             publish()
         ) as ConnectableObservable<T>;
