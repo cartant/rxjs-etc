@@ -4,7 +4,6 @@
  */
 
 import {
-    asapScheduler,
     ConnectableObservable,
     merge,
     MonoTypeOperatorFunction,
@@ -25,7 +24,7 @@ import {
 export function debounceTimeWithinReason<T>(
     debounceDuration: number,
     reasonableDuration: number,
-    scheduler: SchedulerLike = asapScheduler
+    scheduler?: SchedulerLike
 ): MonoTypeOperatorFunction<T> {
 
     return source => source.pipe(publish(sharedSource => new Observable<T>(observer => {
