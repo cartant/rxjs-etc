@@ -4138,8 +4138,8 @@ rxjs-spy@^7.0.0:
     stacktrace-gps "^3.0.2"
 
 rxjs-tslint-rules@^4.0.0:
-  version "4.3.1"
-  resolved "https://registry.yarnpkg.com/rxjs-tslint-rules/-/rxjs-tslint-rules-4.3.1.tgz#32f939c9e83dbae41aa6ebdee1e4b963397eef90"
+  version "4.4.0"
+  resolved "https://registry.yarnpkg.com/rxjs-tslint-rules/-/rxjs-tslint-rules-4.4.0.tgz#f83ec089fd3de98e9beeec9f76f8b1c9cf28245a"
   dependencies:
     decamelize "^2.0.0"
     resolve "^1.4.0"
