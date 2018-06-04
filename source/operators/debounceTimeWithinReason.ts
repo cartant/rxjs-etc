@@ -29,7 +29,7 @@ export function debounceTimeWithinReason<T>(
 
     return source => source.pipe(publish(sharedSource => new Observable<T>(observer => {
 
-        let reasonableTimer: ConnectableObservable<T>;
+        let reasonableTimer: ConnectableObservable<number>;
 
         const debounced = sharedSource.pipe(
             debounce(() => merge(
@@ -43,7 +43,7 @@ export function debounceTimeWithinReason<T>(
             startWith(undefined),
             switchMap(() => timer(reasonableDuration, scheduler)),
             publish()
-        ) as ConnectableObservable<T>;
+        ) as ConnectableObservable<number>;
 
         const subscription = new Subscription();
         subscription.add(reasonableTimer.connect());
