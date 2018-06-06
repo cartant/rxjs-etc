@@ -80,7 +80,7 @@ They can also be used with `pipe`, like this:
 
 * [debounceTimeWithinReason](./source/operators/debounceTimeWithinReason.ts)
 
-    Like `debounceTime`, but with an additional duration to ensure some notifications are emitted for super-bust streams.
+    Like `debounceTime`, but with an additional duration to ensure some notifications are emitted for super-busy streams.
 
 * [defaultObservableIfEmpty](./source/operators/defaultObservableIfEmpty.ts)
 
