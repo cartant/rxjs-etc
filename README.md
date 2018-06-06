@@ -42,6 +42,10 @@ npm install rxjs-etc --save
 
     Like `forkJoin` but only runs the specified number of observables concurrently.
 
+* [separate](./source/observable/separate.ts)
+
+    Like `partition` but can passed more than one predicate to return more than two observables.
+
 * [traverse](./source/observable/traverse.ts)
 
     Based on `expand`. Traverses a graph with backpressure applied using either a notifier or a consumer.
@@ -54,7 +58,7 @@ npm install rxjs-etc --save
 
 * [doIndex](./source/operator/doIndex.ts)
 
-    Like [`do`](http://reactivex.io/rxjs/class/es6/Observable.js~Observable.html#instance-method-do), but it receives an index in addition to the emitted value.
+    Like `do`, but it receives an index in addition to the emitted value.
 
 ### Functions for use with `pipe` or `let`
 
@@ -74,17 +78,25 @@ They can also be used with `pipe`, like this:
 
     Debounce the source observable, but don't debounce the first `count` notifications - only the subsequent notifications.
 
+* [debounceTimeWithinReason](./source/operators/debounceTimeWithinReason.ts)
+
+    Like `debounceTime`, but with an additional duration to ensure some notifications are emitted for super-bust streams.
+
 * [defaultObservableIfEmpty](./source/operators/defaultObservableIfEmpty.ts)
 
-    Like [`defaultIfEmpty`](http://reactivex.io/rxjs/class/es6/Observable.js~Observable.html#instance-method-defaultIfEmpty), but it takes a default observable instead of a default value.
+    Like `defaultIfEmpty`, but it takes a default observable instead of a default value.
 
 * [endWith](./source/operators/endWith.ts)
 
-    Like [`startWith`](http://reactivex.io/rxjs/class/es6/Observable.js~Observable.html#instance-method-startWith), but for the other end.
+    Like `startWith`, but for the other end.
 
 * [guard](./source/operators/guard.ts)
 
     Applies the specified TypeScript guard to change the source observable's type and perform a runtime check. Emits an error notification if the guard rejects a value.
+
+* [hasCompleted](./source/operators/hasCompleted.ts)
+
+    Emits `true` when the source observable completes.
 
 * [inexorably](./source/operators/inexorably.ts)
 
@@ -96,7 +108,7 @@ They can also be used with `pipe`, like this:
 
 * [pluck](./source/operators/pluck.ts)
 
-    Like [`pluck`](http://reactivex.io/rxjs/class/es6/Observable.js~Observable.html#instance-method-pluck), but it's type-safe and only lets you valid keys. And it returns the appropriate type.
+    Like `pluck`, but it's type-safe and only lets you valid keys. And it returns the appropriate type.
 
 * [prioritize](./source/operators/prioritize.ts)
 
@@ -108,7 +120,7 @@ They can also be used with `pipe`, like this:
 
 * [refCountAuditTime](./source/operators/refCountAuditTime.ts)
 
-    Can be used with a `ConnectableObservable` instead of `refCount`. Works kinda like [`auditTime`](http://reactivex.io/rxjs/class/es6/Observable.js~Observable.html#instance-method-auditTime) does for values, but for unsubscriptions instead. That is, when the reference count drops to zero, it waits the specified duration and then if the reference count is zero, it unsubscribes. If the reference count is incremented within the duration, no unsubscription occurs.
+    Can be used with a `ConnectableObservable` instead of `refCount`. Works kinda like `auditTime` does for values, but for unsubscriptions instead. That is, when the reference count drops to zero, it waits the specified duration and then if the reference count is zero, it unsubscribes. If the reference count is incremented within the duration, no unsubscription occurs.
 
 * [reschedule](./source/operators/reschedule.ts)
 
@@ -120,7 +132,7 @@ They can also be used with `pipe`, like this:
 
 * [takeWhileInclusive](./source/operators/takeWhileInclusive.ts)
 
-    Like [`takeWhile`](http://reactivex.io/rxjs/class/es6/Observable.js~Observable.html#instance-method-takeWhile), but the value that fails the predicate is taken.
+    Like `takeWhile`, but the value that fails the predicate is taken.
 
 * [tapIndex](./source/operators/tagIndex.ts)
 
@@ -132,7 +144,7 @@ They can also be used with `pipe`, like this:
 
 * [unsubscribeOn](./source/operators/unsubscribeOn.ts)
 
-    Like [`subscribeOn`](http://reactivex.io/rxjs/class/es6/Observable.js~Observable.html#instance-method-subscribeOn), but for unsubscription.
+    Like `subscribeOn`, but for unsubscription.
 
 ### Utility functions
 
@@ -150,6 +162,10 @@ A bunch of utility functions that do what their names suggest:
     ```
 
     The returned, generic `debounce` function can then be used in `pipe` calls made on observables of any type. And it's type-safe.
+
+* [isNullish/isNotNullish](./source/util.ts)
+
+    `isNullish` returns `true` if a value is `null` or `undefined`.
 
 * [isObservable](./source/util.ts)
 * [isScheduler](./source/util.ts)
