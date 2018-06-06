@@ -12,17 +12,20 @@ describe("separate", () => {
     it("should support a single predicate", marbles(m => {
 
         const source =  m.hot("--a--b--c--d--e--|");
+        const subs =          "^----------------!";
         const expected1 =     "--a--------------|";
         const expectedOther = "-----b--c--d--e--|";
 
         const [sep1, sepOther] = separate(source, value => value === "a");
         m.expect(sep1).toBeObservable(expected1);
         m.expect(sepOther).toBeObservable(expectedOther);
+        m.expect(source).toHaveSubscriptions(subs);
     }));
 
     it("should support two predicates", marbles(m => {
 
         const source =  m.hot("--a--b--c--d--e--|");
+        const subs =          "^----------------!";
         const expected1 =     "--a--------------|";
         const expected2 =     "-----b-----------|";
         const expectedOther = "--------c--d--e--|";
@@ -35,11 +38,13 @@ describe("separate", () => {
         m.expect(sep1).toBeObservable(expected1);
         m.expect(sep2).toBeObservable(expected2);
         m.expect(sepOther).toBeObservable(expectedOther);
+        m.expect(source).toHaveSubscriptions(subs);
     }));
 
     it("should support three predicates", marbles(m => {
 
         const source =  m.hot("--a--b--c--d--e--|");
+        const subs =          "^----------------!";
         const expected1 =     "--a--------------|";
         const expected2 =     "-----b-----------|";
         const expected3 =     "--------c--------|";
@@ -55,11 +60,13 @@ describe("separate", () => {
         m.expect(sep2).toBeObservable(expected2);
         m.expect(sep3).toBeObservable(expected3);
         m.expect(sepOther).toBeObservable(expectedOther);
+        m.expect(source).toHaveSubscriptions(subs);
     }));
 
     it("should support multiple predicates", marbles(m => {
 
         const source =  m.hot("--a--b--c--d--e--|");
+        const subs =          "^----------------!";
         const expected1 =     "--a--------------|";
         const expected2 =     "-----b-----------|";
         const expected3 =     "--------c--------|";
@@ -78,5 +85,6 @@ describe("separate", () => {
         m.expect(sep3).toBeObservable(expected3);
         m.expect(sep4).toBeObservable(expected4);
         m.expect(sepOther).toBeObservable(expectedOther);
+        m.expect(source).toHaveSubscriptions(subs);
     }));
 });
