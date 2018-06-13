@@ -84,20 +84,6 @@ describe("genericPipe", function (): void {
                 snippet.toInfer("source", "Observable<number>");
                 snippet.toInfer("delayed", "Observable<string>");
             });
-
-            it("should fail with incompatible types", () => {
-
-                const snippet = expectSnippet(`
-                    const operator = map((value: string) => value.toLowerCase());
-                    const piped = genericPipe<string>(operator);
-                    const source = of(1);
-                    const delayed = source.pipe(piped);
-                `);
-                snippet.toInfer("operator", "OperatorFunction<string, string>");
-                snippet.toInfer("piped", "<R extends string>(source: Observable<R>) => Observable<R>");
-                snippet.toInfer("source", "Observable<number>");
-                snippet.toFail(/not assignable to/i);
-            });
         });
     }
 });
