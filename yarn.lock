@@ -42,8 +42,8 @@
   resolved "https://registry.yarnpkg.com/@types/mocha/-/mocha-5.2.3.tgz#11f3a5629d67cd444fa6c94536576244e6a52ea9"
 
 "@types/node@^10.0.0":
-  version "10.3.5"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-10.3.5.tgz#8423cdf6e6fb83433e489900d7600d3b61c8260c"
+  version "10.3.6"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-10.3.6.tgz#ea8aab9439b59f40d19ec5f13b44642344872b11"
 
 "@types/sinon@^5.0.0":
   version "5.0.1"
@@ -1957,8 +1957,8 @@ hoek@2.x.x:
   resolved "https://registry.yarnpkg.com/hoek/-/hoek-2.16.3.tgz#20bb7403d3cea398e91dc4710a8ff1b8274a25ed"
 
 hosted-git-info@^2.1.4:
-  version "2.6.0"
-  resolved "https://registry.yarnpkg.com/hosted-git-info/-/hosted-git-info-2.6.0.tgz#23235b29ab230c576aab0d4f13fc046b0b038222"
+  version "2.6.1"
+  resolved "https://registry.yarnpkg.com/hosted-git-info/-/hosted-git-info-2.6.1.tgz#6e4cee78b01bb849dcf93527708c69fdbee410df"
 
 http-errors@1.6.3, http-errors@~1.6.3:
   version "1.6.3"
@@ -3767,8 +3767,8 @@ rxjs-spy@^7.0.0:
     stacktrace-gps "^3.0.2"
 
 rxjs-tslint-rules@^4.0.0:
-  version "4.4.2"
-  resolved "https://registry.yarnpkg.com/rxjs-tslint-rules/-/rxjs-tslint-rules-4.4.2.tgz#9d2912a0274c772044d82bf50fa09c4793296a0b"
+  version "4.4.4"
+  resolved "https://registry.yarnpkg.com/rxjs-tslint-rules/-/rxjs-tslint-rules-4.4.4.tgz#06574f5725fcb4e5063d9caabf95e847a3de7980"
   dependencies:
     "@phenomnomnominal/tsquery" "^1.0.5"
     decamelize "^2.0.0"
@@ -4429,8 +4429,8 @@ uglify-es@^3.3.4:
     source-map "~0.6.1"
 
 uglifyjs-webpack-plugin@^1.2.4:
-  version "1.2.6"
-  resolved "https://registry.yarnpkg.com/uglifyjs-webpack-plugin/-/uglifyjs-webpack-plugin-1.2.6.tgz#f4bb44f02431e82b301d8d4624330a6a35729381"
+  version "1.2.7"
+  resolved "https://registry.yarnpkg.com/uglifyjs-webpack-plugin/-/uglifyjs-webpack-plugin-1.2.7.tgz#57638dd99c853a1ebfe9d97b42160a8a507f9d00"
   dependencies:
     cacache "^10.0.4"
     find-cache-dir "^1.0.0"
