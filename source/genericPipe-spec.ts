@@ -52,10 +52,10 @@ describe("genericPipe", function (): void {
 
             const expectSnippet = expecter(code => `
                 import { of } from "rxjs";
-                import { delay, map } from "rxjs/operators";
+                import { delay, map, mapTo, switchAll } from "rxjs/operators";
                 import { genericPipe } from "./source/genericPipe";
                 ${code}
-            `);
+            `, { strict: true });
 
             it("should infer a non-generic operator for a mono-type operator", () => {
 
@@ -75,7 +75,7 @@ describe("genericPipe", function (): void {
 
                 const snippet = expectSnippet(`
                     const operator = map((value: number) => value.toString());
-                    const piped = genericPipe(operator)
+                    const piped = genericPipe(operator);
                     const source = of(1);
                     const delayed = source.pipe(piped);
                 `);
@@ -83,6 +83,14 @@ describe("genericPipe", function (): void {
                 snippet.toInfer("piped", "UnaryFunction<Observable<number>, Observable<string>>");
                 snippet.toInfer("source", "Observable<number>");
                 snippet.toInfer("delayed", "Observable<string>");
+            });
+
+            it("should match Observable<any> only for excess parameters", () => {
+
+                const snippet = expectSnippet(`
+                    const piped = genericPipe(mapTo(1), switchAll());
+                `);
+                snippet.toFail(/is not assignable to type/);
             });
         });
     }
