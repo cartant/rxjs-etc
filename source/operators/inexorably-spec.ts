@@ -17,7 +17,7 @@ describe("inexorably", () => {
         expect(finalize).to.equal(inexorably);
     });
 
-    it("should call finally after complete", (done: MochaDone) => {
+    it("should call finally after complete", (done: Mocha.Done) => {
 
         let completed = false;
         of(1, 2, 3).pipe(
@@ -32,7 +32,7 @@ describe("inexorably", () => {
         });
     });
 
-    it("should call finally after error", (done: MochaDone) => {
+    it("should call finally after error", (done: Mocha.Done) => {
 
         let thrown = false;
         of(1, 2, 3).pipe(
@@ -53,7 +53,7 @@ describe("inexorably", () => {
         });
     });
 
-    it("should call finally upon disposal", (done: MochaDone) => {
+    it("should call finally upon disposal", (done: Mocha.Done) => {
 
         let disposed = false;
         const subscription = timer(100).pipe(
@@ -67,7 +67,7 @@ describe("inexorably", () => {
         subscription.unsubscribe();
     });
 
-    it("should call finally when synchronously subscribing to and unsubscribing from a shared Observable", (done: MochaDone) => {
+    it("should call finally when synchronously subscribing to and unsubscribing from a shared Observable", (done: Mocha.Done) => {
 
         interval(50).pipe(
             /*tslint:disable-next-line:no-unnecessary-callback-wrapper*/
@@ -79,7 +79,7 @@ describe("inexorably", () => {
         ).subscribe().unsubscribe();
     });
 
-    it("should call two finally instances in succession on a shared Observable", (done: MochaDone) => {
+    it("should call two finally instances in succession on a shared Observable", (done: Mocha.Done) => {
 
         let invoked = 0;
         function checkFinally(notification: Notification<number> | undefined): void {
