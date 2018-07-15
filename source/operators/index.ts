@@ -12,6 +12,7 @@ export * from "./indexElements";
 export * from "./inexorably";
 export * from "./initial";
 export * from "./instanceOf";
+export * from "./latch";
 export * from "./pluck";
 export * from "./prioritize";
 export * from "./rateLimit";
