@@ -46,6 +46,10 @@ npm install rxjs-etc --save
 
     Like `partition` but can passed more than one predicate to return more than two observables.
 
+* [toggle](./source/observable/toggle.ts)
+
+    Splits a notifier into two or more states and between which notifications are toggled.
+
 * [traverse](./source/observable/traverse.ts)
 
     Based on `expand`. Traverses a graph with backpressure applied using either a notifier or a consumer.
@@ -97,6 +101,10 @@ They can also be used with `pipe`, like this:
 * [hasCompleted](./source/operators/hasCompleted.ts)
 
     Emits `true` when the source observable completes.
+
+* [indexElements](./source/operators/indexElements.ts)
+
+    Like `map((value, index) => index)` when it's called without a selector. When called with a selector, it's just an alias for `map`.
 
 * [inexorably](./source/operators/inexorably.ts)
 
