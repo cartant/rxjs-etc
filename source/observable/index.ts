@@ -15,6 +15,7 @@ export * from "./mergeArray";
 export * from "./NotificationQueue";
 export * from "./queue";
 export * from "./separate";
+export * from "./toggle";
 export * from "./traverse";
 export * from "./zipArray";
 export * from "./zipPadded";
