@@ -1,3 +1,14 @@
+<a name="7.4.0"></a>
+
+### Features
+
+* Added the `indexElements` operator. ([435cd47](https://github.com/cartant/rxjs-etc/commit/435cd47))
+* Added the `toggle` factory function. ([3cb7e4f](https://github.com/cartant/rxjs-etc/commit/3cb7e4f))
+
+### Fixes
+
+* Fixed the TypeScript overloads the static `genericPipe`/`pipe` helper. ([d42a7bb](https://github.com/cartant/rxjs-etc/commit/d42a7bb))
+
 <a name="7.3.0"></a>
 
 ### Features
