@@ -3,7 +3,7 @@
  * can be found in the LICENSE file at https://github.com/cartant/rxjs-etc
  */
 
-import { defer, MonoTypeOperatorFunction, PartialObserver } from "rxjs";
+import { defer, MonoTypeOperatorFunction, noop, PartialObserver } from "rxjs";
 import { tap } from "rxjs/operators";
 
 export function tapWithIndex<T>(
@@ -22,11 +22,27 @@ export function tapWithIndex<T>(
     return source => defer(() => {
         /*tslint:disable-next-line:no-unused-declaration*/
         let index = -1;
-        const observer = nextOrObserver && (typeof nextOrObserver !== "function") ?
-            { next: () => {}, ...nextOrObserver } :
-            { complete, error, next: nextOrObserver || (() => {}) };
+        let context: any;
+        let handleNext: ([value, index]: [T, number]) => void;
+        let handleError: (error: any) => void;
+        let handleComplete: () => void;
+        if (nextOrObserver && (typeof nextOrObserver !== "function")) {
+            context = nextOrObserver;
+            handleNext = nextOrObserver.next || noop;
+            handleError = nextOrObserver.error || noop;
+            handleComplete = nextOrObserver.complete || noop;
+        } else {
+            context = undefined;
+            handleNext = nextOrObserver || noop;
+            handleError = error || noop;
+            handleComplete = complete || noop;
+        }
         return source.pipe(
-            tap<T>({ ...observer, next: value => observer.next([value, ++index]) })
+            tap<T>(
+                value => handleNext.call(context, [value, ++index]),
+                error => handleError.call(context, error),
+                () => handleComplete.call(context)
+            )
         );
     });
 }

@@ -94,4 +94,32 @@ describe("tapWithIndex", () => {
             value: "bob"
         }]);
     });
+
+    it("should use the partial observer as the context", () => {
+
+        let seen: { context: any, index: number, value: string }[] = [];
+
+        const observer = {
+            next: function (this: {}, [value, index]: [string, number]): void {
+                seen.push({
+                    context: this,
+                    index,
+                    value
+                });
+            }
+        };
+        from(["alice", "bob"]).pipe(
+            tapWithIndex(observer)
+        ).subscribe();
+
+        expect(seen).to.deep.equal([{
+            context: observer,
+            index: 0,
+            value: "alice"
+        }, {
+            context: observer,
+            index: 1,
+            value: "bob"
+        }]);
+    });
 });
