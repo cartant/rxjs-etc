@@ -58,12 +58,6 @@ npm install rxjs-etc --save
 
     Works like `zipArray`, but if some sources complete whilst others continue to emit values, those the complete are 'padded' with the specified `padValue` (which defaults to `undefined`).
 
-### Instance methods for `Observable`
-
-* [doIndex](./source/operator/doIndex.ts)
-
-    Like `do`, but it receives an index in addition to the emitted value.
-
 ### Functions for use with `pipe` or `let`
 
 A bunch of functions that can be passed to the `let` operator. Use them like this:
@@ -142,9 +136,9 @@ They can also be used with `pipe`, like this:
 
     Like `takeWhile`, but the value that fails the predicate is taken.
 
-* [tapIndex](./source/operators/tagIndex.ts)
+* [tapWithIndex](./source/operators/tapWithIndex.ts)
 
-    Like [`tap`](https://github.com/ReactiveX/rxjs/blob/5.5.2/src/operators/tap.ts#L54-L60), but it receives an index in addition to the emitted value. (Note that `tap` is the lettable/pipeable version of the `do` operator. It was renamed because `do` is a keyword.)
+    Like [`tap`](https://github.com/ReactiveX/rxjs/blob/5.5.2/src/operators/tap.ts#L54-L60), but it receives a tuple that includes the emitted value and the index.
 
 * [throttleAfter](./source/operators/throttleAfter.ts)
 
