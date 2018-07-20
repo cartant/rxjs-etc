@@ -1,3 +1,9 @@
+<a name="8.0.0"></a>
+
+### Breaking Changes
+
+* Renamed the `tapIndex` operator to `tapWithIndex` and used a tuple so that either handler functions or a partial observer can be passed. ([a1f9af4](https://github.com/cartant/rxjs-etc/commit/a1f9af4))
+
 <a name="7.4.0"></a>
 
 ### Features
