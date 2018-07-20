@@ -20,6 +20,6 @@ export * from "./reschedule";
 export * from "./subsequent";
 export * from "./switchMapUntil";
 export * from "./takeWhileInclusive";
-export * from "./tapIndex";
+export * from "./tapWithIndex";
 export * from "./throttleAfter";
 export * from "./unsubscribeOn";
