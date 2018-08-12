@@ -52,7 +52,7 @@ npm install rxjs-etc --save
 
 * [traverse](./source/observable/traverse.ts)
 
-    Based on `expand`. Traverses a graph with backpressure applied using either a notifier or a consumer.
+    Based on `expand`. Traverses a graph - with backpressure control - using either a notifier or a consumer.
 
 * [zipPadded](./source/observable/zipPadded.ts)
 
