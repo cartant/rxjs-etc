@@ -20,7 +20,7 @@ I created this package as a place to put additional RxJS observables, operators 
 
 Install the package using NPM:
 
-```
+```sh
 npm install rxjs-etc --save
 ```
 
@@ -62,11 +62,15 @@ npm install rxjs-etc --save
 
 A bunch of functions that can be passed to the `let` operator. Use them like this:
 
-    source.let(endWith("this is the end"))
+```ts
+source.let(endWith("this is the end"))
+```
 
 They can also be used with `pipe`, like this:
 
-    source.pipe(endWith("this is the end"))
+```ts
+source.pipe(endWith("this is the end"))
+```
 
 * [debounceAfter](./source/operators/debounceAfter.ts)
 
