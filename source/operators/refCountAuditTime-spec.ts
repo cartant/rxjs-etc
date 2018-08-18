@@ -5,7 +5,7 @@
 /*tslint:disable:no-unused-expression*/
 
 import { expect } from "chai";
-import { of } from "rxjs";
+import { defer, of } from "rxjs";
 import { mergeMapTo, publish, toArray } from "rxjs/operators";
 import { marbles } from "rxjs-marbles";
 import { refCountAuditTime } from "./refCountAuditTime";
@@ -128,5 +128,20 @@ describe("refCountAuditTime", () => {
         const source = of(1, 2, 3);
         const published = source.pipe(publish(), refCountAuditTime(0), toArray());
         return published.toPromise().then(value => expect(value).to.deep.equal([1, 2, 3]));
+    });
+
+    it("should support mutliple, synchronous subscriptions", () => {
+
+        let subscribes = 0;
+        const source = defer(() => {
+            ++subscribes;
+            return of(1, 2, 3);
+        });
+
+        const published = source.pipe(publish(), refCountAuditTime(0), toArray());
+        return Promise.all([
+            published.toPromise(),
+            published.toPromise()
+        ]).then(() => expect(subscribes).to.equal(1));
     });
 });

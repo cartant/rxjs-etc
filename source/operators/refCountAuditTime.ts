@@ -4,6 +4,7 @@
  */
 
 import {
+    asapScheduler,
     ConnectableObservable,
     MonoTypeOperatorFunction,
     NEVER,
@@ -19,7 +20,7 @@ import { scan, switchMap, tap } from "rxjs/operators";
 
 export function refCountAuditTime<T>(
     duration: number,
-    scheduler?: SchedulerLike
+    scheduler: SchedulerLike = asapScheduler
 ): MonoTypeOperatorFunction<T> {
 
     return (source: Observable<T>) => {
@@ -32,31 +33,39 @@ export function refCountAuditTime<T>(
         // https://github.com/ReactiveX/rxjs/issues/171#issuecomment-267881847
 
         const connectable: ConnectableObservable<T> = source as any;
-        let subscription: Subscription | null = null;
+        let connectableSubscription: Subscription | null = null;
+        let connectorSubscription: Subscription | null = null;
 
         const notifier = new Subject<number>();
         const connector = notifier.pipe(
             scan((count, step) => count + step, 0),
             switchMap(count => {
-                switch (count) {
-                case 0:
+                if (count === 0) {
                     return timer(duration, scheduler).pipe(tap(() => {
-                        subscription!.unsubscribe();
-                        subscription = null;
+                        if (connectableSubscription) {
+                            connectableSubscription.unsubscribe();
+                            connectableSubscription = null;
+                        }
+                        if (connectorSubscription) {
+                            connectorSubscription.unsubscribe();
+                            connectorSubscription = null;
+                        }
                     }));
-                case 1:
-                    return timer(0, scheduler).pipe(tap(() => {
-                        subscription!.add(connectable.connect());
-                    }));
-                default:
-                    return NEVER;
                 }
+                if (!connectableSubscription && (count > 0)) {
+                    return timer(0, scheduler).pipe(tap(() => {
+                        if (!connectableSubscription) {
+                            connectableSubscription = connectable.connect();
+                        }
+                    }));
+                }
+                return NEVER;
             })
         );
 
         return using(() => {
-            if (subscription === null) {
-                subscription = connector.subscribe();
+            if (!connectorSubscription) {
+                connectorSubscription = connector.subscribe();
             }
             notifier.next(1);
             return { unsubscribe: () => notifier.next(-1) };
