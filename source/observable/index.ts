@@ -5,6 +5,7 @@
 
 export * from "./combineLatestArray";
 export * from "./combineLatestHigherOrder";
+export * from "./combineLatestHigherOrderObject";
 export * from "./combineLatestObject";
 export * from "./concatArray";
 export * from "./forkJoinArray";
