@@ -1,3 +1,10 @@
+<a name="8.2.0"></a>
+## [8.2.0](https://github.com/cartant/rxjs-etc/compare/v8.1.1...v8.2.0) (2018-07-18)
+
+### Features
+
+* Added the `refCountOn` operator. ([fbc8b02](https://github.com/cartant/rxjs-etc/commit/fbc8b02))
+
 <a name="8.1.1"></a>
 ## [8.1.1](https://github.com/cartant/rxjs-etc/compare/v8.1.0...v8.1.1) (2018-07-18)
 
