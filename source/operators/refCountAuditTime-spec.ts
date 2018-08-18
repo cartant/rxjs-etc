@@ -74,7 +74,7 @@ describe("refCountAuditTime", () => {
         m.expect(source).toHaveSubscriptions(sourceSubs);
     }));
 
-    it("should disconnect if a subscription occurs within the duration", marbles(m => {
+    it("should not disconnect if a subscription occurs within the duration", marbles(m => {
 
         const source =     m.cold(   "-1-2-3----4-5----");
         const sourceSubs =        "---^--------------! ";
