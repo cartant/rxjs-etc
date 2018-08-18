@@ -14,11 +14,11 @@ interface Source<T> {
 }
 
 export function combineLatestHigherOrder<T>(): OperatorFunction<Observable<T>[], T[]> {
-    return higherOrderSource => new Observable<T[]>(observer => {
+    return higherOrder => new Observable<T[]>(observer => {
         let lasts: Source<T>[] = [];
-        let higherOrderComplete = false;
+        let higherOrderCompleted = false;
         const higherOrderSubscription = new Subscription();
-        higherOrderSubscription.add(higherOrderSource.subscribe(
+        higherOrderSubscription.add(higherOrder.subscribe(
             observables => {
                 const subscribes: (() => void)[] = [];
                 const nexts = observables.map(observable => {
@@ -41,7 +41,7 @@ export function combineLatestHigherOrder<T>(): OperatorFunction<Observable<T>[],
                             error => observer.error(error),
                             () => {
                                 next.completed = true;
-                                if (higherOrderComplete && nexts.every(({ completed }) => completed)) {
+                                if (higherOrderCompleted && nexts.every(({ completed }) => completed)) {
                                     observer.complete();
                                 }
                             }
@@ -63,7 +63,7 @@ export function combineLatestHigherOrder<T>(): OperatorFunction<Observable<T>[],
                 if (lasts.every(({ completed }) => completed)) {
                     observer.complete();
                 }
-                higherOrderComplete = true;
+                higherOrderCompleted = true;
             }
         ));
         return higherOrderSubscription;
