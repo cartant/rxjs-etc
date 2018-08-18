@@ -132,6 +132,10 @@ source.pipe(endWith("this is the end"))
 
     Can be used with a `ConnectableObservable` instead of `refCount`. Works kinda like `auditTime` does for values, but for unsubscriptions instead. That is, when the reference count drops to zero, it waits the specified duration and then if the reference count is zero, it unsubscribes. If the reference count is incremented within the duration, no unsubscription occurs.
 
+* [refCountOn](./source/operators/refCountOn.ts)
+
+    Like `refCount`, but performs connections and unsubscriptions on the specified scheduler.
+
 * [reschedule](./source/operators/reschedule.ts)
 
     Emits values using the specified scheduler.
