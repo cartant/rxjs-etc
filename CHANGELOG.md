@@ -1,16 +1,26 @@
+<a name="8.1.1"></a>
+## [8.1.1](https://github.com/cartant/rxjs-etc/compare/v8.1.0...v8.1.1) (2018-07-18)
+
+### Fixes
+
+* Added `combineLatestHigherOrder` to the index. ([ba4b026](https://github.com/cartant/rxjs-etc/commit/ba4b026))
+
 <a name="8.1.0"></a>
+## [8.1.0](https://github.com/cartant/rxjs-etc/compare/v8.0.0...v8.1.0) (2018-07-18)
 
 ### Features
 
 * Added the `combineLatestHigherOrder` factory function. ([ba4b026](https://github.com/cartant/rxjs-etc/commit/ba4b026))
 
 <a name="8.0.0"></a>
+## [8.0.0](https://github.com/cartant/rxjs-etc/compare/v7.4.0...v8.0.0) (2018-07-20)
 
 ### Breaking Changes
 
 * Renamed the `tapIndex` operator to `tapWithIndex` and used a tuple so that either handler functions or a partial observer can be passed. ([a1f9af4](https://github.com/cartant/rxjs-etc/commit/a1f9af4))
 
 <a name="7.4.0"></a>
+## [7.4.0](https://github.com/cartant/rxjs-etc/compare/v7.3.0...v7.4.0) (2018-07-16)
 
 ### Features
 
@@ -22,6 +32,7 @@
 * Fixed the TypeScript overloads the static `genericPipe`/`pipe` helper. ([d42a7bb](https://github.com/cartant/rxjs-etc/commit/d42a7bb))
 
 <a name="7.3.0"></a>
+## [7.3.0](https://github.com/cartant/rxjs-etc/compare/v7.2.1...v7.3.0) (2018-06-06)
 
 ### Features
 
