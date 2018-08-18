@@ -1,3 +1,9 @@
+<a name="8.1.0"></a>
+
+### Features
+
+* Added the `combineLatestHigherOrder` factory function. ([ba4b026](https://github.com/cartant/rxjs-etc/commit/ba4b026))
+
 <a name="8.0.0"></a>
 
 ### Breaking Changes
