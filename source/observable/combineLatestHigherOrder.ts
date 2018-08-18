@@ -30,6 +30,9 @@ export function combineLatestHigherOrder<T>(): OperatorFunction<Observable<T>[],
                     }
                     const next: Source<T> = { completed: false, nexted: false, observable };
                     subscribes.push(() => {
+                        if (higherOrderSubscription.closed) {
+                            return;
+                        }
                         next.subscription = next.observable.subscribe(
                             value => {
                                 next.nexted = true;
