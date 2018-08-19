@@ -34,9 +34,9 @@ npm install rxjs-etc --save
 
     To see how these methods behave, consult their tests.
 
-* [combineLatestHigherOrder](./source/observable/combineLatestHigherOrder.ts)
+* [combineLatestHigherOrder](./source/observable/combineLatestHigherOrder.ts), [combineLatestHigherOrderObject](./source/observable/combineLatestHigherOrderObject.ts)
 
-    A higher-order variant of `combineLatest` that takes `Observable<Observable<T>[]>` and returns `Observable<T[]>`.
+    A higher-order variant of `combineLatest` - that takes `Observable<Observable<T>[]>` and returns `Observable<T[]>` - and `combineLatestObject.
 
 * [combineLatestObject](./source/observable/combineLatestObject.ts), [forkJoinObject](./source/observable/forkJoinObject.ts)
 
@@ -139,6 +139,10 @@ source.pipe(endWith("this is the end"))
 * [reschedule](./source/operators/reschedule.ts)
 
     Emits values using the specified scheduler.
+
+* [startWithTimeout](./source/operators/startWithTimeout.ts)
+
+    Like `startWith` but only emits the starting value if the source does not emit within the specified duration.
 
 * [subsequent](./source/operators/subsequent.ts)
 
