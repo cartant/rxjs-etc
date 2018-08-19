@@ -18,6 +18,7 @@ export * from "./rateLimit";
 export * from "./refCountAuditTime";
 export * from "./refCountOn";
 export * from "./reschedule";
+export * from "./startWithTimeout";
 export * from "./subsequent";
 export * from "./switchMapUntil";
 export * from "./takeWhileInclusive";
