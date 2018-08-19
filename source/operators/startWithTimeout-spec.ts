@@ -41,4 +41,15 @@ describe("startWithTimeout", () => {
         m.expect(destination).toBeObservable(expected);
         m.expect(source).toHaveSubscriptions(subs);
     }));
+
+    it("should not emit if the source completes within the duration", marbles(m => {
+
+        const source =   m.cold("--|");
+        const subs =            "^-!";
+        const expected = m.cold("--|");
+
+        const destination = source.pipe(startWithTimeout("z", m.time("---|")));
+        m.expect(destination).toBeObservable(expected);
+        m.expect(source).toHaveSubscriptions(subs);
+    }));
 });
