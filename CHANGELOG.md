@@ -1,3 +1,15 @@
+<a name="8.3.0"></a>
+## [8.3.0](https://github.com/cartant/rxjs-etc/compare/v8.2.0...v8.3.0) (2018-07-19)
+
+### Features
+
+* Added the `combineLatestHigherOrderObject` factory function. ([78199bc](https://github.com/cartant/rxjs-etc/commit/78199bc))
+* Added the `startWithTimeout` operator. ([667cb3c](https://github.com/cartant/rxjs-etc/commit/667cb3c))
+
+### Fixes
+
+* Supported multiple, synchronous subscribes in `refCountAuditTime`. ([ef95141](https://github.com/cartant/rxjs-etc/commit/ef95141))
+
 <a name="8.2.0"></a>
 ## [8.2.0](https://github.com/cartant/rxjs-etc/compare/v8.1.1...v8.2.0) (2018-07-18)
 
