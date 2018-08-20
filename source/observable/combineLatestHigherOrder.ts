@@ -3,7 +3,7 @@
  * can be found in the LICENSE file at https://github.com/cartant/rxjs-etc
  */
 
-import { Observable, OperatorFunction, Subscription } from "rxjs";
+import { Observable, Observer, OperatorFunction, Subscription } from "rxjs";
 
 interface Source<T> {
     completed: boolean;
@@ -13,8 +13,10 @@ interface Source<T> {
     value?: T;
 }
 
-function combine<T>(sources: Source<T>[]): T[] {
-    return sources.map(({ value }) => value) as T[];
+function combine<T>(sources: Source<T>[], observer: Observer<T[]>): void {
+    if (sources.every(({ nexted }) => nexted)) {
+        observer.next(sources.map(({ value }) => value) as T[]);
+    }
 }
 
 export function combineLatestHigherOrder<T>(): OperatorFunction<Observable<T>[], T[]> {
@@ -41,9 +43,7 @@ export function combineLatestHigherOrder<T>(): OperatorFunction<Observable<T>[],
                             value => {
                                 next.nexted = true;
                                 next.value = value;
-                                if (nexts.every(({ nexted }) => nexted)) {
-                                    observer.next(combine(nexts));
-                                }
+                                combine(nexts, observer);
                             },
                             error => observer.error(error),
                             () => {
@@ -62,10 +62,8 @@ export function combineLatestHigherOrder<T>(): OperatorFunction<Observable<T>[],
                         subscription.unsubscribe();
                     }
                 });
-                if (nexts.every(({ nexted }) => nexted)) {
-                    observer.next(combine(nexts));
-                }
                 lasts = nexts;
+                combine(nexts, observer);
                 subscribes.forEach(subscribe => subscribe());
             },
             error => observer.error(error),

@@ -3,7 +3,7 @@
  * can be found in the LICENSE file at https://github.com/cartant/rxjs-etc
  */
 
-import { Observable, OperatorFunction, Subscription } from "rxjs";
+import { Observable, Observer, OperatorFunction, Subscription } from "rxjs";
 
 interface Source<T> {
     completed: boolean;
@@ -14,8 +14,10 @@ interface Source<T> {
     value?: T;
 }
 
-function combine<T>(sources: Source<T>[]): Record<string, T> {
-    return sources.reduce((acc, { key, value }) => ({ ...acc, [key]: value }), {});
+function combine<T>(sources: Source<T>[], observer: Observer<Record<string, T>>): void {
+    if (sources.every(({ nexted }) => nexted)) {
+        observer.next(sources.reduce((acc, { key, value }) => ({ ...acc, [key]: value }), {}));
+    }
 }
 
 export function combineLatestHigherOrderObject<T>(): OperatorFunction<Record<string, Observable<T>>, Record<string, T>> {
@@ -43,9 +45,7 @@ export function combineLatestHigherOrderObject<T>(): OperatorFunction<Record<str
                             value => {
                                 next.nexted = true;
                                 next.value = value;
-                                if (nexts.every(({ nexted }) => nexted)) {
-                                    observer.next(combine(nexts));
-                                }
+                                combine(nexts, observer);
                             },
                             error => observer.error(error),
                             () => {
@@ -64,10 +64,8 @@ export function combineLatestHigherOrderObject<T>(): OperatorFunction<Record<str
                         subscription.unsubscribe();
                     }
                 });
-                if (nexts.every(({ nexted }) => nexted)) {
-                    observer.next(combine(nexts));
-                }
                 lasts = nexts;
+                combine(nexts, observer);
                 subscribes.forEach(subscribe => subscribe());
             },
             error => observer.error(error),
