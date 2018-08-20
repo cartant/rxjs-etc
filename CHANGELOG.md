@@ -1,3 +1,10 @@
+<a name="8.3.1"></a>
+## [8.3.1](https://github.com/cartant/rxjs-etc/compare/v8.3.0...v8.3.1) (2018-07-20)
+
+### Fixes
+
+* With `combineLatestHigherOrder`/`combineLatestHigherOrderObject`, whenever the higher-order observable emits, if all of the sources have emitted a value, emit an array/object. This also means that if the array/object of sources emitted by the higher-order obserable is empty, an empty array/object is emitted. ([e93f650](https://github.com/cartant/rxjs-etc/commit/e93f650))
+
 <a name="8.3.0"></a>
 ## [8.3.0](https://github.com/cartant/rxjs-etc/compare/v8.2.0...v8.3.0) (2018-07-19)
 
