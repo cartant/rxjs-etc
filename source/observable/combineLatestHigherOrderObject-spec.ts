@@ -124,4 +124,28 @@ describe("combineLatestHigherOrderObject", () => {
         m.expect(combined).toBeObservable(expected);
         m.expect(a).toHaveSubscriptions(as);
     }));
+
+    it("should emit an empty object", marbles(m => {
+
+        const h = m.hot(         "i--", { i: {} });
+        const expected = m.cold( "x--", { x: {} });
+
+        const combined = h.pipe(combineLatestHigherOrderObject());
+        m.expect(combined).toBeObservable(expected);
+    }));
+
+    it("should emit when a source is removed", marbles(m => {
+
+        const a = m.hot(         "--a----");
+        const b = m.hot(         "----b--");
+        const h = m.hot(         "i----j-", { i: { a, b }, j: { a } });
+        const as =               "^------";
+        const bs =               "^----!-";
+        const expected = m.cold( "----xy-", { x: { a: "a", b: "b" }, y: { a: "a" } });
+
+        const combined = h.pipe(combineLatestHigherOrderObject());
+        m.expect(combined).toBeObservable(expected);
+        m.expect(a).toHaveSubscriptions(as);
+        m.expect(b).toHaveSubscriptions(bs);
+    }));
 });

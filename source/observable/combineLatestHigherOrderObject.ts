@@ -14,6 +14,10 @@ interface Source<T> {
     value?: T;
 }
 
+function combine<T>(sources: Source<T>[]): Record<string, T> {
+    return sources.reduce((acc, { key, value }) => ({ ...acc, [key]: value }), {});
+}
+
 export function combineLatestHigherOrderObject<T>(): OperatorFunction<Record<string, Observable<T>>, Record<string, T>> {
     return higherOrder => new Observable<Record<string, T>>(observer => {
         let lasts: Source<T>[] = [];
@@ -40,7 +44,7 @@ export function combineLatestHigherOrderObject<T>(): OperatorFunction<Record<str
                                 next.nexted = true;
                                 next.value = value;
                                 if (nexts.every(({ nexted }) => nexted)) {
-                                    observer.next(nexts.reduce((acc, { key, value }) => ({ ...acc, [key]: value }), {}));
+                                    observer.next(combine(nexts));
                                 }
                             },
                             error => observer.error(error),
@@ -60,6 +64,9 @@ export function combineLatestHigherOrderObject<T>(): OperatorFunction<Record<str
                         subscription.unsubscribe();
                     }
                 });
+                if (nexts.every(({ nexted }) => nexted)) {
+                    observer.next(combine(nexts));
+                }
                 lasts = nexts;
                 subscribes.forEach(subscribe => subscribe());
             },

@@ -13,6 +13,10 @@ interface Source<T> {
     value?: T;
 }
 
+function combine<T>(sources: Source<T>[]): T[] {
+    return sources.map(({ value }) => value) as T[];
+}
+
 export function combineLatestHigherOrder<T>(): OperatorFunction<Observable<T>[], T[]> {
     return higherOrder => new Observable<T[]>(observer => {
         let lasts: Source<T>[] = [];
@@ -38,7 +42,7 @@ export function combineLatestHigherOrder<T>(): OperatorFunction<Observable<T>[],
                                 next.nexted = true;
                                 next.value = value;
                                 if (nexts.every(({ nexted }) => nexted)) {
-                                    observer.next(nexts.map(({ value }) => value) as T[]);
+                                    observer.next(combine(nexts));
                                 }
                             },
                             error => observer.error(error),
@@ -58,6 +62,9 @@ export function combineLatestHigherOrder<T>(): OperatorFunction<Observable<T>[],
                         subscription.unsubscribe();
                     }
                 });
+                if (nexts.every(({ nexted }) => nexted)) {
+                    observer.next(combine(nexts));
+                }
                 lasts = nexts;
                 subscribes.forEach(subscribe => subscribe());
             },
