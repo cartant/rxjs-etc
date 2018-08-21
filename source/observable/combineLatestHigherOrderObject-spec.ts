@@ -33,7 +33,7 @@ describe("combineLatestHigherOrderObject", () => {
     it("should combine hot observables", marbles(m => {
 
         const a = m.hot(         "--a------");
-        const b = m.hot(         "----b----");
+        const b = m.hot(         "---b-----");
         const c = m.hot(         "------c--");
         const d = m.hot(         "--------d");
         const h = m.hot(         "i---j--k-", { i: { a, b }, j: { a, c }, k: { d, c } });
@@ -41,7 +41,7 @@ describe("combineLatestHigherOrderObject", () => {
         const bs =               "^---!----";
         const cs =               "----^----";
         const ds =               "-------^-";
-        const expected = m.cold( "----x-y-z", { x: { a: "a", b: "b" }, y: { a: "a", c: "c" }, z: { d: "d", c: "c" } });
+        const expected = m.cold( "---x--y-z", { x: { a: "a", b: "b" }, y: { a: "a", c: "c" }, z: { d: "d", c: "c" } });
 
         const combined = h.pipe(combineLatestHigherOrderObject());
         m.expect(combined).toBeObservable(expected);
@@ -54,14 +54,14 @@ describe("combineLatestHigherOrderObject", () => {
     it("should forward error notifications", marbles(m => {
 
         const a = m.hot(         "--a------");
-        const b = m.hot(         "----b----");
+        const b = m.hot(         "---b-----");
         const c = m.hot(         "------#--");
         const d = m.hot(         "--------d");
         const h = m.hot(         "i---j--k-", { i: { a, b }, j: { a, c }, k: { d, c } });
         const as =               "^-----!--";
         const bs =               "^---!----";
         const cs =               "----^-!--";
-        const expected = m.cold( "----x-#--", { x: { a: "a", b: "b" } });
+        const expected = m.cold( "---x--#--", { x: { a: "a", b: "b" } });
 
         const combined = h.pipe(combineLatestHigherOrderObject());
         m.expect(combined).toBeObservable(expected);
@@ -94,7 +94,7 @@ describe("combineLatestHigherOrderObject", () => {
     it("should not emit later empty sources", marbles(m => {
 
         const a = m.hot(         "--a------");
-        const b = m.hot(         "----b----");
+        const b = m.hot(         "---b-----");
         const c = m.hot(         "---------");
         const d = m.hot(         "---------");
         const h = m.hot(         "i---j--k-", { i: { a, b }, j: { a, c }, k: { d, c } });
@@ -102,7 +102,7 @@ describe("combineLatestHigherOrderObject", () => {
         const bs =               "^---!----";
         const cs =               "----^----";
         const ds =               "-------^-";
-        const expected = m.cold( "----x----", { x: { a: "a", b: "b" } });
+        const expected = m.cold( "---x-----", { x: { a: "a", b: "b" } });
 
         const combined = h.pipe(combineLatestHigherOrderObject());
         m.expect(combined).toBeObservable(expected);
@@ -147,5 +147,16 @@ describe("combineLatestHigherOrderObject", () => {
         m.expect(combined).toBeObservable(expected);
         m.expect(a).toHaveSubscriptions(as);
         m.expect(b).toHaveSubscriptions(bs);
+    }));
+
+    it("should support adds and removes", marbles(m => {
+
+        const a = m.cold(        "a");
+        const b = m.cold(        "b");
+        const h = m.hot(         "i---j--k-", { i: { a }, j: { a, b }, k: { b } });
+        const expected = m.cold( "x---y--z-", { x: { a: "a" }, y: { a: "a", b: "b" }, z: { b: "b" } });
+
+        const combined = h.pipe(combineLatestHigherOrderObject());
+        m.expect(combined).toBeObservable(expected);
     }));
 });

@@ -22,13 +22,14 @@ function combine<T>(sources: Source<T>[], observer: Observer<T[]>): void {
 export function combineLatestHigherOrder<T>(): OperatorFunction<Observable<T>[], T[]> {
     return higherOrder => new Observable<T[]>(observer => {
         let lasts: Source<T>[] = [];
+        let nexts: Source<T>[] = [];
         let higherOrderCompleted = false;
         const higherOrderSubscription = new Subscription();
         higherOrderSubscription.add(higherOrder.subscribe(
             observables => {
                 const subscribes: (() => void)[] = [];
-                const nexts = observables.map(observable => {
-                    const index = lasts.findIndex(l => l.observable === observable);
+                nexts = observables.map(observable => {
+                    const index = lasts.findIndex(last => last.observable === observable);
                     if (index !== -1) {
                         const next = lasts[index];
                         lasts.splice(index, 1);
