@@ -1,3 +1,10 @@
+<a name="8.3.2"></a>
+## [8.3.2](https://github.com/cartant/rxjs-etc/compare/v8.3.1...v8.3.2) (2018-07-21)
+
+### Fixes
+
+* Fixed a problem in which the implementations of  `combineLatestHigherOrder`/`combineLatestHigherOrderObject` closed over an internal, stale array. ([d6296bd](https://github.com/cartant/rxjs-etc/commit/d6296bd))
+
 <a name="8.3.1"></a>
 ## [8.3.1](https://github.com/cartant/rxjs-etc/compare/v8.3.0...v8.3.1) (2018-07-20)
 
