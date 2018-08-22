@@ -34,9 +34,9 @@ npm install rxjs-etc --save
 
     To see how these methods behave, consult their tests.
 
-* [combineLatestHigherOrder](./source/observable/combineLatestHigherOrder.ts), [combineLatestHigherOrderObject](./source/observable/combineLatestHigherOrderObject.ts)
+* [combineLatestHigherOrderArray](./source/observable/combineLatestHigherOrderArray.ts), [combineLatestHigherOrderObject](./source/observable/combineLatestHigherOrderObject.ts)
 
-    Higher-order variants of `combineLatest` - that takes `Observable<Observable<T>[]>` and returns `Observable<T[]>` - and `combineLatestObject`.
+    Higher-order variants of `combineLatestArray` - that takes `Observable<Observable<T>[]>` and returns `Observable<T[]>` - and `combineLatestObject`.
 
 * [combineLatestObject](./source/observable/combineLatestObject.ts), [forkJoinObject](./source/observable/forkJoinObject.ts)
 
