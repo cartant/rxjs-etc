@@ -4,7 +4,7 @@
  */
 
 export * from "./combineLatestArray";
-export * from "./combineLatestHigherOrder";
+export * from "./combineLatestHigherOrderArray";
 export * from "./combineLatestHigherOrderObject";
 export * from "./combineLatestObject";
 export * from "./concatArray";

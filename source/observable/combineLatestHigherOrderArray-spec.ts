@@ -5,7 +5,7 @@
 /*tslint:disable:no-unused-expression*/
 
 import { marbles } from "rxjs-marbles/mocha";
-import { combineLatestHigherOrder } from "./combineLatestHigherOrder";
+import { combineLatestHigherOrderArray } from "./combineLatestHigherOrderArray";
 
 describe("combineLatestHigherOrder", () => {
 
@@ -22,7 +22,7 @@ describe("combineLatestHigherOrder", () => {
         const ds =               "--^";
         const expected = m.cold( "xyz", { x: ["a", "b"], y: ["a", "c"], z: ["d", "c"] });
 
-        const combined = h.pipe(combineLatestHigherOrder());
+        const combined = h.pipe(combineLatestHigherOrderArray());
         m.expect(combined).toBeObservable(expected);
         m.expect(a).toHaveSubscriptions(as);
         m.expect(b).toHaveSubscriptions(bs);
@@ -43,7 +43,7 @@ describe("combineLatestHigherOrder", () => {
         const ds =               "-------^-";
         const expected = m.cold( "---x--y-z", { x: ["a", "b"], y: ["a", "c"], z: ["d", "c"] });
 
-        const combined = h.pipe(combineLatestHigherOrder());
+        const combined = h.pipe(combineLatestHigherOrderArray());
         m.expect(combined).toBeObservable(expected);
         m.expect(a).toHaveSubscriptions(as);
         m.expect(b).toHaveSubscriptions(bs);
@@ -63,7 +63,7 @@ describe("combineLatestHigherOrder", () => {
         const cs =               "----^-!--";
         const expected = m.cold( "---x--#--", { x: ["a", "b"] });
 
-        const combined = h.pipe(combineLatestHigherOrder());
+        const combined = h.pipe(combineLatestHigherOrderArray());
         m.expect(combined).toBeObservable(expected);
         m.expect(a).toHaveSubscriptions(as);
         m.expect(b).toHaveSubscriptions(bs);
@@ -83,7 +83,7 @@ describe("combineLatestHigherOrder", () => {
         const ds =               "-------^-";
         const expected = m.cold( "--------z", { z: ["d", "c"] });
 
-        const combined = h.pipe(combineLatestHigherOrder());
+        const combined = h.pipe(combineLatestHigherOrderArray());
         m.expect(combined).toBeObservable(expected);
         m.expect(a).toHaveSubscriptions(as);
         m.expect(b).toHaveSubscriptions(bs);
@@ -104,7 +104,7 @@ describe("combineLatestHigherOrder", () => {
         const ds =               "-------^-";
         const expected = m.cold( "---x-----", { x: ["a", "b"] });
 
-        const combined = h.pipe(combineLatestHigherOrder());
+        const combined = h.pipe(combineLatestHigherOrderArray());
         m.expect(combined).toBeObservable(expected);
         m.expect(a).toHaveSubscriptions(as);
         m.expect(b).toHaveSubscriptions(bs);
@@ -120,7 +120,7 @@ describe("combineLatestHigherOrder", () => {
                                  "^----------"];
         const expected = m.cold( "-x----(xx)-", { x: ["a", "a"] });
 
-        const combined = h.pipe(combineLatestHigherOrder());
+        const combined = h.pipe(combineLatestHigherOrderArray());
         m.expect(combined).toBeObservable(expected);
         m.expect(a).toHaveSubscriptions(as);
     }));
@@ -130,7 +130,7 @@ describe("combineLatestHigherOrder", () => {
         const h = m.hot(         "i--", { i: [] });
         const expected = m.cold( "x--", { x: [] });
 
-        const combined = h.pipe(combineLatestHigherOrder());
+        const combined = h.pipe(combineLatestHigherOrderArray());
         m.expect(combined).toBeObservable(expected);
     }));
 
@@ -143,7 +143,7 @@ describe("combineLatestHigherOrder", () => {
         const bs =               "^----!-";
         const expected = m.cold( "----xy-", { x: ["a", "b"], y: ["a"] });
 
-        const combined = h.pipe(combineLatestHigherOrder());
+        const combined = h.pipe(combineLatestHigherOrderArray());
         m.expect(combined).toBeObservable(expected);
         m.expect(a).toHaveSubscriptions(as);
         m.expect(b).toHaveSubscriptions(bs);
@@ -156,7 +156,7 @@ describe("combineLatestHigherOrder", () => {
         const h = m.hot(         "i---j--k-", { i: [a], j: [a, b], k: [b] });
         const expected = m.cold( "x---y--z-", { x: ["a"], y: ["a", "b"], z: ["b"] });
 
-        const combined = h.pipe(combineLatestHigherOrder());
+        const combined = h.pipe(combineLatestHigherOrderArray());
         m.expect(combined).toBeObservable(expected);
     }));
 });
