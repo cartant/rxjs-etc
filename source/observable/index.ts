@@ -14,6 +14,7 @@ export * from "./forkJoinObject";
 export * from "./fromIterable";
 export * from "./handler";
 export * from "./mergeArray";
+export * from "./mergeHigherOrderArray";
 export * from "./NotificationQueue";
 export * from "./queue";
 export * from "./separate";
