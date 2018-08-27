@@ -13,6 +13,7 @@ export * from "./indexElements";
 export * from "./inexorably";
 export * from "./initial";
 export * from "./instanceOf";
+export * from "./pairwiseStartWith";
 export * from "./pluck";
 export * from "./prioritize";
 export * from "./rateLimit";
