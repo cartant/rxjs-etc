@@ -1,3 +1,10 @@
+<a name="8.5.0"></a>
+### [8.5.0](https://github.com/cartant/rxjs-etc/compare/v8.5.0...v8.5.0) (2018-08-27)
+
+### Features
+
+* Added a `shareReplay` implementation that unsubscribes if the reference count drops to zero.
+
 <a name="8.4.0"></a>
 ### [8.4.0](https://github.com/cartant/rxjs-etc/compare/v8.3.2...v8.4.0) (2018-08-27)
 
