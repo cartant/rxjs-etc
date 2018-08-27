@@ -77,5 +77,5 @@
   },
   "types": "./dist/index.d.ts",
   "unpkg": "./bundles/rxjs-etc.min.umd.js",
-  "version": "8.4.0"
+  "version": "8.5.0"
 }
