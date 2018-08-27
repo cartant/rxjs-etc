@@ -1,19 +1,33 @@
+<a name="8.4.0"></a>
+### [8.4.0](https://github.com/cartant/rxjs-etc/compare/v8.3.2...v8.4.0) (2018-08-27)
+
+### Changes
+
+* Renamed `refCountAuditTime` to `refCountDelay` and deprecated the former.
+
+### Features
+
+* Added `bufferRecent`.
+* Added `mergeHigherOrderArray`.
+* Added `pairwiseStartWith`.
+* Added `refCountForever`.
+
 <a name="8.3.2"></a>
-## [8.3.2](https://github.com/cartant/rxjs-etc/compare/v8.3.1...v8.3.2) (2018-07-21)
+## [8.3.2](https://github.com/cartant/rxjs-etc/compare/v8.3.1...v8.3.2) (2018-08-21)
 
 ### Fixes
 
 * Fixed a problem in which the implementations of  `combineLatestHigherOrder`/`combineLatestHigherOrderObject` closed over an internal, stale array. ([d6296bd](https://github.com/cartant/rxjs-etc/commit/d6296bd))
 
 <a name="8.3.1"></a>
-## [8.3.1](https://github.com/cartant/rxjs-etc/compare/v8.3.0...v8.3.1) (2018-07-20)
+## [8.3.1](https://github.com/cartant/rxjs-etc/compare/v8.3.0...v8.3.1) (2018-08-20)
 
 ### Fixes
 
 * With `combineLatestHigherOrder`/`combineLatestHigherOrderObject`, whenever the higher-order observable emits, if all of the sources have emitted a value, emit an array/object. This also means that if the array/object of sources emitted by the higher-order obserable is empty, an empty array/object is emitted. ([e93f650](https://github.com/cartant/rxjs-etc/commit/e93f650))
 
 <a name="8.3.0"></a>
-## [8.3.0](https://github.com/cartant/rxjs-etc/compare/v8.2.0...v8.3.0) (2018-07-19)
+## [8.3.0](https://github.com/cartant/rxjs-etc/compare/v8.2.0...v8.3.0) (2018-08-19)
 
 ### Features
 
@@ -25,21 +39,21 @@
 * Supported multiple, synchronous subscribes in `refCountAuditTime`. ([ef95141](https://github.com/cartant/rxjs-etc/commit/ef95141))
 
 <a name="8.2.0"></a>
-## [8.2.0](https://github.com/cartant/rxjs-etc/compare/v8.1.1...v8.2.0) (2018-07-18)
+## [8.2.0](https://github.com/cartant/rxjs-etc/compare/v8.1.1...v8.2.0) (2018-08-18)
 
 ### Features
 
 * Added the `refCountOn` operator. ([fbc8b02](https://github.com/cartant/rxjs-etc/commit/fbc8b02))
 
 <a name="8.1.1"></a>
-## [8.1.1](https://github.com/cartant/rxjs-etc/compare/v8.1.0...v8.1.1) (2018-07-18)
+## [8.1.1](https://github.com/cartant/rxjs-etc/compare/v8.1.0...v8.1.1) (2018-08-18)
 
 ### Fixes
 
 * Added `combineLatestHigherOrder` to the index. ([ba4b026](https://github.com/cartant/rxjs-etc/commit/ba4b026))
 
 <a name="8.1.0"></a>
-## [8.1.0](https://github.com/cartant/rxjs-etc/compare/v8.0.0...v8.1.0) (2018-07-18)
+## [8.1.0](https://github.com/cartant/rxjs-etc/compare/v8.0.0...v8.1.0) (2018-08-18)
 
 ### Features
 
