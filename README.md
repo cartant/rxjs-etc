@@ -128,9 +128,9 @@ source.pipe(endWith("this is the end"))
 
     A rate limiter with pass through when waiting is not necessary.
 
-* [refCountAuditTime](./source/operators/refCountAuditTime.ts)
+* [refCountDelay](./source/operators/refCountDelay.ts)
 
-    Can be used with a `ConnectableObservable` instead of `refCount`. Works kinda like `auditTime` does for values, but for unsubscriptions instead. That is, when the reference count drops to zero, it waits the specified duration and then if the reference count is zero, it unsubscribes. If the reference count is incremented within the duration, no unsubscription occurs.
+    Can be used with a `ConnectableObservable` instead of `refCount`. When the reference count drops to zero, it waits the specified duration and then if the reference count is zero, it unsubscribes. If the reference count is incremented within the duration, no unsubscription occurs.
 
 * [refCountOn](./source/operators/refCountOn.ts)
 

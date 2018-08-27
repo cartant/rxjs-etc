@@ -8,9 +8,9 @@ import { expect } from "chai";
 import { defer, of } from "rxjs";
 import { mergeMapTo, publish, toArray } from "rxjs/operators";
 import { marbles } from "rxjs-marbles";
-import { refCountAuditTime } from "./refCountAuditTime";
+import { refCountDelay } from "./refCountDelay";
 
-describe("refCountAuditTime", () => {
+describe("refCountDelay", () => {
 
     it("should multicast to multiple observers and complete", marbles(m => {
 
@@ -18,7 +18,7 @@ describe("refCountAuditTime", () => {
         const sourceSubs =        "^-----------!";
 
         const duration = m.time("--|");
-        const published = source.pipe(publish(), refCountAuditTime(duration, m.scheduler));
+        const published = source.pipe(publish(), refCountDelay(duration, m.scheduler));
 
         const subscriber1 = m.hot("a|           ").pipe(mergeMapTo(published));
         const expected1   =       "-1-2-3----4-|";
@@ -39,7 +39,7 @@ describe("refCountAuditTime", () => {
         const sourceSubs =        "^-----------!";
 
         const duration = m.time("--|");
-        const published = source.pipe(publish(), refCountAuditTime(duration, m.scheduler));
+        const published = source.pipe(publish(), refCountDelay(duration, m.scheduler));
 
         const subscriber1 = m.hot("a|           ").pipe(mergeMapTo(published));
         const expected1   =       "-1-2-3----4-#";
@@ -60,7 +60,7 @@ describe("refCountAuditTime", () => {
         const sourceSubs =        "---^----------! ";
 
         const duration = m.time("--|");
-        const published = source.pipe(publish(), refCountAuditTime(duration, m.scheduler));
+        const published = source.pipe(publish(), refCountDelay(duration, m.scheduler));
 
         const subscriber1 = m.hot("---a|           ").pipe(mergeMapTo(published));
         const unsub1 =            "----------!     ";
@@ -80,7 +80,7 @@ describe("refCountAuditTime", () => {
         const sourceSubs =        "---^--------------! ";
 
         const duration = m.time("--|");
-        const published = source.pipe(publish(), refCountAuditTime(duration, m.scheduler));
+        const published = source.pipe(publish(), refCountDelay(duration, m.scheduler));
 
         const subscriber1 = m.hot("---a|               ").pipe(mergeMapTo(published));
         const unsub1 =            "----------!         ";
@@ -105,7 +105,7 @@ describe("refCountAuditTime", () => {
                                   "-----------------^---! "];
 
         const duration = m.time("--|");
-        const published = source.pipe(publish(), refCountAuditTime(duration, m.scheduler));
+        const published = source.pipe(publish(), refCountDelay(duration, m.scheduler));
 
         const subscriber1 = m.hot("---a|                  ").pipe(mergeMapTo(published));
         const unsub1 =            "----------!            ";
@@ -126,7 +126,7 @@ describe("refCountAuditTime", () => {
     it("should support synchronous sources", () => {
 
         const source = of(1, 2, 3);
-        const published = source.pipe(publish(), refCountAuditTime(0), toArray());
+        const published = source.pipe(publish(), refCountDelay(0), toArray());
         return published.toPromise().then(value => expect(value).to.deep.equal([1, 2, 3]));
     });
 
@@ -138,7 +138,7 @@ describe("refCountAuditTime", () => {
             return of(1, 2, 3);
         });
 
-        const published = source.pipe(publish(), refCountAuditTime(0), toArray());
+        const published = source.pipe(publish(), refCountDelay(0), toArray());
         return Promise.all([
             published.toPromise(),
             published.toPromise()

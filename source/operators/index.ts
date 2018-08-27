@@ -16,7 +16,7 @@ export * from "./instanceOf";
 export * from "./pluck";
 export * from "./prioritize";
 export * from "./rateLimit";
-export * from "./refCountAuditTime";
+export * from "./refCountDelay";
 export * from "./refCountOn";
 export * from "./reschedule";
 export * from "./startWithTimeout";
