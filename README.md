@@ -46,6 +46,10 @@ npm install rxjs-etc --save
 
     Like `forkJoin` but only runs the specified number of observables concurrently.
 
+* [mergeHigherOrderArray](./source/observable/mergeHigherOrderArray.ts)
+
+    Higher-order variant of `mergeArray` - that takes `Observable<Observable<T>[]>` and returns `Observable<T>`.
+
 * [separate](./source/observable/separate.ts)
 
     Like `partition` but can passed more than one predicate to return more than two observables.
@@ -116,6 +120,10 @@ source.pipe(endWith("this is the end"))
 
     Apply the operator to the source observable, but select only the initial `count` notifications - don't select the subsequent notifications.
 
+* [pairwiseStartWith](./source/operators/pairwiseStartWith.ts)
+
+    Like a combination of `startWith` and `pairwise`, but with more specific typings.
+
 * [pluck](./source/operators/pluck.ts)
 
     Like `pluck`, but it's type-safe and only lets you valid keys. And it returns the appropriate type.
@@ -131,6 +139,10 @@ source.pipe(endWith("this is the end"))
 * [refCountDelay](./source/operators/refCountDelay.ts)
 
     Can be used with a `ConnectableObservable` instead of `refCount`. When the reference count drops to zero, it waits the specified duration and then if the reference count is zero, it unsubscribes. If the reference count is incremented within the duration, no unsubscription occurs.
+
+* [refCountForever](./source/operators/refCountForever.ts)
+
+    Somewhat like the change that was made to `shareReplay` in [5.5.0.beta.4](https://github.com/ReactiveX/rxjs/blob/master/CHANGELOG.md#550-beta4-2017-10-06). When first subscribed to, a subscription is made to the source, but the source is never explicitly unsubscribed from. Unsubscription from the source only occurs if the source completes or errors.
 
 * [refCountOn](./source/operators/refCountOn.ts)
 
