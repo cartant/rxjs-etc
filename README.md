@@ -142,7 +142,7 @@ source.pipe(endWith("this is the end"))
 
 * [refCountForever](./source/operators/refCountForever.ts)
 
-    Somewhat like the change that was made to `shareReplay` in [5.5.0.beta.4](https://github.com/ReactiveX/rxjs/blob/master/CHANGELOG.md#550-beta4-2017-10-06). When first subscribed to, a subscription is made to the source, but the source is never explicitly unsubscribed from. Unsubscription from the source only occurs if the source completes or errors.
+    Somewhat like the change that was made to `shareReplay` in [`5.5.0.beta.4`](https://github.com/ReactiveX/rxjs/blob/master/CHANGELOG.md#550-beta4-2017-10-06). When first subscribed to, a subscription is made to the source, but the source is never explicitly unsubscribed from. Unsubscription from the source only occurs if the source completes or errors.
 
 * [refCountOn](./source/operators/refCountOn.ts)
 
@@ -151,6 +151,10 @@ source.pipe(endWith("this is the end"))
 * [reschedule](./source/operators/reschedule.ts)
 
     Emits values using the specified scheduler.
+
+* [shareReplay](./source/operators/shareReplay.ts)
+
+    Like the pre-[`5.5.0-beta.4`](https://github.com/ReactiveX/rxjs/blob/master/CHANGELOG.md#550-beta4-2017-10-06) version of `shareReplay`. It unsubscribes from the source if the ref count drops to zero.
 
 * [startWithTimeout](./source/operators/startWithTimeout.ts)
 
