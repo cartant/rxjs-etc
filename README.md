@@ -152,10 +152,6 @@ source.pipe(endWith("this is the end"))
 
     Emits values using the specified scheduler.
 
-* [shareReplay](./source/operators/shareReplay.ts)
-
-    Like the pre-[`5.5.0-beta.4`](https://github.com/ReactiveX/rxjs/blob/master/CHANGELOG.md#550-beta4-2017-10-06) version of `shareReplay`. It unsubscribes from the source if the ref count drops to zero.
-
 * [startWithTimeout](./source/operators/startWithTimeout.ts)
 
     Like `startWith` but only emits the starting value if the source does not emit within the specified duration.
