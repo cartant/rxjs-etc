@@ -1,5 +1,12 @@
+<a name="9.0.0"></a>
+### [9.0.0](https://github.com/cartant/rxjs-etc/compare/v8.5.0...v9.0.0) (2018-08-28)
+
+### Breaking Changes
+
+* Removed `shareReplay`. It should be fixed in RxJS, instead. ([fb34d13](https://github.com/cartant/rxjs-etc/commit/fb34d13))
+
 <a name="8.5.0"></a>
-### [8.5.0](https://github.com/cartant/rxjs-etc/compare/v8.5.0...v8.5.0) (2018-08-27)
+### [8.5.0](https://github.com/cartant/rxjs-etc/compare/v8.4.0...v8.5.0) (2018-08-27)
 
 ### Features
 
