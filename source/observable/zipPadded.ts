@@ -38,7 +38,7 @@ export function zipPadded<T>(
             publish()
         ) as ConnectableObservable<number>;
 
-        const subscription = zip<T>(...publishedSources.map(
+        const subscription = zip(...publishedSources.map(
             source => concat(source, indices.pipe(mapTo(padValue)))
         )).subscribe(observer);
 
