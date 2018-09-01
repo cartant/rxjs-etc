@@ -15,12 +15,12 @@ describe("combineLatestHigherOrderObject", () => {
         const b = m.cold(        "b--");
         const c = m.cold(        "c--");
         const d = m.cold(        "d--");
-        const h = m.cold(        "ijk", { i: { a, b }, j: { a, c }, k: { d, c } });
+        const h = m.cold(        "ijk", { i: { a, b }, j: { a, c }, k: { d, c } }) as any;
         const as =               "^-!";
         const bs =               "^!-";
         const cs =               "-^-";
         const ds =               "--^";
-        const expected = m.cold( "xyz", { x: { a: "a", b: "b" }, y: { a: "a", c: "c" }, z: { d: "d", c: "c" } });
+        const expected = m.cold( "xyz", { x: { a: "a", b: "b" }, y: { a: "a", c: "c" }, z: { d: "d", c: "c" } }) as any;
 
         const combined = h.pipe(combineLatestHigherOrderObject());
         m.expect(combined).toBeObservable(expected);
@@ -36,12 +36,12 @@ describe("combineLatestHigherOrderObject", () => {
         const b = m.hot(         "---b-----");
         const c = m.hot(         "------c--");
         const d = m.hot(         "--------d");
-        const h = m.hot(         "i---j--k-", { i: { a, b }, j: { a, c }, k: { d, c } });
+        const h = m.hot(         "i---j--k-", { i: { a, b }, j: { a, c }, k: { d, c } }) as any;
         const as =               "^------!-";
         const bs =               "^---!----";
         const cs =               "----^----";
         const ds =               "-------^-";
-        const expected = m.cold( "---x--y-z", { x: { a: "a", b: "b" }, y: { a: "a", c: "c" }, z: { d: "d", c: "c" } });
+        const expected = m.cold( "---x--y-z", { x: { a: "a", b: "b" }, y: { a: "a", c: "c" }, z: { d: "d", c: "c" } }) as any;
 
         const combined = h.pipe(combineLatestHigherOrderObject());
         m.expect(combined).toBeObservable(expected);
@@ -57,11 +57,11 @@ describe("combineLatestHigherOrderObject", () => {
         const b = m.hot(         "---b-----");
         const c = m.hot(         "------#--");
         const d = m.hot(         "--------d");
-        const h = m.hot(         "i---j--k-", { i: { a, b }, j: { a, c }, k: { d, c } });
+        const h = m.hot(         "i---j--k-", { i: { a, b }, j: { a, c }, k: { d, c } }) as any;
         const as =               "^-----!--";
         const bs =               "^---!----";
         const cs =               "----^-!--";
-        const expected = m.cold( "---x--#--", { x: { a: "a", b: "b" } });
+        const expected = m.cold( "---x--#--", { x: { a: "a", b: "b" } }) as any;
 
         const combined = h.pipe(combineLatestHigherOrderObject());
         m.expect(combined).toBeObservable(expected);
@@ -76,12 +76,12 @@ describe("combineLatestHigherOrderObject", () => {
         const b = m.hot(         "---------");
         const c = m.hot(         "------c--");
         const d = m.hot(         "--------d");
-        const h = m.hot(         "i---j--k-", { i: { a, b }, j: { a, c }, k: { d, c } });
+        const h = m.hot(         "i---j--k-", { i: { a, b }, j: { a, c }, k: { d, c } }) as any;
         const as =               "^------!-";
         const bs =               "^---!----";
         const cs =               "----^----";
         const ds =               "-------^-";
-        const expected = m.cold( "--------z", { z: { c: "c", d: "d" } });
+        const expected = m.cold( "--------z", { z: { c: "c", d: "d" } }) as any;
 
         const combined = h.pipe(combineLatestHigherOrderObject());
         m.expect(combined).toBeObservable(expected);
@@ -97,12 +97,12 @@ describe("combineLatestHigherOrderObject", () => {
         const b = m.hot(         "---b-----");
         const c = m.hot(         "---------");
         const d = m.hot(         "---------");
-        const h = m.hot(         "i---j--k-", { i: { a, b }, j: { a, c }, k: { d, c } });
+        const h = m.hot(         "i---j--k-", { i: { a, b }, j: { a, c }, k: { d, c } }) as any;
         const as =               "^------!-";
         const bs =               "^---!----";
         const cs =               "----^----";
         const ds =               "-------^-";
-        const expected = m.cold( "---x-----", { x: { a: "a", b: "b" } });
+        const expected = m.cold( "---x-----", { x: { a: "a", b: "b" } }) as any;
 
         const combined = h.pipe(combineLatestHigherOrderObject());
         m.expect(combined).toBeObservable(expected);
@@ -115,10 +115,10 @@ describe("combineLatestHigherOrderObject", () => {
     it("should support duplicate sources", marbles(m => {
 
         const a = m.hot(         "-a----a----");
-        const h = m.hot(         "i----------", { i: { p: a, q: a } });
+        const h = m.hot(         "i----------", { i: { p: a, q: a } }) as any;
         const as = [             "^----------",
                                  "^----------"];
-        const expected = m.cold( "-x----(xx)-", { x: { p: "a", q: "a" } });
+        const expected = m.cold( "-x----(xx)-", { x: { p: "a", q: "a" } }) as any;
 
         const combined = h.pipe(combineLatestHigherOrderObject());
         m.expect(combined).toBeObservable(expected);
@@ -138,10 +138,10 @@ describe("combineLatestHigherOrderObject", () => {
 
         const a = m.hot(         "--a----");
         const b = m.hot(         "----b--");
-        const h = m.hot(         "i----j-", { i: { a, b }, j: { a } });
+        const h = m.hot(         "i----j-", { i: { a, b }, j: { a } }) as any;
         const as =               "^------";
         const bs =               "^----!-";
-        const expected = m.cold( "----xy-", { x: { a: "a", b: "b" }, y: { a: "a" } });
+        const expected = m.cold( "----xy-", { x: { a: "a", b: "b" }, y: { a: "a" } }) as any;
 
         const combined = h.pipe(combineLatestHigherOrderObject());
         m.expect(combined).toBeObservable(expected);
@@ -153,8 +153,8 @@ describe("combineLatestHigherOrderObject", () => {
 
         const a = m.cold(        "a");
         const b = m.cold(        "b");
-        const h = m.hot(         "i---j--k-", { i: { a }, j: { a, b }, k: { b } });
-        const expected = m.cold( "x---y--z-", { x: { a: "a" }, y: { a: "a", b: "b" }, z: { b: "b" } });
+        const h = m.hot(         "i---j--k-", { i: { a }, j: { a, b }, k: { b } }) as any;
+        const expected = m.cold( "x---y--z-", { x: { a: "a" }, y: { a: "a", b: "b" }, z: { b: "b" } }) as any;
 
         const combined = h.pipe(combineLatestHigherOrderObject());
         m.expect(combined).toBeObservable(expected);
