@@ -3,17 +3,17 @@
  * can be found in the LICENSE file at https://github.com/cartant/rxjs-etc
  */
 
-import { concat, from, MonoTypeOperatorFunction, SchedulerLike } from "rxjs";
+import { concat, from, OperatorFunction, SchedulerLike } from "rxjs";
 import { isScheduler } from "../util";
 
-export function endWith<T>(v1: T, scheduler?: SchedulerLike): MonoTypeOperatorFunction<T>;
-export function endWith<T>(v1: T, v2: T, scheduler?: SchedulerLike): MonoTypeOperatorFunction<T>;
-export function endWith<T>(v1: T, v2: T, v3: T, scheduler?: SchedulerLike): MonoTypeOperatorFunction<T>;
-export function endWith<T>(v1: T, v2: T, v3: T, v4: T, scheduler?: SchedulerLike): MonoTypeOperatorFunction<T>;
-export function endWith<T>(v1: T, v2: T, v3: T, v4: T, v5: T, scheduler?: SchedulerLike): MonoTypeOperatorFunction<T>;
-export function endWith<T>(v1: T, v2: T, v3: T, v4: T, v5: T, v6: T, scheduler?: SchedulerLike): MonoTypeOperatorFunction<T>;
-export function endWith<T>(...args: (T | SchedulerLike)[]): MonoTypeOperatorFunction<T>;
-export function endWith<T>(...args: (T | SchedulerLike)[]): MonoTypeOperatorFunction<T> {
+export function endWith<T, S1 = T>(v1: S1, scheduler?: SchedulerLike): OperatorFunction<T, T | S1>;
+export function endWith<T, S1 = T, S2 = T>(v1: S1, v2: S2, scheduler?: SchedulerLike): OperatorFunction<T, T | S1 | S2>;
+export function endWith<T, S1 = T, S2 = T, S3 = T>(v1: S1, v2: S2, v3: S3, scheduler?: SchedulerLike): OperatorFunction<T, T | S1 | S2 | S3>;
+export function endWith<T, S1 = T, S2 = T, S3 = T, S4 = T>(v1: S1, v2: S2, v3: S3, v4: S4, scheduler?: SchedulerLike): OperatorFunction<T, T | S1 | S2 | S3 | S4>;
+export function endWith<T, S1 = T, S2 = T, S3 = T, S4 = T, S5 = T>(v1: S1, v2: S2, v3: S3, v4: S4, v5: S5, scheduler?: SchedulerLike): OperatorFunction<T, T | S1 | S2 | S3 | S4 | S5>;
+export function endWith<T, S1 = T, S2 = T, S3 = T, S4 = T, S5 = T, S6 = T>(v1: S1, v2: S2, v3: S3, v4: S4, v5: S5, v6: S6, scheduler?: SchedulerLike): OperatorFunction<T, T | S1 | S2 | S3 | S4 | S5 | S6>;
+export function endWith<T, S = T>(...args: (S | SchedulerLike)[]): OperatorFunction<T, T | S>;
+export function endWith<T, S>(...args: (S | SchedulerLike)[]): OperatorFunction<T, T | S> {
 
     let scheduler = args[args.length - 1] as (SchedulerLike | null);
     if (isScheduler(scheduler)) {
@@ -21,5 +21,5 @@ export function endWith<T>(...args: (T | SchedulerLike)[]): MonoTypeOperatorFunc
     } else {
         scheduler = null;
     }
-    return source => concat(source, from(args as T[], scheduler as any));
+    return source => concat(source, from(args as S[], scheduler as any));
 }
