@@ -21,6 +21,7 @@ export * from "./refCountDelay";
 export * from "./refCountForever";
 export * from "./refCountOn";
 export * from "./reschedule";
+export * from "./startWithDeferred";
 export * from "./startWithTimeout";
 export * from "./subsequent";
 export * from "./switchMapUntil";
