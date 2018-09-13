@@ -5,6 +5,7 @@
 
 export * from "./observable";
 export * from "./genericPipe";
+export * from "./kinds";
 export * from "./scheduler";
 export * from "./util";
 
