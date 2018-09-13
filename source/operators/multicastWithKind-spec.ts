@@ -88,9 +88,7 @@ describe("multicastWithKind", () => {
 
         const result = source.pipe(
             multicastWithKind(
-                (kind, subject) => {
-                    return (kind === "C") ? subject! : new ReplaySubject<string>(1)
-                },
+                (kind, subject) => (kind === "C") ? subject! : new ReplaySubject<string>(1),
                 source => source
             )
         );
