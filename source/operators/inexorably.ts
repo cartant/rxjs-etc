@@ -2,7 +2,7 @@
  * @license Use of this source code is governed by an MIT-style license that
  * can be found in the LICENSE file at https://github.com/cartant/rxjs-etc
  */
-/*tslint:disable:no-use-before-declare*/
+/*tslint:disable:deprecation no-use-before-declare*/
 
 import {
     MonoTypeOperatorFunction,
@@ -14,10 +14,12 @@ import {
     TeardownLogic
 } from "rxjs";
 
+/** @deprecated Use finalizeWithKind */
 export function inexorably<T>(callback: (notification: Notification<T> | undefined) => void): MonoTypeOperatorFunction<T> {
     return (source: Observable<T>) => source.lift(new InexorablyOperator(callback));
 }
 
+/** @deprecated Use finalizeWithKind */
 export const finalize = inexorably;
 
 /*tslint:disable-next-line:no-unused-declaration*/
