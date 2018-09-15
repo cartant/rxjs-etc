@@ -1,3 +1,14 @@
+<a name="9.1.0"></a>
+### [9.1.0](https://github.com/cartant/rxjs-etc/compare/v9.0.0...v9.1.0) (2018-09-15)
+
+### Features
+
+* Added a `finalizeWithKind` operator. ([fe48dfd](https://github.com/cartant/rxjs-etc/commit/fe48dfd))
+
+### Non-breaking Changes
+
+* Deprecated `inexorably` in favour of `finalizeWithKind`. ([cfe9edf](https://github.com/cartant/rxjs-etc/commit/cfe9edf))
+
 <a name="9.0.0"></a>
 ### [9.0.0](https://github.com/cartant/rxjs-etc/compare/v8.5.0...v9.0.0) (2018-08-28)
 
