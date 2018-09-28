@@ -60,8 +60,8 @@
   resolved "https://registry.yarnpkg.com/@types/mocha/-/mocha-5.2.5.tgz#8a4accfc403c124a0bafe8a9fc61a05ec1032073"
 
 "@types/node@^10.0.0":
-  version "10.11.0"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-10.11.0.tgz#ddd0d67a3b6c3810dd1a59e36675fa82de5e19ae"
+  version "10.11.2"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-10.11.2.tgz#59508b88ce90fe2742f7b8414c6f5db3e359570d"
 
 "@types/sinon@^5.0.0":
   version "5.0.2"
@@ -1289,7 +1289,7 @@ eventemitter3@^3.0.0:
 
 events@^1.0.0:
   version "1.1.1"
-  resolved "https://registry.yarnpkg.com/events/-/events-1.1.1.tgz#9ebdb7635ad099c70dcc4c2a1f5004288e8bd924"
+  resolved "http://registry.npmjs.org/events/-/events-1.1.1.tgz#9ebdb7635ad099c70dcc4c2a1f5004288e8bd924"
 
 evp_bytestokey@^1.0.0, evp_bytestokey@^1.0.3:
   version "1.0.3"
@@ -1960,7 +1960,7 @@ json-schema-traverse@^0.4.1:
 
 json5@^0.5.0:
   version "0.5.1"
-  resolved "https://registry.yarnpkg.com/json5/-/json5-0.5.1.tgz#1eade7acc012034ad84e2396767ead9fa5495821"
+  resolved "http://registry.npmjs.org/json5/-/json5-0.5.1.tgz#1eade7acc012034ad84e2396767ead9fa5495821"
 
 just-extend@^3.0.0:
   version "3.0.0"
@@ -3290,8 +3290,8 @@ source-map@^0.6.0, source-map@^0.6.1, source-map@~0.6.1:
   resolved "https://registry.yarnpkg.com/source-map/-/source-map-0.6.1.tgz#74722af32e9614e9c287a8d0bbde48b5e2f1a263"
 
 spdx-correct@^3.0.0:
-  version "3.0.0"
-  resolved "https://registry.yarnpkg.com/spdx-correct/-/spdx-correct-3.0.0.tgz#05a5b4d7153a195bc92c3c425b69f3b2a9524c82"
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/spdx-correct/-/spdx-correct-3.0.1.tgz#434434ff9d1726b4d9f4219d1004813d80639e30"
   dependencies:
     spdx-expression-parse "^3.0.0"
     spdx-license-ids "^3.0.0"
@@ -3473,7 +3473,7 @@ tar@^4:
 
 text-encoding@^0.6.4:
   version "0.6.4"
-  resolved "https://registry.yarnpkg.com/text-encoding/-/text-encoding-0.6.4.tgz#e399a982257a276dae428bb92845cb71bdc26d19"
+  resolved "http://registry.npmjs.org/text-encoding/-/text-encoding-0.6.4.tgz#e399a982257a276dae428bb92845cb71bdc26d19"
 
 through2@^2.0.0:
   version "2.0.3"
@@ -3616,9 +3616,9 @@ typedarray@^0.0.6:
   version "0.0.6"
   resolved "https://registry.yarnpkg.com/typedarray/-/typedarray-0.0.6.tgz#867ac74e3864187b1d3d47d996a78ec5c8830777"
 
-typescript@~3.0.1:
-  version "3.0.3"
-  resolved "https://registry.yarnpkg.com/typescript/-/typescript-3.0.3.tgz#4853b3e275ecdaa27f78fda46dc273a7eb7fc1c8"
+typescript@~3.1.1:
+  version "3.1.1"
+  resolved "https://registry.yarnpkg.com/typescript/-/typescript-3.1.1.tgz#3362ba9dd1e482ebb2355b02dfe8bcd19a2c7c96"
 
 uglify-es@^3.3.4:
   version "3.3.9"
