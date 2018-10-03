@@ -30,6 +30,8 @@ export function pluck<T, K1 extends keyof T, K2 extends keyof T[K1], K3 extends 
     k1: K1, k2: K2, k3: K3, k4: K4, k5: K5, k6: K6
 ): OperatorFunction<T, T[K1][K2][K3][K4][K5][K6]>;
 
+export function pluck<T, R>(...keys: string[]): OperatorFunction<T, R>;
+
 export function pluck<T>(...keys: string[]): OperatorFunction<T, any> {
 
     return (source) => untypedPluck(...keys)(source);
