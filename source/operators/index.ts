@@ -6,6 +6,7 @@
 export * from "./bufferRecent";
 export * from "./debounceAfter";
 export * from "./debounceTimeSubsequent";
+export * from "./deferFinalize";
 export * from "./defaultObservableIfEmpty";
 export * from "./endWith";
 export * from "./finalizeWithKind";
