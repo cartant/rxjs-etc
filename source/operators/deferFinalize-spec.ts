@@ -4,9 +4,7 @@
  */
 /*tslint:disable:no-unused-expression*/
 
-import { expect } from "chai";
-import { defer, Observable, of, timer } from "rxjs";
-import { delay, mergeMap, mergeMapTo } from "rxjs/operators";
+import { timer } from "rxjs";
 import { marbles } from "rxjs-marbles";
 import { deferFinalize } from "./deferFinalize";
 
@@ -20,8 +18,7 @@ describe("deferFinalize", () => {
         const sourceSub =     "^----!";
         const expected =      "-----|";
 
-        const wait = () => of(null).pipe(delay(duration));
-        const result = source.pipe(deferFinalize(_ => wait()));
+        const result = source.pipe(deferFinalize(_ => timer(duration)));
         m.expect(result).toBeObservable(expected);
         m.expect(source).toHaveSubscriptions(sourceSub);
     }));
@@ -34,8 +31,7 @@ describe("deferFinalize", () => {
         const sourceSub =     "^----!";
         const expected =      "-----#";
 
-        const wait = () => of(null).pipe(delay(duration));
-        const result = source.pipe(deferFinalize(_ => wait()));
+        const result = source.pipe(deferFinalize(_ => timer(duration)));
         m.expect(result).toBeObservable(expected);
         m.expect(source).toHaveSubscriptions(sourceSub);
     }));
@@ -49,8 +45,7 @@ describe("deferFinalize", () => {
         const expected =      "----";
         const sub =           "^--!";
 
-        const wait = () => of(null).pipe(delay(duration));
-        const result = source.pipe(deferFinalize(_ => wait()));
+        const result = source.pipe(deferFinalize(_ => timer(duration)));
         m.expect(result, sub).toBeObservable(expected);
         m.expect(source).toHaveSubscriptions(sourceSub);
     }));
