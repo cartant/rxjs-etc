@@ -3056,8 +3056,8 @@ rxjs-marbles@^4.0.0:
     lodash "^4.17.5"
 
 rxjs-spy@^7.0.0:
-  version "7.2.1"
-  resolved "https://registry.yarnpkg.com/rxjs-spy/-/rxjs-spy-7.2.1.tgz#8dc835f3e2f166ee8a11964198020ee625c647a9"
+  version "7.3.0"
+  resolved "https://registry.yarnpkg.com/rxjs-spy/-/rxjs-spy-7.3.0.tgz#684612c32a5f718e8ed3af32eb367a7893d88aaa"
   dependencies:
     "@types/circular-json" "^0.4.0"
     "@types/stacktrace-js" "^0.0.32"
