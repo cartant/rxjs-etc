@@ -34,4 +34,30 @@ describe("pluck", () => {
         m.expect(destination).toBeObservable(expected);
         m.expect(source).toHaveSubscriptions(subs);
     }));
+
+    it("should pluck the specified tuple index", marbles((m) => {
+
+        type Person = [string, number];
+
+        const source =   m.cold<Person>("-p-|", { p: ["alice", 9] });
+        const subs =                    "^--!";
+        const expected = m.cold<number>("-n-|", { n: 9 });
+
+        const destination = source.pipe(pluck(1));
+        m.expect(destination).toBeObservable(expected);
+        m.expect(source).toHaveSubscriptions(subs);
+    }));
+
+    it("should pluck the specified nested tuple index", marbles((m) => {
+
+        type Person = [string, [number, number, number]];
+
+        const source =   m.cold<Person>("-p-|", { p: ["alice", [12, 2, 2009]] });
+        const subs =                    "^--!";
+        const expected = m.cold<number>("-n-|", { n: 2009 });
+
+        const destination = source.pipe(pluck(1, 2));
+        m.expect(destination).toBeObservable(expected);
+        m.expect(source).toHaveSubscriptions(subs);
+    }));
 });
