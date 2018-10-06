@@ -2,6 +2,7 @@
  * @license Use of this source code is governed by an MIT-style license that
  * can be found in the LICENSE file at https://github.com/cartant/rxjs-etc
  */
+/*tslint:disable:deprecation*/
 
 import {
     MonoTypeOperatorFunction,
@@ -10,6 +11,7 @@ import {
     UnaryFunction
 } from "rxjs";
 
+/** @deprecated Inferring a generic can be unsafe; use genericOperator instead */
 export function genericPipe<T>(...operators: MonoTypeOperatorFunction<T>[]): <R extends T>(source: Observable<R>) => Observable<R>;
 export function genericPipe<T>(...operators: UnaryFunction<T, T>[]): <R extends T>(source: R) => R;
 export function genericPipe<T, A>(op1: UnaryFunction<T, A>): UnaryFunction<T, A>;
@@ -26,4 +28,5 @@ export function genericPipe(...operators: UnaryFunction<any, any>[]): UnaryFunct
     return _pipe.apply(undefined, operators);
 }
 
+/** @deprecated Inferring a generic can be unsafe; use genericOperator instead */
 export const pipe = genericPipe;

@@ -2,7 +2,7 @@
  * @license Use of this source code is governed by an MIT-style license that
  * can be found in the LICENSE file at https://github.com/cartant/rxjs-etc
  */
-/*tslint:disable:no-unused-expression*/
+/*tslint:disable:deprecation no-unused-expression*/
 
 import { expect } from "chai";
 import { delay, distinctUntilChanged } from "rxjs/operators";
