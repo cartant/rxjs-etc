@@ -3066,8 +3066,8 @@ rxjs-spy@^7.0.0:
     stacktrace-gps "^3.0.2"
 
 rxjs-tslint-rules@^4.0.0:
-  version "4.9.0"
-  resolved "https://registry.yarnpkg.com/rxjs-tslint-rules/-/rxjs-tslint-rules-4.9.0.tgz#3eb0eb7159da6c6e9f14589d894a5cb949413301"
+  version "4.10.0"
+  resolved "https://registry.yarnpkg.com/rxjs-tslint-rules/-/rxjs-tslint-rules-4.10.0.tgz#8b5d0b4e6bcb5f4c313d2b104043778e8b8fdaf0"
   dependencies:
     "@phenomnomnominal/tsquery" "^2.0.0"
     decamelize "^2.0.0"
