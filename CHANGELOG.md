@@ -1,3 +1,10 @@
+<a name="9.2.0"></a>
+### [9.2.0](https://github.com/cartant/rxjs-etc/compare/v9.1.0...v9.2.0) (2018-10-13)
+
+### Non-breaking Changes
+
+* Renamed the `defaultObservableIfEmpty` operator to `concatIfEmpty` and deprecated the old name. ([dd9c876](https://github.com/cartant/rxjs-etc/commit/dd9c876))
+
 <a name="9.1.0"></a>
 ### [9.1.0](https://github.com/cartant/rxjs-etc/compare/v9.0.0...v9.1.0) (2018-09-15)
 
