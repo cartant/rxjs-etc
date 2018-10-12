@@ -3,22 +3,10 @@
  * can be found in the LICENSE file at https://github.com/cartant/rxjs-etc
  */
 
-import { EMPTY, merge, Observable, OperatorFunction } from "rxjs";
-import { isEmpty, mergeMap, publish } from "rxjs/operators";
+import { concatIfEmpty } from "./concatIfEmpty";
 
-export function defaultObservableIfEmpty<T, D = T>(
-    defaultObservable: Observable<D>
-): OperatorFunction<T, D | T> {
+/** @deprecated Renamed to concatIfEmpty */
+export const defaultObservableIfEmpty = concatIfEmpty;
 
-    return (source: Observable<T>) => source.pipe(
-        publish(sharedSource => merge(
-            sharedSource,
-            sharedSource.pipe(
-                isEmpty(),
-                mergeMap((b: boolean) => b ? defaultObservable : EMPTY)
-            )
-        ))
-    );
-}
-
-export const switchIfEmpty = defaultObservableIfEmpty;
+/** @deprecated Renamed to concatIfEmpty */
+export const switchIfEmpty = concatIfEmpty;

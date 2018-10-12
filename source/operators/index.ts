@@ -4,6 +4,7 @@
  */
 
 export * from "./bufferRecent";
+export * from "./concatIfEmpty";
 export * from "./debounceAfter";
 export * from "./debounceTimeSubsequent";
 export * from "./deferFinalize";

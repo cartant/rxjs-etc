@@ -4,16 +4,10 @@
  */
 /*tslint:disable:no-unused-expression*/
 
-import { expect } from "chai";
 import { marbles } from "rxjs-marbles";
-import { defaultObservableIfEmpty, switchIfEmpty } from "./defaultObservableIfEmpty";
+import { concatIfEmpty } from "./concatIfEmpty";
 
-describe("defaultObservableIfEmpty", () => {
-
-    it("should export an alias", () => {
-
-        expect(switchIfEmpty).to.equal(defaultObservableIfEmpty);
-    });
+describe("concatIfEmpty", () => {
 
     it("should return the source if not empty", marbles((m) => {
 
@@ -22,7 +16,7 @@ describe("defaultObservableIfEmpty", () => {
         const def =      m.cold("--d--|");
         const expected = m.cold("--a--b--c--|");
 
-        const destination = source.pipe(defaultObservableIfEmpty(def));
+        const destination = source.pipe(concatIfEmpty(def));
         m.expect(destination).toBeObservable(expected);
         m.expect(source).toHaveSubscriptions(subs);
         m.expect(def).toHaveSubscriptions([]);
@@ -36,7 +30,7 @@ describe("defaultObservableIfEmpty", () => {
         const defSubs =         "----^----!";
         const expected = m.cold("------d--|");
 
-        const destination = source.pipe(defaultObservableIfEmpty(def));
+        const destination = source.pipe(concatIfEmpty(def));
         m.expect(destination).toBeObservable(expected);
         m.expect(source).toHaveSubscriptions(sourceSubs);
         m.expect(def).toHaveSubscriptions(defSubs);
