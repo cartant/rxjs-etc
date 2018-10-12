@@ -80,6 +80,14 @@ They can also be used with `pipe`, like this:
 source.pipe(endWith("this is the end"))
 ```
 
+* [bufferRecent](./source/operators/bufferRecent.ts)
+
+    Buffers the specified number of most-recent values.
+
+* [concatIfEmpty](./source/operators/concatIfEmpty.ts)
+
+    Like `defaultIfEmpty`, but it takes a default observable instead of a default value.
+
 * [debounceAfter](./source/operators/debounceAfter.ts)
 
     Debounce the source observable, but only after the notifier emits a value.
@@ -91,10 +99,6 @@ source.pipe(endWith("this is the end"))
 * [debounceTimeWithinReason](./source/operators/debounceTimeWithinReason.ts)
 
     Like `debounceTime`, but with an additional duration to ensure some notifications are emitted for super-busy streams.
-
-* [defaultObservableIfEmpty](./source/operators/defaultObservableIfEmpty.ts)
-
-    Like `defaultIfEmpty`, but it takes a default observable instead of a default value.
 
 * [endWith](./source/operators/endWith.ts)
 
