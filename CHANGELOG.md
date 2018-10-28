@@ -1,3 +1,10 @@
+<a name="9.3.0"></a>
+### [9.3.0](https://github.com/cartant/rxjs-etc/compare/v9.2.0...v9.3.0) (2018-10-28)
+
+### Features
+
+* Added a `spread` operator/helper. ([ebd0815](https://github.com/cartant/rxjs-etc/commit/ebd0815))
+
 <a name="9.2.0"></a>
 ### [9.2.0](https://github.com/cartant/rxjs-etc/compare/v9.1.0...v9.2.0) (2018-10-13)
 
