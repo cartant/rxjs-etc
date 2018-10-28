@@ -20,8 +20,8 @@
     esquery "^1.0.1"
 
 "@sinonjs/commons@^1.0.2":
-  version "1.0.2"
-  resolved "https://registry.yarnpkg.com/@sinonjs/commons/-/commons-1.0.2.tgz#3e0ac737781627b8844257fadc3d803997d0526e"
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/@sinonjs/commons/-/commons-1.2.0.tgz#f565569b641564497a9b3988d7ed4ed9e8d6a0da"
   dependencies:
     type-detect "4.0.8"
 
@@ -42,8 +42,8 @@
   resolved "https://registry.yarnpkg.com/@sinonjs/samsam/-/samsam-2.1.2.tgz#16947fce5f57258d01f1688fdc32723093c55d3f"
 
 "@types/chai@^4.0.0":
-  version "4.1.6"
-  resolved "https://registry.yarnpkg.com/@types/chai/-/chai-4.1.6.tgz#1eb26c040e3a84205b1008ad55c800e5e8a94e34"
+  version "4.1.7"
+  resolved "https://registry.yarnpkg.com/@types/chai/-/chai-4.1.7.tgz#1b8e33b61a8c09cbe1f85133071baa0dbf9fa71a"
 
 "@types/circular-json@^0.4.0":
   version "0.4.0"
