@@ -1,3 +1,10 @@
+<a name="9.3.1"></a>
+### [9.3.1](https://github.com/cartant/rxjs-etc/compare/v9.3.0...v9.3.1) (2018-11-18)
+
+### Fixes
+
+* Default the zone schedulers to using the `queueScheduler`. ([d6f79b0](https://github.com/cartant/rxjs-etc/commit/d6f79b0))
+
 <a name="9.3.0"></a>
 ### [9.3.0](https://github.com/cartant/rxjs-etc/compare/v9.2.0...v9.3.0) (2018-10-28)
 
