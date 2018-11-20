@@ -5,10 +5,25 @@
 /*tslint:disable:no-unused-expression*/
 
 import { expect } from "chai";
-import { ReplaySubject } from "rxjs";
+import { ReplaySubject, Subject } from "rxjs";
+import * as sinon from "sinon";
 import { resettable } from "./resettable";
 
 describe("resettable", () => {
+
+    it("should next the factory-created subject", () => {
+
+        const mockSubject: Subject<number> = {
+            complete: sinon.stub(),
+            error: sinon.stub(),
+            next: sinon.stub()
+        } as any;
+
+        const { subject } = resettable(() => mockSubject);
+        subject.next(1);
+
+        expect(mockSubject.next).to.have.property("called", true);
+    });
 
     it("should reset the subject", () => {
 
