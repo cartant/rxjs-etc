@@ -12,6 +12,8 @@ export * from "./defaultObservableIfEmpty";
 export * from "./endWith";
 export * from "./finalizeWithKind";
 export * from "./guard";
+export * from "./hold";
+export * from "./holdWhen";
 export * from "./indexElements";
 export * from "./inexorably";
 export * from "./initial";
