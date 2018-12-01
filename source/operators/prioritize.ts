@@ -5,7 +5,6 @@
 
 import {
     ConnectableObservable,
-    MonoTypeOperatorFunction,
     Observable,
     OperatorFunction,
     Subject,
@@ -14,26 +13,26 @@ import {
 
 import { publish } from "rxjs/operators";
 
-export function prioritize<T, R>(
-    selector: (prioritized: Observable<T>, deprioritized: Observable<T>) => Observable<R>
-): OperatorFunction<T, R>;
-
-export function prioritize<T>(
-    selector: (prioritized: Observable<T>, deprioritized: Observable<T>) => Observable<T>
-): MonoTypeOperatorFunction<T>;
-
-export function prioritize<T, R>(
-    selector: (prioritized: Observable<T>, deprioritized: Observable<T>) => Observable<R>
+export function prioritize<T, R = T>(
+    selector: (
+        prioritized: Observable<T>,
+        deprioritized: Observable<T>,
+        ...rest: Observable<T>[]
+    ) => Observable<R>
 ): OperatorFunction<T, R> {
-
     return (source: Observable<T>) => new Observable<R>(observer => {
-
-        const publishedSource = publish<T>()(source) as ConnectableObservable<T>;
-        const prioritizedSource = new Subject<T>();
+        const published = publish<T>()(source) as ConnectableObservable<T>;
+        const subjects: Subject<T>[] = [];
         const subscription = new Subscription();
-        subscription.add(publishedSource.subscribe(prioritizedSource));
-        subscription.add(selector(prioritizedSource, publishedSource).subscribe(observer));
-        subscription.add(publishedSource.connect());
+        const length = Math.max(selector.length, 2);
+        for (let i = 0; i < length; ++i) {
+            const subject = new Subject<T>();
+            subjects.push(subject);
+            subscription.add(published.subscribe(subject));
+        }
+        const [first, second, ...rest] = subjects;
+        subscription.add(selector(first, second, ...rest).subscribe(observer));
+        subscription.add(published.connect());
         return subscription;
     });
 }
