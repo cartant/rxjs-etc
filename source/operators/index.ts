@@ -35,4 +35,5 @@ export * from "./switchMapUntil";
 export * from "./takeWhileInclusive";
 export * from "./tapWithIndex";
 export * from "./throttleAfter";
+export * from "./withLatestFromWhen";
 export * from "./unsubscribeOn";
