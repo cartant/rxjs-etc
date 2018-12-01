@@ -13,6 +13,7 @@ export * from "./endWith";
 export * from "./finalizeWithKind";
 export * from "./guard";
 export * from "./hold";
+export * from "./holdToggle";
 export * from "./holdWhen";
 export * from "./indexElements";
 export * from "./inexorably";
