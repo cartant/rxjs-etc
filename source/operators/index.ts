@@ -21,6 +21,7 @@ export * from "./initial";
 export * from "./instanceOf";
 export * from "./multicastWithKind";
 export * from "./pairwiseStartWith";
+export * from "./pause";
 export * from "./pluck";
 export * from "./prioritize";
 export * from "./rateLimit";
