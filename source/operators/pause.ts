@@ -4,25 +4,16 @@
  */
 
 import { MonoTypeOperatorFunction, Observable } from "rxjs";
-import { bufferWhen, concatAll, distinctUntilChanged, publish, switchMap, takeUntil } from "rxjs/operators";
-import { hasCompleted } from "./hasCompleted";
-import { prioritize } from "./prioritize";
+import { filter, first, map, mergeMap, publishReplay, startWith } from "rxjs/operators";
 
-export function pause<T>(notifier: Observable<boolean>): MonoTypeOperatorFunction<T> {
-    return source => source.pipe(
-        publish(published => notifier.pipe(
-            distinctUntilChanged(),
-            prioritize((prioritized, deprioritized) => deprioritized.pipe(
-                switchMap(paused => paused ?
-                    published.pipe(
-                        bufferWhen(() => prioritized),
-                        concatAll()
-                    ) :
-                    published
-                )
-            )),
-            takeUntil(source.pipe(
-                hasCompleted()
+export function pause<T>(notifier: Observable<boolean>, paused: boolean = false): MonoTypeOperatorFunction<T> {
+    return source => notifier.pipe(
+        startWith(paused),
+        publishReplay(1, undefined, published => source.pipe(
+            mergeMap(value => published.pipe(
+                filter(p => !p),
+                first(),
+                map(() => value)
             ))
         ))
     );
