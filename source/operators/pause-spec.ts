@@ -5,37 +5,40 @@
 /*tslint:disable:no-unused-expression*/
 
 import { marbles } from "rxjs-marbles";
-import { pause } from "./pause";
+import { pause, PausedState } from "./pause";
+import { TestObservableLike } from "rxjs-marbles/types";
+
+const pausedValues = { p: "paused", r: "resumed" };
 
 describe("pause", () => {
 
     it("should pause and resume", marbles(m => {
 
         const source =   m.cold("ab-----c-d-e----|");
-        const notifier = m.cold("--f-----t---f----", { f: false, t: true });
+        const notifier = m.cold("--r-----p---r----", pausedValues) as TestObservableLike<PausedState>;
         const expected =        "--(ab)-c----(de)|";
 
-        const result = source.pipe(pause(notifier, true));
+        const result = source.pipe(pause(notifier, "paused"));
         m.expect(result).toBeObservable(expected);
     }));
 
     it("should pause complete notifications", marbles(m => {
 
         const source =   m.cold("ab|-----");
-        const notifier = m.cold("---f----", { f: false, t: true });
+        const notifier = m.cold("---r----", pausedValues) as TestObservableLike<PausedState>;
         const expected =        "---(ab|)";
 
-        const result = source.pipe(pause(notifier, true));
+        const result = source.pipe(pause(notifier, "paused"));
         m.expect(result).toBeObservable(expected);
     }));
 
     it("should not pause error notifications", marbles(m => {
 
         const source =   m.cold("ab#-----");
-        const notifier = m.cold("---f----", { f: false, t: true });
+        const notifier = m.cold("---r----", pausedValues) as TestObservableLike<PausedState>;
         const expected =        "--#";
 
-        const result = source.pipe(pause(notifier, true));
+        const result = source.pipe(pause(notifier, "paused"));
         m.expect(result).toBeObservable(expected);
     }));
 });

@@ -6,12 +6,14 @@
 import { MonoTypeOperatorFunction, Observable } from "rxjs";
 import { filter, first, map, mergeMap, publishReplay, startWith } from "rxjs/operators";
 
-export function pause<T>(notifier: Observable<boolean>, paused: boolean = false): MonoTypeOperatorFunction<T> {
+export type PausedState = "paused" | "resumed";
+
+export function pause<T>(notifier: Observable<PausedState>, initialState: PausedState = "resumed"): MonoTypeOperatorFunction<T> {
     return source => notifier.pipe(
-        startWith(paused),
+        startWith(initialState),
         publishReplay(1, undefined, published => source.pipe(
             mergeMap(value => published.pipe(
-                filter(p => !p),
+                filter(state => state === "resumed"),
                 first(),
                 map(() => value)
             ))
