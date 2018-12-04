@@ -4,6 +4,9 @@ import { map, publish, switchMap, withLatestFrom } from "rxjs/operators";
 import { TestScheduler } from "rxjs/testing";
 import { pause } from "./pause";
 
+// From Alex Okrushko's:
+// https://stackblitz.com/edit/withlatesttruthy-fu4pcv?file=src%2Fwith_latest_truthy.ts
+
 function withLatestTruthy<T>(...others: Observable<any>[]): OperatorFunction<T, any> {
     const combined = combineLatest(...others);
     return source => combined.pipe(
