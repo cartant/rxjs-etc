@@ -3,8 +3,21 @@
  * can be found in the LICENSE file at https://github.com/cartant/rxjs-etc
  */
 
-import { MonoTypeOperatorFunction, ObservableInput } from "rxjs";
+import { concat, from, MonoTypeOperatorFunction, NEVER, ObservableInput } from "rxjs";
+import { exhaustMap, ignoreElements, mergeAll, publishReplay, takeUntil, toArray } from "rxjs/operators";
+import { endWith } from "./endWith";
 
-export function exhaustTap<T>(next: (t: T) => ObservableInput<any>, error?: (e: any) => void, complete?: () => void): MonoTypeOperatorFunction<T> {
-    throw new Error("Not implemented");
+export function exhaustTap<T>(next: (value: T) => ObservableInput<any>): MonoTypeOperatorFunction<T> {
+    return source => source.pipe(
+        publishReplay(1, undefined, published => published.pipe(
+            exhaustMap(value => concat(published, NEVER).pipe(
+                takeUntil(from(next(value)).pipe(
+                    ignoreElements(),
+                    endWith(null)
+                )),
+                toArray(),
+                mergeAll()
+            ))
+        ))
+    );
 }
