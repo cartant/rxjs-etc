@@ -1,3 +1,11 @@
+<a name="9.4.0"></a>
+### [9.4.0](https://github.com/cartant/rxjs-etc/compare/v9.3.1...v9.4.0) (2018-12-08)
+
+### Features
+
+* Added a `pause` operator. ([8496970](https://github.com/cartant/rxjs-etc/commit/8496970))
+* Added `concatTap`, `exhaustTap`, `mergeTap` and `switchTap` operators. ([bb3ab78](https://github.com/cartant/rxjs-etc/commit/bb3ab78))
+
 <a name="9.3.1"></a>
 ### [9.3.1](https://github.com/cartant/rxjs-etc/compare/v9.3.0...v9.3.1) (2018-11-18)
 
