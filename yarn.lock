@@ -3612,11 +3612,12 @@ ts-node@^7.0.0:
     source-map-support "^0.5.6"
     yn "^2.0.0"
 
-ts-snippet@^3.0.0:
-  version "3.1.2"
-  resolved "https://registry.yarnpkg.com/ts-snippet/-/ts-snippet-3.1.2.tgz#317aa5485acba0d2ec46c1f82ec8501a4a6dbbeb"
+ts-snippet@^4.0.0:
+  version "4.0.0"
+  resolved "https://registry.yarnpkg.com/ts-snippet/-/ts-snippet-4.0.0.tgz#c6911ea52cd2d39d8e14971e2371e94c1cdc8a1a"
+  integrity sha512-NS7myc8kpirrHTzv+X3IEwISt/t0WmfGHj9PmQYeDk7Isw0j4LPNj7DddCflMpAwEDhRrCe/YlO4cp+gatwPZQ==
   dependencies:
-    tsutils "^2.25.0"
+    tsutils "^3.0.0"
 
 tslib@^1.8.0, tslib@^1.8.1, tslib@^1.9.0:
   version "1.9.3"
@@ -3647,7 +3648,7 @@ tslint@^5.1.0:
     tslib "^1.8.0"
     tsutils "^2.27.2"
 
-tsutils@^2.25.0, tsutils@^2.27.2:
+tsutils@^2.27.2:
   version "2.29.0"
   resolved "https://registry.yarnpkg.com/tsutils/-/tsutils-2.29.0.tgz#32b488501467acbedd4b85498673a0812aca0b99"
   dependencies:
