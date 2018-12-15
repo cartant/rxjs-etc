@@ -22,7 +22,7 @@
     "puppeteer": "^1.0.0",
     "rimraf": "^2.6.1",
     "rxjs": "^6.0.0",
-    "rxjs-marbles": "^4.0.0",
+    "rxjs-marbles": "^5.0.0",
     "rxjs-spy": "^7.0.0",
     "rxjs-tslint-rules": "^4.0.0",
     "sinon": "^7.0.0",
