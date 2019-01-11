@@ -3,14 +3,7 @@
  * can be found in the LICENSE file at https://github.com/cartant/rxjs-etc
  */
 
-import {
-    concat,
-    ConnectableObservable,
-    MonoTypeOperatorFunction,
-    Observable,
-    OperatorFunction
-} from "rxjs/";
-
+import { concat, MonoTypeOperatorFunction, Observable, OperatorFunction } from "rxjs/";
 import { publish, take } from "rxjs/operators";
 
 export function subsequent<T, R>(
@@ -44,13 +37,10 @@ export function subsequent<T, R>(
         operator = countOrOperator;
     }
 
-    return (source: Observable<T>) => new Observable<T | R>(observer => {
-        const published = source.pipe(publish()) as ConnectableObservable<T>;
-        const subscription = concat(
+    return source => source.pipe(
+        publish(published => concat(
             published.pipe(take(count)),
             published.pipe(operator!)
-        ).subscribe(observer);
-        subscription.add(published.connect());
-        return subscription;
-    });
+        ))
+    );
 }
