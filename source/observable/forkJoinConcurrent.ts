@@ -12,9 +12,9 @@ export function forkJoinConcurrent<T>(
 ): Observable<T[]> {
 
     return from(observables).pipe(
-        mergeMap((observable, observableIndex) => observable.pipe(
+        mergeMap((observable, index) => observable.pipe(
             last(),
-            map(value => ({ index: observableIndex, value }))
+            map(value => ({ index, value }))
         ), concurrent),
         toArray(),
         map(pairs => pairs.sort((l, r) => l.index - r.index).map(pair => pair.value))
