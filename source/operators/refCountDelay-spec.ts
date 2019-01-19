@@ -5,8 +5,8 @@
 /*tslint:disable:no-unused-expression*/
 
 import { expect } from "chai";
-import { defer, of } from "rxjs";
-import { mergeMapTo, publish, toArray } from "rxjs/operators";
+import { concat, defer, NEVER, of, ReplaySubject } from "rxjs";
+import { first, mergeMapTo, multicast, publish, toArray } from "rxjs/operators";
 import { marbles } from "rxjs-marbles";
 import { refCountDelay } from "./refCountDelay";
 
@@ -18,13 +18,16 @@ describe("refCountDelay", () => {
         const sourceSubs =        "^-----------!";
 
         const duration = m.time("--|");
-        const published = source.pipe(publish(), refCountDelay(duration, m.scheduler));
+        const refCounted = source.pipe(
+            publish(),
+            refCountDelay(duration, m.scheduler)
+        );
 
-        const subscriber1 = m.hot("a|           ").pipe(mergeMapTo(published));
+        const subscriber1 = m.hot("a|           ").pipe(mergeMapTo(refCounted));
         const expected1   =       "-1-2-3----4-|";
-        const subscriber2 = m.hot("----b|       ").pipe(mergeMapTo(published));
+        const subscriber2 = m.hot("----b|       ").pipe(mergeMapTo(refCounted));
         const expected2   =       "-----3----4-|";
-        const subscriber3 = m.hot("--------c|   ").pipe(mergeMapTo(published));
+        const subscriber3 = m.hot("--------c|   ").pipe(mergeMapTo(refCounted));
         const expected3   =       "----------4-|";
 
         m.expect(subscriber1).toBeObservable(expected1);
@@ -39,13 +42,16 @@ describe("refCountDelay", () => {
         const sourceSubs =        "^-----------!";
 
         const duration = m.time("--|");
-        const published = source.pipe(publish(), refCountDelay(duration, m.scheduler));
+        const refCounted = source.pipe(
+            publish(),
+            refCountDelay(duration, m.scheduler)
+        );
 
-        const subscriber1 = m.hot("a|           ").pipe(mergeMapTo(published));
+        const subscriber1 = m.hot("a|           ").pipe(mergeMapTo(refCounted));
         const expected1   =       "-1-2-3----4-#";
-        const subscriber2 = m.hot("----b|       ").pipe(mergeMapTo(published));
+        const subscriber2 = m.hot("----b|       ").pipe(mergeMapTo(refCounted));
         const expected2   =       "-----3----4-#";
-        const subscriber3 = m.hot("--------c|   ").pipe(mergeMapTo(published));
+        const subscriber3 = m.hot("--------c|   ").pipe(mergeMapTo(refCounted));
         const expected3   =       "----------4-#";
 
         m.expect(subscriber1).toBeObservable(expected1);
@@ -60,12 +66,15 @@ describe("refCountDelay", () => {
         const sourceSubs =        "---^----------! ";
 
         const duration = m.time("--|");
-        const published = source.pipe(publish(), refCountDelay(duration, m.scheduler));
+        const refCounted = source.pipe(
+            publish(),
+            refCountDelay(duration, m.scheduler)
+        );
 
-        const subscriber1 = m.hot("---a|           ").pipe(mergeMapTo(published));
+        const subscriber1 = m.hot("---a|           ").pipe(mergeMapTo(refCounted));
         const unsub1 =            "----------!     ";
         const expected1   =       "----1-2-3--     ";
-        const subscriber2 = m.hot("-------b|       ").pipe(mergeMapTo(published));
+        const subscriber2 = m.hot("-------b|       ").pipe(mergeMapTo(refCounted));
         const unsub2 =            "------------!   ";
         const expected2   =       "--------3----   ";
 
@@ -80,15 +89,18 @@ describe("refCountDelay", () => {
         const sourceSubs =        "---^--------------! ";
 
         const duration = m.time("--|");
-        const published = source.pipe(publish(), refCountDelay(duration, m.scheduler));
+        const refCounted = source.pipe(
+            publish(),
+            refCountDelay(duration, m.scheduler)
+        );
 
-        const subscriber1 = m.hot("---a|               ").pipe(mergeMapTo(published));
+        const subscriber1 = m.hot("---a|               ").pipe(mergeMapTo(refCounted));
         const unsub1 =            "----------!         ";
         const expected1   =       "----1-2-3--         ";
-        const subscriber2 = m.hot("-------b|           ").pipe(mergeMapTo(published));
+        const subscriber2 = m.hot("-------b|           ").pipe(mergeMapTo(refCounted));
         const unsub2 =            "------------!       ";
         const expected2   =       "--------3----       ";
-        const subscriber3 = m.hot("--------------c|    ").pipe(mergeMapTo(published));
+        const subscriber3 = m.hot("--------------c|    ").pipe(mergeMapTo(refCounted));
         const unsub3 =            "----------------!   ";
         const expected3   =       "---------------5-   ";
 
@@ -105,15 +117,18 @@ describe("refCountDelay", () => {
                                   "-----------------^---! "];
 
         const duration = m.time("--|");
-        const published = source.pipe(publish(), refCountDelay(duration, m.scheduler));
+        const refCounted = source.pipe(
+            publish(),
+            refCountDelay(duration, m.scheduler)
+        );
 
-        const subscriber1 = m.hot("---a|                  ").pipe(mergeMapTo(published));
+        const subscriber1 = m.hot("---a|                  ").pipe(mergeMapTo(refCounted));
         const unsub1 =            "----------!            ";
         const expected1   =       "----1-2-3--            ";
-        const subscriber2 = m.hot("-------b|              ").pipe(mergeMapTo(published));
+        const subscriber2 = m.hot("-------b|              ").pipe(mergeMapTo(refCounted));
         const unsub2 =            "------------!          ";
         const expected2   =       "--------3----          ";
-        const subscriber3 = m.hot("-----------------c|    ").pipe(mergeMapTo(published));
+        const subscriber3 = m.hot("-----------------c|    ").pipe(mergeMapTo(refCounted));
         const unsub3 =            "-------------------!   ";
         const expected3   =       "------------------1-   ";
 
@@ -126,8 +141,12 @@ describe("refCountDelay", () => {
     it("should support synchronous sources", () => {
 
         const source = of(1, 2, 3);
-        const published = source.pipe(publish(), refCountDelay(0), toArray());
-        return published.toPromise().then(value => expect(value).to.deep.equal([1, 2, 3]));
+        const refCounted = source.pipe(
+            publish(),
+            refCountDelay(0),
+            toArray()
+        );
+        return refCounted.toPromise().then(value => expect(value).to.deep.equal([1, 2, 3]));
     });
 
     it("should support mutliple, synchronous subscriptions", () => {
@@ -138,10 +157,51 @@ describe("refCountDelay", () => {
             return of(1, 2, 3);
         });
 
-        const published = source.pipe(publish(), refCountDelay(0), toArray());
+        const refCounted = source.pipe(
+            publish(),
+            refCountDelay(0),
+            toArray()
+        );
         return Promise.all([
-            published.toPromise(),
-            published.toPromise()
+            refCounted.toPromise(),
+            refCounted.toPromise()
         ]).then(() => expect(subscribes).to.equal(1));
     });
+
+    it("should support a ReplaySubject", marbles(m => {
+
+        const source =     m.cold(   "--(r|)---------------");
+        const sourceSubs =       ["---^-!                  ",
+                                  "-----------------^-!    "];
+
+        // Given a source that completes, concatenate NEVER so that the
+        // completion of the source does not effect the unsubscription of the
+        // ReplaySubject. Then use refCountDelay so that the ReplaySubject
+        // remains subscribed and 'alive' for the specified duration - whilst
+        // the ref count is zero. Use first, as the subscribers want the
+        // replayed, first value from the source.
+        //
+        // This mechanism could be used to cache an HTTP response for a specific
+        // duration - whether or not there are subscribers.
+
+        const duration = m.time("-----|");
+        const refCounted = source.pipe(
+            s => concat(s, NEVER),
+            multicast(() => new ReplaySubject(1)),
+            refCountDelay(duration, m.scheduler),
+            first()
+        );
+
+        const subscriber1 = m.hot("---(a|)                 ").pipe(mergeMapTo(refCounted));
+        const expected1   =       "-----(r|)               ";
+        const subscriber2 = m.hot("-------(b|)             ").pipe(mergeMapTo(refCounted));
+        const expected2   =       "-------(r|)             ";
+        const subscriber3 = m.hot("-----------------(c|)   ").pipe(mergeMapTo(refCounted));
+        const expected3   =       "-------------------(r|) ";
+
+        m.expect(subscriber1).toBeObservable(expected1);
+        m.expect(subscriber2).toBeObservable(expected2);
+        m.expect(subscriber3).toBeObservable(expected3);
+        m.expect(source).toHaveSubscriptions(sourceSubs);
+    }));
 });
