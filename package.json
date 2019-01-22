@@ -27,7 +27,7 @@
     "rxjs-tslint-rules": "^4.0.0",
     "sinon": "^7.0.0",
     "ts-loader": "^5.0.0",
-    "ts-node": "^7.0.0",
+    "ts-node": "^8.0.0",
     "ts-snippet": "^4.0.0",
     "tslint": "^5.1.0",
     "tslint-etc": "^1.2.0",
