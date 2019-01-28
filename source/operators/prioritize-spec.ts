@@ -12,12 +12,12 @@ import {
     concatMap,
     filter,
     mapTo,
-    mergeMapTo,
     toArray,
     window
 } from "rxjs/operators";
 
 import { marbles } from "rxjs-marbles";
+import { materializeTo } from "./materializeTo";
 import { prioritize } from "./prioritize";
 
 describe("prioritize", () => {
@@ -78,7 +78,7 @@ describe("prioritize", () => {
 
         const result = source.pipe(prioritize<any>(merge), filter(() => false));
 
-        const subscriber = m.hot("---a|-----------").pipe(mergeMapTo(result));
+        const subscriber = m.hot("---a------------").pipe(materializeTo(result));
         const unsub  =           "----------!-----";
         const expected   =       "----------------";
 

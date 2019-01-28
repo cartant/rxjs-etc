@@ -4,8 +4,9 @@
  */
 /*tslint:disable:no-unused-expression*/
 
-import { mergeMapTo, publish } from "rxjs/operators";
+import { publish } from "rxjs/operators";
 import { marbles } from "rxjs-marbles";
+import { materializeTo } from "./materializeTo";
 import { refCountForever } from "./refCountForever";
 
 describe("refCountForever", () => {
@@ -17,11 +18,11 @@ describe("refCountForever", () => {
 
         const published = source.pipe(publish(), refCountForever());
 
-        const subscriber1 = m.hot("a|           ").pipe(mergeMapTo(published));
+        const subscriber1 = m.hot("a            ").pipe(materializeTo(published));
         const expected1 =         "-1-2-3----4--";
-        const subscriber2 = m.hot("----b|       ").pipe(mergeMapTo(published));
+        const subscriber2 = m.hot("----b        ").pipe(materializeTo(published));
         const expected2 =         "-----3----4--";
-        const subscriber3 = m.hot("--------c|   ").pipe(mergeMapTo(published));
+        const subscriber3 = m.hot("--------c    ").pipe(materializeTo(published));
         const expected3 =         "----------4--";
 
         m.expect(subscriber1).toBeObservable(expected1);
@@ -37,11 +38,11 @@ describe("refCountForever", () => {
 
         const published = source.pipe(publish(), refCountForever());
 
-        const subscriber1 = m.hot("a|           ").pipe(mergeMapTo(published));
+        const subscriber1 = m.hot("a            ").pipe(materializeTo(published));
         const expected1 =         "-1-2-3----4--";
-        const subscriber2 = m.hot("----b|       ").pipe(mergeMapTo(published));
+        const subscriber2 = m.hot("----b        ").pipe(materializeTo(published));
         const expected2 =         "-----3----4--";
-        const subscriber3 = m.hot("--------c|   ").pipe(mergeMapTo(published));
+        const subscriber3 = m.hot("--------c    ").pipe(materializeTo(published));
         const expected3 =         "----------4--";
         const unsub =             "------------!";
 
@@ -58,11 +59,11 @@ describe("refCountForever", () => {
 
         const published = source.pipe(publish(), refCountForever());
 
-        const subscriber1 = m.hot("a|           ").pipe(mergeMapTo(published));
+        const subscriber1 = m.hot("a            ").pipe(materializeTo(published));
         const expected1 =         "-1-2-3----4-|";
-        const subscriber2 = m.hot("----b|       ").pipe(mergeMapTo(published));
+        const subscriber2 = m.hot("----b        ").pipe(materializeTo(published));
         const expected2 =         "-----3----4-|";
-        const subscriber3 = m.hot("--------c|   ").pipe(mergeMapTo(published));
+        const subscriber3 = m.hot("--------c    ").pipe(materializeTo(published));
         const expected3 =         "----------4-|";
 
         m.expect(subscriber1).toBeObservable(expected1);
@@ -78,11 +79,11 @@ describe("refCountForever", () => {
 
         const published = source.pipe(publish(), refCountForever());
 
-        const subscriber1 = m.hot("a|           ").pipe(mergeMapTo(published));
+        const subscriber1 = m.hot("a            ").pipe(materializeTo(published));
         const expected1 =         "-1-2-3----4-#";
-        const subscriber2 = m.hot("----b|       ").pipe(mergeMapTo(published));
+        const subscriber2 = m.hot("----b        ").pipe(materializeTo(published));
         const expected2 =         "-----3----4-#";
-        const subscriber3 = m.hot("--------c|   ").pipe(mergeMapTo(published));
+        const subscriber3 = m.hot("--------c    ").pipe(materializeTo(published));
         const expected3 =         "----------4-#";
 
         m.expect(subscriber1).toBeObservable(expected1);
