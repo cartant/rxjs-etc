@@ -3,6 +3,7 @@
  * can be found in the LICENSE file at https://github.com/cartant/rxjs-etc
  */
 
+export * from "./auditMap";
 export * from "./bufferRecent";
 export * from "./concatIfEmpty";
 export * from "./concatTap";
