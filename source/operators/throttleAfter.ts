@@ -40,8 +40,8 @@ export function throttleAfter<T>(
             publish<boolean, T>((sharedSignal: Observable<boolean>) => sharedSignal.pipe(
                 concatMap((signalled: boolean) => signalled ?
                     sharedSource.pipe(
-                        takeUntil(sharedSignal.pipe(filter((signalled: boolean) => !signalled))),
-                        take(1)
+                        take(1),
+                        takeUntil(sharedSignal.pipe(filter((signalled: boolean) => !signalled)))
                     ) :
                     sharedSource.pipe(
                         takeUntil(sharedSignal.pipe(filter((signalled: boolean) => signalled)))

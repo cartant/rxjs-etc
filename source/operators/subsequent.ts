@@ -3,7 +3,7 @@
  * can be found in the LICENSE file at https://github.com/cartant/rxjs-etc
  */
 
-import { concat, MonoTypeOperatorFunction, Observable, OperatorFunction } from "rxjs/";
+import { concat, MonoTypeOperatorFunction, Observable, OperatorFunction } from "rxjs";
 import { publish, take } from "rxjs/operators";
 
 export function subsequent<T, R>(

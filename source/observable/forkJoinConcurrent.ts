@@ -2,6 +2,7 @@
  * @license Use of this source code is governed by an MIT-style license that
  * can be found in the LICENSE file at https://github.com/cartant/rxjs-etc
  */
+/*tslint:disable:no-assign-mutated-array*/
 
 import { from, Observable } from "rxjs";
 import { last, map, mergeMap, toArray } from "rxjs/operators";

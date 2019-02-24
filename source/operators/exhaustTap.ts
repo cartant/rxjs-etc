@@ -2,6 +2,7 @@
  * @license Use of this source code is governed by an MIT-style license that
  * can be found in the LICENSE file at https://github.com/cartant/rxjs-etc
  */
+/*tslint:disable:rxjs-no-unsafe-takeuntil*/
 
 import { concat, from, MonoTypeOperatorFunction, NEVER, ObservableInput } from "rxjs";
 import { exhaustMap, ignoreElements, mergeAll, publishReplay, takeUntil, toArray } from "rxjs/operators";
