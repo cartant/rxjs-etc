@@ -6,7 +6,6 @@
 import {
     ConnectableObservable,
     merge,
-    MonoTypeOperatorFunction,
     Observable,
     SchedulerLike,
     Subscription,
@@ -21,33 +20,37 @@ import {
     switchMap
 } from "rxjs/operators";
 
-export function debounceTimeWithinReason<T>(
+import { GenericOperatorFunction } from "../GenericOperatorFunction";
+
+export function debounceTimeWithinReason(
     debounceDuration: number,
     reasonableDuration: number,
     scheduler?: SchedulerLike
-): MonoTypeOperatorFunction<T> {
+): GenericOperatorFunction {
 
-    return source => source.pipe(publish(sharedSource => new Observable<T>(observer => {
+    return <T>(source: Observable<T>) => source.pipe(
+        publish(sharedSource => new Observable<T>(observer => {
 
-        let reasonableTimer: ConnectableObservable<number>;
+            let reasonableTimer: ConnectableObservable<number>;
 
-        const debounced = sharedSource.pipe(
-            debounce(() => merge(
-                timer(debounceDuration, scheduler),
-                reasonableTimer
-            ))
-        );
+            const debounced = sharedSource.pipe(
+                debounce(() => merge(
+                    timer(debounceDuration, scheduler),
+                    reasonableTimer
+                ))
+            );
 
-        reasonableTimer = debounced.pipe(
-            mapTo(undefined),
-            startWith(undefined),
-            switchMap(() => timer(reasonableDuration, scheduler)),
-            publish()
-        ) as ConnectableObservable<number>;
+            reasonableTimer = debounced.pipe(
+                mapTo(undefined),
+                startWith(undefined),
+                switchMap(() => timer(reasonableDuration, scheduler)),
+                publish()
+            ) as ConnectableObservable<number>;
 
-        const subscription = new Subscription();
-        subscription.add(reasonableTimer.connect());
-        subscription.add(debounced.subscribe(observer));
-        return subscription;
-    })));
+            const subscription = new Subscription();
+            subscription.add(reasonableTimer.connect());
+            subscription.add(debounced.subscribe(observer));
+            return subscription;
+        })
+    ));
 }

@@ -5,10 +5,11 @@
 /*tslint:disable:deprecation no-use-before-declare*/
 
 import { CloseKind } from "../kinds";
-import { from, MonoTypeOperatorFunction, ObservableInput, Operator, Subscriber, Subscription, TeardownLogic } from "rxjs";
+import { from, ObservableInput, Operator, Subscriber, Subscription, TeardownLogic } from "rxjs";
 import { finalize } from "rxjs/operators";
+import { GenericOperatorFunction } from "../GenericOperatorFunction";
 
-export function deferFinalize<T>(callback: (kind: CloseKind) => ObservableInput<any>): MonoTypeOperatorFunction<T> {
+export function deferFinalize(callback: (kind: CloseKind) => ObservableInput<any>): GenericOperatorFunction {
     return source => source.lift(new DeferFinalizeOperator(callback));
 }
 

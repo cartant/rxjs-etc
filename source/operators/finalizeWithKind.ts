@@ -4,10 +4,11 @@
  */
 
 import { CloseKind } from "../kinds";
-import { defer, MonoTypeOperatorFunction } from "rxjs";
+import { defer } from "rxjs";
 import { finalize, tap } from "rxjs/operators";
+import { GenericOperatorFunction } from "../GenericOperatorFunction";
 
-export function finalizeWithKind<T>(callback: (kind: CloseKind) => void): MonoTypeOperatorFunction<T> {
+export function finalizeWithKind<T>(callback: (kind: CloseKind) => void): GenericOperatorFunction {
     return source => defer(() => {
         let kind: CloseKind = "U";
         return source.pipe(

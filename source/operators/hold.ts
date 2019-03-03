@@ -3,10 +3,11 @@
  * can be found in the LICENSE file at https://github.com/cartant/rxjs-etc
  */
 
-import { MonoTypeOperatorFunction, Observable } from "rxjs";
+import { Observable } from "rxjs";
 import { buffer, concatAll } from "rxjs/operators";
+import { GenericOperatorFunction } from "../GenericOperatorFunction";
 
-export function hold<T>(releaseNotifier: Observable<any>): MonoTypeOperatorFunction<T> {
+export function hold(releaseNotifier: Observable<any>): GenericOperatorFunction {
     return source => source.pipe(
         buffer(releaseNotifier),
         concatAll()
