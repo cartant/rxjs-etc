@@ -5,7 +5,6 @@
 
 import {
     concat,
-    MonoTypeOperatorFunction,
     Observable,
     of,
     SchedulerLike
@@ -23,15 +22,17 @@ import {
     takeUntil
 } from "rxjs/operators";
 
-export function debounceAfter<T>(
+import { GenericOperatorFunction } from "../GenericOperatorFunction";
+
+export function debounceAfter(
     notifier: Observable<any>,
     duration: number,
     scheduler?: SchedulerLike
-): MonoTypeOperatorFunction<T> {
+): GenericOperatorFunction {
 
     // https://stackoverflow.com/a/44257656/6680611
 
-    return (source: Observable<T>) => source.pipe(
+    return <T>(source: Observable<T>) => source.pipe(
         publish((sharedSource) => notifier.pipe(
             switchMap(() => concat(
                 of(true),
