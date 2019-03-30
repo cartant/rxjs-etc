@@ -34,7 +34,7 @@
     "ts-snippet": "^4.0.0",
     "tslint": "^5.1.0",
     "tslint-etc": "^1.2.0",
-    "typescript": "~3.3.1",
+    "typescript": "~3.4.1",
     "webpack": "^4.0.0",
     "webpack-cli": "^3.0.0",
     "webpack-rxjs-externals": "^2.0.0"
