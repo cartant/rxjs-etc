@@ -48,6 +48,7 @@
   "license": "MIT",
   "main": "./dist/index.js",
   "module": "./dist/esm5/index.js",
+  "sideEffects": false,
   "name": "rxjs-etc",
   "optionalDependencies": {},
   "peerDependencies": {
