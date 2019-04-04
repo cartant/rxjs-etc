@@ -48,7 +48,6 @@
   "license": "MIT",
   "main": "./dist/index.js",
   "module": "./dist/esm5/index.js",
-  "sideEffects": false,
   "name": "rxjs-etc",
   "optionalDependencies": {},
   "peerDependencies": {
@@ -79,6 +78,7 @@
     "test:mocha": "mocha build/**/*-spec.js",
     "test:watch": "yarn run lint && yarn run test:build && karma start"
   },
+  "sideEffects": false,
   "types": "./dist/index.d.ts",
   "unpkg": "./bundles/rxjs-etc.min.umd.js",
   "version": "9.4.0"

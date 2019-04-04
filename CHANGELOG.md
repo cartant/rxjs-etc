@@ -1,3 +1,10 @@
+<a name="9.4.1"></a>
+### [9.4.1](https://github.com/cartant/rxjs-etc/compare/v9.4.0...v9.4.1) (2019-04-05)
+
+### Fixes
+
+* Specify `"sideEffects": false` in the `package.json` file. ([28a8510](https://github.com/cartant/rxjs-etc/commit/28a8510))
+
 <a name="9.4.0"></a>
 ### [9.4.0](https://github.com/cartant/rxjs-etc/compare/v9.3.1...v9.4.0) (2018-12-08)
 
