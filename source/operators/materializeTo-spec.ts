@@ -8,14 +8,15 @@ import { marbles } from "rxjs-marbles";
 import { materializeTo } from "./materializeTo";
 
 describe("materializeTo", () => {
+  it(
+    "should complete the outer observable",
+    marbles(m => {
+      const outer = m.cold("---a----");
+      const inner = m.cold("---x|");
+      const expected = "------x|";
 
-    it("should complete the outer observable", marbles(m => {
-
-        const outer = m.cold("---a----");
-        const inner = m.cold(   "---x|");
-        const expected =     "------x|";
-
-        const result = outer.pipe(materializeTo(inner));
-        m.expect(result).toBeObservable(expected);
-    }));
+      const result = outer.pipe(materializeTo(inner));
+      m.expect(result).toBeObservable(expected);
+    })
+  );
 });

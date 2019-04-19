@@ -9,69 +9,71 @@ import { expecter } from "ts-snippet";
 import { instanceOf } from "./instanceOf";
 import { timeout } from "../timeout-spec";
 
-describe("instanceOf", function (): void {
+describe("instanceOf", function(): void {
+  /*tslint:disable-next-line:no-invalid-this*/
+  this.timeout(timeout);
 
-    /*tslint:disable-next-line:no-invalid-this*/
-    this.timeout(timeout);
+  describe("functionality", () => {
+    class Base {}
+    class Something extends Base {}
+    class SomethingElse extends Base {}
 
-    describe("functionality", () => {
+    const base = new Base();
+    const something = new Something();
+    const somethingElse = new SomethingElse();
+    const values = { b: base, e: somethingElse, s: something };
 
-        class Base {}
-        class Something extends Base {}
-        class SomethingElse extends Base {}
+    it(
+      "should filter using a single instance type",
+      marbles(m => {
+        const source = m.cold("bbssee|", values);
+        const expected = m.cold("--ss--|", values);
 
-        const base = new Base();
-        const something = new Something();
-        const somethingElse = new SomethingElse();
-        const values = { b: base, e: somethingElse, s: something };
+        const destination = source.pipe(instanceOf(Something));
+        m.expect(destination).toBeObservable(expected);
+      })
+    );
 
-        it("should filter using a single instance type", marbles(m => {
+    it(
+      "should filter using a union of instance types",
+      marbles(m => {
+        const source = m.cold("bbssee|", values);
+        const expected = m.cold("--ssee|", values);
 
-            const source =   m.cold("bbssee|", values);
-            const expected = m.cold("--ss--|", values);
+        const destination = source.pipe(
+          instanceOf({ Something, SomethingElse })
+        );
+        m.expect(destination).toBeObservable(expected);
+      })
+    );
+  });
 
-            const destination = source.pipe(instanceOf(Something));
-            m.expect(destination).toBeObservable(expected);
-        }));
-
-        it("should filter using a union of instance types", marbles(m => {
-
-            const source =   m.cold("bbssee|", values);
-            const expected = m.cold("--ssee|", values);
-
-            const destination = source.pipe(instanceOf({ Something, SomethingElse }));
-            m.expect(destination).toBeObservable(expected);
-        }));
-    });
-
-    if (!global["window"]) {
-
-        describe("types", () => {
-
-            const expectSnippet = expecter(code => `
+  if (!global["window"]) {
+    describe("types", () => {
+      const expectSnippet = expecter(
+        code => `
                 import { of } from "rxjs";
                 import { instanceOf } from "./source/operators";
                 class Base {}
                 class Something extends Base {}
                 class SomethingElse extends Base {}
                 ${code}
-            `);
+            `
+      );
 
-            it("should infer a single instance type", () => {
-
-                expectSnippet(`
+      it("should infer a single instance type", () => {
+        expectSnippet(`
                     const source = of<Base>(new Something());
                     const filtered = source.pipe(instanceOf(Something));
                 `).toInfer("filtered", "Observable<Something>");
-            });
+      });
 
-            it("should infer a union of instance types", () => {
-
-                expectSnippet(`
+      it("should infer a union of instance types", () => {
+        expectSnippet(`
                     const source = of<Base>(new Something());
                     const filtered = source.pipe(instanceOf({ Something, SomethingElse }));
                 `).toInfer("filtered", "Observable<Something | SomethingElse>");
-            });
-        });
-    }
+      });
+    });
+  }
 });

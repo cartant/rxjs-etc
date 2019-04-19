@@ -6,27 +6,28 @@
 import { combineLatest, Observable, of } from "rxjs";
 
 export function combineLatestArray<T>(
-    observables: Observable<T>[]
+  observables: Observable<T>[]
 ): Observable<T[]>;
 
 export function combineLatestArray<T, R>(
-    observables: Observable<T>[],
-    project: (values: T[]) => R
+  observables: Observable<T>[],
+  project: (values: T[]) => R
 ): Observable<R>;
 
 export function combineLatestArray<T, R>(
-    ...args: (Observable<T>[] | ((values: T[]) => R))[]
+  ...args: (Observable<T>[] | ((values: T[]) => R))[]
 ): Observable<R> {
+  let observables = args[0] as Observable<T>[];
+  let project = args[1] as (values: T[]) => R;
 
-    let observables = args[0] as Observable<T>[];
-    let project = args[1] as (values: T[]) => R;
+  if (observables.length === 0) {
+    return of<any>(project ? project([]) : []);
+  }
 
-    if (observables.length === 0) {
-        return of<any>(project ? project([]) : []);
-    }
-
-    const applyArgs: any[] = observables.slice();
-    if (project) { applyArgs.push((...values: any[]) => project(values)); }
-    /*tslint:disable-next-line:deprecation*/
-    return combineLatest.apply(null, applyArgs);
+  const applyArgs: any[] = observables.slice();
+  if (project) {
+    applyArgs.push((...values: any[]) => project(values));
+  }
+  /*tslint:disable-next-line:deprecation*/
+  return combineLatest.apply(null, applyArgs);
 }

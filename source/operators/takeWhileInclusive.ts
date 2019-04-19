@@ -6,14 +6,23 @@
 import { concat, MonoTypeOperatorFunction, ReplaySubject } from "rxjs";
 import { filter, multicast, take, takeWhile } from "rxjs/operators";
 
-export function takeWhileInclusive<T>(predicate: (value: T) => boolean): MonoTypeOperatorFunction<T> {
+export function takeWhileInclusive<T>(
+  predicate: (value: T) => boolean
+): MonoTypeOperatorFunction<T> {
+  // https://stackoverflow.com/a/44644237/6680611
 
-    // https://stackoverflow.com/a/44644237/6680611
-
-    return source => source.pipe(
-        multicast(() => new ReplaySubject<T>(1), sharedSource => concat(
+  return source =>
+    source.pipe(
+      multicast(
+        () => new ReplaySubject<T>(1),
+        sharedSource =>
+          concat(
             sharedSource.pipe(takeWhile(predicate)),
-            sharedSource.pipe(take(1), filter(value => !predicate(value)))
-        ))
+            sharedSource.pipe(
+              take(1),
+              filter(value => !predicate(value))
+            )
+          )
+      )
     );
 }

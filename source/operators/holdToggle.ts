@@ -7,11 +7,12 @@ import { MonoTypeOperatorFunction, Observable } from "rxjs";
 import { bufferToggle, concatAll } from "rxjs/operators";
 
 export function holdToggle<T, C>(
-    captures: Observable<C>,
-    releaseSelector: (value: C) => Observable<C>
+  captures: Observable<C>,
+  releaseSelector: (value: C) => Observable<C>
 ): MonoTypeOperatorFunction<T> {
-    return source => source.pipe(
-        bufferToggle(captures, releaseSelector),
-        concatAll()
+  return source =>
+    source.pipe(
+      bufferToggle(captures, releaseSelector),
+      concatAll()
     );
 }

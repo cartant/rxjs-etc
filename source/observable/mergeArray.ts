@@ -6,15 +6,16 @@
 import { EMPTY, merge, Observable } from "rxjs";
 
 export function mergeArray<T, R>(
-    observables: Observable<T>[],
-    concurrent?: number
+  observables: Observable<T>[],
+  concurrent?: number
 ): Observable<R> {
+  if (observables.length === 0) {
+    return EMPTY;
+  }
 
-    if (observables.length === 0) {
-        return EMPTY;
-    }
-
-    const applyArgs: any[] = [...observables];
-    if (concurrent) { applyArgs.push(concurrent); }
-    return merge.apply(null, applyArgs);
+  const applyArgs: any[] = [...observables];
+  if (concurrent) {
+    applyArgs.push(concurrent);
+  }
+  return merge.apply(null, applyArgs);
 }

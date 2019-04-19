@@ -8,14 +8,15 @@ import { marbles } from "rxjs-marbles";
 import { hold } from "./hold";
 
 describe("hold", () => {
+  it(
+    "should hold notifications until released",
+    marbles(m => {
+      const source = m.cold("ab---cd-----|");
+      const notifier = m.cold("--z----z-----");
+      const expected = "--(ab)-(cd)-|";
 
-    it("should hold notifications until released", marbles(m => {
-
-        const source =   m.cold("ab---cd-----|");
-        const notifier = m.cold("--z----z-----");
-        const expected =        "--(ab)-(cd)-|";
-
-        const destination = source.pipe(hold(notifier));
-        m.expect(destination).toBeObservable(expected);
-    }));
+      const destination = source.pipe(hold(notifier));
+      m.expect(destination).toBeObservable(expected);
+    })
+  );
 });

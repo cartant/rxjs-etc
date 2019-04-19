@@ -10,43 +10,53 @@ import { marbles } from "rxjs-marbles";
 import { handler } from "./handler";
 
 describe("handler", () => {
+  it(
+    "should be emit the called value",
+    marbles(m => {
+      const source = m.cold("-a-b--|");
+      const expected = "-a-b--|";
+      const handled = "-a-b---";
 
-    it("should be emit the called value", marbles(m => {
+      const h = handler<string>();
+      const destination = source.pipe(tap(h));
 
-        const source =   m.cold("-a-b--|");
-        const expected =        "-a-b--|";
-        const handled =         "-a-b---";
+      m.expect(destination).toBeObservable(expected);
+      m.expect(from(h)).toBeObservable(handled);
+    })
+  );
 
-        const h = handler<string>();
-        const destination = source.pipe(tap(h));
+  it(
+    "should support a single operator",
+    marbles(m => {
+      const source = m.cold("-a-b--|");
+      const expected = "-a-b--|";
+      const handled = "-x-x---";
 
-        m.expect(destination).toBeObservable(expected);
-        m.expect(from(h)).toBeObservable(handled);
-    }));
+      const h = handler(mapTo("x"));
+      const destination = source.pipe(tap(h));
 
-    it("should support a single operator", marbles(m => {
+      m.expect(destination).toBeObservable(expected);
+      m.expect(from(h)).toBeObservable(handled);
+    })
+  );
 
-        const source =   m.cold("-a-b--|");
-        const expected =        "-a-b--|";
-        const handled =         "-x-x---";
+  it(
+    "should support mulitple, piped operators",
+    marbles(m => {
+      const source = m.cold("-a-b--|");
+      const expected = "-a-b--|";
+      const handled = "--x-x--";
 
-        const h = handler(mapTo("x"));
-        const destination = source.pipe(tap(h));
+      const h = handler(
+        pipe(
+          mapTo("x"),
+          delay(m.time("-|"), m.scheduler)
+        )
+      );
+      const destination = source.pipe(tap(h));
 
-        m.expect(destination).toBeObservable(expected);
-        m.expect(from(h)).toBeObservable(handled);
-    }));
-
-    it("should support mulitple, piped operators", marbles(m => {
-
-        const source =   m.cold("-a-b--|");
-        const expected =        "-a-b--|";
-        const handled =         "--x-x--";
-
-        const h = handler(pipe(mapTo("x"), delay(m.time("-|"), m.scheduler)));
-        const destination = source.pipe(tap(h));
-
-        m.expect(destination).toBeObservable(expected);
-        m.expect(from(h)).toBeObservable(handled);
-    }));
+      m.expect(destination).toBeObservable(expected);
+      m.expect(from(h)).toBeObservable(handled);
+    })
+  );
 });

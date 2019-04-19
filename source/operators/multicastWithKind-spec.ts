@@ -11,93 +11,111 @@ import { CloseKind } from "../kinds";
 import { multicastWithKind } from "./multicastWithKind";
 
 describe("multicastWithKind", () => {
+  it(
+    "should indicate closing via a complete notification",
+    marbles(m => {
+      let kind: CloseKind | undefined = undefined;
 
-    it("should indicate closing via a complete notification", marbles(m => {
+      const source = m.cold("a|");
+      const subs = ["^---", "--^-"];
+      const expected = ["a|--", "--a|"];
 
-        let kind: CloseKind | undefined = undefined;
+      const result = source.pipe(
+        multicastWithKind(
+          k => {
+            kind = k;
+            return new Subject<string>();
+          },
+          source => source
+        )
+      );
+      m.expect(result, subs[0]).toBeObservable(expected[0]);
+      m.expect(result, subs[1]).toBeObservable(expected[1]);
+      m.scheduler.schedule(
+        () => expect(kind).to.equal(undefined),
+        m.time("-|")
+      );
+      m.scheduler.schedule(() => expect(kind).to.equal("C"), m.time("---|"));
+    })
+  );
 
-        const source = m.cold("a|");
-        const subs = [        "^---",
-                              "--^-"];
-        const expected = [    "a|--",
-                              "--a|"];
+  it(
+    "should indicate closing via an error notification",
+    marbles(m => {
+      let kind: CloseKind | undefined = undefined;
 
-        const result = source.pipe(
-            multicastWithKind(k => {
-                kind = k;
-                return new Subject<string>();
-            }, source => source)
-        );
-        m.expect(result, subs[0]).toBeObservable(expected[0]);
-        m.expect(result, subs[1]).toBeObservable(expected[1]);
-        m.scheduler.schedule(() => expect(kind).to.equal(undefined), m.time("-|"));
-        m.scheduler.schedule(() => expect(kind).to.equal("C"), m.time("---|"));
-    }));
+      const source = m.cold("a#");
+      const subs = ["^---", "--^-"];
+      const expected = ["a#--", "--a#"];
 
-    it("should indicate closing via an error notification", marbles(m => {
+      const result = source.pipe(
+        multicastWithKind(
+          k => {
+            kind = k;
+            return new Subject<string>();
+          },
+          source => source
+        )
+      );
+      m.expect(result, subs[0]).toBeObservable(expected[0]);
+      m.expect(result, subs[1]).toBeObservable(expected[1]);
+      m.scheduler.schedule(
+        () => expect(kind).to.equal(undefined),
+        m.time("-|")
+      );
+      m.scheduler.schedule(() => expect(kind).to.equal("E"), m.time("---|"));
+    })
+  );
 
-        let kind: CloseKind | undefined = undefined;
+  it(
+    "should indicate closing via an unsubscription",
+    marbles(m => {
+      let kind: CloseKind | undefined = undefined;
 
-        const source = m.cold("a#");
-        const subs = [        "^---",
-                              "--^-"];
-        const expected = [    "a#--",
-                              "--a#"];
+      const source = m.cold("a-");
+      const subs = ["^!--", "--^!"];
+      const expected = ["a---", "--a-"];
 
-        const result = source.pipe(
-            multicastWithKind(k => {
-                kind = k;
-                return new Subject<string>();
-            }, source => source)
-        );
-        m.expect(result, subs[0]).toBeObservable(expected[0]);
-        m.expect(result, subs[1]).toBeObservable(expected[1]);
-        m.scheduler.schedule(() => expect(kind).to.equal(undefined), m.time("-|"));
-        m.scheduler.schedule(() => expect(kind).to.equal("E"), m.time("---|"));
-    }));
+      const result = source.pipe(
+        multicastWithKind(
+          k => {
+            kind = k;
+            return new Subject<string>();
+          },
+          source => source
+        )
+      );
+      m.expect(result, subs[0]).toBeObservable(expected[0]);
+      m.expect(result, subs[1]).toBeObservable(expected[1]);
+      m.scheduler.schedule(
+        () => expect(kind).to.equal(undefined),
+        m.time("-|")
+      );
+      m.scheduler.schedule(() => expect(kind).to.equal("U"), m.time("---|"));
+    })
+  );
 
-    it("should indicate closing via an unsubscription", marbles(m => {
+  it(
+    "should be able to reuse the subject",
+    marbles(m => {
+      const source = m.cold("a|");
+      const subs = ["^-----", "--^---"];
+      const expected = ["a|----", "--(a|)"];
 
-        let kind: CloseKind | undefined = undefined;
+      const result = source.pipe(
+        multicastWithKind(
+          (kind, subject) =>
+            kind === "C" ? subject! : new ReplaySubject<string>(1),
+          source => source
+        )
+      );
+      m.expect(result, subs[0]).toBeObservable(expected[0]);
+      m.expect(result, subs[1]).toBeObservable(expected[1]);
 
-        const source = m.cold("a-");
-        const subs = [        "^!--",
-                              "--^!"];
-        const expected = [    "a---",
-                              "--a-"];
-
-        const result = source.pipe(
-            multicastWithKind(k => {
-                kind = k;
-                return new Subject<string>();
-            }, source => source)
-        );
-        m.expect(result, subs[0]).toBeObservable(expected[0]);
-        m.expect(result, subs[1]).toBeObservable(expected[1]);
-        m.scheduler.schedule(() => expect(kind).to.equal(undefined), m.time("-|"));
-        m.scheduler.schedule(() => expect(kind).to.equal("U"), m.time("---|"));
-    }));
-
-    it("should be able to reuse the subject", marbles(m => {
-
-        const source = m.cold("a|");
-        const subs = [        "^-----",
-                              "--^---"];
-        const expected = [    "a|----",
-                              "--(a|)"];
-
-        const result = source.pipe(
-            multicastWithKind(
-                (kind, subject) => (kind === "C") ? subject! : new ReplaySubject<string>(1),
-                source => source
-            )
-        );
-        m.expect(result, subs[0]).toBeObservable(expected[0]);
-        m.expect(result, subs[1]).toBeObservable(expected[1]);
-
-        // This works, but a second subscription to the source is made
-        // unnecessarily. The implementation should check the subject's
-        // isStopped to determine whether or not a subscription should be
-        // made.
-    }));
+      // This works, but a second subscription to the source is made
+      // unnecessarily. The implementation should check the subject's
+      // isStopped to determine whether or not a subscription should be
+      // made.
+    })
+  );
 });

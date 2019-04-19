@@ -9,23 +9,30 @@ import { marbles } from "rxjs-marbles";
 import { reschedule } from "./reschedule";
 
 describe("reschedule", () => {
-
-    it("should reschedule to emit using the specified scheduler", marbles((m) => {
-
-        class MoreDelayScheduler implements SchedulerLike {
-            constructor(private moreDelay: number) {}
-            public now(): number {
-                return m.scheduler.now();
-            }
-            public schedule<T>(work: (this: SchedulerAction<T>, state?: T) => void, delay: number = 0, state?: T): Subscription {
-                return m.scheduler.schedule(work, delay + this.moreDelay, state);
-            }
+  it(
+    "should reschedule to emit using the specified scheduler",
+    marbles(m => {
+      class MoreDelayScheduler implements SchedulerLike {
+        constructor(private moreDelay: number) {}
+        public now(): number {
+          return m.scheduler.now();
         }
+        public schedule<T>(
+          work: (this: SchedulerAction<T>, state?: T) => void,
+          delay: number = 0,
+          state?: T
+        ): Subscription {
+          return m.scheduler.schedule(work, delay + this.moreDelay, state);
+        }
+      }
 
-        const source = of("a", "b", "c", m.scheduler);
-        const expected = m.cold("--a-b-(c|)");
+      const source = of("a", "b", "c", m.scheduler);
+      const expected = m.cold("--a-b-(c|)");
 
-        const destination = source.pipe(reschedule(new MoreDelayScheduler(m.time("--|"))));
-        m.expect(destination).toBeObservable(expected);
-    }));
+      const destination = source.pipe(
+        reschedule(new MoreDelayScheduler(m.time("--|")))
+      );
+      m.expect(destination).toBeObservable(expected);
+    })
+  );
 });

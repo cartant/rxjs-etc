@@ -5,13 +5,10 @@
 
 import { concat, EMPTY, Observable } from "rxjs";
 
-export function concatArray<T, R>(
-    observables: Observable<T>[]
-): Observable<R> {
+export function concatArray<T, R>(observables: Observable<T>[]): Observable<R> {
+  if (observables.length === 0) {
+    return EMPTY;
+  }
 
-    if (observables.length === 0) {
-        return EMPTY;
-    }
-
-    return concat.apply(null, observables);
+  return concat.apply(null, observables);
 }

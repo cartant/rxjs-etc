@@ -10,59 +10,66 @@ import { auditMap } from "./auditMap";
 import { of } from "rxjs";
 
 describe("auditMap", () => {
+  it(
+    "should emit an isolated notification",
+    marbles(m => {
+      const source = m.hot("--a-------");
+      //                        --a
+      const expected = "----a-----";
 
-    it("should emit an isolated notification", marbles(m => {
+      const duration = m.time("--|");
+      const result = source.pipe(
+        auditMap(value => of(value).pipe(delay(duration)))
+      );
+      m.expect(result).toBeObservable(expected);
+    })
+  );
 
-        const source =   m.hot("--a-------");
-        //                        --a
-        const expected =       "----a-----";
+  it(
+    "should emit the last of two notifications",
+    marbles(m => {
+      const source = m.hot("--ab------");
+      //                        --a
+      //                          --b
+      const expected = "------b---";
 
-        const duration = m.time("--|");
-        const result = source.pipe(
-            auditMap(value => of(value).pipe(delay(duration)))
-        );
-        m.expect(result).toBeObservable(expected);
-    }));
+      const duration = m.time("--|");
+      const result = source.pipe(
+        auditMap(value => of(value).pipe(delay(duration)))
+      );
+      m.expect(result).toBeObservable(expected);
+    })
+  );
 
-    it("should emit the last of two notifications", marbles(m => {
+  it(
+    "should emit the last of three notifications",
+    marbles(m => {
+      const source = m.hot("--abc-----");
+      //                        --a
+      //                          --c
+      const expected = "------c---";
 
-        const source =   m.hot("--ab------");
-        //                        --a
-        //                          --b
-        const expected =       "------b---";
+      const duration = m.time("--|");
+      const result = source.pipe(
+        auditMap(value => of(value).pipe(delay(duration)))
+      );
+      m.expect(result).toBeObservable(expected);
+    })
+  );
 
-        const duration = m.time("--|");
-        const result = source.pipe(
-            auditMap(value => of(value).pipe(delay(duration)))
-        );
-        m.expect(result).toBeObservable(expected);
-    }));
+  it(
+    "should emit separated notifications",
+    marbles(m => {
+      const source = m.hot("--a---b---");
+      //                        --a
+      //                            --b
+      const expected = "----a---b-";
 
-    it("should emit the last of three notifications", marbles(m => {
-
-        const source =   m.hot("--abc-----");
-        //                        --a
-        //                          --c
-        const expected =       "------c---";
-
-        const duration = m.time("--|");
-        const result = source.pipe(
-            auditMap(value => of(value).pipe(delay(duration)))
-        );
-        m.expect(result).toBeObservable(expected);
-    }));
-
-    it("should emit separated notifications", marbles(m => {
-
-        const source =   m.hot("--a---b---");
-        //                        --a
-        //                            --b
-        const expected =       "----a---b-";
-
-        const duration = m.time("--|");
-        const result = source.pipe(
-            auditMap(value => of(value).pipe(delay(duration)))
-        );
-        m.expect(result).toBeObservable(expected);
-    }));
+      const duration = m.time("--|");
+      const result = source.pipe(
+        auditMap(value => of(value).pipe(delay(duration)))
+      );
+      m.expect(result).toBeObservable(expected);
+    })
+  );
 });

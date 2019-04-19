@@ -8,100 +8,115 @@ import { marbles } from "rxjs-marbles";
 import { rateLimit } from "./rateLimit";
 
 describe("rateLimit", () => {
+  it(
+    "should emit synchronous pass-though values immediately",
+    marbles(m => {
+      const source = m.cold("(ab)----|");
+      const subs = "^-------!";
+      const expected = m.cold("(ab)----|");
 
-    it("should emit synchronous pass-though values immediately", marbles((m) => {
+      const period = m.time("------|");
+      const destination = source.pipe(rateLimit(period, 2, m.scheduler));
+      m.expect(destination).toBeObservable(expected);
+      m.expect(source).toHaveSubscriptions(subs);
+    })
+  );
 
-        const source =   m.cold("(ab)----|");
-        const subs =            "^-------!";
-        const expected = m.cold("(ab)----|");
+  it(
+    "should emit consecutive pass-though values immediately",
+    marbles(m => {
+      const source = m.cold("ab----|");
+      const subs = "^-----!";
+      const expected = m.cold("ab----|");
 
-        const period = m.time("------|");
-        const destination = source.pipe(rateLimit(period, 2, m.scheduler));
-        m.expect(destination).toBeObservable(expected);
-        m.expect(source).toHaveSubscriptions(subs);
-    }));
+      const period = m.time("------|");
+      const destination = source.pipe(rateLimit(period, 2, m.scheduler));
+      m.expect(destination).toBeObservable(expected);
+      m.expect(source).toHaveSubscriptions(subs);
+    })
+  );
 
-    it("should emit consecutive pass-though values immediately", marbles((m) => {
+  it(
+    "should delay excess synchronous values by the period",
+    marbles(m => {
+      const source = m.cold("(abc)----|");
+      const subs = "^--------!";
+      const expected = m.cold("(ab)--c--|");
 
-        const source =   m.cold("ab----|");
-        const subs =            "^-----!";
-        const expected = m.cold("ab----|");
+      const period = m.time("------|");
+      const destination = source.pipe(rateLimit(period, 2, m.scheduler));
+      m.expect(destination).toBeObservable(expected);
+      m.expect(source).toHaveSubscriptions(subs);
+    })
+  );
 
-        const period = m.time("------|");
-        const destination = source.pipe(rateLimit(period, 2, m.scheduler));
-        m.expect(destination).toBeObservable(expected);
-        m.expect(source).toHaveSubscriptions(subs);
-    }));
+  it(
+    "should delay excess consecutive values by the period",
+    marbles(m => {
+      const source = m.cold("abc------|");
+      const subs = "^--------!";
+      const expected = m.cold("ab----c--|");
 
-    it("should delay excess synchronous values by the period", marbles((m) => {
+      const period = m.time("------|");
+      const destination = source.pipe(rateLimit(period, 2, m.scheduler));
+      m.expect(destination).toBeObservable(expected);
+      m.expect(source).toHaveSubscriptions(subs);
+    })
+  );
 
-        const source =   m.cold("(abc)----|");
-        const subs =            "^--------!";
-        const expected = m.cold("(ab)--c--|");
+  it(
+    "should delay excess synchronous values by the period even if the source completes",
+    marbles(m => {
+      const source = m.cold("(abc)|");
+      const subs = "^----!";
+      const expected = m.cold("(ab)--(c|)");
 
-        const period = m.time("------|");
-        const destination = source.pipe(rateLimit(period, 2, m.scheduler));
-        m.expect(destination).toBeObservable(expected);
-        m.expect(source).toHaveSubscriptions(subs);
-    }));
+      const period = m.time("------|");
+      const destination = source.pipe(rateLimit(period, 2, m.scheduler));
+      m.expect(destination).toBeObservable(expected);
+      m.expect(source).toHaveSubscriptions(subs);
+    })
+  );
 
-    it("should delay excess consecutive values by the period", marbles((m) => {
+  it(
+    "should delay excess consecutive values by the period even if the source completes",
+    marbles(m => {
+      const source = m.cold("abc|");
+      const subs = "^--!";
+      const expected = m.cold("ab----(c|)");
 
-        const source =   m.cold("abc------|");
-        const subs =            "^--------!";
-        const expected = m.cold("ab----c--|");
+      const period = m.time("------|");
+      const destination = source.pipe(rateLimit(period, 2, m.scheduler));
+      m.expect(destination).toBeObservable(expected);
+      m.expect(source).toHaveSubscriptions(subs);
+    })
+  );
 
-        const period = m.time("------|");
-        const destination = source.pipe(rateLimit(period, 2, m.scheduler));
-        m.expect(destination).toBeObservable(expected);
-        m.expect(source).toHaveSubscriptions(subs);
-    }));
+  it(
+    "should delay excess synchronous values by several periods",
+    marbles(m => {
+      const source = m.cold("(abcde)----------|");
+      const subs = "^----------------!";
+      const expected = m.cold("(ab)----(cd)----e|");
 
-    it("should delay excess synchronous values by the period even if the source completes", marbles((m) => {
+      const period = m.time("--------|");
+      const destination = source.pipe(rateLimit(period, 2, m.scheduler));
+      m.expect(destination).toBeObservable(expected);
+      m.expect(source).toHaveSubscriptions(subs);
+    })
+  );
 
-        const source =   m.cold("(abc)|");
-        const subs =            "^----!";
-        const expected = m.cold("(ab)--(c|)");
+  it(
+    "should delay excess consecutive values by several periods",
+    marbles(m => {
+      const source = m.cold("abcde------------|");
+      const subs = "^----------------!";
+      const expected = m.cold("ab------(cd)----e|");
 
-        const period = m.time("------|");
-        const destination = source.pipe(rateLimit(period, 2, m.scheduler));
-        m.expect(destination).toBeObservable(expected);
-        m.expect(source).toHaveSubscriptions(subs);
-    }));
-
-    it("should delay excess consecutive values by the period even if the source completes", marbles((m) => {
-
-        const source =   m.cold("abc|");
-        const subs =            "^--!";
-        const expected = m.cold("ab----(c|)");
-
-        const period = m.time("------|");
-        const destination = source.pipe(rateLimit(period, 2, m.scheduler));
-        m.expect(destination).toBeObservable(expected);
-        m.expect(source).toHaveSubscriptions(subs);
-    }));
-
-    it("should delay excess synchronous values by several periods", marbles((m) => {
-
-        const source =   m.cold("(abcde)----------|");
-        const subs =            "^----------------!";
-        const expected = m.cold("(ab)----(cd)----e|");
-
-        const period = m.time("--------|");
-        const destination = source.pipe(rateLimit(period, 2, m.scheduler));
-        m.expect(destination).toBeObservable(expected);
-        m.expect(source).toHaveSubscriptions(subs);
-    }));
-
-    it("should delay excess consecutive values by several periods", marbles((m) => {
-
-        const source =   m.cold("abcde------------|");
-        const subs =            "^----------------!";
-        const expected = m.cold("ab------(cd)----e|");
-
-        const period = m.time("--------|");
-        const destination = source.pipe(rateLimit(period, 2, m.scheduler));
-        m.expect(destination).toBeObservable(expected);
-        m.expect(source).toHaveSubscriptions(subs);
-    }));
+      const period = m.time("--------|");
+      const destination = source.pipe(rateLimit(period, 2, m.scheduler));
+      m.expect(destination).toBeObservable(expected);
+      m.expect(source).toHaveSubscriptions(subs);
+    })
+  );
 });

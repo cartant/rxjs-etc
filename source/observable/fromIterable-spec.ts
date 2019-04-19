@@ -8,17 +8,18 @@ import { marbles } from "rxjs-marbles";
 import { fromIterable } from "./fromIterable";
 
 describe("fromIterable", () => {
+  it(
+    "should accept an iterable",
+    marbles(m => {
+      const map = new Map<string, number>();
+      map.set("a", 1);
+      map.set("b", 2);
+      map.set("c", 3);
 
-    it("should accept an iterable", marbles((m) => {
+      const expected = m.cold("(abc|)");
 
-        const map = new Map<string, number>();
-        map.set("a", 1);
-        map.set("b", 2);
-        map.set("c", 3);
-
-        const expected = m.cold("(abc|)");
-
-        const destination = fromIterable(map.keys());
-        m.expect(destination).toBeObservable(expected);
-    }));
+      const destination = fromIterable(map.keys());
+      m.expect(destination).toBeObservable(expected);
+    })
+  );
 });

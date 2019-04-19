@@ -7,11 +7,16 @@ import { from, MonoTypeOperatorFunction, ObservableInput } from "rxjs";
 import { concatMap, ignoreElements } from "rxjs/operators";
 import { endWith } from "./endWith";
 
-export function concatTap<T>(next: (value: T) => ObservableInput<any>): MonoTypeOperatorFunction<T> {
-    return source => source.pipe(
-        concatMap(value => from(next(value)).pipe(
-            ignoreElements(),
-            endWith(value)
-        ))
+export function concatTap<T>(
+  next: (value: T) => ObservableInput<any>
+): MonoTypeOperatorFunction<T> {
+  return source =>
+    source.pipe(
+      concatMap(value =>
+        from(next(value)).pipe(
+          ignoreElements(),
+          endWith(value)
+        )
+      )
     );
 }

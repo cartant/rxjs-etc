@@ -8,26 +8,29 @@ import { marbles } from "rxjs-marbles";
 import { hasCompleted } from "./hasCompleted";
 
 describe("hasCompleted", () => {
+  it(
+    "should emit nothing for a source that does not complete",
+    marbles(m => {
+      const source = m.cold("ab-cd-ef--");
+      const sourceSubs = "^---------";
+      const expected = "----------";
 
-    it("should emit nothing for a source that does not complete", marbles(m => {
+      const destination = source.pipe(hasCompleted());
+      m.expect(destination).toBeObservable(expected);
+      m.expect(source).toHaveSubscriptions(sourceSubs);
+    })
+  );
 
-        const source =   m.cold("ab-cd-ef--");
-        const sourceSubs =      "^---------";
-        const expected =        "----------";
+  it(
+    "should emit 'true' when a source completes",
+    marbles(m => {
+      const source = m.cold("ab-cd-ef-|");
+      const sourceSubs = "^--------!";
+      const expected = m.cold("---------(t|)", { t: true });
 
-        const destination = source.pipe(hasCompleted());
-        m.expect(destination).toBeObservable(expected);
-        m.expect(source).toHaveSubscriptions(sourceSubs);
-    }));
-
-    it("should emit 'true' when a source completes", marbles(m => {
-
-        const source =   m.cold("ab-cd-ef-|");
-        const sourceSubs =      "^--------!";
-        const expected = m.cold("---------(t|)", { t: true });
-
-        const destination = source.pipe(hasCompleted());
-        m.expect(destination).toBeObservable(expected);
-        m.expect(source).toHaveSubscriptions(sourceSubs);
-    }));
+      const destination = source.pipe(hasCompleted());
+      m.expect(destination).toBeObservable(expected);
+      m.expect(source).toHaveSubscriptions(sourceSubs);
+    })
+  );
 });

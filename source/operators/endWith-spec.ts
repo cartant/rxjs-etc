@@ -8,26 +8,29 @@ import { marbles } from "rxjs-marbles";
 import { endWith } from "./endWith";
 
 describe("endWith", () => {
+  it(
+    "should end an observable with a single value",
+    marbles(m => {
+      const source = m.cold("-a-b-c-|");
+      const subs = "^------!";
+      const expected = m.cold("-a-b-c-(d|)");
 
-    it("should end an observable with a single value", marbles((m) => {
+      const destination = source.pipe(endWith("d"));
+      m.expect(destination).toBeObservable(expected);
+      m.expect(source).toHaveSubscriptions(subs);
+    })
+  );
 
-        const source =   m.cold("-a-b-c-|");
-        const subs =            "^------!";
-        const expected = m.cold("-a-b-c-(d|)");
+  it(
+    "should end an observable with multiple values",
+    marbles(m => {
+      const source = m.cold("-a-b-c-|");
+      const subs = "^------!";
+      const expected = m.cold("-a-b-c-(de|)");
 
-        const destination = source.pipe(endWith("d"));
-        m.expect(destination).toBeObservable(expected);
-        m.expect(source).toHaveSubscriptions(subs);
-    }));
-
-    it("should end an observable with multiple values", marbles((m) => {
-
-        const source =   m.cold("-a-b-c-|");
-        const subs =            "^------!";
-        const expected = m.cold("-a-b-c-(de|)");
-
-        const destination = source.pipe(endWith("d", "e"));
-        m.expect(destination).toBeObservable(expected);
-        m.expect(source).toHaveSubscriptions(subs);
-    }));
+      const destination = source.pipe(endWith("d", "e"));
+      m.expect(destination).toBeObservable(expected);
+      m.expect(source).toHaveSubscriptions(subs);
+    })
+  );
 });

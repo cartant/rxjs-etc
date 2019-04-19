@@ -8,28 +8,27 @@ import { debounceTime } from "rxjs/operators";
 import { subsequent } from "./subsequent";
 
 export function debounceTimeSubsequent<T>(
-    duration: number,
-    count: number,
-    scheduler?: SchedulerLike
+  duration: number,
+  count: number,
+  scheduler?: SchedulerLike
 ): MonoTypeOperatorFunction<T>;
 
 export function debounceTimeSubsequent<T>(
-    duration: number,
-    scheduler?: SchedulerLike
+  duration: number,
+  scheduler?: SchedulerLike
 ): MonoTypeOperatorFunction<T>;
 
 export function debounceTimeSubsequent<T>(
-    duration: number,
-    countOrScheduler?: number | SchedulerLike,
-    scheduler?: SchedulerLike
+  duration: number,
+  countOrScheduler?: number | SchedulerLike,
+  scheduler?: SchedulerLike
 ): MonoTypeOperatorFunction<T> {
-
-    let count: number;
-    if (typeof countOrScheduler === "number") {
-        count = countOrScheduler;
-    } else {
-        count = 1;
-        scheduler = countOrScheduler;
-    }
-    return subsequent(count, debounceTime(duration, scheduler));
+  let count: number;
+  if (typeof countOrScheduler === "number") {
+    count = countOrScheduler;
+  } else {
+    count = 1;
+    scheduler = countOrScheduler;
+  }
+  return subsequent(count, debounceTime(duration, scheduler));
 }

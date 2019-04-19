@@ -12,15 +12,18 @@ import { publish, switchMap, takeUntil } from "rxjs/operators";
 // https://blog.strongbrew.io/building-a-safe-autocomplete-operator-with-rxjs/
 
 export function switchMapUntil<T, I, R>(
-    prelude: OperatorFunction<T, I>,
-    project: (value: I, index: number) => Observable<R>
+  prelude: OperatorFunction<T, I>,
+  project: (value: I, index: number) => Observable<R>
 ): OperatorFunction<T, R> {
-    return source => source.pipe(
-        publish(shared => shared.pipe(
-            prelude,
-            switchMap((value, index) => project(value, index).pipe(
-                takeUntil(shared)
-            ))
-        ))
+  return source =>
+    source.pipe(
+      publish(shared =>
+        shared.pipe(
+          prelude,
+          switchMap((value, index) =>
+            project(value, index).pipe(takeUntil(shared))
+          )
+        )
+      )
     );
 }

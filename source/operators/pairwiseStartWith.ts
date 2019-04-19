@@ -6,9 +6,12 @@
 import { OperatorFunction } from "rxjs";
 import { pairwise, startWith } from "rxjs/operators";
 
-export function pairwiseStartWith<T, S = T>(value: S): OperatorFunction<T, [S | T, T]> {
-    return source => source.pipe(
-        startWith(value),
-        pairwise() as OperatorFunction<S | T, [ S | T, T]>
+export function pairwiseStartWith<T, S = T>(
+  value: S
+): OperatorFunction<T, [S | T, T]> {
+  return source =>
+    source.pipe(
+      startWith(value),
+      pairwise() as OperatorFunction<S | T, [S | T, T]>
     );
 }

@@ -8,19 +8,22 @@ import { marbles } from "rxjs-marbles";
 import { throttleAfter } from "./throttleAfter";
 
 describe("throttleAfter", () => {
+  it(
+    "should throttle after the notifier emits",
+    marbles(m => {
+      const source = m.cold("ab-cd---ef-g-----h--|");
+      const sourceSubs = "^-------------------!";
+      const notifier = m.cold("--n----n--n---------|");
+      const notifierSubs = "^-------------------!";
+      const expected = m.cold("ab-c----e--------h--|");
 
-    it("should throttle after the notifier emits", marbles((m) => {
-
-        const source =   m.cold("ab-cd---ef-g-----h--|");
-        const sourceSubs =      "^-------------------!";
-        const notifier = m.cold("--n----n--n---------|");
-        const notifierSubs =    "^-------------------!";
-        const expected = m.cold("ab-c----e--------h--|");
-
-        const duration = m.time("----|");
-        const destination = source.pipe(throttleAfter(notifier, duration, m.scheduler));
-        m.expect(destination).toBeObservable(expected);
-        m.expect(source).toHaveSubscriptions(sourceSubs);
-        m.expect(notifier).toHaveSubscriptions(notifierSubs);
-    }));
+      const duration = m.time("----|");
+      const destination = source.pipe(
+        throttleAfter(notifier, duration, m.scheduler)
+      );
+      m.expect(destination).toBeObservable(expected);
+      m.expect(source).toHaveSubscriptions(sourceSubs);
+      m.expect(notifier).toHaveSubscriptions(notifierSubs);
+    })
+  );
 });

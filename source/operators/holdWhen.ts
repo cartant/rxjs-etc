@@ -6,9 +6,12 @@
 import { MonoTypeOperatorFunction, Observable } from "rxjs";
 import { bufferWhen, concatAll } from "rxjs/operators";
 
-export function holdWhen<T>(releaseSelector: () => Observable<any>): MonoTypeOperatorFunction<T> {
-    return source => source.pipe(
-        bufferWhen(releaseSelector),
-        concatAll()
+export function holdWhen<T>(
+  releaseSelector: () => Observable<any>
+): MonoTypeOperatorFunction<T> {
+  return source =>
+    source.pipe(
+      bufferWhen(releaseSelector),
+      concatAll()
     );
 }

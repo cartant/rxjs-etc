@@ -10,82 +10,83 @@ import * as sinon from "sinon";
 import { resettable } from "./resettable";
 
 describe("resettable", () => {
+  it("should next the factory-created subject", () => {
+    const mockSubject: Subject<number> = {
+      complete: sinon.stub(),
+      error: sinon.stub(),
+      next: sinon.stub()
+    } as any;
 
-    it("should next the factory-created subject", () => {
+    const { subject } = resettable(() => mockSubject);
+    subject.next(1);
 
-        const mockSubject: Subject<number> = {
-            complete: sinon.stub(),
-            error: sinon.stub(),
-            next: sinon.stub()
-        } as any;
+    expect(mockSubject.next).to.have.property("called", true);
+  });
 
-        const { subject } = resettable(() => mockSubject);
-        subject.next(1);
+  it("should reset the subject", () => {
+    const { observable, reset, subject } = resettable(
+      () => new ReplaySubject<number>(3)
+    );
 
-        expect(mockSubject.next).to.have.property("called", true);
-    });
+    const a: number[] = [];
+    observable.subscribe(value => a.push(value));
 
-    it("should reset the subject", () => {
+    subject.next(1);
+    subject.next(2);
+    subject.next(3);
+    subject.next(4);
 
-        const { observable, reset, subject } = resettable(() => new ReplaySubject<number>(3));
+    const b: number[] = [];
+    observable.subscribe(value => b.push(value));
 
-        const a: number[] = [];
-        observable.subscribe(value => a.push(value));
+    reset();
 
-        subject.next(1);
-        subject.next(2);
-        subject.next(3);
-        subject.next(4);
+    const c: number[] = [];
+    observable.subscribe(value => c.push(value));
 
-        const b: number[]  = [];
-        observable.subscribe(value => b.push(value));
+    subject.next(5);
+    subject.next(6);
 
-        reset();
+    const d: number[] = [];
+    observable.subscribe(value => d.push(value));
 
-        const c: number[]  = [];
-        observable.subscribe(value => c.push(value));
+    expect(a).to.deep.equal([1, 2, 3, 4, 5, 6]);
+    expect(b).to.deep.equal([2, 3, 4, 5, 6]);
+    expect(c).to.deep.equal([5, 6]);
+    expect(d).to.deep.equal([5, 6]);
+  });
 
-        subject.next(5);
-        subject.next(6);
+  it("should support arguments", () => {
+    const { observable, reset, subject } = resettable(
+      (count: number) => new ReplaySubject<number>(count),
+      2
+    );
 
-        const d: number[]  = [];
-        observable.subscribe(value => d.push(value));
+    const a: number[] = [];
+    observable.subscribe(value => a.push(value));
 
-        expect(a).to.deep.equal([1, 2, 3, 4, 5, 6]);
-        expect(b).to.deep.equal([2, 3, 4, 5, 6]);
-        expect(c).to.deep.equal([5, 6]);
-        expect(d).to.deep.equal([5, 6]);
-    });
+    subject.next(1);
+    subject.next(2);
+    subject.next(3);
+    subject.next(4);
 
-    it("should support arguments", () => {
+    const b: number[] = [];
+    observable.subscribe(value => b.push(value));
 
-        const { observable, reset, subject } = resettable((count: number) => new ReplaySubject<number>(count), 2);
+    reset(1);
 
-        const a: number[] = [];
-        observable.subscribe(value => a.push(value));
+    const c: number[] = [];
+    observable.subscribe(value => c.push(value));
 
-        subject.next(1);
-        subject.next(2);
-        subject.next(3);
-        subject.next(4);
+    subject.next(5);
+    subject.next(6);
 
-        const b: number[]  = [];
-        observable.subscribe(value => b.push(value));
+    const d: number[] = [];
+    observable.subscribe(value => d.push(value));
 
-        reset(1);
-
-        const c: number[]  = [];
-        observable.subscribe(value => c.push(value));
-
-        subject.next(5);
-        subject.next(6);
-
-        const d: number[]  = [];
-        observable.subscribe(value => d.push(value));
-
-        expect(a).to.deep.equal([1, 2, 3, 4, 5, 6]);
-        expect(b).to.deep.equal([3, 4, 5, 6]);
-        expect(c).to.deep.equal([5, 6]);
-        expect(d).to.deep.equal([6]);
-    });
+    expect(a).to.deep.equal([1, 2, 3, 4, 5, 6]);
+    expect(b).to.deep.equal([3, 4, 5, 6]);
+    expect(c).to.deep.equal([5, 6]);
+    expect(d).to.deep.equal([6]);
+  });
 });

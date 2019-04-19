@@ -8,19 +8,22 @@ import { marbles } from "rxjs-marbles";
 import { debounceAfter } from "./debounceAfter";
 
 describe("debounceAfter", () => {
+  it(
+    "should debounce after the notifier emits",
+    marbles(m => {
+      const source = m.cold("ab-cd---ef------gh--|");
+      const sourceSubs = "^-------------------!";
+      const notifier = m.cold("--n----n--n---------|");
+      const notifierSubs = "^-------------------!";
+      const expected = m.cold("ab----d-------f-gh--|");
 
-    it("should debounce after the notifier emits", marbles((m) => {
-
-        const source =   m.cold("ab-cd---ef------gh--|");
-        const sourceSubs =      "^-------------------!";
-        const notifier = m.cold("--n----n--n---------|");
-        const notifierSubs =    "^-------------------!";
-        const expected = m.cold("ab----d-------f-gh--|");
-
-        const duration = m.time("----|");
-        const destination = source.pipe(debounceAfter(notifier, duration, m.scheduler));
-        m.expect(destination).toBeObservable(expected);
-        m.expect(source).toHaveSubscriptions(sourceSubs);
-        m.expect(notifier).toHaveSubscriptions(notifierSubs);
-    }));
+      const duration = m.time("----|");
+      const destination = source.pipe(
+        debounceAfter(notifier, duration, m.scheduler)
+      );
+      m.expect(destination).toBeObservable(expected);
+      m.expect(source).toHaveSubscriptions(sourceSubs);
+      m.expect(notifier).toHaveSubscriptions(notifierSubs);
+    })
+  );
 });

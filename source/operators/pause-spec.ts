@@ -11,34 +11,46 @@ import { TestObservableLike } from "rxjs-marbles/types";
 const pausedValues = { p: "paused", r: "resumed" };
 
 describe("pause", () => {
+  it(
+    "should pause and resume",
+    marbles(m => {
+      const source = m.cold("ab-----c-d-e----|");
+      const notifier = m.cold(
+        "--r-----p---r----",
+        pausedValues
+      ) as TestObservableLike<PausedState>;
+      const expected = "--(ab)-c----(de)|";
 
-    it("should pause and resume", marbles(m => {
+      const result = source.pipe(pause(notifier, "paused"));
+      m.expect(result).toBeObservable(expected);
+    })
+  );
 
-        const source =   m.cold("ab-----c-d-e----|");
-        const notifier = m.cold("--r-----p---r----", pausedValues) as TestObservableLike<PausedState>;
-        const expected =        "--(ab)-c----(de)|";
+  it(
+    "should pause complete notifications",
+    marbles(m => {
+      const source = m.cold("ab|-----");
+      const notifier = m.cold("---r----", pausedValues) as TestObservableLike<
+        PausedState
+      >;
+      const expected = "---(ab|)";
 
-        const result = source.pipe(pause(notifier, "paused"));
-        m.expect(result).toBeObservable(expected);
-    }));
+      const result = source.pipe(pause(notifier, "paused"));
+      m.expect(result).toBeObservable(expected);
+    })
+  );
 
-    it("should pause complete notifications", marbles(m => {
+  it(
+    "should not pause error notifications",
+    marbles(m => {
+      const source = m.cold("ab#-----");
+      const notifier = m.cold("---r----", pausedValues) as TestObservableLike<
+        PausedState
+      >;
+      const expected = "--#";
 
-        const source =   m.cold("ab|-----");
-        const notifier = m.cold("---r----", pausedValues) as TestObservableLike<PausedState>;
-        const expected =        "---(ab|)";
-
-        const result = source.pipe(pause(notifier, "paused"));
-        m.expect(result).toBeObservable(expected);
-    }));
-
-    it("should not pause error notifications", marbles(m => {
-
-        const source =   m.cold("ab#-----");
-        const notifier = m.cold("---r----", pausedValues) as TestObservableLike<PausedState>;
-        const expected =        "--#";
-
-        const result = source.pipe(pause(notifier, "paused"));
-        m.expect(result).toBeObservable(expected);
-    }));
+      const result = source.pipe(pause(notifier, "paused"));
+      m.expect(result).toBeObservable(expected);
+    })
+  );
 });

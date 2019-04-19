@@ -4,6 +4,6 @@
  */
 
 export interface Zone {
-    run(fn: () => any): any;
-    runOutsideAngular(fn: () => any): any;
+  run(fn: () => any): any;
+  runOutsideAngular(fn: () => any): any;
 }

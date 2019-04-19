@@ -8,22 +8,21 @@ import { marbles } from "rxjs-marbles";
 import { withLatestFromWhen } from "./withLatestFromWhen";
 
 describe("withLatestFromWhen", () => {
+  it(
+    "should flush the latest values when notified",
+    marbles(m => {
+      const a = m.cold("--a--b-c--d");
+      const i = m.cold("i--j----k--");
+      const x = m.cold("-x--y----z-");
+      const notifier = m.cold("------f----");
+      const expected = m.cold("--m--n----o", {
+        m: ["a", "i", "x"],
+        n: ["b", "j", "y"],
+        o: ["d", "k", "z"]
+      }) as any;
 
-    it("should flush the latest values when notified", marbles(m => {
-
-        const a =        m.cold("--a--b-c--d");
-        const i =        m.cold("i--j----k--");
-        const x =        m.cold("-x--y----z-");
-        const notifier = m.cold("------f----");
-        const expected = m.cold("--m--n----o", {
-            m: ["a", "i", "x"],
-            n: ["b", "j", "y"],
-            o: ["d", "k", "z"]
-        }) as any;
-
-        const result = a.pipe(
-            withLatestFromWhen(i, x, () => notifier)
-        );
-        m.expect(result).toBeObservable(expected);
-    }));
+      const result = a.pipe(withLatestFromWhen(i, x, () => notifier));
+      m.expect(result).toBeObservable(expected);
+    })
+  );
 });

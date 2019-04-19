@@ -6,9 +6,12 @@
 import { MonoTypeOperatorFunction, Observable } from "rxjs";
 import { buffer, concatAll } from "rxjs/operators";
 
-export function hold<T>(releaseNotifier: Observable<any>): MonoTypeOperatorFunction<T> {
-    return source => source.pipe(
-        buffer(releaseNotifier),
-        concatAll()
+export function hold<T>(
+  releaseNotifier: Observable<any>
+): MonoTypeOperatorFunction<T> {
+  return source =>
+    source.pipe(
+      buffer(releaseNotifier),
+      concatAll()
     );
 }

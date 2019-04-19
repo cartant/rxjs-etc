@@ -8,48 +8,57 @@ import { marbles } from "rxjs-marbles";
 import { forkJoinObject } from "./forkJoinObject";
 
 describe("forkJoinObject", () => {
+  it(
+    "should support empty objects",
+    marbles(m => {
+      const expected = m.cold("(i|)", { i: {} });
 
-    it("should support empty objects", marbles(m => {
+      const destination = forkJoinObject({});
+      m.expect(destination).toBeObservable(expected);
+    })
+  );
 
-        const expected = m.cold("(i|)", { i: {} });
+  it(
+    "should support objects with single property",
+    marbles(m => {
+      const a = m.hot("--abc|");
+      const expected = m.cold("-----(i|)", { i: { a: "c" } });
 
-        const destination = forkJoinObject({});
-        m.expect(destination).toBeObservable(expected);
-    }));
+      const destination = forkJoinObject({ a });
+      m.expect(destination).toBeObservable(expected);
+    })
+  );
 
-    it("should support objects with single property", marbles(m => {
+  it(
+    "should support objects with multiple properties",
+    marbles(m => {
+      const a = m.hot("--abc|");
+      const x = m.hot("---xyz|");
+      const expected = m.cold("------(i|)", { i: { a: "c", x: "z" } });
 
-        const a =         m.hot("--abc|");
-        const expected = m.cold("-----(i|)", { i: { a: "c" } });
+      const destination = forkJoinObject({ a, x });
+      m.expect(destination).toBeObservable(expected);
+    })
+  );
 
-        const destination = forkJoinObject({ a });
-        m.expect(destination).toBeObservable(expected);
-    }));
+  it(
+    "should support objects with non-observable properties",
+    marbles(m => {
+      const expected = m.cold("(i|)", { i: { a: "a" } });
 
-    it("should support objects with multiple properties", marbles(m => {
+      const destination = forkJoinObject({ a: "a" });
+      m.expect(destination).toBeObservable(expected);
+    })
+  );
 
-        const a =         m.hot("--abc|");
-        const x =         m.hot("---xyz|");
-        const expected = m.cold("------(i|)", { i: { a: "c", x: "z" } });
+  it(
+    "should support objects with some non-observable properties",
+    marbles(m => {
+      const a = m.hot("--abc|");
+      const expected = m.cold("-----(i|)", { i: { a: "c", b: "b" } });
 
-        const destination = forkJoinObject({ a, x });
-        m.expect(destination).toBeObservable(expected);
-    }));
-
-    it("should support objects with non-observable properties", marbles(m => {
-
-        const expected = m.cold("(i|)", { i: { a: "a" } });
-
-        const destination = forkJoinObject({ a: "a" });
-        m.expect(destination).toBeObservable(expected);
-    }));
-
-    it("should support objects with some non-observable properties", marbles(m => {
-
-        const a =         m.hot("--abc|");
-        const expected = m.cold("-----(i|)", { i: { a: "c", b: "b" } });
-
-        const destination = forkJoinObject({ a, b: "b" });
-        m.expect(destination).toBeObservable(expected);
-    }));
+      const destination = forkJoinObject({ a, b: "b" });
+      m.expect(destination).toBeObservable(expected);
+    })
+  );
 });

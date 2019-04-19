@@ -10,100 +10,107 @@ import { marbles } from "rxjs-marbles";
 import { NotificationQueue } from "./NotificationQueue";
 
 describe("NotificationQueue", () => {
+  it(
+    "should emit nothing without a notification",
+    marbles(m => {
+      const notifier = m.hot("--");
+      const queuings = m.cold("q-");
+      const expected = m.cold("--");
 
-    it("should emit nothing without a notification", marbles(m => {
+      const queue = new NotificationQueue(notifier);
+      queue.connect();
 
-        const notifier =  m.hot("--");
-        const queuings = m.cold("q-");
-        const expected = m.cold("--");
+      const result = queuings.pipe(
+        concatMap(() => {
+          const subject = new AsyncSubject<string>();
+          queue.subscribe(
+            index => subject.error(new Error("Unexpected index.")),
+            error => subject.error(error),
+            () => subject.error(new Error("Unexpected completion."))
+          );
+          return subject;
+        })
+      );
 
-        const queue = new NotificationQueue(notifier);
-        queue.connect();
+      m.expect(result).toBeObservable(expected);
+    })
+  );
 
-        const result = queuings.pipe(
-            concatMap(() => {
-                const subject = new AsyncSubject<string>();
-                queue.subscribe(
-                    index => subject.error(new Error("Unexpected index.")),
-                    error => subject.error(error),
-                    () => subject.error(new Error("Unexpected completion."))
-                );
-                return subject;
-            })
-        );
+  it(
+    "should emit the subscription index upon notification",
+    marbles(m => {
+      const notifier = m.hot("-n");
+      const queuings = m.cold("q-");
+      const expected = m.cold("-0");
 
-        m.expect(result).toBeObservable(expected);
-    }));
+      const queue = new NotificationQueue(notifier);
+      queue.connect();
 
-    it("should emit the subscription index upon notification", marbles(m => {
+      const result = queuings.pipe(
+        concatMap(() => {
+          const subject = new AsyncSubject<string>();
+          queue.subscribe(
+            index => subject.next(index.toString()),
+            error => subject.error(error),
+            () => subject.complete()
+          );
+          return subject;
+        })
+      );
 
-        const notifier =  m.hot("-n");
-        const queuings = m.cold("q-");
-        const expected = m.cold("-0");
+      m.expect(result).toBeObservable(expected);
+    })
+  );
 
-        const queue = new NotificationQueue(notifier);
-        queue.connect();
+  it(
+    "should emit the subscription index for each notification",
+    marbles(m => {
+      const notifier = m.hot("-----n-n");
+      const queuings = m.cold("(qq)----");
+      const expected = m.cold("-----0-1");
 
-        const result = queuings.pipe(
-            concatMap(() => {
-                const subject = new AsyncSubject<string>();
-                queue.subscribe(
-                    index => subject.next(index.toString()),
-                    error => subject.error(error),
-                    () => subject.complete()
-                );
-                return subject;
-            })
-        );
+      const queue = new NotificationQueue(notifier);
+      queue.connect();
 
-        m.expect(result).toBeObservable(expected);
-    }));
+      const result = queuings.pipe(
+        concatMap(() => {
+          const subject = new AsyncSubject<string>();
+          queue.subscribe(
+            index => subject.next(index.toString()),
+            error => subject.error(error),
+            () => subject.complete()
+          );
+          return subject;
+        })
+      );
 
-    it("should emit the subscription index for each notification", marbles(m => {
+      m.expect(result).toBeObservable(expected);
+    })
+  );
 
-        const notifier =  m.hot("-----n-n");
-        const queuings = m.cold("(qq)----");
-        const expected = m.cold("-----0-1");
+  it(
+    "should queue notifications",
+    marbles(m => {
+      const notifier = m.hot("(nn)----");
+      const queuings = m.cold("-----q-q");
+      const expected = m.cold("-----0-1");
 
-        const queue = new NotificationQueue(notifier);
-        queue.connect();
+      const queue = new NotificationQueue(notifier);
+      queue.connect();
 
-        const result = queuings.pipe(
-            concatMap(() => {
-                const subject = new AsyncSubject<string>();
-                queue.subscribe(
-                    index => subject.next(index.toString()),
-                    error => subject.error(error),
-                    () => subject.complete()
-                );
-                return subject;
-            })
-        );
+      const result = queuings.pipe(
+        concatMap(() => {
+          const subject = new AsyncSubject<string>();
+          queue.subscribe(
+            index => subject.next(index.toString()),
+            error => subject.error(error),
+            () => subject.complete()
+          );
+          return subject;
+        })
+      );
 
-        m.expect(result).toBeObservable(expected);
-    }));
-
-    it("should queue notifications", marbles(m => {
-
-        const notifier =  m.hot("(nn)----");
-        const queuings = m.cold("-----q-q");
-        const expected = m.cold("-----0-1");
-
-        const queue = new NotificationQueue(notifier);
-        queue.connect();
-
-        const result = queuings.pipe(
-            concatMap(() => {
-                const subject = new AsyncSubject<string>();
-                queue.subscribe(
-                    index => subject.next(index.toString()),
-                    error => subject.error(error),
-                    () => subject.complete()
-                );
-                return subject;
-            })
-        );
-
-        m.expect(result).toBeObservable(expected);
-    }));
+      m.expect(result).toBeObservable(expected);
+    })
+  );
 });

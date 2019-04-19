@@ -10,39 +10,44 @@ import { finalizeWithKind } from "./finalizeWithKind";
 import { CloseKind } from "../kinds";
 
 describe("finalizeWithKind", () => {
+  it(
+    "should indicate closing via a complete notification",
+    marbles(m => {
+      let kind: CloseKind | undefined = undefined;
 
-    it("should indicate closing via a complete notification", marbles(m => {
+      const source = m.cold("a|");
 
-        let kind: CloseKind | undefined = undefined;
+      const result = source.pipe(finalizeWithKind(k => (kind = k)));
+      m.expect(result).toBeObservable(source);
+      m.scheduler.schedule(() => expect(kind).to.equal("C"), m.time("--|"));
+    })
+  );
 
-        const source = m.cold("a|");
+  it(
+    "should indicate closing via an error notification",
+    marbles(m => {
+      let kind: CloseKind | undefined = undefined;
 
-        const result = source.pipe(finalizeWithKind(k => kind = k));
-        m.expect(result).toBeObservable(source);
-        m.scheduler.schedule(() => expect(kind).to.equal("C"), m.time("--|"));
-    }));
+      const source = m.cold("a#");
 
-    it("should indicate closing via an error notification", marbles(m => {
+      const result = source.pipe(finalizeWithKind(k => (kind = k)));
+      m.expect(result).toBeObservable(source);
+      m.scheduler.schedule(() => expect(kind).to.equal("E"), m.time("--|"));
+    })
+  );
 
-        let kind: CloseKind | undefined = undefined;
+  it(
+    "should indicate closing via an unsubscription",
+    marbles(m => {
+      let kind: CloseKind | undefined = undefined;
 
-        const source = m.cold("a#");
+      const source = m.cold("a-|");
+      const sub = "-!";
+      const expected = "a-";
 
-        const result = source.pipe(finalizeWithKind(k => kind = k));
-        m.expect(result).toBeObservable(source);
-        m.scheduler.schedule(() => expect(kind).to.equal("E"), m.time("--|"));
-    }));
-
-    it("should indicate closing via an unsubscription", marbles(m => {
-
-        let kind: CloseKind | undefined = undefined;
-
-        const source = m.cold("a-|");
-        const sub =           "-!";
-        const expected =      "a-";
-
-        const result = source.pipe(finalizeWithKind(k => kind = k));
-        m.expect(result, sub).toBeObservable(expected);
-        m.scheduler.schedule(() => expect(kind).to.equal("U"), m.time("--|"));
-    }));
+      const result = source.pipe(finalizeWithKind(k => (kind = k)));
+      m.expect(result, sub).toBeObservable(expected);
+      m.scheduler.schedule(() => expect(kind).to.equal("U"), m.time("--|"));
+    })
+  );
 });

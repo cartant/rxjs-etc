@@ -8,24 +8,27 @@ import { marbles } from "rxjs-marbles";
 import { mergeTap } from "./mergeTap";
 
 describe("mergeTap", () => {
+  it(
+    "should mirror the source",
+    marbles(m => {
+      const source = m.cold("abc|");
+      const next = m.cold("(n|)");
+      const expected = "abc|";
 
-    it("should mirror the source", marbles(m => {
+      const result = source.pipe(mergeTap(() => next));
+      m.expect(result).toBeObservable(expected);
+    })
+  );
 
-        const source = m.cold("abc|");
-        const next =   m.cold("(n|)");
-        const expected =      "abc|";
+  it(
+    "should merge tapped observables",
+    marbles(m => {
+      const source = m.cold("a--b--c|");
+      const next = m.cold("n---|");
+      const expected = "----a--b--(c|)";
 
-        const result = source.pipe(mergeTap(() => next));
-        m.expect(result).toBeObservable(expected);
-    }));
-
-    it("should merge tapped observables", marbles(m => {
-
-        const source = m.cold("a--b--c|");
-        const next =   m.cold("n---|");
-        const expected =      "----a--b--(c|)";
-
-        const result = source.pipe(mergeTap(() => next));
-        m.expect(result).toBeObservable(expected);
-    }));
+      const result = source.pipe(mergeTap(() => next));
+      m.expect(result).toBeObservable(expected);
+    })
+  );
 });

@@ -8,37 +8,42 @@ import { marbles } from "rxjs-marbles";
 import { concatArray } from "./concatArray";
 
 describe("concatArray", () => {
+  it(
+    "should concat a single observable",
+    marbles(m => {
+      const source = m.cold("a----|");
+      const subs = "^----!";
+      const expected = m.cold("a----|");
 
-    it("should concat a single observable", marbles((m) => {
+      const destination = concatArray([source]);
+      m.expect(destination).toBeObservable(expected);
+      m.expect(source).toHaveSubscriptions(subs);
+    })
+  );
 
-        const source =   m.cold("a----|");
-        const subs =            "^----!";
-        const expected = m.cold("a----|");
+  it(
+    "should concat multiple observables",
+    marbles(m => {
+      const source1 = m.cold("a--|");
+      const subs1 = "^--!";
+      const source2 = m.cold("b----|");
+      const subs2 = "---^----!";
+      const expected = m.cold("a--b----|");
 
-        const destination = concatArray([source]);
-        m.expect(destination).toBeObservable(expected);
-        m.expect(source).toHaveSubscriptions(subs);
-    }));
+      const destination = concatArray([source1, source2]);
+      m.expect(destination).toBeObservable(expected);
+      m.expect(source1).toHaveSubscriptions(subs1);
+      m.expect(source2).toHaveSubscriptions(subs2);
+    })
+  );
 
-    it("should concat multiple observables", marbles((m) => {
+  it(
+    "should complete when observables is empty",
+    marbles(m => {
+      const expected = m.cold("|");
 
-        const source1 =  m.cold("a--|");
-        const subs1 =           "^--!";
-        const source2 =     m.cold("b----|");
-        const subs2 =           "---^----!";
-        const expected = m.cold("a--b----|");
-
-        const destination = concatArray([source1, source2]);
-        m.expect(destination).toBeObservable(expected);
-        m.expect(source1).toHaveSubscriptions(subs1);
-        m.expect(source2).toHaveSubscriptions(subs2);
-    }));
-
-    it("should complete when observables is empty", marbles((m) => {
-
-        const expected = m.cold("|");
-
-        const destination = concatArray([]);
-        m.expect(destination).toBeObservable(expected);
-    }));
+      const destination = concatArray([]);
+      m.expect(destination).toBeObservable(expected);
+    })
+  );
 });

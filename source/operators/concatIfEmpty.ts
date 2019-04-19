@@ -7,16 +7,18 @@ import { EMPTY, merge, Observable, OperatorFunction } from "rxjs";
 import { isEmpty, mergeMap, publish } from "rxjs/operators";
 
 export function concatIfEmpty<T, D = T>(
-    observable: Observable<D>
+  observable: Observable<D>
 ): OperatorFunction<T, D | T> {
-
-    return source => source.pipe(
-        publish(sharedSource => merge(
-            sharedSource,
-            sharedSource.pipe(
-                isEmpty(),
-                mergeMap(empty => empty ? observable : EMPTY)
-            )
-        ))
+  return source =>
+    source.pipe(
+      publish(sharedSource =>
+        merge(
+          sharedSource,
+          sharedSource.pipe(
+            isEmpty(),
+            mergeMap(empty => (empty ? observable : EMPTY))
+          )
+        )
+      )
     );
 }

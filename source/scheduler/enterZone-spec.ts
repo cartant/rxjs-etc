@@ -10,15 +10,13 @@ import * as sinon from "sinon";
 import { enterZone } from "./enterZone";
 
 describe("enterZone", () => {
+  it("should run inside Angular's zone", () => {
+    const zone = {
+      run: sinon.stub(),
+      runOutsideAngular: sinon.stub()
+    };
 
-    it("should run inside Angular's zone", () => {
-
-        const zone = {
-            run: sinon.stub(),
-            runOutsideAngular: sinon.stub()
-        };
-
-        of(1, enterZone(zone)).subscribe();
-        expect(zone.run).to.have.property("calledOnce", true);
-    });
+    of(1, enterZone(zone)).subscribe();
+    expect(zone.run).to.have.property("calledOnce", true);
+  });
 });

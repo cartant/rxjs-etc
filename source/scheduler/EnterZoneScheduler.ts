@@ -7,16 +7,11 @@ import { SchedulerLike, Subscription } from "rxjs";
 import { Zone } from "./Zone";
 
 export class EnterZoneScheduler {
+  constructor(private zone: Zone, private scheduler: SchedulerLike) {}
 
-    constructor(
-        private zone: Zone,
-        private scheduler: SchedulerLike
-    ) {}
-
-    schedule(...args: any[]): Subscription {
-        return this.zone.run(() => this.scheduler.schedule.apply(
-            this.scheduler,
-            args
-        ));
-    }
+  schedule(...args: any[]): Subscription {
+    return this.zone.run(() =>
+      this.scheduler.schedule.apply(this.scheduler, args)
+    );
+  }
 }

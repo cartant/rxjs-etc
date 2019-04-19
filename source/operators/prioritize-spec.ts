@@ -8,12 +8,12 @@ import { expect } from "chai";
 import { asyncScheduler, from, merge, of } from "rxjs";
 
 import {
-    bufferCount,
-    concatMap,
-    filter,
-    mapTo,
-    toArray,
-    window
+  bufferCount,
+  concatMap,
+  filter,
+  mapTo,
+  toArray,
+  window
 } from "rxjs/operators";
 
 import { marbles } from "rxjs-marbles";
@@ -21,68 +21,96 @@ import { materializeTo } from "./materializeTo";
 import { prioritize } from "./prioritize";
 
 describe("prioritize", () => {
+  it("should control the subscription order", () => {
+    const source = of(1);
+    const result = source.pipe(
+      prioritize((first, second) =>
+        merge(first.pipe(mapTo("first")), second.pipe(mapTo("second")))
+      ),
+      toArray()
+    );
+    return result
+      .toPromise()
+      .then(value => expect(value).to.deep.equal(["first", "second"]));
+  });
 
-    it("should control the subscription order", () => {
+  it("should support self notifications", () => {
+    const source = from("aabccdee", asyncScheduler);
+    const result = source.pipe(
+      prioritize((first, second) =>
+        second.pipe(
+          window(
+            first.pipe(
+              bufferCount(2, 1),
+              filter(([previous, current]) => current !== previous)
+            )
+          ),
+          concatMap(w => w.pipe(toArray())),
+          toArray()
+        )
+      )
+    );
+    return result
+      .toPromise()
+      .then(value =>
+        expect(value).to.deep.equal([
+          ["a", "a"],
+          ["b"],
+          ["c", "c"],
+          ["d"],
+          ["e", "e"],
+          []
+        ])
+      );
+  });
 
-        const source = of(1);
-        const result = source.pipe(
-            prioritize((first, second) => merge(
-                first.pipe(mapTo("first")),
-                second.pipe(mapTo("second"))
-            )),
-            toArray()
-        );
-        return result.toPromise().then(value => expect(value).to.deep.equal(["first", "second"]));
-    });
+  it("should support synchronous sources", () => {
+    const source = from("aabccdee");
+    const result = source.pipe(
+      prioritize((first, second) =>
+        second.pipe(
+          window(
+            first.pipe(
+              bufferCount(2, 1),
+              filter(([previous, current]) => current !== previous)
+            )
+          ),
+          concatMap(w => w.pipe(toArray())),
+          toArray()
+        )
+      )
+    );
+    return result
+      .toPromise()
+      .then(value =>
+        expect(value).to.deep.equal([
+          ["a", "a"],
+          ["b"],
+          ["c", "c"],
+          ["d"],
+          ["e", "e"],
+          []
+        ])
+      );
+  });
 
-    it("should support self notifications", () => {
+  it(
+    "should unsubscribe from the source",
+    marbles(m => {
+      const source = m.cold("-1-2-3----4--");
+      const sourceSubs = "---^------!-----";
 
-        const source = from("aabccdee", asyncScheduler);
-        const result = source.pipe(
-            prioritize((first, second) => second.pipe(
-                window(first.pipe(
-                    bufferCount(2, 1),
-                    filter(([previous, current]) => current !== previous)
-                )),
-                concatMap(w => w.pipe(toArray())),
-                toArray()
-            ))
-        );
-        return result.toPromise().then(value => expect(value).to.deep.equal(
-            [["a", "a"], ["b"], ["c", "c"], ["d"], ["e", "e"], []]
-        ));
-    });
+      const result = source.pipe(
+        prioritize<any>(merge),
+        filter(() => false)
+      );
 
-    it("should support synchronous sources", () => {
+      const subscriber = m.hot("---a------------").pipe(materializeTo(result));
+      const unsub = "----------!-----";
+      const expected = "----------------";
 
-        const source = from("aabccdee");
-        const result = source.pipe(
-            prioritize((first, second) => second.pipe(
-                window(first.pipe(
-                    bufferCount(2, 1),
-                    filter(([previous, current]) => current !== previous)
-                )),
-                concatMap(w => w.pipe(toArray())),
-                toArray()
-            ))
-        );
-        return result.toPromise().then(value => expect(value).to.deep.equal(
-            [["a", "a"], ["b"], ["c", "c"], ["d"], ["e", "e"], []]
-        ));
-    });
-
-    it("should unsubscribe from the source", marbles(m => {
-
-        const source =    m.cold(   "-1-2-3----4--");
-        const sourceSubs =       "---^------!-----";
-
-        const result = source.pipe(prioritize<any>(merge), filter(() => false));
-
-        const subscriber = m.hot("---a------------").pipe(materializeTo(result));
-        const unsub  =           "----------!-----";
-        const expected   =       "----------------";
-
-        m.expect(subscriber, unsub).toBeObservable(expected);
-        m.expect(source).toHaveSubscriptions(sourceSubs);
-    }));
+      m.expect(subscriber, unsub).toBeObservable(expected);
+      m.expect(source).toHaveSubscriptions(sourceSubs);
+    })
+  );
 });

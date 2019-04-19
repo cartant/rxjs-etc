@@ -7,18 +7,19 @@ import { Observable, OperatorFunction } from "rxjs";
 import { map } from "rxjs/operators";
 
 export function guard<T, R extends T>(
-    guard: (value: T) => value is R,
-    message?: string
+  guard: (value: T) => value is R,
+  message?: string
 ): OperatorFunction<T, R> {
-
-    return (source: Observable<T>) => source.pipe(map((value: any) => {
-
+  return (source: Observable<T>) =>
+    source.pipe(
+      map((value: any) => {
         if (guard(value)) {
-            return value;
+          return value;
         }
 
         const error = new Error(message || "Guard rejection.");
         error["value"] = value;
         throw error;
-    }));
+      })
+    );
 }
