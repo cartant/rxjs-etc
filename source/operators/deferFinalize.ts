@@ -62,6 +62,7 @@ class DeferFinalizeSubscriber<T> extends Subscriber<T> {
     this.subscription = subscription;
     subscription.add(func);
     const result = this.callback(this.kind);
+    /*tslint:disable:rxjs-no-ignored-subscription*/
     from(result)
       .pipe(finalize(() => subscription.unsubscribe()))
       .subscribe();

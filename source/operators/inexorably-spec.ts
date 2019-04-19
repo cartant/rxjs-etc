@@ -2,7 +2,7 @@
  * @license Use of this source code is governed by an MIT-style license that
  * can be found in the LICENSE file at https://github.com/cartant/rxjs-etc
  */
-/*tslint:disable:deprecation no-unused-expression throw-error rxjs-throw-error*/
+/*tslint:disable:deprecation no-unused-expression throw-error rxjs-no-ignored-subscription rxjs-throw-error*/
 
 import { expect } from "chai";
 import { interval, Notification, of, timer } from "rxjs";
