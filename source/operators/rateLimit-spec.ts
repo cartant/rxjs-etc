@@ -7,13 +7,14 @@
 import { marbles } from "rxjs-marbles";
 import { rateLimit } from "./rateLimit";
 
+// prettier-ignore
 describe("rateLimit", () => {
   it(
     "should emit synchronous pass-though values immediately",
     marbles(m => {
-      const source = m.cold("(ab)----|");
-      const subs = "^-------!";
-      const expected = m.cold("(ab)----|");
+      const source = m.cold("   (ab)----|");
+      const subs = "            ^-------!";
+      const expected = m.cold(" (ab)----|");
 
       const period = m.time("------|");
       const destination = source.pipe(rateLimit(period, 2, m.scheduler));
@@ -25,9 +26,9 @@ describe("rateLimit", () => {
   it(
     "should emit consecutive pass-though values immediately",
     marbles(m => {
-      const source = m.cold("ab----|");
-      const subs = "^-----!";
-      const expected = m.cold("ab----|");
+      const source = m.cold("   ab----|");
+      const subs = "            ^-----!";
+      const expected = m.cold(" ab----|");
 
       const period = m.time("------|");
       const destination = source.pipe(rateLimit(period, 2, m.scheduler));
@@ -39,9 +40,9 @@ describe("rateLimit", () => {
   it(
     "should delay excess synchronous values by the period",
     marbles(m => {
-      const source = m.cold("(abc)----|");
-      const subs = "^--------!";
-      const expected = m.cold("(ab)--c--|");
+      const source = m.cold("   (abc)----|");
+      const subs = "            ^--------!";
+      const expected = m.cold(" (ab)--c--|");
 
       const period = m.time("------|");
       const destination = source.pipe(rateLimit(period, 2, m.scheduler));
@@ -53,9 +54,9 @@ describe("rateLimit", () => {
   it(
     "should delay excess consecutive values by the period",
     marbles(m => {
-      const source = m.cold("abc------|");
-      const subs = "^--------!";
-      const expected = m.cold("ab----c--|");
+      const source = m.cold("   abc------|");
+      const subs = "            ^--------!";
+      const expected = m.cold(" ab----c--|");
 
       const period = m.time("------|");
       const destination = source.pipe(rateLimit(period, 2, m.scheduler));
@@ -67,9 +68,9 @@ describe("rateLimit", () => {
   it(
     "should delay excess synchronous values by the period even if the source completes",
     marbles(m => {
-      const source = m.cold("(abc)|");
-      const subs = "^----!";
-      const expected = m.cold("(ab)--(c|)");
+      const source = m.cold("   (abc)|");
+      const subs = "            ^----!";
+      const expected = m.cold(" (ab)--(c|)");
 
       const period = m.time("------|");
       const destination = source.pipe(rateLimit(period, 2, m.scheduler));
@@ -81,9 +82,9 @@ describe("rateLimit", () => {
   it(
     "should delay excess consecutive values by the period even if the source completes",
     marbles(m => {
-      const source = m.cold("abc|");
-      const subs = "^--!";
-      const expected = m.cold("ab----(c|)");
+      const source = m.cold("   abc|");
+      const subs = "            ^--!";
+      const expected = m.cold(" ab----(c|)");
 
       const period = m.time("------|");
       const destination = source.pipe(rateLimit(period, 2, m.scheduler));
@@ -95,9 +96,9 @@ describe("rateLimit", () => {
   it(
     "should delay excess synchronous values by several periods",
     marbles(m => {
-      const source = m.cold("(abcde)----------|");
-      const subs = "^----------------!";
-      const expected = m.cold("(ab)----(cd)----e|");
+      const source = m.cold("   (abcde)----------|");
+      const subs = "            ^----------------!";
+      const expected = m.cold(" (ab)----(cd)----e|");
 
       const period = m.time("--------|");
       const destination = source.pipe(rateLimit(period, 2, m.scheduler));
@@ -109,9 +110,9 @@ describe("rateLimit", () => {
   it(
     "should delay excess consecutive values by several periods",
     marbles(m => {
-      const source = m.cold("abcde------------|");
-      const subs = "^----------------!";
-      const expected = m.cold("ab------(cd)----e|");
+      const source = m.cold("   abcde------------|");
+      const subs = "            ^----------------!";
+      const expected = m.cold(" ab------(cd)----e|");
 
       const period = m.time("--------|");
       const destination = source.pipe(rateLimit(period, 2, m.scheduler));

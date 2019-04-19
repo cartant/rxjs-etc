@@ -7,13 +7,14 @@
 import { marbles } from "rxjs-marbles";
 import { mergeArray } from "./mergeArray";
 
+// prettier-ignore
 describe("mergeArray", () => {
   it(
     "should merge a single observable",
     marbles(m => {
-      const source = m.cold("a--|");
-      const subs = "^--!";
-      const expected = m.cold("a--|");
+      const source = m.cold("   a--|");
+      const subs = "            ^--!";
+      const expected = m.cold(" a--|");
 
       const destination = mergeArray([source]);
       m.expect(destination).toBeObservable(expected);
@@ -24,11 +25,11 @@ describe("mergeArray", () => {
   it(
     "should merge multiple observables",
     marbles(m => {
-      const source1 = m.cold("a--|");
-      const subs1 = "^--!";
-      const source2 = m.cold("--b--|");
-      const subs2 = "^----!";
-      const expected = m.cold("a-b--|");
+      const source1 = m.cold("  a--|");
+      const subs1 = "           ^--!";
+      const source2 = m.cold("  --b--|");
+      const subs2 = "           ^----!";
+      const expected = m.cold(" a-b--|");
 
       const destination = mergeArray([source1, source2]);
       m.expect(destination).toBeObservable(expected);
@@ -41,7 +42,6 @@ describe("mergeArray", () => {
     "should complete when observables is empty",
     marbles(m => {
       const expected = m.cold("|");
-
       const destination = mergeArray([]);
       m.expect(destination).toBeObservable(expected);
     })

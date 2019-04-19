@@ -7,6 +7,7 @@
 import { marbles } from "rxjs-marbles";
 import { forkJoinConcurrent } from "./forkJoinConcurrent";
 
+// prettier-ignore
 describe("forkJoinConcurrent", () => {
   it(
     "should join a single observable",
@@ -14,9 +15,9 @@ describe("forkJoinConcurrent", () => {
       const values = { a: 1 };
       const results = { x: [values.a] };
 
-      const source = m.cold("a----|", values);
-      const subs = "^----!";
-      const expected = m.cold("-----(x|)", results);
+      const source = m.cold("   a----|", values);
+      const subs = "            ^----!";
+      const expected = m.cold(" -----(x|)", results);
 
       const destination = forkJoinConcurrent([source], 1);
       m.expect(destination).toBeObservable(expected);
@@ -30,11 +31,11 @@ describe("forkJoinConcurrent", () => {
       const values = { a: 1, b: 2 };
       const results = { x: [values.a, values.b] };
 
-      const source1 = m.cold("a--|", values);
-      const subs1 = "^--!";
-      const source2 = m.cold("b-|", values);
-      const subs2 = "---^-!";
-      const expected = m.cold("-----(x|)", results);
+      const source1 = m.cold("  a--|", values);
+      const subs1 = "           ^--!";
+      const source2 = m.cold("  b-|", values);
+      const subs2 = "           ---^-!";
+      const expected = m.cold(" -----(x|)", results);
 
       const destination = forkJoinConcurrent([source1, source2], 1);
       m.expect(destination).toBeObservable(expected);

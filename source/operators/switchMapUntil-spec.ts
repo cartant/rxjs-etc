@@ -14,15 +14,19 @@ import {
 import { marbles } from "rxjs-marbles";
 import { switchMapUntil } from "./switchMapUntil";
 
+// prettier-ignore
 describe("switchMapUntil", () => {
   it(
     "should play nice with auditTime",
     marbles(m => {
-      const outer = m.hot("oo-o-------");
-      const osubs = "^----------";
-      const inner = m.cold("--i|");
-      const isubs = ["--^!-------", "-----^--!--"];
-      const expected = "-------i---";
+      const outer = m.hot("  oo-o-------");
+      const osubs = "        ^----------";
+      const inner = m.cold(" --i|");
+      const isubs = [
+        "                    --^!-------",
+        "                    -----^--!--"
+      ];
+      const expected = "     -------i---";
 
       const destination = outer.pipe(
         switchMapUntil(auditTime(m.time("--|")), () => inner)
@@ -36,11 +40,14 @@ describe("switchMapUntil", () => {
   it(
     "should play nice with debounceTime",
     marbles(m => {
-      const outer = m.hot("oo--o------");
-      const osubs = "^----------";
-      const inner = m.cold("--i|");
-      const isubs = ["---^!------", "------^--!-"];
-      const expected = "--------i--";
+      const outer = m.hot("  oo--o------");
+      const osubs = "        ^----------";
+      const inner = m.cold(" --i|");
+      const isubs = [
+        "                    ---^!------",
+        "                    ------^--!-"
+      ];
+      const expected = "     --------i--";
 
       const destination = outer.pipe(
         switchMapUntil(debounceTime(m.time("--|")), () => inner)
@@ -54,11 +61,14 @@ describe("switchMapUntil", () => {
   it(
     "should play nice with delay",
     marbles(m => {
-      const outer = m.hot("o--o-------");
-      const osubs = "^----------";
-      const inner = m.cold("--i|");
-      const isubs = ["--^!-------", "-----^--!--"];
-      const expected = "-------i---";
+      const outer = m.hot("  o--o-------");
+      const osubs = "        ^----------";
+      const inner = m.cold(" --i|");
+      const isubs = [
+        "                    --^!-------",
+        "                    -----^--!--"
+      ];
+      const expected = "     -------i---";
 
       const destination = outer.pipe(
         switchMapUntil(delay(m.time("--|")), () => inner)
@@ -72,11 +82,14 @@ describe("switchMapUntil", () => {
   it(
     "should play nice with sampleTime",
     marbles(m => {
-      const outer = m.hot("oo-o------|");
-      const osubs = "^---------!";
-      const inner = m.cold("--i|");
-      const isubs = ["--^!-------", "----^--!---"];
-      const expected = "------i---|";
+      const outer = m.hot("  oo-o------|");
+      const osubs = "        ^---------!";
+      const inner = m.cold(" --i|");
+      const isubs = [
+        "                    --^!-------",
+        "                    ----^--!---"
+      ];
+      const expected = "     ------i---|";
 
       const destination = outer.pipe(
         switchMapUntil(sampleTime(m.time("--|")), () => inner)
@@ -90,11 +103,14 @@ describe("switchMapUntil", () => {
   it(
     "should play nice with cold sources",
     marbles(m => {
-      const outer = m.cold("oo--o------");
-      const osubs = "^----------";
-      const inner = m.cold("--i|");
-      const isubs = ["---^!------", "------^--!-"];
-      const expected = "--------i--";
+      const outer = m.cold(" oo--o------");
+      const osubs = "        ^----------";
+      const inner = m.cold(" --i|");
+      const isubs = [
+        "                    ---^!------",
+        "                    ------^--!-"
+      ];
+      const expected = "     --------i--";
 
       const destination = outer.pipe(
         switchMapUntil(debounceTime(m.time("--|")), () => inner)
@@ -108,11 +124,14 @@ describe("switchMapUntil", () => {
   it(
     "should play nice with replay sources",
     marbles(m => {
-      const outer = m.cold("oo--o------");
-      const osubs = "^----------";
-      const inner = m.cold("--i|");
-      const isubs = ["---^!------", "------^--!-"];
-      const expected = "--------i--";
+      const outer = m.cold(" oo--o------");
+      const osubs = "        ^----------";
+      const inner = m.cold(" --i|");
+      const isubs = [
+        "                    ---^!------",
+        "                    ------^--!-"
+      ];
+      const expected = "     --------i--";
 
       const replayed = outer.pipe(shareReplay(1));
       const destination = replayed.pipe(

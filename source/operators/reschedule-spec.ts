@@ -8,6 +8,7 @@ import { of, SchedulerAction, SchedulerLike, Subscription } from "rxjs";
 import { marbles } from "rxjs-marbles";
 import { reschedule } from "./reschedule";
 
+// prettier-ignore
 describe("reschedule", () => {
   it(
     "should reschedule to emit using the specified scheduler",

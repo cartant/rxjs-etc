@@ -9,6 +9,7 @@ import { defer, of, queueScheduler } from "rxjs";
 import { publish } from "rxjs/operators";
 import { refCountOn } from "./refCountOn";
 
+// prettier-ignore
 describe("refCountOn", () => {
   it("should support queue-scheduled actions", () => {
     let received = false;

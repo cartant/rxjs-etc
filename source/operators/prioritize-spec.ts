@@ -20,6 +20,7 @@ import { marbles } from "rxjs-marbles";
 import { materializeTo } from "./materializeTo";
 import { prioritize } from "./prioritize";
 
+// prettier-ignore
 describe("prioritize", () => {
   it("should control the subscription order", () => {
     const source = of(1);
@@ -97,17 +98,17 @@ describe("prioritize", () => {
   it(
     "should unsubscribe from the source",
     marbles(m => {
-      const source = m.cold("-1-2-3----4--");
-      const sourceSubs = "---^------!-----";
+      const source = m.cold("    -1-2-3----4--");
+      const sourceSubs = "       ---^------!-----";
 
       const result = source.pipe(
         prioritize<any>(merge),
         filter(() => false)
       );
 
-      const subscriber = m.hot("---a------------").pipe(materializeTo(result));
-      const unsub = "----------!-----";
-      const expected = "----------------";
+      const subscriber = m.hot(" ---a------------").pipe(materializeTo(result));
+      const unsub = "            ----------!-----";
+      const expected = "         ----------------";
 
       m.expect(subscriber, unsub).toBeObservable(expected);
       m.expect(source).toHaveSubscriptions(sourceSubs);

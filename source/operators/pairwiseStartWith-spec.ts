@@ -8,13 +8,14 @@ import { Observable } from "rxjs";
 import { marbles } from "rxjs-marbles";
 import { pairwiseStartWith } from "./pairwiseStartWith";
 
+// prettier-ignore
 describe("pairwiseStartWith", () => {
   it(
     "should start with the specified value",
     marbles(m => {
       type T = [string | undefined, string];
-      const source = m.cold("abc") as Observable<string>;
-      const expected = m.cold("xyz", {
+      const source = m.cold("   abc") as Observable<string>;
+      const expected = m.cold(" xyz", {
         x: [undefined, "a"] as T,
         y: ["a", "b"] as T,
         z: ["b", "c"] as T

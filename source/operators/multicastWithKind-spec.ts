@@ -10,15 +10,22 @@ import { marbles } from "rxjs-marbles";
 import { CloseKind } from "../kinds";
 import { multicastWithKind } from "./multicastWithKind";
 
+// prettier-ignore
 describe("multicastWithKind", () => {
   it(
     "should indicate closing via a complete notification",
     marbles(m => {
       let kind: CloseKind | undefined = undefined;
 
-      const source = m.cold("a|");
-      const subs = ["^---", "--^-"];
-      const expected = ["a|--", "--a|"];
+      const source = m.cold(" a|");
+      const subs = [
+        "                     ^---",
+        "                     --^-"
+      ];
+      const expected = [
+        "                     a|--",
+        "                     --a|"
+      ];
 
       const result = source.pipe(
         multicastWithKind(
@@ -44,9 +51,15 @@ describe("multicastWithKind", () => {
     marbles(m => {
       let kind: CloseKind | undefined = undefined;
 
-      const source = m.cold("a#");
-      const subs = ["^---", "--^-"];
-      const expected = ["a#--", "--a#"];
+      const source = m.cold(" a#");
+      const subs = [
+        "                     ^---",
+        "                     --^-"
+      ];
+      const expected = [
+        "                     a#--",
+        "                     --a#"
+      ];
 
       const result = source.pipe(
         multicastWithKind(
@@ -72,9 +85,15 @@ describe("multicastWithKind", () => {
     marbles(m => {
       let kind: CloseKind | undefined = undefined;
 
-      const source = m.cold("a-");
-      const subs = ["^!--", "--^!"];
-      const expected = ["a---", "--a-"];
+      const source = m.cold(" a-");
+      const subs = [
+        "                     ^!--",
+        "                     --^!"
+      ];
+      const expected = [
+        "                     a---",
+        "                     --a-"
+      ];
 
       const result = source.pipe(
         multicastWithKind(
@@ -98,9 +117,15 @@ describe("multicastWithKind", () => {
   it(
     "should be able to reuse the subject",
     marbles(m => {
-      const source = m.cold("a|");
-      const subs = ["^-----", "--^---"];
-      const expected = ["a|----", "--(a|)"];
+      const source = m.cold(" a|");
+      const subs = [
+        "                     ^-----",
+        "                     --^---"
+      ];
+      const expected = [
+        "                     a|----",
+        "                     --(a|)"
+      ];
 
       const result = source.pipe(
         multicastWithKind(

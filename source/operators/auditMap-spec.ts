@@ -9,13 +9,14 @@ import { marbles } from "rxjs-marbles";
 import { auditMap } from "./auditMap";
 import { of } from "rxjs";
 
+// prettier-ignore
 describe("auditMap", () => {
   it(
     "should emit an isolated notification",
     marbles(m => {
-      const source = m.hot("--a-------");
-      //                        --a
-      const expected = "----a-----";
+      const source = m.hot(" --a-------");
+      //                       --a
+      const expected = "     ----a-----";
 
       const duration = m.time("--|");
       const result = source.pipe(
@@ -28,10 +29,10 @@ describe("auditMap", () => {
   it(
     "should emit the last of two notifications",
     marbles(m => {
-      const source = m.hot("--ab------");
-      //                        --a
-      //                          --b
-      const expected = "------b---";
+      const source = m.hot(" --ab------");
+      //                       --a
+      //                         --b
+      const expected = "     ------b---";
 
       const duration = m.time("--|");
       const result = source.pipe(
@@ -44,10 +45,10 @@ describe("auditMap", () => {
   it(
     "should emit the last of three notifications",
     marbles(m => {
-      const source = m.hot("--abc-----");
-      //                        --a
-      //                          --c
-      const expected = "------c---";
+      const source = m.hot(" --abc-----");
+      //                       --a
+      //                         --c
+      const expected = "     ------c---";
 
       const duration = m.time("--|");
       const result = source.pipe(
@@ -60,10 +61,10 @@ describe("auditMap", () => {
   it(
     "should emit separated notifications",
     marbles(m => {
-      const source = m.hot("--a---b---");
-      //                        --a
-      //                            --b
-      const expected = "----a---b-";
+      const source = m.hot(" --a---b---");
+      //                       --a
+      //                           --b
+      const expected = "     ----a---b-";
 
       const duration = m.time("--|");
       const result = source.pipe(

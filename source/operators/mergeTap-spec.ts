@@ -7,13 +7,14 @@
 import { marbles } from "rxjs-marbles";
 import { mergeTap } from "./mergeTap";
 
+// prettier-ignore
 describe("mergeTap", () => {
   it(
     "should mirror the source",
     marbles(m => {
-      const source = m.cold("abc|");
-      const next = m.cold("(n|)");
-      const expected = "abc|";
+      const source = m.cold(" abc|");
+      const next = m.cold("   (n|)");
+      const expected = "      abc|";
 
       const result = source.pipe(mergeTap(() => next));
       m.expect(result).toBeObservable(expected);
@@ -23,9 +24,9 @@ describe("mergeTap", () => {
   it(
     "should merge tapped observables",
     marbles(m => {
-      const source = m.cold("a--b--c|");
-      const next = m.cold("n---|");
-      const expected = "----a--b--(c|)";
+      const source = m.cold(" a--b--c|");
+      const next = m.cold("   n---|");
+      const expected = "      ----a--b--(c|)";
 
       const result = source.pipe(mergeTap(() => next));
       m.expect(result).toBeObservable(expected);

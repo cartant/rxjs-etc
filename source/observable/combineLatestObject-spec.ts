@@ -7,12 +7,12 @@
 import { marbles } from "rxjs-marbles";
 import { combineLatestObject } from "./combineLatestObject";
 
+// prettier-ignore
 describe("combineLatestObject", () => {
   it(
     "should support empty objects",
     marbles(m => {
       const expected = m.cold("(i|)", { i: {} });
-
       const destination = combineLatestObject({});
       m.expect(destination).toBeObservable(expected);
     })
@@ -21,9 +21,8 @@ describe("combineLatestObject", () => {
   it(
     "should support objects with single property",
     marbles(m => {
-      const a = m.hot("--a");
-      const expected = m.cold("--i", { i: { a: "a" } });
-
+      const a = m.hot("         --a");
+      const expected = m.cold(" --i", { i: { a: "a" } });
       const destination = combineLatestObject({ a });
       m.expect(destination).toBeObservable(expected);
     })
@@ -32,10 +31,9 @@ describe("combineLatestObject", () => {
   it(
     "should support objects with multiple properties",
     marbles(m => {
-      const a = m.hot("--a");
-      const b = m.hot("---b");
-      const expected = m.cold("---i", { i: { a: "a", b: "b" } });
-
+      const a = m.hot("         --a");
+      const b = m.hot("         ---b");
+      const expected = m.cold(" ---i", { i: { a: "a", b: "b" } });
       const destination = combineLatestObject({ a, b });
       m.expect(destination).toBeObservable(expected);
     })
@@ -45,7 +43,6 @@ describe("combineLatestObject", () => {
     "should support objects with non-observable properties",
     marbles(m => {
       const expected = m.cold("(i|)", { i: { a: "a" } });
-
       const destination = combineLatestObject({ a: "a" });
       m.expect(destination).toBeObservable(expected);
     })
@@ -54,9 +51,8 @@ describe("combineLatestObject", () => {
   it(
     "should support objects with some non-observable properties",
     marbles(m => {
-      const a = m.hot("--a");
-      const expected = m.cold("--i", { i: { a: "a", b: "b" } });
-
+      const a = m.hot("         --a");
+      const expected = m.cold(" --i", { i: { a: "a", b: "b" } });
       const destination = combineLatestObject({ a, b: "b" });
       m.expect(destination).toBeObservable(expected);
     })

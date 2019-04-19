@@ -7,13 +7,14 @@
 import { startWithTimeout } from "./startWithTimeout";
 import { marbles } from "rxjs-marbles";
 
+// prettier-ignore
 describe("startWithTimeout", () => {
   it(
     "should do nothing if the source emits within the duration",
     marbles(m => {
-      const source = m.cold("--a--b--c--|");
-      const subs = "^----------!";
-      const expected = m.cold("--a--b--c--|");
+      const source = m.cold("   --a--b--c--|");
+      const subs = "            ^----------!";
+      const expected = m.cold(" --a--b--c--|");
 
       const destination = source.pipe(startWithTimeout("z", m.time("---|")));
       m.expect(destination).toBeObservable(expected);
@@ -24,9 +25,9 @@ describe("startWithTimeout", () => {
   it(
     "should emit the value if the source is empty",
     marbles(m => {
-      const source = m.cold("-----------|");
-      const subs = "^----------!";
-      const expected = m.cold("---z-------|");
+      const source = m.cold("   -----------|");
+      const subs = "            ^----------!";
+      const expected = m.cold(" ---z-------|");
 
       const destination = source.pipe(startWithTimeout("z", m.time("---|")));
       m.expect(destination).toBeObservable(expected);
@@ -37,9 +38,9 @@ describe("startWithTimeout", () => {
   it(
     "should emit the value if the source emits after the duration",
     marbles(m => {
-      const source = m.cold("-----a-b-c-|");
-      const subs = "^----------!";
-      const expected = m.cold("---z-a-b-c-|");
+      const source = m.cold("   -----a-b-c-|");
+      const subs = "            ^----------!";
+      const expected = m.cold(" ---z-a-b-c-|");
 
       const destination = source.pipe(startWithTimeout("z", m.time("---|")));
       m.expect(destination).toBeObservable(expected);
@@ -50,9 +51,9 @@ describe("startWithTimeout", () => {
   it(
     "should not emit if the source completes within the duration",
     marbles(m => {
-      const source = m.cold("--|");
-      const subs = "^-!";
-      const expected = m.cold("--|");
+      const source = m.cold("   --|");
+      const subs = "            ^-!";
+      const expected = m.cold(" --|");
 
       const destination = source.pipe(startWithTimeout("z", m.time("---|")));
       m.expect(destination).toBeObservable(expected);

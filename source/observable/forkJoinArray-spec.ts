@@ -7,6 +7,7 @@
 import { marbles } from "rxjs-marbles";
 import { forkJoinArray } from "./forkJoinArray";
 
+// prettier-ignore
 describe("forkJoinArray", () => {
   it(
     "should join a single observable",
@@ -14,9 +15,9 @@ describe("forkJoinArray", () => {
       const values = { a: 1 };
       const results = { x: [values.a] };
 
-      const source = m.cold("a----|", values);
-      const subs = "^----!";
-      const expected = m.cold("-----(x|)", results);
+      const source = m.cold("   a----|", values);
+      const subs = "            ^----!";
+      const expected = m.cold(" -----(x|)", results);
 
       const destination = forkJoinArray([source]);
       m.expect(destination).toBeObservable(expected);
@@ -30,11 +31,11 @@ describe("forkJoinArray", () => {
       const values = { a: 1, b: 2 };
       const results = { x: [values.a, values.b] };
 
-      const source1 = m.cold("a--|", values);
-      const subs1 = "^--!";
-      const source2 = m.cold("b----|", values);
-      const subs2 = "^----!";
-      const expected = m.cold("-----(x|)", results);
+      const source1 = m.cold("  a--|", values);
+      const subs1 = "           ^--!";
+      const source2 = m.cold("  b----|", values);
+      const subs2 = "           ^----!";
+      const expected = m.cold(" -----(x|)", results);
 
       const destination = forkJoinArray([source1, source2]);
       m.expect(destination).toBeObservable(expected);
@@ -47,7 +48,6 @@ describe("forkJoinArray", () => {
     "should emit an empty array when observables is empty",
     marbles(m => {
       const expected = m.cold("(x|)", { x: [] });
-
       const destination = forkJoinArray([]);
       m.expect(destination).toBeObservable(expected);
     })
@@ -59,9 +59,9 @@ describe("forkJoinArray", () => {
       const values = { a: 1 };
       const results = { x: [values.a + 1] };
 
-      const source = m.cold("a----|", values);
-      const subs = "^----!";
-      const expected = m.cold("-----(x|)", results);
+      const source = m.cold("   a----|", values);
+      const subs = "            ^----!";
+      const expected = m.cold(" -----(x|)", results);
 
       const destination = forkJoinArray([source], values =>
         values.map(value => value + 1)
@@ -77,11 +77,11 @@ describe("forkJoinArray", () => {
       const values = { a: 1, b: 2 };
       const results = { x: [values.a + 1, values.b + 1] };
 
-      const source1 = m.cold("a--|", values);
-      const subs1 = "^--!";
-      const source2 = m.cold("b----|", values);
-      const subs2 = "^----!";
-      const expected = m.cold("-----(x|)", results);
+      const source1 = m.cold("  a--|", values);
+      const subs1 = "           ^--!";
+      const source2 = m.cold("  b----|", values);
+      const subs2 = "           ^----!";
+      const expected = m.cold(" -----(x|)", results);
 
       const destination = forkJoinArray([source1, source2], values =>
         values.map(value => value + 1)
@@ -96,7 +96,6 @@ describe("forkJoinArray", () => {
     "should support project when observables is empty",
     marbles(m => {
       const expected = m.cold("(x|)", { x: ["empty"] });
-
       const destination = forkJoinArray([], values => ["empty"]);
       m.expect(destination).toBeObservable(expected);
     })

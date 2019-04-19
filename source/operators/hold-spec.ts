@@ -7,13 +7,14 @@
 import { marbles } from "rxjs-marbles";
 import { hold } from "./hold";
 
+// prettier-ignore
 describe("hold", () => {
   it(
     "should hold notifications until released",
     marbles(m => {
-      const source = m.cold("ab---cd-----|");
-      const notifier = m.cold("--z----z-----");
-      const expected = "--(ab)-(cd)-|";
+      const source = m.cold("   ab---cd-----|");
+      const notifier = m.cold(" --z----z-----");
+      const expected = "        --(ab)-(cd)-|";
 
       const destination = source.pipe(hold(notifier));
       m.expect(destination).toBeObservable(expected);

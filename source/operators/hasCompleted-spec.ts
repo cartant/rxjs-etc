@@ -7,13 +7,14 @@
 import { marbles } from "rxjs-marbles";
 import { hasCompleted } from "./hasCompleted";
 
+// prettier-ignore
 describe("hasCompleted", () => {
   it(
     "should emit nothing for a source that does not complete",
     marbles(m => {
-      const source = m.cold("ab-cd-ef--");
-      const sourceSubs = "^---------";
-      const expected = "----------";
+      const source = m.cold(" ab-cd-ef--");
+      const sourceSubs = "    ^---------";
+      const expected = "      ----------";
 
       const destination = source.pipe(hasCompleted());
       m.expect(destination).toBeObservable(expected);
@@ -24,9 +25,9 @@ describe("hasCompleted", () => {
   it(
     "should emit 'true' when a source completes",
     marbles(m => {
-      const source = m.cold("ab-cd-ef-|");
-      const sourceSubs = "^--------!";
-      const expected = m.cold("---------(t|)", { t: true });
+      const source = m.cold("   ab-cd-ef-|");
+      const sourceSubs = "      ^--------!";
+      const expected = m.cold(" ---------(t|)", { t: true });
 
       const destination = source.pipe(hasCompleted());
       m.expect(destination).toBeObservable(expected);

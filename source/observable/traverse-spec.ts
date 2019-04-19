@@ -20,6 +20,7 @@ import { delay, ignoreElements, map } from "rxjs/operators";
 import { marbles } from "rxjs-marbles";
 import { traverse } from "./traverse";
 
+// prettier-ignore
 describe("traverse", () => {
   describe("lists", () => {
     const createFactory = (
@@ -45,9 +46,9 @@ describe("traverse", () => {
     it(
       "should complete if there is no data",
       marbles(m => {
-        const notifier = m.hot("--n----|");
-        const notifierSubs = "^---!";
-        const expected = m.cold("----|");
+        const notifier = m.hot("  --n----|");
+        const notifierSubs = "    ^---!";
+        const expected = m.cold(" ----|");
 
         const factory = createFactory(-1, 1, m.time("--|"), m.scheduler);
         const traversed = traverse({ factory, notifier });
@@ -59,8 +60,8 @@ describe("traverse", () => {
     it(
       "should traverse the first chunk of data",
       marbles(m => {
-        const notifier = m.hot("n-");
-        const expected = m.cold("0-");
+        const notifier = m.hot("  n-");
+        const expected = m.cold(" 0-");
 
         const factory = createFactory();
         const traversed = traverse({ factory, notifier });
@@ -71,8 +72,8 @@ describe("traverse", () => {
     it(
       "should traverse further chunks in response to the notifier",
       marbles(m => {
-        const notifier = m.hot("n-n----n--n--");
-        const expected = m.cold("0-1----2--3--");
+        const notifier = m.hot("  n-n----n--n--");
+        const expected = m.cold(" 0-1----2--3--");
 
         const factory = createFactory();
         const traversed = traverse({ factory, notifier });
@@ -83,8 +84,8 @@ describe("traverse", () => {
     it(
       "should flatten values within chunks",
       marbles(m => {
-        const notifier = m.hot("n----n-------n-----n-----");
-        const expected = m.cold("(01)-(12)----(23)--(34)--");
+        const notifier = m.hot("  n----n-------n-----n-----");
+        const expected = m.cold(" (01)-(12)----(23)--(34)--");
 
         const factory = createFactory(Infinity, 2);
         const traversed = traverse({ factory, notifier });
@@ -95,8 +96,8 @@ describe("traverse", () => {
     it(
       "should queue notifications",
       marbles(m => {
-        const notifier = m.hot("nnn------------");
-        const expected = m.cold("----0---1---2--");
+        const notifier = m.hot("  nnn------------");
+        const expected = m.cold(" ----0---1---2--");
 
         const factory = createFactory(
           Infinity,
@@ -113,7 +114,6 @@ describe("traverse", () => {
       "should traverse without a notifier",
       marbles(m => {
         const expected = m.cold("----0---1---2---|");
-
         const factory = createFactory(2, 1, m.time("----|"), m.scheduler);
         const traversed = traverse({ factory });
         m.expect(traversed).toBeObservable(expected);
@@ -123,13 +123,13 @@ describe("traverse", () => {
     it(
       "should traverse with an operator",
       marbles(m => {
-        const other = m.cold("|");
+        const other = m.cold("    |");
         const subs = [
-          "----(^!)---------",
-          "--------(^!)-----",
-          "------------(^!)-"
+          "                       ----(^!)---------",
+          "                       --------(^!)-----",
+          "                       ------------(^!)-"
         ];
-        const expected = m.cold("----0---1---2---|");
+        const expected = m.cold(" ----0---1---2---|");
 
         const factory = createFactory(2, 1, m.time("----|"), m.scheduler);
         const traversed = traverse({
@@ -144,9 +144,13 @@ describe("traverse", () => {
     it(
       "should traverse with an asynchonous operator",
       marbles(m => {
-        const other = m.cold("----|");
-        const subs = ["^---!-------", "----^---!---", "--------^---!"];
-        const expected = m.cold("0---1---2---|");
+        const other = m.cold("    ----|");
+        const subs = [
+          "                       ^---!-------",
+          "                       ----^---!---",
+          "                       --------^---!"
+        ];
+        const expected = m.cold(" 0---1---2---|");
 
         const factory = createFactory(2);
         const traversed = traverse({
@@ -168,16 +172,16 @@ describe("traverse", () => {
           z: { markers: [], values: ["e", "f"] }
         };
 
-        const w = m.cold("-----(w|)", values);
-        const x = m.cold("-----(x|)", values);
-        const y = m.cold("-----(y|)", values);
-        const z = m.cold("-----(z|)", values);
+        const w = m.cold("        -----(w|)", values);
+        const x = m.cold("        -----(x|)", values);
+        const y = m.cold("        -----(y|)", values);
+        const z = m.cold("        -----(z|)", values);
 
-        const expected = m.cold("----------(ab)-(cd)-(ef|)");
-        const wSubs = "^----!-------------------";
-        const xSubs = "-----^----!--------------";
-        const ySubs = "----------^----!---------";
-        const zSubs = "---------------^----!----";
+        const expected = m.cold(" ----------(ab)-(cd)-(ef|)");
+        const wSubs = "           ^----!-------------------";
+        const xSubs = "           -----^----!--------------";
+        const ySubs = "           ----------^----!---------";
+        const zSubs = "           ---------------^----!----";
 
         const factory = (marker: string | undefined, index: number) => {
           switch (marker) {
@@ -237,8 +241,8 @@ describe("traverse", () => {
     it(
       "should traverse graphs with a notifier",
       marbles(m => {
-        const notifier = m.hot("n-----n-----n---");
-        const expected = m.cold("(abc)-(de)--(f|)");
+        const notifier = m.hot("  n-----n-----n---");
+        const expected = m.cold(" (abc)-(de)--(f|)");
 
         const factory = createFactory();
         const traversed = traverse({ factory, notifier });
@@ -249,8 +253,8 @@ describe("traverse", () => {
     it(
       "should queue notifications for graphs",
       marbles(m => {
-        const notifier = m.hot("nnn-------------------");
-        const expected = m.cold("------(abc)-(de)--(f|)");
+        const notifier = m.hot("  nnn-------------------");
+        const expected = m.cold(" ------(abc)-(de)--(f|)");
 
         const factory = createFactory(m.time("------|"), m.scheduler);
         const traversed = traverse({ factory, notifier });
@@ -262,7 +266,6 @@ describe("traverse", () => {
       "should traverse graphs without a notifier",
       marbles(m => {
         const expected = m.cold("------(abc)-(de)--(f|)");
-
         const factory = createFactory(m.time("------|"), m.scheduler);
         const traversed = traverse({ factory });
         m.expect(traversed).toBeObservable(expected);
@@ -273,7 +276,6 @@ describe("traverse", () => {
       "should support concurrency",
       marbles(m => {
         const expected = m.cold("------(abc)-(def|)");
-
         const factory = createFactory(m.time("------|"), m.scheduler);
         const traversed = traverse({ factory, concurrency: Infinity });
         m.expect(traversed).toBeObservable(expected);

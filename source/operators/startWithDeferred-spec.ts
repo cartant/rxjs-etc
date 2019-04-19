@@ -7,13 +7,14 @@
 import { startWithDeferred } from "./startWithDeferred";
 import { marbles } from "rxjs-marbles";
 
+// prettier-ignore
 describe("startWithDeferred", () => {
   it(
     "should start with the value returned by the factory",
     marbles(m => {
-      const source = m.cold("--a--b--c--|");
-      const subs = "^----------!";
-      const expected = m.cold("x-a--b--c--|");
+      const source = m.cold("   --a--b--c--|");
+      const subs = "            ^----------!";
+      const expected = m.cold(" x-a--b--c--|");
 
       const destination = source.pipe(startWithDeferred(() => "x"));
       m.expect(destination).toBeObservable(expected);

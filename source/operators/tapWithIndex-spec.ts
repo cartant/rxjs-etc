@@ -9,13 +9,14 @@ import { from } from "rxjs";
 import { marbles } from "rxjs-marbles";
 import { tapWithIndex } from "./tapWithIndex";
 
+// prettier-ignore
 describe("tapWithIndex", () => {
   it(
     "should mirror multiple values and complete",
     marbles(m => {
-      const source = m.cold("--1--2--3--|");
-      const subs = "^----------!";
-      const expected = m.cold("--1--2--3--|");
+      const source = m.cold("   --1--2--3--|");
+      const subs = "            ^----------!";
+      const expected = m.cold(" --1--2--3--|");
 
       const destination = source.pipe(tapWithIndex(() => {}));
       m.expect(destination).toBeObservable(expected);
@@ -26,9 +27,9 @@ describe("tapWithIndex", () => {
   it(
     "should mirror multiple values and terminate with error",
     marbles(m => {
-      const source = m.cold("--1--2--3--#");
-      const subs = "^----------!";
-      const expected = m.cold("--1--2--3--#");
+      const source = m.cold("   --1--2--3--#");
+      const subs = "            ^----------!";
+      const expected = m.cold(" --1--2--3--#");
 
       const destination = source.pipe(tapWithIndex(() => {}));
       m.expect(destination).toBeObservable(expected);

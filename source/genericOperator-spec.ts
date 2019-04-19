@@ -11,6 +11,7 @@ import { expecter } from "ts-snippet";
 import { timeout } from "./timeout-spec";
 import { genericOperator } from "./genericOperator";
 
+// prettier-ignore
 describe("genericOperator", function(): void {
   /*tslint:disable-next-line:no-invalid-this*/
   this.timeout(timeout);
@@ -19,8 +20,8 @@ describe("genericOperator", function(): void {
     it(
       "should pipe a mono-type operator",
       marbles(m => {
-        const source = m.cold("-a-|");
-        const expected = "--a-|";
+        const source = m.cold(" -a-|");
+        const expected = "       --a-|";
 
         const duration = m.time("-|");
         const operator = genericOperator(delay(duration));
@@ -32,8 +33,8 @@ describe("genericOperator", function(): void {
     it(
       "should pipe multiple mono-type operators",
       marbles(m => {
-        const source = m.cold("-a-a-|");
-        const expected = "--a---|";
+        const source = m.cold(" -a-a-|");
+        const expected = "      --a---|";
 
         const duration = m.time("-|");
         const operator = genericOperator(
@@ -52,18 +53,18 @@ describe("genericOperator", function(): void {
     describe("types", () => {
       const expectSnippet = expecter(
         code => `
-                import { delay, map } from "rxjs/operators";
-                import { genericOperator } from "./source/genericOperator";
-                ${code}
-            `,
+          import { delay, map } from "rxjs/operators";
+          import { genericOperator } from "./source/genericOperator";
+          ${code}
+        `,
         { strict: true }
       );
 
       it("should infer a generic operator from OperatorFunction<{}, {}>", () => {
         const snippet = expectSnippet(`
-                    const operator = delay(10);
-                    const result = genericOperator(operator);
-                `);
+          const operator = delay(10);
+          const result = genericOperator(operator);
+        `);
         snippet.toInfer("operator", "MonoTypeOperatorFunction<{}>");
         snippet.toInfer(
           "result",
@@ -73,27 +74,27 @@ describe("genericOperator", function(): void {
 
       it("should infer never from OperatorFunction<number, {}>", () => {
         const snippet = expectSnippet(`
-                    const operator = map<number, {}>(() => 42);
-                    const result = genericOperator(operator);
-                `);
+          const operator = map<number, {}>(() => 42);
+          const result = genericOperator(operator);
+        `);
         snippet.toInfer("operator", "OperatorFunction<number, {}>");
         snippet.toInfer("result", "never");
       });
 
       it("should infer never from OperatorFunction<{}, number>", () => {
         const snippet = expectSnippet(`
-                    const operator = map<{}, number>(() => 42);
-                    const result = genericOperator(operator);
-                `);
+          const operator = map<{}, number>(() => 42);
+          const result = genericOperator(operator);
+        `);
         snippet.toInfer("operator", "OperatorFunction<{}, number>");
         snippet.toInfer("result", "never");
       });
 
       it("should infer never from OperatorFunction<number, number>", () => {
         const snippet = expectSnippet(`
-                    const operator = map<number, number>(() => 42);
-                    const result = genericOperator(operator);
-                `);
+          const operator = map<number, number>(() => 42);
+          const result = genericOperator(operator);
+        `);
         snippet.toInfer("operator", "OperatorFunction<number, number>");
         snippet.toInfer("result", "never");
       });

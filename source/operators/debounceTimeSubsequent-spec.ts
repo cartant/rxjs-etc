@@ -7,13 +7,14 @@
 import { marbles } from "rxjs-marbles";
 import { debounceTimeSubsequent } from "./debounceTimeSubsequent";
 
+// prettier-ignore
 describe("debounceTimeSubsequent", () => {
   it(
     "should debounce only subsequent notifications",
     marbles(m => {
-      const source = m.cold("ab-cd---ef----|");
-      const sourceSubs = "^-------------!";
-      const expected = m.cold("a------d----f-|");
+      const source = m.cold("   ab-cd---ef----|");
+      const sourceSubs = "      ^-------------!";
+      const expected = m.cold(" a------d----f-|");
 
       const duration = m.time("---|");
       const destination = source.pipe(
@@ -27,9 +28,9 @@ describe("debounceTimeSubsequent", () => {
   it(
     "should support count",
     marbles(m => {
-      const source = m.cold("ab-cd---ef----|");
-      const sourceSubs = "^-------------!";
-      const expected = m.cold("ab-----d----f-|");
+      const source = m.cold("   ab-cd---ef----|");
+      const sourceSubs = "      ^-------------!";
+      const expected = m.cold(" ab-----d----f-|");
 
       const duration = m.time("---|");
       const destination = source.pipe(

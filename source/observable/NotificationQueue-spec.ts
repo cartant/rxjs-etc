@@ -9,13 +9,14 @@ import { concatMap } from "rxjs/operators";
 import { marbles } from "rxjs-marbles";
 import { NotificationQueue } from "./NotificationQueue";
 
+// prettier-ignore
 describe("NotificationQueue", () => {
   it(
     "should emit nothing without a notification",
     marbles(m => {
-      const notifier = m.hot("--");
-      const queuings = m.cold("q-");
-      const expected = m.cold("--");
+      const notifier = m.hot("  --");
+      const queuings = m.cold(" q-");
+      const expected = m.cold(" --");
 
       const queue = new NotificationQueue(notifier);
       queue.connect();
@@ -39,9 +40,9 @@ describe("NotificationQueue", () => {
   it(
     "should emit the subscription index upon notification",
     marbles(m => {
-      const notifier = m.hot("-n");
-      const queuings = m.cold("q-");
-      const expected = m.cold("-0");
+      const notifier = m.hot("  -n");
+      const queuings = m.cold(" q-");
+      const expected = m.cold(" -0");
 
       const queue = new NotificationQueue(notifier);
       queue.connect();
@@ -65,9 +66,9 @@ describe("NotificationQueue", () => {
   it(
     "should emit the subscription index for each notification",
     marbles(m => {
-      const notifier = m.hot("-----n-n");
-      const queuings = m.cold("(qq)----");
-      const expected = m.cold("-----0-1");
+      const notifier = m.hot("  -----n-n");
+      const queuings = m.cold(" (qq)----");
+      const expected = m.cold(" -----0-1");
 
       const queue = new NotificationQueue(notifier);
       queue.connect();
@@ -91,9 +92,9 @@ describe("NotificationQueue", () => {
   it(
     "should queue notifications",
     marbles(m => {
-      const notifier = m.hot("(nn)----");
-      const queuings = m.cold("-----q-q");
-      const expected = m.cold("-----0-1");
+      const notifier = m.hot("  (nn)----");
+      const queuings = m.cold(" -----q-q");
+      const expected = m.cold(" -----0-1");
 
       const queue = new NotificationQueue(notifier);
       queue.connect();

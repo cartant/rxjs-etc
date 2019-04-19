@@ -11,6 +11,7 @@ import { expecter } from "ts-snippet";
 import { timeout } from "./timeout-spec";
 import { genericPipe, pipe } from "./genericPipe";
 
+// prettier-ignore
 describe("genericPipe", function(): void {
   /*tslint:disable-next-line:no-invalid-this*/
   this.timeout(timeout);
@@ -23,8 +24,8 @@ describe("genericPipe", function(): void {
     it(
       "should pipe a mono-type operator",
       marbles(m => {
-        const source = m.cold("-a-|");
-        const expected = "--a-|";
+        const source = m.cold(" -a-|");
+        const expected = "      --a-|";
 
         const duration = m.time("-|");
         const operator = genericPipe(delay(duration));
@@ -36,8 +37,8 @@ describe("genericPipe", function(): void {
     it(
       "should pipe multiple mono-type operators",
       marbles(m => {
-        const source = m.cold("-a-a-|");
-        const expected = "--a---|";
+        const source = m.cold(" -a-a-|");
+        const expected = "      --a---|";
 
         const duration = m.time("-|");
         const operator = genericPipe(delay(duration), distinctUntilChanged());
@@ -51,21 +52,21 @@ describe("genericPipe", function(): void {
     describe("types", () => {
       const expectSnippet = expecter(
         code => `
-                import { of } from "rxjs";
-                import { delay, map, mapTo, switchAll } from "rxjs/operators";
-                import { genericPipe } from "./source/genericPipe";
-                ${code}
-            `,
+          import { of } from "rxjs";
+          import { delay, map, mapTo, switchAll } from "rxjs/operators";
+          import { genericPipe } from "./source/genericPipe";
+          ${code}
+        `,
         { strict: true }
       );
 
       it("should infer a non-generic operator for a mono-type operator", () => {
         const snippet = expectSnippet(`
-                    const operator = delay(10);
-                    const piped = genericPipe(operator);
-                    const source = of(1);
-                    const delayed = source.pipe(piped);
-                `);
+          const operator = delay(10);
+          const piped = genericPipe(operator);
+          const source = of(1);
+          const delayed = source.pipe(piped);
+        `);
         snippet.toInfer("operator", "MonoTypeOperatorFunction<{}>");
         snippet.toInfer(
           "piped",
@@ -77,11 +78,11 @@ describe("genericPipe", function(): void {
 
       it("should infer a non-generic operator for a non-mono-type operator", () => {
         const snippet = expectSnippet(`
-                    const operator = map((value: number) => value.toString());
-                    const piped = genericPipe(operator);
-                    const source = of(1);
-                    const delayed = source.pipe(piped);
-                `);
+          const operator = map((value: number) => value.toString());
+          const piped = genericPipe(operator);
+          const source = of(1);
+          const delayed = source.pipe(piped);
+        `);
         snippet.toInfer("operator", "OperatorFunction<number, string>");
         snippet.toInfer(
           "piped",
@@ -93,8 +94,8 @@ describe("genericPipe", function(): void {
 
       it("should match Observable<any> only for excess parameters", () => {
         const snippet = expectSnippet(`
-                    const piped = genericPipe(mapTo(1), switchAll());
-                `);
+          const piped = genericPipe(mapTo(1), switchAll());
+        `);
         snippet.toFail(/is not assignable to type/);
       });
     });

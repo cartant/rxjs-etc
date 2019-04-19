@@ -9,13 +9,14 @@ import { debounceTime, mapTo } from "rxjs/operators";
 import { marbles } from "rxjs-marbles";
 import { subsequent } from "./subsequent";
 
+// prettier-ignore
 describe("subsequent", () => {
   it(
     "should debounce only subsequent notifications",
     marbles(m => {
-      const source = m.cold("ab-cd---ef----|");
-      const sourceSubs = "^-------------!";
-      const expected = m.cold("a------d----f-|");
+      const source = m.cold("   ab-cd---ef----|");
+      const sourceSubs = "      ^-------------!";
+      const expected = m.cold(" a------d----f-|");
 
       const duration = m.time("---|");
       const destination = source.pipe(
@@ -29,9 +30,9 @@ describe("subsequent", () => {
   it(
     "should support count",
     marbles(m => {
-      const source = m.cold("ab-cd---ef----|");
-      const sourceSubs = "^-------------!";
-      const expected = m.cold("ab-----d----f-|");
+      const source = m.cold("   ab-cd---ef----|");
+      const sourceSubs = "      ^-------------!";
+      const expected = m.cold(" ab-----d----f-|");
 
       const duration = m.time("---|");
       const destination = source.pipe(
@@ -45,9 +46,9 @@ describe("subsequent", () => {
   it(
     "should support a piped operator",
     marbles(m => {
-      const source = m.cold("ab-cd---ef----|");
-      const sourceSubs = "^-------------!";
-      const expected = m.cold("a------x----x-|");
+      const source = m.cold("   ab-cd---ef----|");
+      const sourceSubs = "      ^-------------!";
+      const expected = m.cold(" a------x----x-|");
 
       const duration = m.time("---|");
       const destination = source.pipe(

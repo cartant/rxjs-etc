@@ -8,15 +8,16 @@ import { timer } from "rxjs";
 import { marbles } from "rxjs-marbles";
 import { deferFinalize } from "./deferFinalize";
 
+// prettier-ignore
 describe("deferFinalize", () => {
   it(
     "should support asynchonous finalization upon complete",
     marbles(m => {
       const duration = m.time("--|");
 
-      const source = m.cold("---|");
-      const sourceSub = "^----!";
-      const expected = "-----|";
+      const source = m.cold(" ---|");
+      const sourceSub = "     ^----!";
+      const expected = "      -----|";
 
       const result = source.pipe(deferFinalize(_ => timer(duration)));
       m.expect(result).toBeObservable(expected);
@@ -29,9 +30,9 @@ describe("deferFinalize", () => {
     marbles(m => {
       const duration = m.time("--|");
 
-      const source = m.cold("---#");
-      const sourceSub = "^----!";
-      const expected = "-----#";
+      const source = m.cold(" ---#");
+      const sourceSub = "     ^----!";
+      const expected = "      -----#";
 
       const result = source.pipe(deferFinalize(_ => timer(duration)));
       m.expect(result).toBeObservable(expected);
@@ -44,10 +45,10 @@ describe("deferFinalize", () => {
     marbles(m => {
       const duration = m.time("--|");
 
-      const source = m.cold("------");
-      const sourceSub = "^----!";
-      const expected = "----";
-      const sub = "^--!";
+      const source = m.cold(" ------");
+      const sourceSub = "     ^----!";
+      const expected = "      ----";
+      const sub = "           ^--!";
 
       const result = source.pipe(deferFinalize(_ => timer(duration)));
       m.expect(result, sub).toBeObservable(expected);

@@ -7,15 +7,16 @@
 import { marbles } from "rxjs-marbles";
 import { debounceAfter } from "./debounceAfter";
 
+// prettier-ignore
 describe("debounceAfter", () => {
   it(
     "should debounce after the notifier emits",
     marbles(m => {
-      const source = m.cold("ab-cd---ef------gh--|");
-      const sourceSubs = "^-------------------!";
-      const notifier = m.cold("--n----n--n---------|");
-      const notifierSubs = "^-------------------!";
-      const expected = m.cold("ab----d-------f-gh--|");
+      const source = m.cold("   ab-cd---ef------gh--|");
+      const sourceSubs = "      ^-------------------!";
+      const notifier = m.cold(" --n----n--n---------|");
+      const notifierSubs = "    ^-------------------!";
+      const expected = m.cold(" ab----d-------f-gh--|");
 
       const duration = m.time("----|");
       const destination = source.pipe(

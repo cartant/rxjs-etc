@@ -8,13 +8,14 @@ import { filter, map } from "rxjs/operators";
 import { marbles } from "rxjs-marbles";
 import { spread } from "./spread";
 
+// prettier-ignore
 describe("spread", () => {
   it(
     "should pipe the specified operators",
     marbles(m => {
-      const source = m.cold("-a-b-c-|");
-      const subs = "^------!";
-      const expected = m.cold("-A---C-|)");
+      const source = m.cold("   -a-b-c-|");
+      const subs = "            ^------!";
+      const expected = m.cold(" -A---C-|)");
 
       const operators = [
         filter(value => value !== "b"),

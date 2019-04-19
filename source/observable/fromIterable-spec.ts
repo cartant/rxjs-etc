@@ -17,7 +17,6 @@ describe("fromIterable", () => {
       map.set("c", 3);
 
       const expected = m.cold("(abc|)");
-
       const destination = fromIterable(map.keys());
       m.expect(destination).toBeObservable(expected);
     })

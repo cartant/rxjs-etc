@@ -10,6 +10,7 @@ import { map, share } from "rxjs/operators";
 import { marbles } from "rxjs-marbles";
 import { finalize, inexorably } from "./inexorably";
 
+// prettier-ignore
 describe("inexorably", () => {
   it("should export an alias", () => {
     expect(finalize).to.equal(inexorably);
@@ -159,9 +160,9 @@ describe("inexorably", () => {
     "should handle basic hot observable",
     marbles(m => {
       let executed = false;
-      let s = m.hot("--a--b--c--|");
-      let subs = "^----------!";
-      let expected = "--a--b--c--|";
+      let s = m.hot("  --a--b--c--|");
+      let subs = "     ^----------!";
+      let expected = " --a--b--c--|";
       let result = s.pipe(
         inexorably((notification: Notification<number> | undefined) => {
           expect(notification).to.not.be.undefined;
@@ -180,9 +181,9 @@ describe("inexorably", () => {
     "should handle basic cold observable",
     marbles(m => {
       let executed = false;
-      let s = m.cold("--a--b--c--|");
-      let subs = "^----------!";
-      let expected = "--a--b--c--|";
+      let s = m.cold(" --a--b--c--|");
+      let subs = "     ^----------!";
+      let expected = " --a--b--c--|";
       let result = s.pipe(
         inexorably((notification: Notification<number> | undefined) => {
           expect(notification).to.not.be.undefined;
@@ -201,9 +202,9 @@ describe("inexorably", () => {
     "should handle basic error",
     marbles(m => {
       let executed = false;
-      let s = m.hot("--a--b--c--#");
-      let subs = "^----------!";
-      let expected = "--a--b--c--#";
+      let s = m.hot("  --a--b--c--#");
+      let subs = "     ^----------!";
+      let expected = " --a--b--c--#";
       let result = s.pipe(
         inexorably((notification: Notification<number> | undefined) => {
           expect(notification).to.not.be.undefined;
@@ -222,10 +223,10 @@ describe("inexorably", () => {
     "should handle unsubscription",
     marbles(m => {
       let executed = false;
-      let s = m.hot("--a--b--c--|");
-      let subs = "^-----!     ";
-      let expected = "--a--b-";
-      let unsub = "------!";
+      let s = m.hot("  --a--b--c--|");
+      let subs = "     ^-----!     ";
+      let expected = " --a--b-";
+      let unsub = "    ------!";
       let result = s.pipe(
         inexorably((notification: Notification<number> | undefined) => {
           expect(notification).to.be.undefined;

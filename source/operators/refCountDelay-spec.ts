@@ -11,12 +11,13 @@ import { marbles } from "rxjs-marbles";
 import { materializeTo } from "./materializeTo";
 import { refCountDelay } from "./refCountDelay";
 
+// prettier-ignore
 describe("refCountDelay", () => {
   it(
     "should multicast to multiple observers and complete",
     marbles(m => {
-      const source = m.cold("-1-2-3----4-|");
-      const sourceSubs = "^-----------!";
+      const source = m.cold("     -1-2-3----4-|");
+      const sourceSubs = "        ^-----------!";
 
       const duration = m.time("--|");
       const refCounted = source.pipe(
@@ -24,18 +25,12 @@ describe("refCountDelay", () => {
         refCountDelay(duration, m.scheduler)
       );
 
-      const subscriber1 = m
-        .hot("a            ")
-        .pipe(materializeTo(refCounted));
-      const expected1 = "-1-2-3----4-|";
-      const subscriber2 = m
-        .hot("----b        ")
-        .pipe(materializeTo(refCounted));
-      const expected2 = "-----3----4-|";
-      const subscriber3 = m
-        .hot("--------c    ")
-        .pipe(materializeTo(refCounted));
-      const expected3 = "----------4-|";
+      const subscriber1 = m.hot(" a            ").pipe(materializeTo(refCounted));
+      const expected1 = "         -1-2-3----4-|";
+      const subscriber2 = m.hot(" ----b        ").pipe(materializeTo(refCounted));
+      const expected2 = "         -----3----4-|";
+      const subscriber3 = m.hot(" --------c    ").pipe(materializeTo(refCounted));
+      const expected3 = "         ----------4-|";
 
       m.expect(subscriber1).toBeObservable(expected1);
       m.expect(subscriber2).toBeObservable(expected2);
@@ -47,8 +42,8 @@ describe("refCountDelay", () => {
   it(
     "should multicast an error to multiple observers",
     marbles(m => {
-      const source = m.cold("-1-2-3----4-#");
-      const sourceSubs = "^-----------!";
+      const source = m.cold("     -1-2-3----4-#");
+      const sourceSubs = "        ^-----------!";
 
       const duration = m.time("--|");
       const refCounted = source.pipe(
@@ -56,18 +51,12 @@ describe("refCountDelay", () => {
         refCountDelay(duration, m.scheduler)
       );
 
-      const subscriber1 = m
-        .hot("a            ")
-        .pipe(materializeTo(refCounted));
-      const expected1 = "-1-2-3----4-#";
-      const subscriber2 = m
-        .hot("----b        ")
-        .pipe(materializeTo(refCounted));
-      const expected2 = "-----3----4-#";
-      const subscriber3 = m
-        .hot("--------c    ")
-        .pipe(materializeTo(refCounted));
-      const expected3 = "----------4-#";
+      const subscriber1 = m.hot(" a            ").pipe(materializeTo(refCounted));
+      const expected1 = "         -1-2-3----4-#";
+      const subscriber2 = m.hot(" ----b        ").pipe(materializeTo(refCounted));
+      const expected2 = "         -----3----4-#";
+      const subscriber3 = m.hot(" --------c    ").pipe(materializeTo(refCounted));
+      const expected3 = "         ----------4-#";
 
       m.expect(subscriber1).toBeObservable(expected1);
       m.expect(subscriber2).toBeObservable(expected2);
@@ -79,8 +68,8 @@ describe("refCountDelay", () => {
   it(
     "should disconnect after the specified duration once the last subscriber unsubscribes",
     marbles(m => {
-      const source = m.cold("-1-2-3----4--");
-      const sourceSubs = "---^----------! ";
+      const source = m.cold("     -1-2-3----4-----");
+      const sourceSubs = "        ---^----------! ";
 
       const duration = m.time("--|");
       const refCounted = source.pipe(
@@ -88,16 +77,12 @@ describe("refCountDelay", () => {
         refCountDelay(duration, m.scheduler)
       );
 
-      const subscriber1 = m
-        .hot("---a            ")
-        .pipe(materializeTo(refCounted));
-      const unsub1 = "----------!     ";
-      const expected1 = "----1-2-3--     ";
-      const subscriber2 = m
-        .hot("-------b        ")
-        .pipe(materializeTo(refCounted));
-      const unsub2 = "------------!   ";
-      const expected2 = "--------3----   ";
+      const subscriber1 = m.hot(" ---a            ").pipe(materializeTo(refCounted));
+      const unsub1 = "            ----------!     ";
+      const expected1 = "         ----1-2-3--     ";
+      const subscriber2 = m.hot(" -------b        ").pipe(materializeTo(refCounted));
+      const unsub2 = "            ------------!   ";
+      const expected2 = "         --------3----   ";
 
       m.expect(subscriber1, unsub1).toBeObservable(expected1);
       m.expect(subscriber2, unsub2).toBeObservable(expected2);
@@ -108,8 +93,8 @@ describe("refCountDelay", () => {
   it(
     "should not disconnect if a subscription occurs within the duration",
     marbles(m => {
-      const source = m.cold("-1-2-3----4-5----");
-      const sourceSubs = "---^--------------! ";
+      const source = m.cold("     -1-2-3----4-5-------");
+      const sourceSubs = "        ---^--------------! ";
 
       const duration = m.time("--|");
       const refCounted = source.pipe(
@@ -117,21 +102,15 @@ describe("refCountDelay", () => {
         refCountDelay(duration, m.scheduler)
       );
 
-      const subscriber1 = m
-        .hot("---a                ")
-        .pipe(materializeTo(refCounted));
-      const unsub1 = "----------!         ";
-      const expected1 = "----1-2-3--         ";
-      const subscriber2 = m
-        .hot("-------b            ")
-        .pipe(materializeTo(refCounted));
-      const unsub2 = "------------!       ";
-      const expected2 = "--------3----       ";
-      const subscriber3 = m
-        .hot("--------------c     ")
-        .pipe(materializeTo(refCounted));
-      const unsub3 = "----------------!   ";
-      const expected3 = "---------------5-   ";
+      const subscriber1 = m.hot(" ---a                ").pipe(materializeTo(refCounted));
+      const unsub1 = "            ----------!         ";
+      const expected1 = "         ----1-2-3--         ";
+      const subscriber2 = m.hot(" -------b            ").pipe(materializeTo(refCounted));
+      const unsub2 = "            ------------!       ";
+      const expected2 = "         --------3----       ";
+      const subscriber3 = m.hot(" --------------c     ").pipe(materializeTo(refCounted));
+      const unsub3 = "            ----------------!   ";
+      const expected3 = "         ---------------5-   ";
 
       m.expect(subscriber1, unsub1).toBeObservable(expected1);
       m.expect(subscriber2, unsub2).toBeObservable(expected2);
@@ -143,8 +122,11 @@ describe("refCountDelay", () => {
   it(
     "should reconnect if a subscription occurs after the duration",
     marbles(m => {
-      const source = m.cold("-1-2-3----4-5-------");
-      const sourceSubs = ["---^----------!        ", "-----------------^---! "];
+      const source = m.cold("     -1-2-3----4-5----------");
+      const sourceSubs = [
+        "                         ---^----------!        ",
+        "                         -----------------^---! "
+      ];
 
       const duration = m.time("--|");
       const refCounted = source.pipe(
@@ -152,21 +134,15 @@ describe("refCountDelay", () => {
         refCountDelay(duration, m.scheduler)
       );
 
-      const subscriber1 = m
-        .hot("---a                   ")
-        .pipe(materializeTo(refCounted));
-      const unsub1 = "----------!            ";
-      const expected1 = "----1-2-3--            ";
-      const subscriber2 = m
-        .hot("-------b               ")
-        .pipe(materializeTo(refCounted));
-      const unsub2 = "------------!          ";
-      const expected2 = "--------3----          ";
-      const subscriber3 = m
-        .hot("-----------------c     ")
-        .pipe(materializeTo(refCounted));
-      const unsub3 = "-------------------!   ";
-      const expected3 = "------------------1-   ";
+      const subscriber1 = m.hot(" ---a                   ").pipe(materializeTo(refCounted));
+      const unsub1 = "            ----------!            ";
+      const expected1 = "         ----1-2-3--            ";
+      const subscriber2 = m.hot(" -------b               ").pipe(materializeTo(refCounted));
+      const unsub2 = "            ------------!          ";
+      const expected2 = "         --------3----          ";
+      const subscriber3 = m.hot(" -----------------c     ").pipe(materializeTo(refCounted));
+      const unsub3 = "            -------------------!   ";
+      const expected3 = "         ------------------1-   ";
 
       m.expect(subscriber1, unsub1).toBeObservable(expected1);
       m.expect(subscriber2, unsub2).toBeObservable(expected2);
@@ -207,10 +183,10 @@ describe("refCountDelay", () => {
   it(
     "should support a ReplaySubject",
     marbles(m => {
-      const source = m.cold("--(r|)---------------");
+      const source = m.cold("     --(r|)------------------");
       const sourceSubs = [
-        "---^-!                  ",
-        "-----------------^-!    "
+        "                         ---^-!                  ",
+        "                         -----------------^-!    "
       ];
 
       // Given a source that completes, concatenate NEVER so that the
@@ -231,18 +207,12 @@ describe("refCountDelay", () => {
         first()
       );
 
-      const subscriber1 = m
-        .hot("---a                    ")
-        .pipe(materializeTo(refCounted));
-      const expected1 = "-----(r|)               ";
-      const subscriber2 = m
-        .hot("-------b                ")
-        .pipe(materializeTo(refCounted));
-      const expected2 = "-------(r|)             ";
-      const subscriber3 = m
-        .hot("-----------------c      ")
-        .pipe(materializeTo(refCounted));
-      const expected3 = "-------------------(r|) ";
+      const subscriber1 = m.hot(" ---a                    ").pipe(materializeTo(refCounted));
+      const expected1 = "         -----(r|)               ";
+      const subscriber2 = m.hot(" -------b                ").pipe(materializeTo(refCounted));
+      const expected2 = "         -------(r|)             ";
+      const subscriber3 = m.hot(" -----------------c      ").pipe(materializeTo(refCounted));
+      const expected3 = "         -------------------(r|) ";
 
       m.expect(subscriber1).toBeObservable(expected1);
       m.expect(subscriber2).toBeObservable(expected2);

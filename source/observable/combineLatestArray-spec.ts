@@ -7,6 +7,7 @@
 import { marbles } from "rxjs-marbles";
 import { combineLatestArray } from "./combineLatestArray";
 
+// prettier-ignore
 describe("combineLatestArray", () => {
   it(
     "should combine a single observable",
@@ -14,9 +15,9 @@ describe("combineLatestArray", () => {
       const values = { a: 1, b: 2 };
       const results = { x: [values.a], y: [values.b] };
 
-      const source = m.cold("ab----|", values);
-      const subs = "^-----!";
-      const expected = m.cold("xy----|", results);
+      const source = m.cold("   ab----|", values);
+      const subs = "            ^-----!";
+      const expected = m.cold(" xy----|", results);
 
       const destination = combineLatestArray([source]);
       m.expect(destination).toBeObservable(expected);
@@ -34,10 +35,10 @@ describe("combineLatestArray", () => {
         z: [values.b, values.d]
       };
 
-      const source1 = m.cold("a-b---|", values);
-      const source2 = m.cold("-c-d--|", values);
-      const subs = "^-----!";
-      const expected = m.cold("-xyz--|", results);
+      const source1 = m.cold("  a-b---|", values);
+      const source2 = m.cold("  -c-d--|", values);
+      const subs = "            ^-----!";
+      const expected = m.cold(" -xyz--|", results);
 
       const destination = combineLatestArray([source1, source2]);
       m.expect(destination).toBeObservable(expected);
@@ -50,7 +51,6 @@ describe("combineLatestArray", () => {
     "should emit an empty array when observables is empty",
     marbles(m => {
       const expected = m.cold("(x|)", { x: [] });
-
       const destination = combineLatestArray([]);
       m.expect(destination).toBeObservable(expected);
     })
@@ -65,9 +65,9 @@ describe("combineLatestArray", () => {
         y: [values.b + 1]
       };
 
-      const source = m.cold("ab---|", values);
-      const subs = "^----!";
-      const expected = m.cold("xy---|", results);
+      const source = m.cold("   ab---|", values);
+      const subs = "            ^----!";
+      const expected = m.cold(" xy---|", results);
 
       const destination = combineLatestArray([source], values =>
         values.map(value => value + 1)
@@ -87,10 +87,10 @@ describe("combineLatestArray", () => {
         z: [values.b + 1, values.d + 1]
       };
 
-      const source1 = m.cold("a-b---|", values);
-      const source2 = m.cold("-c-d--|", values);
-      const subs = "^-----!";
-      const expected = m.cold("-xyz--|", results);
+      const source1 = m.cold("  a-b---|", values);
+      const source2 = m.cold("  -c-d--|", values);
+      const subs = "            ^-----!";
+      const expected = m.cold(" -xyz--|", results);
 
       const destination = combineLatestArray([source1, source2], values =>
         values.map(value => value + 1)
@@ -105,7 +105,6 @@ describe("combineLatestArray", () => {
     "should support project when observables is empty",
     marbles(m => {
       const expected = m.cold("(x|)", { x: ["empty"] });
-
       const destination = combineLatestArray([], values => ["empty"]);
       m.expect(destination).toBeObservable(expected);
     })
