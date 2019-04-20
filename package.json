@@ -3,7 +3,9 @@
   "bugs": {
     "url": "https://github.com/cartant/rxjs-etc/issues"
   },
-  "dependencies": {},
+  "dependencies": {
+    "memoize-resolver": "^1.0.0"
+  },
   "description": "Observables and operators for RxJS",
   "devDependencies": {
     "@cartant/tslint-config": "^1.0.1",
@@ -62,7 +64,7 @@
   "peerDependencies": {
     "rxjs": "^6.0.0"
   },
-  "private": true,
+  "private": false,
   "publishConfig": {
     "tag": "latest"
   },

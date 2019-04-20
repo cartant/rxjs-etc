@@ -13,6 +13,7 @@ export * from "./forkJoinConcurrent";
 export * from "./forkJoinObject";
 export * from "./fromIterable";
 export * from "./handler";
+export * from "./memo";
 export * from "./mergeArray";
 export * from "./mergeHigherOrderArray";
 export * from "./NotificationQueue";
