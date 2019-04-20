@@ -143,9 +143,9 @@
   integrity sha512-1axi39YdtBI7z957vdqXI4Ac25e7YihYQtJa+Clnxg1zTJEaIRbndt71O3sP4GAMgiAm0pY26/b9BrY4MR/PMw==
 
 "@types/node@*", "@types/node@^11.0.0":
-  version "11.13.5"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-11.13.5.tgz#266564afa8a6a09dc778dfacc703ed3f09c80516"
-  integrity sha512-/OMMBnjVtDuwX1tg2pkYVSqRIDSmNTnvVvmvP/2xiMAAWf4a5+JozrApCrO4WCAILmXVxfNoQ3E+0HJbNpFVGg==
+  version "11.13.6"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-11.13.6.tgz#37ec75690830acb0d74ce3c6c43caab787081e85"
+  integrity sha512-Xoo/EBzEe8HxTSwaZNLZjaW6M6tA/+GmD3/DZ6uo8qSaolE/9Oarko0oV1fVfrLqOz0tx0nXJB4rdD5c+vixLw==
 
 "@types/sinon@^7.0.0":
   version "7.0.11"
@@ -4217,9 +4217,9 @@ run-queue@^1.0.0, run-queue@^1.0.3:
     aproba "^1.1.1"
 
 rxjs-marbles@^5.0.0:
-  version "5.0.0"
-  resolved "https://registry.yarnpkg.com/rxjs-marbles/-/rxjs-marbles-5.0.0.tgz#b46b4d6ed8ff62da9b5da6df1bcb423df56c72f4"
-  integrity sha512-Twr69tKSxC4ObE/afKJtSPuw+hVE5Paul8KlHhVsnOpqnSHiOd9Ff94RUx+fsCXYsnEILrf4qLsXpHlYzG4a9Q==
+  version "5.0.1"
+  resolved "https://registry.yarnpkg.com/rxjs-marbles/-/rxjs-marbles-5.0.1.tgz#cb89b811bdc1640e1a1752bfba1c6b0da291250a"
+  integrity sha512-qjKgZojswpIzVuRqrOcN+93C7Nv3GiAvOmhQy4NdeYn0kBwkMZzI2n65aJPIgPKDSsT8QZXIoQZ5euD7zBl+Bw==
   dependencies:
     fast-equals "^1.6.1"
 
@@ -4235,9 +4235,9 @@ rxjs-spy@^7.0.0:
     stacktrace-gps "^3.0.2"
 
 rxjs-tslint-rules@^4.0.0, rxjs-tslint-rules@^4.17.2:
-  version "4.22.0"
-  resolved "https://registry.yarnpkg.com/rxjs-tslint-rules/-/rxjs-tslint-rules-4.22.0.tgz#51fe2ff5b8b735e4df52e4de814e767b10f81ec5"
-  integrity sha512-t6SSGsEOYB18cjrOVXdheEnAQDnZlgo81KZt3zm5xHxkdFGrIMP4dX90hyezEfCCiFVuRiUyIa6cz2SGqyqo8w==
+  version "4.22.1"
+  resolved "https://registry.yarnpkg.com/rxjs-tslint-rules/-/rxjs-tslint-rules-4.22.1.tgz#cdfc049d352410145b8f63b3d1a56e54f8db4395"
+  integrity sha512-rbi18cHfXxmXx7zHqNKOY+cID7VHFaogwmcLnEx3X3CKMt9R1xgWgulglSOjo0ViP27nDyEOFDdJut5VgVn4JQ==
   dependencies:
     "@phenomnomnominal/tsquery" "^3.0.0"
     decamelize "^3.0.0"
