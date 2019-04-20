@@ -11,7 +11,7 @@ import * as sinon from "sinon";
 import { memo } from "./memo";
 
 // prettier-ignore
-describe.only("memo", () => {
+describe("memo", () => {
   it("should memoize an observable-returning function", () => {
     const func = memo((value: number) => of(value));
     expect(func(42)).to.equal(func(42));
