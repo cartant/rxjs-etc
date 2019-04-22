@@ -7,6 +7,7 @@ export * from "./observable";
 export * from "./genericOperator";
 export * from "./genericPipe";
 export * from "./kinds";
+export * from "./piped";
 export * from "./scheduler";
 export * from "./util";
 
