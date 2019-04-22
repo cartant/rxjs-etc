@@ -71,7 +71,7 @@ export function withLatestFromWhen<T, R>(
             startWith(undefined),
             switchMap(() =>
               publishedSource.pipe(
-                withLatestFrom<T, any>(...publishedObservables)
+                withLatestFrom(...publishedObservables)
               )
             )
           )

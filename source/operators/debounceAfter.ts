@@ -39,7 +39,7 @@ export function debounceAfter<T>(
           ),
           startWith(false),
           distinctUntilChanged(),
-          publish<boolean, T>((sharedSignal: Observable<boolean>) =>
+          publish((sharedSignal: Observable<boolean>) =>
             sharedSignal.pipe(
               concatMap((signalled: boolean) =>
                 signalled

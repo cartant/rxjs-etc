@@ -102,7 +102,7 @@ describe("prioritize", () => {
       const sourceSubs = "       ---^------!-----";
 
       const result = source.pipe(
-        prioritize<any>(merge),
+        prioritize(merge),
         filter(() => false)
       );
 

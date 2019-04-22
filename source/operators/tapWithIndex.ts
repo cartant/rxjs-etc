@@ -41,7 +41,7 @@ export function tapWithIndex<T>(
         handleComplete = complete || noop;
       }
       return source.pipe(
-        tap<T>(
+        tap(
           value => handleNext.call(context, [value, ++index]),
           error => handleError.call(context, error),
           () => handleComplete.call(context)
