@@ -8,8 +8,13 @@ import { mergeMap } from "rxjs/operators";
 import { marbles } from "rxjs-marbles";
 import { expecter } from "ts-snippet";
 import { splitBy } from "./splitBy";
+import { compiler } from "../compiler-spec";
+import { timeout } from "../timeout-spec";
 
-describe("splitBy", () => {
+describe("splitBy", function () {
+  /*tslint:disable-next-line:no-invalid-this*/
+  this.timeout(timeout);
+
   it(
     "should split values",
     marbles(m => {
@@ -32,7 +37,8 @@ describe("splitBy", () => {
         import { Observable, of } from "rxjs";
         import { splitBy } from "./source/operators/splitBy";
         ${code}
-      `
+      `,
+      compiler
     );
 
     it("should infer a type guard predicate", () => {

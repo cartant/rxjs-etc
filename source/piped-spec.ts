@@ -4,8 +4,12 @@
  */
 
 import { expecter } from "ts-snippet";
+import { compiler } from "./compiler-spec";
+import { timeout } from "./timeout-spec";
 
-describe("Piped", () => {
+describe("Piped", function () {
+  /*tslint:disable-next-line:no-invalid-this*/
+  this.timeout(timeout);
 
   if (!global["window"]) {
     const expectSnippet = expecter(
@@ -14,7 +18,8 @@ describe("Piped", () => {
         import { debounceTime } from "rxjs/operators";
         import { Piped } from "./source/piped";
         ${code}
-      `
+      `,
+      compiler
     );
 
     it("should fail without being explicit typed", () => {

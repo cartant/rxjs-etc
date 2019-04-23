@@ -7,6 +7,7 @@
 import { marbles } from "rxjs-marbles";
 import { expecter } from "ts-snippet";
 import { instanceOf } from "./instanceOf";
+import { compiler } from "../compiler-spec";
 import { timeout } from "../timeout-spec";
 
 // prettier-ignore
@@ -59,7 +60,8 @@ describe("instanceOf", function(): void {
           class Something extends Base {}
           class SomethingElse extends Base {}
           ${code}
-        `
+        `,
+        compiler
       );
 
       it("should infer a single instance type", () => {

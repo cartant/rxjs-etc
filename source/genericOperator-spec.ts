@@ -8,6 +8,7 @@ import { pipe } from "rxjs";
 import { delay, distinctUntilChanged } from "rxjs/operators";
 import { marbles } from "rxjs-marbles";
 import { expecter } from "ts-snippet";
+import { compiler } from "./compiler-spec";
 import { timeout } from "./timeout-spec";
 import { genericOperator } from "./genericOperator";
 
@@ -57,7 +58,7 @@ describe("genericOperator", function(): void {
           import { genericOperator } from "./source/genericOperator";
           ${code}
         `,
-        { strict: true }
+        compiler
       );
 
       it("should infer a generic operator from OperatorFunction<{}, {}>", () => {

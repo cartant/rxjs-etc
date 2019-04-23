@@ -8,6 +8,7 @@ import { expect } from "chai";
 import { delay, distinctUntilChanged } from "rxjs/operators";
 import { marbles } from "rxjs-marbles";
 import { expecter } from "ts-snippet";
+import { compiler } from "./compiler-spec";
 import { timeout } from "./timeout-spec";
 import { genericPipe, pipe } from "./genericPipe";
 
@@ -57,7 +58,7 @@ describe("genericPipe", function(): void {
           import { genericPipe } from "./source/genericPipe";
           ${code}
         `,
-        { strict: true }
+        compiler
       );
 
       it("should infer a non-generic operator for a mono-type operator", () => {
