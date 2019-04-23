@@ -1,3 +1,10 @@
+<a name="9.5.0"></a>
+### [9.5.0](https://github.com/cartant/rxjs-etc/compare/v9.4.1...v9.5.0) (2019-04-23)
+
+### Features
+
+* Added `bucketBy` and `splitBy` operators. ([c43c56f](https://github.com/cartant/rxjs-etc/commit/c43c56f))
+
 <a name="9.4.1"></a>
 ### [9.4.1](https://github.com/cartant/rxjs-etc/compare/v9.4.0...v9.4.1) (2019-04-05)
 
