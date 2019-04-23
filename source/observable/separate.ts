@@ -12,25 +12,33 @@ function not<T>(
   return value => predicates.every(predicate => !predicate(value));
 }
 
+/** @deprecated Use the splitBy operator instead */
 export function separate<T>(
   source: Observable<T>,
   predicate1: (value: T) => boolean
 ): [Observable<T>, Observable<T>];
+
+/** @deprecated Use the splitBy operator instead */
 export function separate<T>(
   source: Observable<T>,
   predicate1: (value: T) => boolean,
   predicate2: (value: T) => boolean
 ): [Observable<T>, Observable<T>, Observable<T>];
+
+/** @deprecated Use the splitBy operator instead */
 export function separate<T>(
   source: Observable<T>,
   predicate1: (value: T) => boolean,
   predicate2: (value: T) => boolean,
   predicate3: (value: T) => boolean
 ): [Observable<T>, Observable<T>, Observable<T>, Observable<T>];
+
+/** @deprecated Use the splitBy operator instead */
 export function separate<T>(
   source: Observable<T>,
   ...predicates: ((value: T) => boolean)[]
 ): Observable<T>[];
+
 export function separate<T>(
   source: Observable<T>,
   ...predicates: ((value: T) => boolean)[]
