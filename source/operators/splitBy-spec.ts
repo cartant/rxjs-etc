@@ -6,6 +6,7 @@
 
 import { mergeMap } from "rxjs/operators";
 import { marbles } from "rxjs-marbles";
+import { expecter } from "ts-snippet";
 import { splitBy } from "./splitBy";
 
 describe("splitBy", () => {
@@ -24,4 +25,25 @@ describe("splitBy", () => {
       m.expect(split).toBeObservable(expected, { x, y });
     })
   );
+
+  if (!global["window"]) {
+    const expectSnippet = expecter(
+      code => `
+        import { Observable, of } from "rxjs";
+        import { splitBy } from "./source/operators/splitBy";
+        ${code}
+      `
+    );
+
+    it("should infer a type guard predicate", () => {
+      expectSnippet(`
+        function isNumber(value: any): value is number {
+          return typeof value === "string";
+        }
+        const split = of(42 as any, "54" as any).pipe(
+          splitBy(isNumber)
+        );
+      `).toInfer("split", "Observable<[Observable<number>, Observable<any>]>");
+    });
+  }
 });
