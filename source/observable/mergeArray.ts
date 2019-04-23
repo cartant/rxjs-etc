@@ -17,5 +17,6 @@ export function mergeArray<T, R>(
   if (concurrent) {
     applyArgs.push(concurrent);
   }
+  /*tslint:disable-next-line:deprecation*/
   return merge.apply(null, applyArgs);
 }

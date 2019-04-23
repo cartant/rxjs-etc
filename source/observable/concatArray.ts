@@ -9,6 +9,6 @@ export function concatArray<T, R>(observables: Observable<T>[]): Observable<R> {
   if (observables.length === 0) {
     return EMPTY;
   }
-
+  /*tslint:disable-next-line:deprecation*/
   return concat.apply(null, observables);
 }
