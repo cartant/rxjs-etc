@@ -57,5 +57,6 @@ export function endWith<T, E>(
   } else {
     scheduler = null;
   }
+  /*tslint:disable-next-line:deprecation*/
   return source => concat(source, from(args as E[], scheduler as any));
 }

@@ -36,6 +36,7 @@ describe("prioritize", () => {
   });
 
   it("should support self notifications", () => {
+    /*tslint:disable-next-line:deprecation*/
     const source = from("aabccdee", asyncScheduler);
     const result = source.pipe(
       prioritize((first, second) =>
@@ -102,6 +103,7 @@ describe("prioritize", () => {
       const sourceSubs = "       ---^------!-----";
 
       const result = source.pipe(
+        /*tslint:disable-next-line:deprecation*/
         prioritize(merge),
         filter(() => false)
       );
