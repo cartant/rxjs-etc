@@ -50,10 +50,6 @@ npm install rxjs-etc --save
 
     Higher-order variant of `mergeArray` - that takes `Observable<Observable<T>[]>` and returns `Observable<T>`.
 
-* [separate](./source/observable/separate.ts)
-
-    Like `partition` but can passed more than one predicate to return more than two observables.
-
 * [toggle](./source/observable/toggle.ts)
 
     Splits a notifier into two or more states and between which notifications are toggled.
@@ -79,6 +75,10 @@ They can also be used with `pipe`, like this:
 ```ts
 source.pipe(endWith("this is the end"))
 ```
+
+* [bucketBy](./source/operators/bucketBy.ts)
+
+    Uses a hash function to put values from an observable stream into buckets - which are themselves observable streams. See `splitBy`.
 
 * [bufferRecent](./source/operators/bufferRecent.ts)
 
@@ -155,6 +155,10 @@ source.pipe(endWith("this is the end"))
 * [reschedule](./source/operators/reschedule.ts)
 
     Emits values using the specified scheduler.
+
+* [splitBy](./source/operators/splitBy.ts)
+
+    Splits an observable stream into two streams. Values that satisfy a predicate are fed into the first stream and values that don't are fed into the second. It's a (better) replacement for `partition` - which did not multicast the source. See `bucketBy` for the general case of splitting a stream into a specific number of 'buckets'.
 
 * [startWithTimeout](./source/operators/startWithTimeout.ts)
 
