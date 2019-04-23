@@ -12,10 +12,10 @@ describe("splitBy", () => {
   it(
     "should split values",
     marbles(m => {
-      const source = m.cold("  --a-b-c-a-b-c-|");
-      const x = m.cold("         a-----a-----|");
-      const y = m.cold("         --b-c---b-c-|");
-      const expected = "       --(xy)--------|";
+      const source = m.cold(" --a-b-c-a-b-c-|");
+      const x = m.cold("      --a-----a-----|");
+      const y = m.cold("      ----b-c---b-c-|");
+      const expected = "      (xy)----------|";
 
       const split = source.pipe(
         splitBy(value => value === "a"),
