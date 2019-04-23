@@ -6,26 +6,29 @@
 import { expecter } from "ts-snippet";
 
 describe("Piped", () => {
-  const expectSnippet = expecter(
-    code => `
-      import { Observable, of } from "rxjs";
-      import { debounceTime } from "rxjs/operators";
-      import { Piped } from "./source/piped";
-      ${code}
-    `
-  );
 
-  it("should fail without being explicit typed", () => {
-    expectSnippet(`
-      const operator = debounceTime(1e3);
-      const debounced: Observable<number> = of(42).pipe(operator);
-    `).toFail(/not assignable to type 'Observable<number>'/);
-  });
+  if (!global["window"]) {
+    const expectSnippet = expecter(
+      code => `
+        import { Observable, of } from "rxjs";
+        import { debounceTime } from "rxjs/operators";
+        import { Piped } from "./source/piped";
+        ${code}
+      `
+    );
 
-  it("should explicitly type a piped operator", () => {
-    expectSnippet(`
-      const operator = debounceTime(1e3) as Piped<number>;
-      const debounced: Observable<number> = of(42).pipe(operator);
-    `).toInfer("debounced", "Observable<number>");
-  });
+    it("should fail without being explicit typed", () => {
+      expectSnippet(`
+        const operator = debounceTime(1e3);
+        const debounced: Observable<number> = of(42).pipe(operator);
+      `).toFail(/not assignable to type 'Observable<number>'/);
+    });
+
+    it("should explicitly type a piped operator", () => {
+      expectSnippet(`
+        const operator = debounceTime(1e3) as Piped<number>;
+        const debounced: Observable<number> = of(42).pipe(operator);
+      `).toInfer("debounced", "Observable<number>");
+    });
+  }
 });
