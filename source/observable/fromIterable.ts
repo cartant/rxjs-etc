@@ -12,5 +12,5 @@ export interface IterableLike<T> {
 }
 
 export function fromIterable<T>(iterable: IterableLike<T>): Observable<T> {
-  return from(iterable as any);
+  return from(iterable as any) as Observable<T>;
 }

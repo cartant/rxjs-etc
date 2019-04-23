@@ -36,7 +36,7 @@ export function multicastWithKind<T, R>(
         subject = factory(kind, subject);
         kind = undefined;
         return subject;
-      }, selector)
+      }, selector!)
     );
   };
 }

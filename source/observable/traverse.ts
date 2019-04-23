@@ -89,12 +89,12 @@ export function traverse<T, M, R>({
                   factory(marker, index).pipe(
                     mergeMap(({ markers, values }) =>
                       concat(
-                        from<T>(values).pipe(
+                        from(values).pipe(
                           operator,
                           tap(value => destination.next(value)),
                           ignoreElements()
                         ) as Observable<never>,
-                        from<M>(markers)
+                        from(markers)
                       )
                     )
                   )

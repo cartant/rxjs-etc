@@ -14,5 +14,5 @@ import { concatMap } from "rxjs/operators";
 export function reschedule<T>(
   scheduler: SchedulerLike = asapScheduler
 ): MonoTypeOperatorFunction<T> {
-  return concatMap<T, T>(value => of(value, scheduler));
+  return concatMap(value => of(value, scheduler));
 }

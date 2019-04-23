@@ -9,6 +9,7 @@ import {
   Observable,
   ObservableInput,
   OperatorFunction,
+  Subscriber,
   Subscription
 } from "rxjs";
 import { publish, startWith, switchMap, withLatestFrom } from "rxjs/operators";
@@ -62,7 +63,7 @@ export function withLatestFromWhen<T, R>(
     new Observable<R>(subscriber => {
       const publishedSource = publish<T>()(source) as ConnectableObservable<T>;
       const publishedObservables = observables.map(
-        o => publish<any>()(from(o)) as ConnectableObservable<any>
+        o => (from(o).pipe(publish())) as ConnectableObservable<any>
       );
       const subscription = new Subscription();
       subscription.add(
@@ -75,7 +76,7 @@ export function withLatestFromWhen<T, R>(
               )
             )
           )
-          .subscribe(subscriber)
+          .subscribe(subscriber as Subscriber<{}>)
       );
       publishedObservables.forEach(p => subscription.add(p.connect()));
       subscription.add(publishedSource.connect());
