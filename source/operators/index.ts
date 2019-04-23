@@ -4,6 +4,7 @@
  */
 
 export * from "./auditMap";
+export * from "./bucketBy";
 export * from "./bufferRecent";
 export * from "./concatIfEmpty";
 export * from "./concatTap";
@@ -34,6 +35,7 @@ export * from "./refCountDelay";
 export * from "./refCountForever";
 export * from "./refCountOn";
 export * from "./reschedule";
+export * from "./splitBy";
 export * from "./spread";
 export * from "./startWithDeferred";
 export * from "./startWithTimeout";
