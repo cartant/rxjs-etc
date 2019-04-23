@@ -8,6 +8,13 @@
   "rules": {
     "rxjs-no-connectable": { "severity": "off" },
     "rxjs-no-subclass": { "severity": "off" },
-    "rxjs-no-unsafe-scope": { "severity": "off" }
+    "rxjs-no-unsafe-scope": { "severity": "off" },
+    "typedef": {
+      "options": [
+        "parameter",
+        "property-declaration"
+      ],
+      "severity": "error"
+    }
   }
 }
