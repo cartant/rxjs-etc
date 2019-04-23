@@ -43,7 +43,7 @@ class BucketByOperator<T> implements Operator<T, Observable<T>[]> {
 
 /*tslint:disable-next-line:no-unused-declaration*/
 class BucketBySubscriber<T> extends Subscriber<T> {
-  private buckets: Subject<T>[] | undefined;
+  private buckets: Subject<T>[];
   private index = 0;
 
   constructor(
@@ -53,17 +53,17 @@ class BucketBySubscriber<T> extends Subscriber<T> {
     private subjectSelector: () => Subject<T>
   ) {
     super(destination);
+    const buckets = this.buckets = new Array(count);
+    for (let i = 0; i < count; ++i) {
+      buckets[i] = subjectSelector();
+    }
+    destination.next!(buckets.map(subject => subject.asObservable()));
   }
 
   protected _next(value: T): void {
-    const { closed, count, destination, hashSelector } = this;
-    let { buckets } = this;
+    const { buckets, closed, count, hashSelector } = this;
     if (closed) {
       return;
-    }
-    if (!buckets) {
-      buckets = this.buckets = this._buckets();
-      destination.next!(buckets.map(subject => subject.asObservable()));
     }
     let index: number;
     try {
@@ -77,37 +77,20 @@ class BucketBySubscriber<T> extends Subscriber<T> {
   }
 
   protected _error(error: any): void {
-    const { closed, destination } = this;
-    let { buckets } = this;
+    const { buckets, closed, destination } = this;
     if (closed) {
       return;
-    }
-    if (!buckets) {
-      buckets = this.buckets = this._buckets();
     }
     buckets.forEach(bucket => bucket.error(error));
     destination.error!(error);
   }
 
   protected _complete(): void {
-    const { closed, destination } = this;
-    let { buckets } = this;
+    const { buckets, closed, destination } = this;
     if (closed) {
       return;
     }
-    if (!buckets) {
-      buckets = this.buckets = this._buckets();
-    }
     buckets.forEach(bucket => bucket.complete());
     destination.complete!();
-  }
-
-  private _buckets() {
-    const { count, subjectSelector } = this;
-    const buckets = new Array(count);
-    for (let i = 0; i < count; ++i) {
-      buckets[i] = subjectSelector();
-    }
-    return buckets;
   }
 }
