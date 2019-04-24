@@ -14,12 +14,12 @@ export function zipArray<T, R>(
 
 export function zipArray<T, R>(
   ...args: (Observable<T>[] | ((values: T[]) => R))[]
-): Observable<R> {
+): Observable<T[] | R> {
   let observables = args[0] as Observable<T>[];
   let project = args[1] as (values: T[]) => R;
 
   if (observables.length === 0) {
-    return of<any>(project ? project([]) : []);
+    return of(project ? project([]) : []);
   }
 
   const applyArgs: any[] = observables.slice();
