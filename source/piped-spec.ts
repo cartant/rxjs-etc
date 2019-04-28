@@ -7,7 +7,7 @@ import { expecter } from "ts-snippet";
 import { compiler } from "./compiler-spec";
 import { timeout } from "./timeout-spec";
 
-describe("Piped", function () {
+describe("Piped", function() {
   /*tslint:disable-next-line:no-invalid-this*/
   this.timeout(timeout);
 

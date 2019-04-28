@@ -11,7 +11,7 @@ import { splitBy } from "./splitBy";
 import { compiler } from "../compiler-spec";
 import { timeout } from "../timeout-spec";
 
-describe("splitBy", function () {
+describe("splitBy", function() {
   /*tslint:disable-next-line:no-invalid-this*/
   this.timeout(timeout);
 

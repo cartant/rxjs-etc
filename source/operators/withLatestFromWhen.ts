@@ -63,7 +63,7 @@ export function withLatestFromWhen<T, R>(
     new Observable<R>(subscriber => {
       const publishedSource = publish<T>()(source) as ConnectableObservable<T>;
       const publishedObservables = observables.map(
-        o => (from(o).pipe(publish())) as ConnectableObservable<any>
+        o => from(o).pipe(publish()) as ConnectableObservable<any>
       );
       const subscription = new Subscription();
       subscription.add(
@@ -71,9 +71,7 @@ export function withLatestFromWhen<T, R>(
           .pipe(
             startWith(undefined),
             switchMap(() =>
-              publishedSource.pipe(
-                withLatestFrom(...publishedObservables)
-              )
+              publishedSource.pipe(withLatestFrom(...publishedObservables))
             )
           )
           .subscribe(subscriber as Subscriber<{}>)

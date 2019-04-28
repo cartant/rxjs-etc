@@ -45,7 +45,11 @@
     "webpack-rxjs-externals": "^2.0.0"
   },
   "es2015": "./dist/esm2015/index.js",
-  "homepage": "https://github.com/cartant/rxjs-etc",
+  "homepage": "https://github.com/cartant/rxjs-etc",  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
   "keywords": [
     "observable",
     "rxjs"

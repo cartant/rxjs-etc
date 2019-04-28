@@ -139,7 +139,9 @@ describe("bucketBy", () => {
       const expected = "      (xyz)-#  ";
 
       const bucketed = source.pipe(
-        bucketBy(3, () => { throw error; }),
+        bucketBy(3, () => {
+          throw error;
+        }),
         mergeMap(buckets => buckets)
       );
       m.expect(bucketed).toBeObservable(expected, { x, y, z }, error);

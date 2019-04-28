@@ -53,7 +53,7 @@ class BucketBySubscriber<T> extends Subscriber<T> {
     private subjectSelector: () => Subject<T>
   ) {
     super(destination);
-    const buckets = this.buckets = new Array(count);
+    const buckets = (this.buckets = new Array(count));
     for (let i = 0; i < count; ++i) {
       buckets[i] = subjectSelector();
     }
