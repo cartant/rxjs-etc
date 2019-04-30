@@ -6,26 +6,26 @@
 
 import { expect } from "chai";
 import { asapScheduler, EMPTY } from "rxjs";
-import { isNotNullish, isNullish, isObservable, isScheduler } from "./util";
+import { isNonNulled, isNulled, isObservable, isScheduler } from "./util";
 
 describe("util", () => {
-  describe("isNotNullish", () => {
-    it("should determine whether a value is not nullish", () => {
-      expect(isNotNullish(null)).to.be.false;
-      expect(isNotNullish(undefined)).to.be.false;
-      expect(isNotNullish(false)).to.be.true;
-      expect(isNotNullish(0)).to.be.true;
-      expect(isNotNullish("")).to.be.true;
+  describe("isNonNulled", () => {
+    it("should determine whether a value is not nulled", () => {
+      expect(isNonNulled(null)).to.be.false;
+      expect(isNonNulled(undefined)).to.be.false;
+      expect(isNonNulled(false)).to.be.true;
+      expect(isNonNulled(0)).to.be.true;
+      expect(isNonNulled("")).to.be.true;
     });
   });
 
-  describe("isNullish", () => {
-    it("should determine whether a value is nullish", () => {
-      expect(isNullish(null)).to.be.true;
-      expect(isNullish(undefined)).to.be.true;
-      expect(isNullish(false)).to.be.false;
-      expect(isNullish(0)).to.be.false;
-      expect(isNullish("")).to.be.false;
+  describe("isNulled", () => {
+    it("should determine whether a value is nulled", () => {
+      expect(isNulled(null)).to.be.true;
+      expect(isNulled(undefined)).to.be.true;
+      expect(isNulled(false)).to.be.false;
+      expect(isNulled(0)).to.be.false;
+      expect(isNulled("")).to.be.false;
     });
   });
 

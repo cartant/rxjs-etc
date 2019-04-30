@@ -5,15 +5,21 @@
 
 import { Observable, SchedulerLike } from "rxjs";
 
-export function isNotNullish<T>(value: T | null | undefined): value is T {
-  return value !== null && value !== undefined;
+export function isNonNulled<T>(value: T): value is NonNullable<T> {
+  return value != null;
 }
 
-export function isNullish<T>(
+/** @deprecated Renamed to isNonNulled */
+export const isNotNullish = isNonNulled;
+
+export function isNulled<T>(
   value: T | null | undefined
 ): value is null | undefined {
-  return value === null || value === undefined;
+  return value == null;
 }
+
+/** @deprecated Renamed to isNulled */
+export const isNullish = isNulled;
 
 export function isObservable(
   value: object | null | undefined

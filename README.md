@@ -188,9 +188,9 @@ source.pipe(endWith("this is the end"))
 
 A bunch of utility functions that do what their names suggest:
 
-* [isNullish/isNotNullish](./source/util.ts)
+* [isNulled/isNotNulled](./source/util.ts)
 
-    `isNullish` returns `true` if a value is `null` or `undefined`.
+    `isNulled` returns `true` if a value is `null` or `undefined`.
 
 * [isObservable](./source/util.ts)
 * [isScheduler](./source/util.ts)
