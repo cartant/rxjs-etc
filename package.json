@@ -13,7 +13,7 @@
     "@cartant/tslint-config-rxjs": "^2.0.0",
     "@types/chai": "^4.0.0",
     "@types/mocha": "^5.0.0",
-    "@types/node": "^11.0.0",
+    "@types/node": "^12.0.0",
     "@types/sinon": "^7.0.0",
     "chai": "^4.0.0",
     "cpy-cli": "^2.0.0",
