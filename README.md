@@ -172,6 +172,10 @@ source.pipe(endWith("this is the end"))
 
     Like `takeWhile`, but the value that fails the predicate is taken.
 
+* [tapSubscribe](./source/operators/tapSubscribe.ts)
+
+    Like [`tap`](https://github.com/ReactiveX/rxjs/blob/5.5.2/src/operators/tap.ts#L54-L60), but for subscriptions and unsubscriptions instead of notifications.
+
 * [tapWithIndex](./source/operators/tapWithIndex.ts)
 
     Like [`tap`](https://github.com/ReactiveX/rxjs/blob/5.5.2/src/operators/tap.ts#L54-L60), but it receives a tuple that includes the emitted value and the index.
