@@ -43,6 +43,7 @@ export * from "./subsequent";
 export * from "./switchMapUntil";
 export * from "./switchTap";
 export * from "./takeWhileInclusive";
+export * from "./tapSubscribe";
 export * from "./tapWithIndex";
 export * from "./throttleAfter";
 export * from "./withLatestFromWhen";
