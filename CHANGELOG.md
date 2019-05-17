@@ -1,3 +1,10 @@
+<a name="9.6.0"></a>
+### [9.6.0](https://github.com/cartant/rxjs-etc/compare/v9.5.0...v9.6.0) (2019-05-17)
+
+### Features
+
+* Added the `tapSubscribe` operator. ([fd52583](https://github.com/cartant/rxjs-etc/commit/fd52583))
+
 <a name="9.5.0"></a>
 ### [9.5.0](https://github.com/cartant/rxjs-etc/compare/v9.4.1...v9.5.0) (2019-04-23)
 
