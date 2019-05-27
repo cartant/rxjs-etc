@@ -85,7 +85,7 @@
     "dist:build:esm2015": "tsc -p tsconfig-dist-esm2015.json",
     "dist:build:esm5": "tsc -p tsconfig-dist-esm5.json",
     "dist:clean": "rimraf dist && rimraf bundles/rxjs-etc.* && mkdirp bundles",
-    "dist:copy": "node scripts/pack.js && cpy bundles/rxjs-etc.* dist/bundles/ && cpy CHANGELOG.md LICENSE README.md dist/",
+    "dist:copy": "node scripts/pack.js && cpy bundles/rxjs-etc.* dist/bundles/ && cpy CHANGELOG.md LICENSE README.md dist/ && cpy **/package.json ../dist/ --cwd=source/ --parents",
     "lint": "tslint --project tsconfig.json source/**/*.ts",
     "test": "yarn run lint && yarn run test:build && yarn run test:karma && yarn run test:mocha",
     "test:build": "yarn run test:clean && tsc -p tsconfig.json",

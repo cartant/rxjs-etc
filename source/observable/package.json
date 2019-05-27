@@ -1,0 +1,8 @@
+{
+  "name": "rxjs-etc/observable",
+  "typings": "./index.d.ts",
+  "main": "./index.js",
+  "module": "../esm5/observable/index.js",
+  "es2015": "../esm2015/observable/index.js",
+  "sideEffects": false
+}
