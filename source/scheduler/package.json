@@ -1,0 +1,8 @@
+{
+  "name": "rxjs-etc/scheduler",
+  "typings": "./index.d.ts",
+  "main": "./index.js",
+  "module": "../esm5/scheduler/index.js",
+  "es2015": "../esm2015/scheduler/index.js",
+  "sideEffects": false
+}
