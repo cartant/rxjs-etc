@@ -1,3 +1,10 @@
+<a name="9.6.1"></a>
+### [9.6.1](https://github.com/cartant/rxjs-etc/compare/v9.6.0...v9.6.1) (2019-05-28)
+
+### Fixes
+
+* Add `package.json` files for all directories that are import locations.
+
 <a name="9.6.0"></a>
 ### [9.6.0](https://github.com/cartant/rxjs-etc/compare/v9.5.0...v9.6.0) (2019-05-17)
 
