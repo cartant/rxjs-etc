@@ -1,3 +1,10 @@
+<a name="9.6.2"></a>
+### [9.6.2](https://github.com/cartant/rxjs-etc/compare/v9.6.1...v9.6.2) (2019-05-29)
+
+### Fixes
+
+* Republished as the `package.json` files that should have been added in 9.6.1 were left out.
+
 <a name="9.6.1"></a>
 ### [9.6.1](https://github.com/cartant/rxjs-etc/compare/v9.6.0...v9.6.1) (2019-05-28)
 
