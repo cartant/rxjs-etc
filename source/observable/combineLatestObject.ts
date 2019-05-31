@@ -11,10 +11,15 @@ import { isObservable } from "../util";
 export function combineLatestObject<T>(
   instance: { [K in keyof T]: T[K] | Observable<T[K]> }
 ): Observable<T> {
-  const entries = Object.entries(instance) as [string, any][];
-  return combineLatestArray(
-    entries.map(([, value]) => (isObservable(value) ? value : of(value)))
-  ).pipe(
+  type K = keyof T;
+  const entries = Object.entries(instance) as [
+    string,
+    T[K] | Observable<T[K]>
+  ][];
+  const observables = entries.map(([, value]) =>
+    isObservable(value) ? value : of(value)
+  );
+  return combineLatestArray(observables).pipe(
     map(values =>
       values.reduce(
         (acc, value, index) => ({ ...acc, [entries[index][0]]: value }),

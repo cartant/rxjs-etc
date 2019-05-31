@@ -21,10 +21,12 @@ export function isNulled<T>(
 /** @deprecated Renamed to isNulled */
 export const isNullish = isNulled;
 
-export function isObservable(
-  value: object | null | undefined
-): value is Observable<any> {
-  return Boolean(value && typeof value["subscribe"] === "function");
+export function isObservable(value: any): value is Observable<any> {
+  return Boolean(
+    value &&
+      typeof value === "object" &&
+      typeof value["subscribe"] === "function"
+  );
 }
 
 export function isScheduler(
