@@ -9,7 +9,6 @@ import {
   Observable,
   ObservableInput,
   OperatorFunction,
-  Subscriber,
   Subscription
 } from "rxjs";
 import { publish, startWith, switchMap, withLatestFrom } from "rxjs/operators";
@@ -54,13 +53,13 @@ export function withLatestFromWhen<T, R>(
 export function withLatestFromWhen<T, R>(
   ...observables: (ObservableInput<any> | (() => Observable<any>))[]
 ): OperatorFunction<T, R>;
-export function withLatestFromWhen<T, R>(
+export function withLatestFromWhen<T>(
   ...args: (ObservableInput<any> | (() => Observable<any>))[]
-): OperatorFunction<T, R> {
+): OperatorFunction<T, any> {
   const flushSelector = args.pop() as () => Observable<any>;
   const observables = args as ObservableInput<any>[];
   return source =>
-    new Observable<R>(subscriber => {
+    new Observable<any>(subscriber => {
       const publishedSource = publish<T>()(source) as ConnectableObservable<T>;
       const publishedObservables = observables.map(
         o => from(o).pipe(publish()) as ConnectableObservable<any>
@@ -74,7 +73,7 @@ export function withLatestFromWhen<T, R>(
               publishedSource.pipe(withLatestFrom(...publishedObservables))
             )
           )
-          .subscribe(subscriber as Subscriber<{}>)
+          .subscribe(subscriber)
       );
       publishedObservables.forEach(p => subscription.add(p.connect()));
       subscription.add(publishedSource.connect());

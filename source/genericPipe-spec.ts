@@ -68,10 +68,10 @@ describe("genericPipe", function(): void {
           const source = of(1);
           const delayed = source.pipe(piped);
         `);
-        snippet.toInfer("operator", "MonoTypeOperatorFunction<{}>");
+        snippet.toInfer("operator", "MonoTypeOperatorFunction<unknown>");
         snippet.toInfer(
           "piped",
-          "<R extends {}>(source: Observable<R>) => Observable<R>"
+          "<R extends unknown>(source: Observable<R>) => Observable<R>"
         );
         snippet.toInfer("source", "Observable<number>");
         snippet.toInfer("delayed", "Observable<number>");

@@ -66,7 +66,7 @@ describe("genericOperator", function(): void {
           const operator = delay(10);
           const result = genericOperator(operator);
         `);
-        snippet.toInfer("operator", "MonoTypeOperatorFunction<{}>");
+        snippet.toInfer("operator", "MonoTypeOperatorFunction<unknown>");
         snippet.toInfer(
           "result",
           "<T>(source: Observable<T>) => Observable<T>"
