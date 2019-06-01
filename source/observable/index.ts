@@ -17,6 +17,7 @@ export * from "./memo";
 export * from "./mergeArray";
 export * from "./mergeHigherOrderArray";
 export * from "./NotificationQueue";
+export * from "./progress";
 export * from "./queue";
 export * from "./resettable";
 export * from "./separate";
