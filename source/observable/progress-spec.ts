@@ -5,7 +5,7 @@
 /*tslint:disable:no-unnecessary-callback-wrapper no-unused-expression*/
 
 import { concat, merge, of } from "rxjs";
-import { ignoreElements, mergeMap, tap } from "rxjs/operators";
+import { ignoreElements, tap } from "rxjs/operators";
 import { progress } from "./progress";
 
 // prettier-ignore
@@ -15,15 +15,14 @@ describe("progress", () => {
     /*tslint:disable*/
     progress(
       (...o) => concat(...o),
-      of(1), of(2), of(3)
-    ).pipe(
-      mergeMap(([result, state]) => merge(
+      (result, state) => merge(
         state.pipe(
-          tap(({ complete }) => console.log(complete)),
+          tap(({ finalized }) => console.log(finalized)),
           ignoreElements()
         ),
         result
-      ))
+      ),
+      of(1), of(2), of(3)
     ).subscribe(value => console.log(value));
   });
 });
