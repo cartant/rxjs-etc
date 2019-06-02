@@ -17,12 +17,18 @@ describe("progress", () => {
       (...o) => concat(...o),
       (result, state) => merge(
         state.pipe(
-          tap(({ finalized }) => console.log(finalized)),
+          tap({
+            complete: () => console.log("state complete"),
+            next: ({ finalized }) => console.log(finalized)
+          }),
           ignoreElements()
         ),
         result
       ),
       of("a"), of("b"), of("c")
-    ).subscribe(value => console.log(value));
+    ).subscribe({
+      complete: () => console.log("complete"),
+      next: value => console.log(value)
+    });
   });
 });

@@ -35,12 +35,15 @@ export function progress<
     const created = creator(
       ...(observables.map(o =>
         o.pipe(
-          finalize(() =>
+          finalize(() => {
             state.next({
               finalized: ++finalized,
               total
-            })
-          )
+            });
+            if (finalized === total) {
+              state.complete();
+            }
+          })
         )
       ) as Observables)
     );
