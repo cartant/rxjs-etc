@@ -4,7 +4,6 @@
  */
 /*tslint:disable:deprecation no-use-before-declare*/
 
-import { CloseKind } from "../kinds";
 import {
   from,
   MonoTypeOperatorFunction,
@@ -15,6 +14,7 @@ import {
   TeardownLogic
 } from "rxjs";
 import { finalize } from "rxjs/operators";
+import { CloseKind } from "../kinds";
 
 export function deferFinalize<T>(
   callback: (kind: CloseKind) => ObservableInput<any>

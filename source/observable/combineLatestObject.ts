@@ -5,8 +5,8 @@
 
 import { Observable, of } from "rxjs";
 import { map } from "rxjs/operators";
-import { combineLatestArray } from "./combineLatestArray";
 import { isObservable } from "../util";
+import { combineLatestArray } from "./combineLatestArray";
 
 export function combineLatestObject<T>(
   instance: { [K in keyof T]: T[K] | Observable<T[K]> }

@@ -4,8 +4,8 @@
  */
 /*tslint:disable:no-unused-expression*/
 
-import { startWithDeferred } from "./startWithDeferred";
 import { marbles } from "rxjs-marbles";
+import { startWithDeferred } from "./startWithDeferred";
 
 // prettier-ignore
 describe("startWithDeferred", () => {

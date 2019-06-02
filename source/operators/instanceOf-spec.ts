@@ -6,9 +6,9 @@
 
 import { marbles } from "rxjs-marbles";
 import { expecter } from "ts-snippet";
-import { instanceOf } from "./instanceOf";
 import { compiler } from "../compiler-spec";
 import { timeout } from "../timeout-spec";
+import { instanceOf } from "./instanceOf";
 
 // prettier-ignore
 describe("instanceOf", function(): void {

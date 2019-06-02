@@ -5,12 +5,12 @@
 /*tslint:disable:deprecation no-unused-expression*/
 
 import { pipe } from "rxjs";
-import { delay, distinctUntilChanged } from "rxjs/operators";
 import { marbles } from "rxjs-marbles";
+import { delay, distinctUntilChanged } from "rxjs/operators";
 import { expecter } from "ts-snippet";
 import { compiler } from "./compiler-spec";
-import { timeout } from "./timeout-spec";
 import { genericOperator } from "./genericOperator";
+import { timeout } from "./timeout-spec";
 
 // prettier-ignore
 describe("genericOperator", function(): void {

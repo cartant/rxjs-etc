@@ -5,8 +5,8 @@
 /*tslint:disable:no-unused-expression rxjs-no-ignored-subscription*/
 
 import { AsyncSubject } from "rxjs";
-import { concatMap } from "rxjs/operators";
 import { marbles } from "rxjs-marbles";
+import { concatMap } from "rxjs/operators";
 import { NotificationQueue } from "./NotificationQueue";
 
 // prettier-ignore

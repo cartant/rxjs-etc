@@ -5,8 +5,8 @@
 /*tslint:disable:no-unused-expression*/
 
 import { pipe } from "rxjs";
-import { debounceTime, mapTo } from "rxjs/operators";
 import { marbles } from "rxjs-marbles";
+import { debounceTime, mapTo } from "rxjs/operators";
 import { subsequent } from "./subsequent";
 
 // prettier-ignore

@@ -4,6 +4,7 @@
  */
 /*tslint:disable:no-unused-expression*/
 
+import { marbles } from "rxjs-marbles";
 import {
   bufferToggle,
   concatAll,
@@ -11,7 +12,6 @@ import {
   takeUntil,
   windowToggle
 } from "rxjs/operators";
-import { marbles } from "rxjs-marbles";
 import { toggle } from "./toggle";
 
 // prettier-ignore

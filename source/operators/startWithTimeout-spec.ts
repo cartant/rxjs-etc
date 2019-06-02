@@ -4,8 +4,8 @@
  */
 /*tslint:disable:no-unused-expression*/
 
-import { startWithTimeout } from "./startWithTimeout";
 import { marbles } from "rxjs-marbles";
+import { startWithTimeout } from "./startWithTimeout";
 
 // prettier-ignore
 describe("startWithTimeout", () => {

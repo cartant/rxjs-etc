@@ -4,12 +4,12 @@
  */
 /*tslint:disable:no-unused-expression*/
 
-import { mergeMap } from "rxjs/operators";
 import { marbles } from "rxjs-marbles";
+import { mergeMap } from "rxjs/operators";
 import { expecter } from "ts-snippet";
-import { splitBy } from "./splitBy";
 import { compiler } from "../compiler-spec";
 import { timeout } from "../timeout-spec";
+import { splitBy } from "./splitBy";
 
 describe("splitBy", function() {
   /*tslint:disable-next-line:no-invalid-this*/

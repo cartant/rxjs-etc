@@ -3,9 +3,9 @@
  * can be found in the LICENSE file at https://github.com/cartant/rxjs-etc
  */
 
-import { CloseKind } from "../kinds";
 import { defer, MonoTypeOperatorFunction } from "rxjs";
 import { finalize, tap } from "rxjs/operators";
+import { CloseKind } from "../kinds";
 
 export function finalizeWithKind<T>(
   callback: (kind: CloseKind) => void

@@ -4,6 +4,7 @@
  */
 /*tslint:disable:no-unused-expression rxjs-no-sharereplay*/
 
+import { marbles } from "rxjs-marbles";
 import {
   auditTime,
   debounceTime,
@@ -11,7 +12,6 @@ import {
   sampleTime,
   shareReplay
 } from "rxjs/operators";
-import { marbles } from "rxjs-marbles";
 import { switchMapUntil } from "./switchMapUntil";
 
 // prettier-ignore

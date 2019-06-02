@@ -6,8 +6,8 @@
 
 import { expect } from "chai";
 import { interval, Notification, of, timer } from "rxjs";
-import { map, share } from "rxjs/operators";
 import { marbles } from "rxjs-marbles";
+import { map, share } from "rxjs/operators";
 import { finalize, inexorably } from "./inexorably";
 
 // prettier-ignore

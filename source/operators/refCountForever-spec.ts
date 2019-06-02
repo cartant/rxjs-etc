@@ -4,8 +4,8 @@
  */
 /*tslint:disable:no-unused-expression*/
 
-import { publish } from "rxjs/operators";
 import { marbles } from "rxjs-marbles";
+import { publish } from "rxjs/operators";
 import { materializeTo } from "./materializeTo";
 import { refCountForever } from "./refCountForever";
 

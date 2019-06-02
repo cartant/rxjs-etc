@@ -3,7 +3,6 @@
  * can be found in the LICENSE file at https://github.com/cartant/rxjs-etc
  */
 
-import { CloseKind } from "../kinds";
 import {
   ConnectableObservable,
   Observable,
@@ -12,6 +11,7 @@ import {
   UnaryFunction
 } from "rxjs";
 import { multicast } from "rxjs/operators";
+import { CloseKind } from "../kinds";
 import { finalizeWithKind } from "./finalizeWithKind";
 
 export function multicastWithKind<T>(

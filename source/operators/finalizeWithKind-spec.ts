@@ -6,8 +6,8 @@
 
 import { expect } from "chai";
 import { marbles } from "rxjs-marbles";
-import { finalizeWithKind } from "./finalizeWithKind";
 import { CloseKind } from "../kinds";
+import { finalizeWithKind } from "./finalizeWithKind";
 
 // prettier-ignore
 describe("finalizeWithKind", () => {

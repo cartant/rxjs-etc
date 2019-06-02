@@ -7,9 +7,9 @@
 import { expect } from "chai";
 import { of, queueScheduler } from "rxjs";
 import { expecter } from "ts-snippet";
-import { queue } from "./queue";
 import { compiler } from "../compiler-spec";
 import { timeout } from "../timeout-spec";
+import { queue } from "./queue";
 
 // prettier-ignore
 describe("queue", function(): void {

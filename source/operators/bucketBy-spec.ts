@@ -4,8 +4,8 @@
  */
 /*tslint:disable:no-unused-expression*/
 
-import { mergeMap } from "rxjs/operators";
 import { marbles } from "rxjs-marbles";
+import { mergeMap } from "rxjs/operators";
 import { bucketBy } from "./bucketBy";
 
 describe("bucketBy", () => {

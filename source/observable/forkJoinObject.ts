@@ -5,8 +5,8 @@
 
 import { Observable, of } from "rxjs";
 import { map } from "rxjs/operators";
-import { forkJoinArray } from "./forkJoinArray";
 import { isObservable } from "../util";
+import { forkJoinArray } from "./forkJoinArray";
 
 export function forkJoinObject<T>(
   instance: { [K in keyof T]: T[K] | Observable<T[K]> }

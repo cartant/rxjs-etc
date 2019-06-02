@@ -5,8 +5,8 @@
 /*tslint:disable:no-unused-expression*/
 
 import { marbles } from "rxjs-marbles";
-import { pause, PausedState } from "./pause";
 import { TestObservableLike } from "rxjs-marbles/types";
+import { pause, PausedState } from "./pause";
 
 const pausedValues = { p: "paused", r: "resumed" };
 

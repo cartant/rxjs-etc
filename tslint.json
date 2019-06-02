@@ -6,6 +6,7 @@
     "@cartant/tslint-config-rxjs"
   ],
   "rules": {
+    "deprecation": { "severity": "off" },
     "rxjs-no-connectable": { "severity": "off" },
     "rxjs-no-subclass": { "severity": "off" },
     "rxjs-no-unsafe-scope": { "severity": "off" },

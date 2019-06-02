@@ -4,8 +4,8 @@
  */
 /*tslint:disable:no-unused-expression*/
 
-import { filter, map } from "rxjs/operators";
 import { marbles } from "rxjs-marbles";
+import { filter, map } from "rxjs/operators";
 import { spread } from "./spread";
 
 // prettier-ignore

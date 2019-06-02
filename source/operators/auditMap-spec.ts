@@ -4,10 +4,10 @@
  */
 /*tslint:disable:no-unused-expression*/
 
-import { delay } from "rxjs/operators";
-import { marbles } from "rxjs-marbles";
-import { auditMap } from "./auditMap";
 import { of } from "rxjs";
+import { marbles } from "rxjs-marbles";
+import { delay } from "rxjs/operators";
+import { auditMap } from "./auditMap";
 
 // prettier-ignore
 describe("auditMap", () => {

@@ -5,8 +5,8 @@
 /*tslint:disable:no-unused-expression*/
 
 import { from, pipe } from "rxjs";
-import { delay, mapTo, tap } from "rxjs/operators";
 import { marbles } from "rxjs-marbles";
+import { delay, mapTo, tap } from "rxjs/operators";
 import { handler } from "./handler";
 
 // prettier-ignore

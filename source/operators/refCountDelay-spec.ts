@@ -6,8 +6,8 @@
 
 import { expect } from "chai";
 import { concat, defer, NEVER, of, ReplaySubject } from "rxjs";
-import { first, multicast, publish, toArray } from "rxjs/operators";
 import { marbles } from "rxjs-marbles";
+import { first, multicast, publish, toArray } from "rxjs/operators";
 import { materializeTo } from "./materializeTo";
 import { refCountDelay } from "./refCountDelay";
 

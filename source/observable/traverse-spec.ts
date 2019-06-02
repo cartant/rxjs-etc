@@ -16,8 +16,8 @@ import {
   timer
 } from "rxjs";
 
-import { delay, ignoreElements, map } from "rxjs/operators";
 import { marbles } from "rxjs-marbles";
+import { delay, ignoreElements, map } from "rxjs/operators";
 import { traverse } from "./traverse";
 
 // prettier-ignore
