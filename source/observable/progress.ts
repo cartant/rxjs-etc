@@ -3,7 +3,7 @@
  * can be found in the LICENSE file at https://github.com/cartant/rxjs-etc
  */
 
-import { defer, Observable, Subject } from "rxjs";
+import { Observable, Subject, Subscription } from "rxjs";
 import { finalize } from "rxjs/operators";
 
 export interface ProgressState {
@@ -27,12 +27,27 @@ export function progress<
   ) => Observable<T>,
   ...observables: Observables
 ): Observable<T> {
-  return defer(() => {
-    const finalizes = new Subject<undefined>();
-    const source = creator(
+  return new Observable(subscriber => {
+    let finalized = 0;
+    const total = observables.length;
+    const source = new Subject<any>();
+    const state = new Subject<ProgressState>();
+    const created = creator(
       ...(observables.map(o =>
-        o.pipe(finalize(() => finalizes.next(undefined)))
+        o.pipe(
+          finalize(() =>
+            state.next({
+              finalized: ++finalized,
+              total
+            })
+          )
+        )
       ) as Observables)
     );
+    const subscription = new Subscription();
+    const selected = selector(source as any, state);
+    subscription.add(selected.subscribe(subscriber));
+    subscription.add(created.subscribe(source));
+    return subscription;
   });
 }

@@ -11,7 +11,7 @@ import { progress } from "./progress";
 // prettier-ignore
 describe("progress", () => {
 
-  it.skip("should look something like this", () => {
+  it.only("should look something like this", () => {
     /*tslint:disable*/
     progress(
       (...o) => concat(...o),
@@ -22,7 +22,7 @@ describe("progress", () => {
         ),
         result
       ),
-      of(1), of(2), of(3)
+      of("a"), of("b"), of("c")
     ).subscribe(value => console.log(value));
   });
 });
