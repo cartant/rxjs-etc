@@ -4,18 +4,18 @@
  */
 /*tslint:disable:no-unnecessary-callback-wrapper no-unused-expression*/
 
-import { concat, merge, of } from "rxjs";
+import { concat, merge, forkJoin, of } from "rxjs";
 import { ignoreElements, tap } from "rxjs/operators";
 import { progress } from "./progress";
 
 // prettier-ignore
-describe("progress", () => {
-
-  it.only("should look something like this", () => {
+describe.only("progress", () => {
+  it("should support forkJoin", () => {
     /*tslint:disable*/
     progress(
-      (...o) => concat(...o),
-      (result, state) => merge(
+      [of("a"), of("b"), of("c")],
+      o => forkJoin(...o),
+      (state, concatenated) => merge(
         state.pipe(
           tap({
             complete: () => console.log("state complete"),
@@ -23,9 +23,50 @@ describe("progress", () => {
           }),
           ignoreElements()
         ),
-        result
-      ),
-      of("a"), of("b"), of("c")
+        concatenated
+      )
+    ).subscribe({
+      complete: () => console.log("complete"),
+      next: value => console.log(value)
+    });
+  });
+
+  it("should support concat", () => {
+    /*tslint:disable*/
+    progress(
+      [of("a"), of("b"), of("c")],
+      o => concat(...o),
+      (state, concatenated) => merge(
+        state.pipe(
+          tap({
+            complete: () => console.log("state complete"),
+            next: ({ finalized }) => console.log(finalized)
+          }),
+          ignoreElements()
+        ),
+        concatenated
+      )
+    ).subscribe({
+      complete: () => console.log("complete"),
+      next: value => console.log(value)
+    });
+  });
+
+  it("should support merge", () => {
+    /*tslint:disable*/
+    progress(
+      [of("a"), of("b"), of("c")],
+      o => merge(...o),
+      (state, concatenated) => merge(
+        state.pipe(
+          tap({
+            complete: () => console.log("state complete"),
+            next: ({ finalized }) => console.log(finalized)
+          }),
+          ignoreElements()
+        ),
+        concatenated
+      )
     ).subscribe({
       complete: () => console.log("complete"),
       next: value => console.log(value)
