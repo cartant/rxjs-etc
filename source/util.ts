@@ -5,6 +5,10 @@
 
 import { Observable, SchedulerLike } from "rxjs";
 
+export type ObservableValues<T> = {
+  [K in keyof T]: T[K] extends Observable<infer U> ? U : never
+};
+
 export function isNonNulled<T>(value: T): value is NonNullable<T> {
   return value != null;
 }

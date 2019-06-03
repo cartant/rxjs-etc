@@ -2,7 +2,7 @@
  * @license Use of this source code is governed by an MIT-style license that
  * can be found in the LICENSE file at https://github.com/cartant/rxjs-etc
  */
-/*tslint:disable:no-unnecessary-callback-wrapper no-unused-expression*/
+/*tslint:disable:no-console no-unnecessary-callback-wrapper no-unused-expression rxjs-no-ignored-subscription*/
 
 import { concat, forkJoin, merge, of, Subject } from "rxjs";
 import { ignoreElements, tap } from "rxjs/operators";
@@ -10,11 +10,10 @@ import { progress } from "./progress";
 
 // prettier-ignore
 describe.only("progress", () => {
-  it("should support forkJoin", () => {
+  it("should default to forkJoin", () => {
     const b = new Subject<string>();
     progress(
       [of("a"), b, of("c")],
-      o => forkJoin(...o),
       (state, concatenated) => merge(
         state.pipe(
           tap({
@@ -25,6 +24,29 @@ describe.only("progress", () => {
         ),
         concatenated
       )
+    ).subscribe({
+      complete: () => console.log("complete"),
+      next: value => console.log(value)
+    });
+    b.next("b");
+    b.complete();
+  });
+
+  it("should support forkJoin", () => {
+    const b = new Subject<string>();
+    progress(
+      [of("a"), b, of("c")],
+      (state, concatenated) => merge(
+        state.pipe(
+          tap({
+            complete: () => console.log("state complete"),
+            next: ({ finalized }) => console.log(finalized)
+          }),
+          ignoreElements()
+        ),
+        concatenated
+      ),
+      o => forkJoin(...o)
     ).subscribe({
       complete: () => console.log("complete"),
       next: value => console.log(value)
@@ -37,7 +59,6 @@ describe.only("progress", () => {
     const b = new Subject<string>();
     progress(
       [of("a"), b, of("c")],
-      o => concat(...o),
       (state, concatenated) => merge(
         state.pipe(
           tap({
@@ -47,7 +68,8 @@ describe.only("progress", () => {
           ignoreElements()
         ),
         concatenated
-      )
+      ),
+      o => concat(...o)
     ).subscribe({
       complete: () => console.log("complete"),
       next: value => console.log(value)
@@ -60,7 +82,6 @@ describe.only("progress", () => {
     const b = new Subject<string>();
     progress(
       [of("a"), b, of("c")],
-      o => merge(...o),
       (state, concatenated) => merge(
         state.pipe(
           tap({
@@ -70,7 +91,8 @@ describe.only("progress", () => {
           ignoreElements()
         ),
         concatenated
-      )
+      ),
+      o => merge(...o)
     ).subscribe({
       complete: () => console.log("complete"),
       next: value => console.log(value)

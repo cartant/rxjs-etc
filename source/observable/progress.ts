@@ -3,8 +3,9 @@
  * can be found in the LICENSE file at https://github.com/cartant/rxjs-etc
  */
 
-import { Observable, Subject, Subscription } from "rxjs";
+import { forkJoin, Observable, Subject } from "rxjs";
 import { finalize } from "rxjs/operators";
+import { ObservableValues } from "../util";
 
 export interface ProgressState {
   finalized: number;
@@ -17,18 +18,39 @@ export function progress<
   T
 >(
   observables: Observables,
-  creator: Creator,
   selector: (
     state: Observable<ProgressState>,
     created: ReturnType<Creator>
+  ) => Observable<T>,
+  creator: Creator
+): Observable<T>;
+
+export function progress<Observables extends Observable<any>[], T>(
+  observables: Observables,
+  selector: (
+    state: Observable<ProgressState>,
+    created: Observable<ObservableValues<Observables>>
   ) => Observable<T>
+): Observable<T>;
+
+export function progress<
+  Observables extends Observable<any>[],
+  Creator extends (obervables: Observables) => Observable<any>,
+  T
+>(
+  observables: Observables,
+  selector: (
+    state: Observable<ProgressState>,
+    created: ReturnType<Creator>
+  ) => Observable<T>,
+  creator?: Creator
 ): Observable<T> {
   return new Observable(subscriber => {
     let finalized = 0;
     const total = observables.length;
     const state = new Subject<ProgressState>();
     const shared = new Subject<any>();
-    const created = creator(observables.map(o =>
+    const created = (creator || forkJoin)(observables.map(o =>
       o.pipe(
         finalize(() => {
           state.next({
