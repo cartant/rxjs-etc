@@ -18,7 +18,7 @@ describe.only("progress", () => {
         state.pipe(
           tap({
             complete: () => console.log("state complete"),
-            next: ({ finalized }) => console.log(finalized)
+            next: state => console.log(state)
           }),
           ignoreElements()
         ),
@@ -40,7 +40,7 @@ describe.only("progress", () => {
         state.pipe(
           tap({
             complete: () => console.log("state complete"),
-            next: ({ finalized }) => console.log(finalized)
+            next: state => console.log(state)
           }),
           ignoreElements()
         ),
@@ -63,7 +63,7 @@ describe.only("progress", () => {
         state.pipe(
           tap({
             complete: () => console.log("state complete"),
-            next: ({ finalized }) => console.log(finalized)
+            next: state => console.log(state)
           }),
           ignoreElements()
         ),
@@ -86,7 +86,7 @@ describe.only("progress", () => {
         state.pipe(
           tap({
             complete: () => console.log("state complete"),
-            next: ({ finalized }) => console.log(finalized)
+            next: state => console.log(state)
           }),
           ignoreElements()
         ),
