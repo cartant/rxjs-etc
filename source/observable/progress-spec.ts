@@ -4,16 +4,16 @@
  */
 /*tslint:disable:no-unnecessary-callback-wrapper no-unused-expression*/
 
-import { concat, merge, forkJoin, of } from "rxjs";
+import { concat, forkJoin, merge, of, Subject } from "rxjs";
 import { ignoreElements, tap } from "rxjs/operators";
 import { progress } from "./progress";
 
 // prettier-ignore
 describe.only("progress", () => {
   it("should support forkJoin", () => {
-    /*tslint:disable*/
+    const b = new Subject<string>();
     progress(
-      [of("a"), of("b"), of("c")],
+      [of("a"), b, of("c")],
       o => forkJoin(...o),
       (state, concatenated) => merge(
         state.pipe(
@@ -29,12 +29,14 @@ describe.only("progress", () => {
       complete: () => console.log("complete"),
       next: value => console.log(value)
     });
+    b.next("b");
+    b.complete();
   });
 
   it("should support concat", () => {
-    /*tslint:disable*/
+    const b = new Subject<string>();
     progress(
-      [of("a"), of("b"), of("c")],
+      [of("a"), b, of("c")],
       o => concat(...o),
       (state, concatenated) => merge(
         state.pipe(
@@ -50,12 +52,14 @@ describe.only("progress", () => {
       complete: () => console.log("complete"),
       next: value => console.log(value)
     });
+    b.next("b");
+    b.complete();
   });
 
   it("should support merge", () => {
-    /*tslint:disable*/
+    const b = new Subject<string>();
     progress(
-      [of("a"), of("b"), of("c")],
+      [of("a"), b, of("c")],
       o => merge(...o),
       (state, concatenated) => merge(
         state.pipe(
@@ -71,5 +75,7 @@ describe.only("progress", () => {
       complete: () => console.log("complete"),
       next: value => console.log(value)
     });
+    b.next("b");
+    b.complete();
   });
 });
