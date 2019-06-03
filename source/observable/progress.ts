@@ -15,36 +15,36 @@ export interface ProgressState {
 
 export function progress<
   Observables extends Observable<any>[],
-  Creator extends (obervables: Observables) => Observable<any>,
+  SourceSelector extends (obervables: Observables) => Observable<any>,
   T
 >(
   observables: Observables,
-  selector: (
+  resultSelector: (
     state: Observable<ProgressState>,
-    created: ReturnType<Creator>
+    source: ReturnType<SourceSelector>
   ) => Observable<T>,
-  creator: Creator
+  sourceSelector: SourceSelector
 ): Observable<T>;
 
 export function progress<Observables extends Observable<any>[], T>(
   observables: Observables,
-  selector: (
+  resultSelector: (
     state: Observable<ProgressState>,
-    created: Observable<ObservableValues<Observables>>
+    source: Observable<ObservableValues<Observables>>
   ) => Observable<T>
 ): Observable<T>;
 
 export function progress<
   Observables extends Observable<any>[],
-  Creator extends (obervables: Observables) => Observable<any>,
+  SourceSelector extends (obervables: Observables) => Observable<any>,
   T
 >(
   observables: Observables,
-  selector: (
+  resultSelector: (
     state: Observable<ProgressState>,
-    created: ReturnType<Creator>
+    source: ReturnType<SourceSelector>
   ) => Observable<T>,
-  creator?: Creator
+  sourceSelector?: SourceSelector
 ): Observable<T> {
   return new Observable(subscriber => {
     let finalized = 0;
@@ -52,7 +52,7 @@ export function progress<
     const total = observables.length;
     const state = new Subject<ProgressState>();
     const shared = new Subject<any>();
-    const created = (creator || forkJoin)(observables.map(o =>
+    const source = (sourceSelector || forkJoin)(observables.map(o =>
       o.pipe(
         tap(() =>
           state.next({
@@ -73,9 +73,9 @@ export function progress<
         })
       )
     ) as Observables);
-    const selected = selector(state, shared as any);
-    const subscription = selected.subscribe(subscriber);
-    subscription.add(created.subscribe(shared));
+    const result = resultSelector(state, shared as any);
+    const subscription = result.subscribe(subscriber);
+    subscription.add(source.subscribe(shared));
     return subscription;
   });
 }
