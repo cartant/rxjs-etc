@@ -4,11 +4,12 @@
  */
 
 import { forkJoin, Observable, Subject } from "rxjs";
-import { finalize } from "rxjs/operators";
+import { finalize, tap } from "rxjs/operators";
 import { ObservableValues } from "../util";
 
 export interface ProgressState {
   finalized: number;
+  nexted: number;
   total: number;
 }
 
@@ -47,14 +48,23 @@ export function progress<
 ): Observable<T> {
   return new Observable(subscriber => {
     let finalized = 0;
+    let nexted = 0;
     const total = observables.length;
     const state = new Subject<ProgressState>();
     const shared = new Subject<any>();
     const created = (creator || forkJoin)(observables.map(o =>
       o.pipe(
+        tap(() =>
+          state.next({
+            finalized,
+            nexted: ++nexted,
+            total
+          })
+        ),
         finalize(() => {
           state.next({
             finalized: ++finalized,
+            nexted,
             total
           });
           if (finalized === total) {
