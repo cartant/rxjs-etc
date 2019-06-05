@@ -23,6 +23,7 @@ export * from "./indexElements";
 export * from "./inexorably";
 export * from "./initial";
 export * from "./instanceOf";
+export * from "./materializeTap";
 export * from "./materializeTo";
 export * from "./mergeTap";
 export * from "./multicastWithKind";
