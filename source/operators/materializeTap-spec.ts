@@ -4,9 +4,9 @@
  */
 /*tslint:disable:no-unused-expression*/
 
+import { Notification, Subject } from "rxjs";
 import { marbles } from "rxjs-marbles";
 import { materializeTap } from "./materializeTap";
-import { Subject, Notification } from "rxjs";
 
 // prettier-ignore
 describe("materializeTap", () => {
