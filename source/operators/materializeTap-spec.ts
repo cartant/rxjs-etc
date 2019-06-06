@@ -6,11 +6,40 @@
 
 import { marbles } from "rxjs-marbles";
 import { materializeTap } from "./materializeTap";
+import { Subject, Notification } from "rxjs";
 
+// prettier-ignore
 describe("materializeTap", () => {
-  it("should tap into next", marbles(m => {}));
+  it("should tap into next", marbles(m => {
+    const source = m.cold(" ---a----");
+    const expected = "      ---n----";
+    const subject = new Subject<Notification<string>>();
+    const tapped = source.pipe(materializeTap(notification => subject.next(notification)));
+    m.expect(tapped).toBeObservable(source);
+    m.expect(subject).toBeObservable(expected, {
+      n: new Notification("N", "a")
+    });
+  }));
 
-  it("should tap into error", marbles(m => {}));
+  it("should tap into error", marbles(m => {
+    const source = m.cold(" ---#----");
+    const expected = "      ---n----";
+    const subject = new Subject<Notification<string>>();
+    const tapped = source.pipe(materializeTap(notification => subject.next(notification)));
+    m.expect(tapped).toBeObservable(source);
+    m.expect(subject).toBeObservable(expected, {
+      n: new Notification("E", undefined as string | undefined, "error")
+    });
+  }));
 
-  it("should tap into complete", marbles(m => {}));
+  it("should tap into complete", marbles(m => {
+    const source = m.cold(" ---|");
+    const expected = "      ---n";
+    const subject = new Subject<Notification<string>>();
+    const tapped = source.pipe(materializeTap(notification => subject.next(notification)));
+    m.expect(tapped).toBeObservable(source);
+    m.expect(subject).toBeObservable(expected, {
+      n: new Notification("C")
+    });
+  }));
 });
