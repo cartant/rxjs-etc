@@ -89,7 +89,7 @@
     "lint": "tslint --project tsconfig.json \"source/**/*.ts\"",
     "prettier": "prettier --write \"./source/**/*.{js,json,ts}\"",
     "prettier:ci": "prettier --check \"./source/**/*.{js,json,ts}\"",
-    "test": "yarn run lint && yarn run test:build && yarn run test:karma && yarn run test:mocha",
+    "test": "yarn run lint && yarn run test:build && yarn run test:mocha && yarn run test:karma",
     "test:build": "yarn run test:clean && tsc -p tsconfig.json",
     "test:clean": "rimraf build",
     "test:karma": "karma start --single-run",
