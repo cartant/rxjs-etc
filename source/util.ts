@@ -3,11 +3,14 @@
  * can be found in the LICENSE file at https://github.com/cartant/rxjs-etc
  */
 
-import { Observable, SchedulerLike } from "rxjs";
+import { Observable, SchedulerLike, OperatorFunction } from "rxjs";
 
 export type ObservableValue<T> = T extends Observable<infer U> ? U : never;
 
 export type ObservableValues<T> = { [K in keyof T]: ObservableValue<T[K]> };
+
+// https://github.com/ReactiveX/rxjs/issues/4632#issuecomment-481815411
+export type Op<T> = OperatorFunction<any, T>;
 
 export function isNonNulled<T>(value: T): value is NonNullable<T> {
   return value != null;
