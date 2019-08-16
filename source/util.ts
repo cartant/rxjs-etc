@@ -3,7 +3,7 @@
  * can be found in the LICENSE file at https://github.com/cartant/rxjs-etc
  */
 
-import { Observable, SchedulerLike, OperatorFunction } from "rxjs";
+import { Observable, OperatorFunction, SchedulerLike } from "rxjs";
 
 export type ObservableValue<T> = T extends Observable<infer U> ? U : never;
 
