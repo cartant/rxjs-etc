@@ -90,7 +90,7 @@ export function traverse<T, M, R>({
                           operator,
                           tap(value => destination.next(value)),
                           ignoreElements()
-                        ) as Observable<never>,
+                        ),
                         from(markers)
                       )
                     )
