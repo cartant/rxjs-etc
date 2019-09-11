@@ -47,10 +47,10 @@ export function traverse<T, M>(options: {
 // https://github.com/palantir/tslint/issues/3906
 
 export function traverse<T, M, R>({
-  concurrency: optionalConcurrency, // tslint:disable-line:no-use-before-declare
+  concurrency = 1,
   factory,
-  operator: optionalOperator, // tslint:disable-line:no-use-before-declare
-  notifier: optionalNotifier // tslint:disable-line:no-use-before-declare
+  operator = identity,
+  notifier
 }: {
   concurrency?: number;
   factory: TraverseFactory<T, M>;
@@ -58,14 +58,11 @@ export function traverse<T, M, R>({
   notifier?: Observable<any>;
 }): Observable<T | R> {
   return new Observable<T | R>(observer => {
-    const concurrency =
-      optionalConcurrency !== undefined ? optionalConcurrency : 1;
-    const operator = optionalOperator || identity;
     let queue: NotificationQueue;
     let queueOperator: MonoTypeOperatorFunction<M | undefined>;
 
-    if (optionalNotifier) {
-      queue = new NotificationQueue(optionalNotifier);
+    if (notifier) {
+      queue = new NotificationQueue(notifier);
       queueOperator = identity;
     } else {
       const subject = new Subject<any>();
