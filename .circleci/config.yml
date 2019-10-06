@@ -2,7 +2,8 @@ version: 2
 jobs:
   build:
     docker:
-      - image: circleci/node:current
+      # https://circleci.com/docs/2.0/docker-image-tags.json
+      - image: circleci/node:current-browsers
     steps:
       - checkout
       - run:
