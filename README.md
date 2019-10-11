@@ -192,7 +192,7 @@ source.pipe(endWith("this is the end"))
 
 A bunch of utility functions that do what their names suggest:
 
-* [isNulled/isNotNulled](./source/util.ts)
+* [isNulled/isNonNulled](./source/util.ts)
 
     `isNulled` returns `true` if a value is `null` or `undefined`.
 
