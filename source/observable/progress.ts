@@ -52,27 +52,29 @@ export function progress<
     const total = observables.length;
     const state = new Subject<ProgressState>();
     const shared = new Subject<any>();
-    const source = (sourceSelector || forkJoin)(observables.map(o =>
-      o.pipe(
-        tap(() =>
-          state.next({
-            finalized,
-            nexted: ++nexted,
-            total
+    const source = (sourceSelector || forkJoin)(
+      observables.map(o =>
+        o.pipe(
+          tap(() =>
+            state.next({
+              finalized,
+              nexted: ++nexted,
+              total
+            })
+          ),
+          finalize(() => {
+            state.next({
+              finalized: ++finalized,
+              nexted,
+              total
+            });
+            if (finalized === total) {
+              state.complete();
+            }
           })
-        ),
-        finalize(() => {
-          state.next({
-            finalized: ++finalized,
-            nexted,
-            total
-          });
-          if (finalized === total) {
-            state.complete();
-          }
-        })
-      )
-    ) as Observables);
+        )
+      ) as Observables
+    );
     const result = resultSelector(state, shared as any);
     const subscription = result.subscribe(subscriber);
     subscription.add(source.subscribe(shared));

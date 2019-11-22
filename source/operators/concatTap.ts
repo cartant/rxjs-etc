@@ -13,10 +13,7 @@ export function concatTap<T>(
   return source =>
     source.pipe(
       concatMap(value =>
-        from(next(value)).pipe(
-          ignoreElements(),
-          endWith(value)
-        )
+        from(next(value)).pipe(ignoreElements(), endWith(value))
       )
     );
 }

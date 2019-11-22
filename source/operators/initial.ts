@@ -45,10 +45,7 @@ export function initial<T, R>(
     source.pipe(
       publish(published =>
         merge(
-          published.pipe(
-            take(count),
-            operator!
-          ),
+          published.pipe(take(count), operator!),
           published.pipe(skip(count))
         )
       )

@@ -17,10 +17,7 @@ export function memo<A extends any[], T>(
   const resolver = createResolver();
   return (memoize || defaultMemoize)(
     (...args: A) =>
-      func(...args).pipe(
-        multicast(new ReplaySubject<T>(Infinity)),
-        refCount()
-      ),
+      func(...args).pipe(multicast(new ReplaySubject<T>(Infinity)), refCount()),
     resolver
   );
 }

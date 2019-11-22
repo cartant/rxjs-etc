@@ -51,7 +51,7 @@ export function endWith<T, E = T>(
 export function endWith<T, E>(
   ...args: (E | SchedulerLike)[]
 ): OperatorFunction<T, T | E> {
-  let scheduler = args[args.length - 1] as (SchedulerLike | null);
+  let scheduler = args[args.length - 1] as SchedulerLike | null;
   if (isScheduler(scheduler)) {
     args.pop();
   } else {

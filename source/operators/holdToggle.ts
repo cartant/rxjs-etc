@@ -11,8 +11,5 @@ export function holdToggle<T, C>(
   releaseSelector: (value: C) => Observable<C>
 ): MonoTypeOperatorFunction<T> {
   return source =>
-    source.pipe(
-      bufferToggle(captures, releaseSelector),
-      concatAll()
-    );
+    source.pipe(bufferToggle(captures, releaseSelector), concatAll());
 }

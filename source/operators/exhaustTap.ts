@@ -31,10 +31,7 @@ export function exhaustTap<T>(
           exhaustMap(value =>
             concat(published, NEVER).pipe(
               takeUntil(
-                from(next(value)).pipe(
-                  ignoreElements(),
-                  endWith(null)
-                )
+                from(next(value)).pipe(ignoreElements(), endWith(null))
               ),
               toArray(),
               mergeAll()

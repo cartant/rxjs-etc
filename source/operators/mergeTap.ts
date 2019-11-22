@@ -13,10 +13,7 @@ export function mergeTap<T>(
   return source =>
     source.pipe(
       mergeMap(value =>
-        from(next(value)).pipe(
-          ignoreElements(),
-          endWith(value)
-        )
+        from(next(value)).pipe(ignoreElements(), endWith(value))
       )
     );
 }

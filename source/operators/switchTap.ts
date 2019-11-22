@@ -24,10 +24,7 @@ export function switchTap<T>(
         published.pipe(
           concatMap(value =>
             concat(
-              from(next(value)).pipe(
-                ignoreElements(),
-                takeUntil(published)
-              ),
+              from(next(value)).pipe(ignoreElements(), takeUntil(published)),
               of(value)
             )
           )
