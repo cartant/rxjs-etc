@@ -1,3 +1,10 @@
+<a name="9.7.1"></a>
+### [9.7.0](https://github.com/cartant/rxjs-etc/compare/v9.7.0...v9.7.1) (2020-02-23)
+
+### Fixes
+
+* Replace `first` with `take` in the `delayUntil` operator's implementation. ([10e217c](https://github.com/cartant/rxjs-etc/commit/10e217c))
+
 <a name="9.7.0"></a>
 ### [9.7.0](https://github.com/cartant/rxjs-etc/compare/v9.6.2...v9.7.0) (2020-02-23)
 
