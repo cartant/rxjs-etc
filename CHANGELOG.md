@@ -1,3 +1,10 @@
+<a name="9.7.0"></a>
+### [9.7.0](https://github.com/cartant/rxjs-etc/compare/v9.6.2...v9.7.0) (2020-02-23)
+
+### Features
+
+* Add the `delayUntil` operator. ([bf0fb88](https://github.com/cartant/rxjs-etc/commit/bf0fb88))
+
 <a name="9.6.2"></a>
 ### [9.6.2](https://github.com/cartant/rxjs-etc/compare/v9.6.1...v9.6.2) (2019-05-29)
 
