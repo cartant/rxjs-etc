@@ -23,7 +23,7 @@ describe("delayUntil", () => {
   );
 
   it(
-    "should don't emit after the signal",
+    "should support sources that don't emit after the signal",
     marbles(m => {
       const source = m.cold("   -a-b------|");
       const signal = m.cold("   -----x-----");
@@ -37,7 +37,7 @@ describe("delayUntil", () => {
   );
 
   it(
-    "should don't emit before the signal",
+    "should support sources that don't emit before the signal",
     marbles(m => {
       const source = m.cold("   -------a-b|");
       const signal = m.cold("   -----x-----");
