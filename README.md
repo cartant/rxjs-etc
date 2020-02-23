@@ -99,6 +99,10 @@ source.pipe(endWith("this is the end"))
 
     Like `debounceTime`, but with an additional duration to ensure some notifications are emitted for super-busy streams.
 
+* [delayUntil](./source/operators/delayUntil.ts)
+
+    Delays a source's value notifications until a signal is received from a notifier.
+
 * [endWith](./source/operators/endWith.ts)
 
     Like `startWith`, but for the other end.
