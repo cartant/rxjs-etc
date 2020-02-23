@@ -23,7 +23,49 @@ describe("delayUntil", () => {
   );
 
   it(
-    "should support empty sources",
+    "should don't emit after the signal",
+    marbles(m => {
+      const source = m.cold("   -a-b------|");
+      const signal = m.cold("   -----x-----");
+      const subs = "            ^---------!";
+      const expected = m.cold(" -----(ab)-|");
+
+      const destination = source.pipe(delayUntil(signal));
+      m.expect(destination).toBeObservable(expected);
+      m.expect(source).toHaveSubscriptions(subs);
+    })
+  );
+
+  it(
+    "should don't emit before the signal",
+    marbles(m => {
+      const source = m.cold("   -------a-b|");
+      const signal = m.cold("   -----x-----");
+      const subs = "            ^---------!";
+      const expected = m.cold(" -------a-b|");
+
+      const destination = source.pipe(delayUntil(signal));
+      m.expect(destination).toBeObservable(expected);
+      m.expect(source).toHaveSubscriptions(subs);
+    })
+  );
+
+  it(
+    "should support empty sources that complete before the signal",
+    marbles(m => {
+      const source = m.cold("   ---|   ");
+      const signal = m.cold("   -----x-");
+      const subs = "            ^--!   ";
+      const expected = m.cold(" ---|   ");
+
+      const destination = source.pipe(delayUntil(signal));
+      m.expect(destination).toBeObservable(expected);
+      m.expect(source).toHaveSubscriptions(subs);
+    })
+  );
+
+  it(
+    "should support empty sources that complete after the signal",
     marbles(m => {
       const source = m.cold("   --------------|");
       const signal = m.cold("   -----x---------");

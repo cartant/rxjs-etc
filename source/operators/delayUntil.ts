@@ -4,7 +4,7 @@
  */
 
 import { concat, Observable, OperatorFunction } from "rxjs";
-import { buffer, first, mergeAll, publish } from "rxjs/operators";
+import { buffer, mergeAll, publish, take } from "rxjs/operators";
 
 export function delayUntil<T>(
   notifier: Observable<any>
@@ -12,7 +12,7 @@ export function delayUntil<T>(
   return source =>
     source.pipe(
       publish(published =>
-        concat(published.pipe(buffer(notifier), first(), mergeAll()), published)
+        concat(published.pipe(buffer(notifier), take(1), mergeAll()), published)
       )
     );
 }
