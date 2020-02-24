@@ -1,5 +1,12 @@
+<a name="9.7.2"></a>
+### [9.7.2](https://github.com/cartant/rxjs-etc/compare/v9.7.1...v9.7.2) (2020-02-24)
+
+### Fixes
+
+* Delay completion in the `delayUntil` operator's implementation. ([667be7a](https://github.com/cartant/rxjs-etc/commit/667be7a))
+
 <a name="9.7.1"></a>
-### [9.7.0](https://github.com/cartant/rxjs-etc/compare/v9.7.0...v9.7.1) (2020-02-23)
+### [9.7.1](https://github.com/cartant/rxjs-etc/compare/v9.7.0...v9.7.1) (2020-02-23)
 
 ### Fixes
 
