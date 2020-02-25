@@ -1,3 +1,10 @@
+<a name="9.7.3"></a>
+### [9.7.3](https://github.com/cartant/rxjs-etc/compare/v9.7.2...v9.7.3) (2020-02-25)
+
+### Fixes
+
+* Delay indefinitely in the `delayUntil` operator's implementation if the notifier completes without signalling. ([60790c1](https://github.com/cartant/rxjs-etc/commit/60790c1))
+
 <a name="9.7.2"></a>
 ### [9.7.2](https://github.com/cartant/rxjs-etc/compare/v9.7.1...v9.7.2) (2020-02-24)
 
