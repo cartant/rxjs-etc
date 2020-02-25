@@ -1,3 +1,10 @@
+<a name="9.7.4"></a>
+### [9.7.4](https://github.com/cartant/rxjs-etc/compare/v9.7.3...v9.7.4) (2020-02-25)
+
+### Fixes
+
+* Clear the buffer in the `delayUntil` operator's implementation upon unsubscription from the delayed observable. ([7e9eb13](https://github.com/cartant/rxjs-etc/commit/7e9eb13))
+
 <a name="9.7.3"></a>
 ### [9.7.3](https://github.com/cartant/rxjs-etc/compare/v9.7.2...v9.7.3) (2020-02-25)
 
