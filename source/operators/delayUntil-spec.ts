@@ -119,4 +119,18 @@ describe("delayUntil", () => {
       m.expect(source).toHaveSubscriptions(subs);
     })
   );
+
+  it(
+    "should delay indefinitely if the notifier completes",
+    marbles(m => {
+      const source = m.cold("   -a-b------c-d-|");
+      const signal = m.cold("   -----|         ");
+      const subs = "            ^-------------!";
+      const expected = m.cold(" ---------------");
+
+      const destination = source.pipe(delayUntil(signal));
+      m.expect(destination).toBeObservable(expected);
+      m.expect(source).toHaveSubscriptions(subs);
+    })
+  );
 });
