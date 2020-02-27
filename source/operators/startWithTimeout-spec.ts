@@ -2,8 +2,10 @@
  * @license Use of this source code is governed by an MIT-style license that
  * can be found in the LICENSE file at https://github.com/cartant/rxjs-etc
  */
-/*tslint:disable:no-unused-expression*/
+/*tslint:disable:no-unused-expression rxjs-no-ignored-subscription*/
 
+import { expect } from "chai";
+import { BehaviorSubject, Subject } from "rxjs";
 import { marbles } from "rxjs-marbles";
 import { startWithTimeout } from "./startWithTimeout";
 
@@ -59,5 +61,30 @@ describe("startWithTimeout", () => {
       m.expect(destination).toBeObservable(expected);
       m.expect(source).toHaveSubscriptions(subs);
     })
+  );
+
+  it(
+    "should emit a value if the source does not emit synchronously with a timeout of zero",
+    () => {
+      const subject = new Subject<string>();
+      const composed = subject.pipe(startWithTimeout("z", 0));
+
+      const values: string[] = [];
+      composed.subscribe(value => values.push(value));
+      subject.next("a");
+      expect(values).to.deep.equal(["z", "a"]);
+    }
+  );
+
+  it(
+    "should do nothing if the source emits synchronously with a timeout of zero",
+    () => {
+      const subject = new BehaviorSubject("a");
+      const composed = subject.pipe(startWithTimeout("z", 0));
+
+      const values: string[] = [];
+      composed.subscribe(value => values.push(value));
+      expect(values).to.deep.equal(["a"]);
+    }
   );
 });
