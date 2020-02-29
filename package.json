@@ -85,6 +85,7 @@
     "dist:clean": "rimraf dist && rimraf bundles/rxjs-etc.* && mkdirp bundles",
     "dist:copy": "cpy bundles/rxjs-etc.* dist/bundles",
     "lint": "tslint --project tsconfig.json \"source/**/*.ts\"",
+    "prepublishOnly": "yarn run test && yarn run dist",
     "prettier": "prettier --write \"./source/**/*.{js,json,ts}\"",
     "prettier:ci": "prettier --check \"./source/**/*.{js,json,ts}\"",
     "test": "yarn run lint && yarn run test:build && yarn run test:mocha && yarn run test:karma",
