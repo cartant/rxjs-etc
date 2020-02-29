@@ -39,5 +39,5 @@ export function isObservable(value: any): value is Observable<any> {
 export function isScheduler(
   value: object | null | undefined
 ): value is SchedulerLike {
-  return Boolean(value && typeof value["schedule"] === "function");
+  return Boolean(value && typeof (value as any)["schedule"] === "function");
 }

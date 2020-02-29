@@ -119,7 +119,7 @@ export function genericPipe<T, A, B, C, D, E, F, G, H, I>(
 export function genericPipe(
   ...operators: UnaryFunction<any, any>[]
 ): UnaryFunction<any, any> {
-  return _pipe.apply(undefined, operators);
+  return _pipe.apply(undefined, operators as any);
 }
 
 /** @deprecated Inferring a generic can be unsafe; use genericOperator instead */

@@ -50,7 +50,7 @@ describe("genericOperator", function(): void {
     );
   });
 
-  if (!global["window"]) {
+  if (!(global as any).window) {
     describe("types", () => {
       const expectSnippet = expecter(
         code => `

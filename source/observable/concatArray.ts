@@ -10,5 +10,5 @@ export function concatArray<T, R>(observables: Observable<T>[]): Observable<R> {
     return EMPTY;
   }
   /*tslint:disable-next-line:deprecation*/
-  return concat.apply(null, observables);
+  return concat.apply(null, observables) as any;
 }

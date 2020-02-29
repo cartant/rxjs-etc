@@ -31,7 +31,7 @@ describe("splitBy", function() {
     })
   );
 
-  if (!global["window"]) {
+  if (!(global as any).window) {
     const expectSnippet = expecter(
       code => `
         import { Observable, of } from "rxjs";

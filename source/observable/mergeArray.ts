@@ -18,5 +18,5 @@ export function mergeArray<T, R>(
     applyArgs.push(concurrent);
   }
   /*tslint:disable-next-line:deprecation*/
-  return merge.apply(null, applyArgs);
+  return merge.apply(null, applyArgs) as any;
 }

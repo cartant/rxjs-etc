@@ -5,6 +5,6 @@
 
 import { Compiler } from "ts-snippet";
 
-export const compiler: Compiler = global["window"]
+export const compiler: Compiler = (global as any).window
   ? undefined!
   : new Compiler({ strict: true });

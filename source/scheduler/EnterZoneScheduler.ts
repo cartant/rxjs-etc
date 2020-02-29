@@ -11,7 +11,7 @@ export class EnterZoneScheduler {
 
   schedule(...args: any[]): Subscription {
     return this.zone.run(() =>
-      this.scheduler.schedule.apply(this.scheduler, args)
+      this.scheduler.schedule.apply(this.scheduler, args as any)
     );
   }
 }

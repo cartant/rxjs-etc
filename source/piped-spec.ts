@@ -11,7 +11,7 @@ describe("Piped", function() {
   /*tslint:disable-next-line:no-invalid-this*/
   this.timeout(timeout);
 
-  if (!global["window"]) {
+  if (!(global as any).window) {
     const expectSnippet = expecter(
       code => `
         import { Observable, of } from "rxjs";

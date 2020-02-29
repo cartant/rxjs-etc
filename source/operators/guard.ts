@@ -18,7 +18,7 @@ export function guard<T, R extends T>(
         }
 
         const error = new Error(message || "Guard rejection.");
-        error["value"] = value;
+        (error as any)["value"] = value;
         throw error;
       })
     );

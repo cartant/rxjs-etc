@@ -27,5 +27,5 @@ export function forkJoinArray<T, R>(
     applyArgs.push((...values: any[]) => project(values));
   }
   /*tslint:disable-next-line:deprecation*/
-  return forkJoin.apply(null, applyArgs);
+  return forkJoin.apply(null, applyArgs) as any;
 }
