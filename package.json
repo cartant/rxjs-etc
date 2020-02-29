@@ -44,7 +44,6 @@
     "webpack-cli": "^3.0.0",
     "webpack-rxjs-externals": "^2.0.0"
   },
-  "es2015": "./dist/esm2015/index.js",
   "homepage": "https://github.com/cartant/rxjs-etc",
   "husky": {
     "hooks": {
@@ -62,8 +61,8 @@
       "git add"
     ]
   },
-  "main": "./dist/index.js",
-  "module": "./dist/esm5/index.js",
+  "main": "./dist/cjs/index.js",
+  "module": "./dist/esm/index.js",
   "name": "rxjs-etc",
   "optionalDependencies": {},
   "peerDependencies": {
@@ -79,13 +78,12 @@
   },
   "scripts": {
     "dist": "yarn run dist:build && yarn run dist:copy",
-    "dist:build": "yarn run dist:clean && yarn run dist:build:cjs && yarn run dist:build:esm2015 && yarn run dist:build:esm5 && yarn run dist:build:bundle",
+    "dist:build": "yarn run dist:clean && yarn run dist:build:cjs && yarn run dist:build:esm && yarn run dist:build:bundle",
     "dist:build:bundle": "webpack --config webpack.config.js && webpack --config webpack.config.js --env.production",
     "dist:build:cjs": "tsc -p tsconfig-dist-cjs.json",
-    "dist:build:esm2015": "tsc -p tsconfig-dist-esm2015.json",
-    "dist:build:esm5": "tsc -p tsconfig-dist-esm5.json",
+    "dist:build:esm": "tsc -p tsconfig-dist-esm.json",
     "dist:clean": "rimraf dist && rimraf bundles/rxjs-etc.* && mkdirp bundles",
-    "dist:copy": "node scripts/pack.js && cpy bundles/rxjs-etc.* dist/bundles/ && cpy CHANGELOG.md LICENSE README.md dist/ && cpy **/package.json ../dist/ --cwd=source/ --parents",
+    "dist:copy": "cpy bundles/rxjs-etc.* dist/bundles",
     "lint": "tslint --project tsconfig.json \"source/**/*.ts\"",
     "prettier": "prettier --write \"./source/**/*.{js,json,ts}\"",
     "prettier:ci": "prettier --check \"./source/**/*.{js,json,ts}\"",
@@ -97,7 +95,7 @@
     "test:watch": "yarn run lint && yarn run test:build && karma start"
   },
   "sideEffects": false,
-  "types": "./dist/index.d.ts",
+  "types": "./dist/esm/index.d.ts",
   "unpkg": "./bundles/rxjs-etc.min.umd.js",
   "version": "9.7.4"
 }
