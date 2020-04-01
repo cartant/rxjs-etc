@@ -10,7 +10,7 @@ import { delayUntil } from "./delayUntil";
 describe("delayUntil", () => {
   it(
     "should delay notifications received prior to the signal",
-    marbles(m => {
+    marbles((m) => {
       const source = m.cold("   -a-b------c-d-|");
       const signal = m.cold("   -----x---------");
       const subs = "            ^-------------!";
@@ -24,7 +24,7 @@ describe("delayUntil", () => {
 
   it(
     "should support sources that don't emit after the signal",
-    marbles(m => {
+    marbles((m) => {
       const source = m.cold("   -a-b------|");
       const signal = m.cold("   -----x-----");
       const subs = "            ^---------!";
@@ -38,7 +38,7 @@ describe("delayUntil", () => {
 
   it(
     "should support sources that don't emit before the signal",
-    marbles(m => {
+    marbles((m) => {
       const source = m.cold("   -------a-b|");
       const signal = m.cold("   -----x-----");
       const subs = "            ^---------!";
@@ -52,7 +52,7 @@ describe("delayUntil", () => {
 
   it(
     "should delay sources that complete before the signal",
-    marbles(m => {
+    marbles((m) => {
       const source = m.cold("   -ab|      ");
       const signal = m.cold("   -----x----");
       const subs = "            ^--!      ";
@@ -66,7 +66,7 @@ describe("delayUntil", () => {
 
   it(
     "should delay empty sources that complete before the signal",
-    marbles(m => {
+    marbles((m) => {
       const source = m.cold("   ---|   ");
       const signal = m.cold("   -----x-");
       const subs = "            ^--!   ";
@@ -80,7 +80,7 @@ describe("delayUntil", () => {
 
   it(
     "should support empty sources that complete after the signal",
-    marbles(m => {
+    marbles((m) => {
       const source = m.cold("   --------------|");
       const signal = m.cold("   -----x---------");
       const subs = "            ^-------------!";
@@ -94,7 +94,7 @@ describe("delayUntil", () => {
 
   it(
     "should not delay errors before the signal",
-    marbles(m => {
+    marbles((m) => {
       const source = m.cold("   --#    ");
       const signal = m.cold("   -----x-");
       const subs = "            ^-!    ";
@@ -108,7 +108,7 @@ describe("delayUntil", () => {
 
   it(
     "should support sources that error after the signal",
-    marbles(m => {
+    marbles((m) => {
       const source = m.cold("   -------#");
       const signal = m.cold("   -----x--");
       const subs = "            ^------!";
@@ -122,7 +122,7 @@ describe("delayUntil", () => {
 
   it(
     "should delay indefinitely if the notifier completes",
-    marbles(m => {
+    marbles((m) => {
       const source = m.cold("   -a-b------c-d-|");
       const signal = m.cold("   -----|         ");
       const subs = "            ^-------------!";

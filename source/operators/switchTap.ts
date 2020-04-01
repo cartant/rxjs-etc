@@ -8,7 +8,7 @@ import {
   from,
   MonoTypeOperatorFunction,
   ObservableInput,
-  of
+  of,
 } from "rxjs";
 import { concatMap, ignoreElements, publish, takeUntil } from "rxjs/operators";
 
@@ -18,11 +18,11 @@ import { concatMap, ignoreElements, publish, takeUntil } from "rxjs/operators";
 export function switchTap<T>(
   next: (value: T) => ObservableInput<any>
 ): MonoTypeOperatorFunction<T> {
-  return source =>
+  return (source) =>
     source.pipe(
-      publish(published =>
+      publish((published) =>
         published.pipe(
-          concatMap(value =>
+          concatMap((value) =>
             concat(
               from(next(value)).pipe(ignoreElements(), takeUntil(published)),
               of(value)

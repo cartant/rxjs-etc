@@ -52,5 +52,5 @@ export function queue<T1, T2, T3, T4, T5, T6>(
 ];
 export function queue<R = any>(...sources: Observable<any>[]): Observable<R>[];
 export function queue(...sources: Observable<any>[]): Observable<any>[] {
-  return sources.map(source => source.pipe(observeOn(queueScheduler)));
+  return sources.map((source) => source.pipe(observeOn(queueScheduler)));
 }

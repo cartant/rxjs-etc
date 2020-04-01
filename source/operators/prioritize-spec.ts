@@ -13,7 +13,7 @@ import {
   filter,
   mapTo,
   toArray,
-  window
+  window,
 } from "rxjs/operators";
 
 import { marbles } from "rxjs-marbles";

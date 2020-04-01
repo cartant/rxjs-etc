@@ -8,7 +8,7 @@ import {
   Observable,
   OperatorFunction,
   Subject,
-  Subscription
+  Subscription,
 } from "rxjs";
 
 import { publish } from "rxjs/operators";
@@ -21,7 +21,7 @@ export function prioritize<T, R = T>(
   ) => Observable<R>
 ): OperatorFunction<T, R> {
   return (source: Observable<T>) =>
-    new Observable<R>(observer => {
+    new Observable<R>((observer) => {
       const published = publish<T>()(source) as ConnectableObservable<T>;
       const subjects: Subject<T>[] = [];
       const subscription = new Subscription();

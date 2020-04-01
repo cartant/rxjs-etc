@@ -10,7 +10,7 @@ import {
   debounceTime,
   delay,
   sampleTime,
-  shareReplay
+  shareReplay,
 } from "rxjs/operators";
 import { switchMapUntil } from "./switchMapUntil";
 

@@ -10,7 +10,7 @@ import {
   map,
   mergeMap,
   publishReplay,
-  startWith
+  startWith,
 } from "rxjs/operators";
 
 // I found this pause operator hiding within a more complicated operator that
@@ -22,14 +22,14 @@ export function pause<T>(
   notifier: Observable<PausedState>,
   initialState: PausedState = "resumed"
 ): MonoTypeOperatorFunction<T> {
-  return source =>
+  return (source) =>
     notifier.pipe(
       startWith(initialState),
-      publishReplay(1, undefined, published =>
+      publishReplay(1, undefined, (published) =>
         source.pipe(
-          mergeMap(value =>
+          mergeMap((value) =>
             published.pipe(
-              filter(state => state === "resumed"),
+              filter((state) => state === "resumed"),
               first(),
               map(() => value)
             )

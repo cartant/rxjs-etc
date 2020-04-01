@@ -7,13 +7,13 @@ import { expecter } from "ts-snippet";
 import { compiler } from "./compiler-spec";
 import { timeout } from "./timeout-spec";
 
-describe("Piped", function() {
+describe("Piped", function () {
   /*tslint:disable-next-line:no-invalid-this*/
   this.timeout(timeout);
 
   if (!(global as any).window) {
     const expectSnippet = expecter(
-      code => `
+      (code) => `
         import { Observable, of } from "rxjs";
         import { debounceTime } from "rxjs/operators";
         import { Piped } from "./source/piped";

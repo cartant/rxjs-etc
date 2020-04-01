@@ -25,7 +25,7 @@ export function tapSubscribe<T>(
     typeof configOrSubscribe === "function"
       ? { subscribe: configOrSubscribe }
       : configOrSubscribe;
-  return source =>
+  return (source) =>
     defer(() => {
       let completed = false;
       let errored = false;
@@ -33,7 +33,7 @@ export function tapSubscribe<T>(
       return source.pipe(
         tap({
           complete: () => (completed = true),
-          error: () => (errored = true)
+          error: () => (errored = true),
         }),
         finalize(() => {
           if (completed && ignore.complete) {

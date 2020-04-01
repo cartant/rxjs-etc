@@ -30,20 +30,20 @@ export function combineLatestHigherOrderObject<T>(): OperatorFunction<
   Record<string, Observable<T>>,
   Record<string, T>
 > {
-  return higherOrder =>
-    new Observable<Record<string, T>>(observer => {
+  return (higherOrder) =>
+    new Observable<Record<string, T>>((observer) => {
       let lasts: Source<T>[] = [];
       let nexts: Source<T>[] = [];
       let higherOrderCompleted = false;
       const higherOrderSubscription = new Subscription();
       higherOrderSubscription.add(
         higherOrder.subscribe(
-          observables => {
+          (observables) => {
             const subscribes: (() => void)[] = [];
-            nexts = Object.keys(observables).map(key => {
+            nexts = Object.keys(observables).map((key) => {
               const observable = observables[key];
               const index = lasts.findIndex(
-                last => last.observable === observable && last.key === key
+                (last) => last.observable === observable && last.key === key
               );
               if (index !== -1) {
                 const next = lasts[index];
@@ -54,19 +54,19 @@ export function combineLatestHigherOrderObject<T>(): OperatorFunction<
                 completed: false,
                 key,
                 nexted: false,
-                observable
+                observable,
               };
               subscribes.push(() => {
                 if (higherOrderSubscription.closed) {
                   return;
                 }
                 next.subscription = next.observable.subscribe(
-                  value => {
+                  (value) => {
                     next.nexted = true;
                     next.value = value;
                     combine(nexts, observer);
                   },
-                  error => observer.error(error),
+                  (error) => observer.error(error),
                   () => {
                     next.completed = true;
                     if (
@@ -88,9 +88,9 @@ export function combineLatestHigherOrderObject<T>(): OperatorFunction<
             });
             lasts = nexts;
             combine(nexts, observer);
-            subscribes.forEach(subscribe => subscribe());
+            subscribes.forEach((subscribe) => subscribe());
           },
-          error => observer.error(error),
+          (error) => observer.error(error),
           () => {
             if (lasts.every(({ completed }) => completed)) {
               observer.complete();

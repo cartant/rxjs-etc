@@ -10,7 +10,7 @@ import {
   OperatorFunction,
   Subject,
   Subscriber,
-  TeardownLogic
+  TeardownLogic,
 } from "rxjs";
 
 export function bucketBy<T>(
@@ -18,7 +18,7 @@ export function bucketBy<T>(
   hashSelector: (value: T, index: number) => number,
   subjectSelector: () => Subject<T> = () => new Subject<T>()
 ): OperatorFunction<T, Observable<T>[]> {
-  return source =>
+  return (source) =>
     source.lift(new BucketByOperator<T>(count, hashSelector, subjectSelector));
 }
 
@@ -57,7 +57,7 @@ class BucketBySubscriber<T> extends Subscriber<T> {
     for (let i = 0; i < count; ++i) {
       buckets[i] = subjectSelector();
     }
-    destination.next!(buckets.map(subject => subject.asObservable()));
+    destination.next!(buckets.map((subject) => subject.asObservable()));
   }
 
   protected _next(value: T): void {
@@ -81,7 +81,7 @@ class BucketBySubscriber<T> extends Subscriber<T> {
     if (closed) {
       return;
     }
-    buckets.forEach(bucket => bucket.error(error));
+    buckets.forEach((bucket) => bucket.error(error));
     destination.error!(error);
   }
 
@@ -90,7 +90,7 @@ class BucketBySubscriber<T> extends Subscriber<T> {
     if (closed) {
       return;
     }
-    buckets.forEach(bucket => bucket.complete());
+    buckets.forEach((bucket) => bucket.complete());
     destination.complete!();
   }
 }

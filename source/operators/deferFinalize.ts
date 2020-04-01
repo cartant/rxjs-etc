@@ -11,7 +11,7 @@ import {
   Operator,
   Subscriber,
   Subscription,
-  TeardownLogic
+  TeardownLogic,
 } from "rxjs";
 import { finalize } from "rxjs/operators";
 import { CloseKind } from "../kinds";
@@ -19,7 +19,7 @@ import { CloseKind } from "../kinds";
 export function deferFinalize<T>(
   callback: (kind: CloseKind) => ObservableInput<any>
 ): MonoTypeOperatorFunction<T> {
-  return source => source.lift(new DeferFinalizeOperator(callback));
+  return (source) => source.lift(new DeferFinalizeOperator(callback));
 }
 
 /*tslint:disable-next-line:no-unused-declaration*/

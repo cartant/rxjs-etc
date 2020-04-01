@@ -13,7 +13,7 @@ import {
   of,
   SchedulerLike,
   Subject,
-  timer
+  timer,
 } from "rxjs";
 
 import { marbles } from "rxjs-marbles";

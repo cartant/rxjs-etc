@@ -8,7 +8,7 @@ import {
   MonoTypeOperatorFunction,
   Observable,
   of,
-  SchedulerLike
+  SchedulerLike,
 } from "rxjs";
 
 import {
@@ -20,7 +20,7 @@ import {
   startWith,
   switchMap,
   takeLast,
-  takeUntil
+  takeUntil,
 } from "rxjs/operators";
 
 export function debounceAfter<T>(
@@ -32,7 +32,7 @@ export function debounceAfter<T>(
 
   return (source: Observable<T>) =>
     source.pipe(
-      publish(sharedSource =>
+      publish((sharedSource) =>
         notifier.pipe(
           switchMap(() =>
             concat(of(true), of(false).pipe(delay(duration, scheduler)))

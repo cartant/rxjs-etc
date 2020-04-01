@@ -14,7 +14,7 @@ describe("resettable", () => {
     const mockSubject: Subject<number> = {
       complete: sinon.stub(),
       error: sinon.stub(),
-      next: sinon.stub()
+      next: sinon.stub(),
     } as any;
 
     const { subject } = resettable(() => mockSubject);
@@ -29,7 +29,7 @@ describe("resettable", () => {
     );
 
     const a: number[] = [];
-    observable.subscribe(value => a.push(value));
+    observable.subscribe((value) => a.push(value));
 
     subject.next(1);
     subject.next(2);
@@ -37,18 +37,18 @@ describe("resettable", () => {
     subject.next(4);
 
     const b: number[] = [];
-    observable.subscribe(value => b.push(value));
+    observable.subscribe((value) => b.push(value));
 
     reset();
 
     const c: number[] = [];
-    observable.subscribe(value => c.push(value));
+    observable.subscribe((value) => c.push(value));
 
     subject.next(5);
     subject.next(6);
 
     const d: number[] = [];
-    observable.subscribe(value => d.push(value));
+    observable.subscribe((value) => d.push(value));
 
     expect(a).to.deep.equal([1, 2, 3, 4, 5, 6]);
     expect(b).to.deep.equal([2, 3, 4, 5, 6]);
@@ -63,7 +63,7 @@ describe("resettable", () => {
     );
 
     const a: number[] = [];
-    observable.subscribe(value => a.push(value));
+    observable.subscribe((value) => a.push(value));
 
     subject.next(1);
     subject.next(2);
@@ -71,18 +71,18 @@ describe("resettable", () => {
     subject.next(4);
 
     const b: number[] = [];
-    observable.subscribe(value => b.push(value));
+    observable.subscribe((value) => b.push(value));
 
     reset(1);
 
     const c: number[] = [];
-    observable.subscribe(value => c.push(value));
+    observable.subscribe((value) => c.push(value));
 
     subject.next(5);
     subject.next(6);
 
     const d: number[] = [];
-    observable.subscribe(value => d.push(value));
+    observable.subscribe((value) => d.push(value));
 
     expect(a).to.deep.equal([1, 2, 3, 4, 5, 6]);
     expect(b).to.deep.equal([3, 4, 5, 6]);

@@ -9,7 +9,7 @@ import { filter, share } from "rxjs/operators";
 function not<T>(
   ...predicates: ((value: T) => boolean)[]
 ): (value: T) => boolean {
-  return value => predicates.every(predicate => !predicate(value));
+  return (value) => predicates.every((predicate) => !predicate(value));
 }
 
 /** @deprecated Use the splitBy operator instead */
@@ -45,7 +45,7 @@ export function separate<T>(
 ): Observable<T>[] {
   const shared = source.pipe(share());
   return [
-    ...predicates.map(predicate => shared.pipe(filter(predicate))),
-    shared.pipe(filter(not(...predicates)))
+    ...predicates.map((predicate) => shared.pipe(filter(predicate))),
+    shared.pipe(filter(not(...predicates))),
   ];
 }

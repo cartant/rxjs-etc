@@ -10,9 +10,9 @@ import { endWith } from "./endWith";
 export function concatTap<T>(
   next: (value: T) => ObservableInput<any>
 ): MonoTypeOperatorFunction<T> {
-  return source =>
+  return (source) =>
     source.pipe(
-      concatMap(value =>
+      concatMap((value) =>
         from(next(value)).pipe(ignoreElements(), endWith(value))
       )
     );

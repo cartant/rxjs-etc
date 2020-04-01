@@ -6,8 +6,8 @@
 import { Observable, OperatorFunction } from "rxjs";
 
 export function takeSync<T>(): OperatorFunction<T, T> {
-  return source =>
-    new Observable<T>(subscriber => {
+  return (source) =>
+    new Observable<T>((subscriber) => {
       const subscription = source.subscribe(subscriber);
       subscriber.complete();
       return subscription;

@@ -24,19 +24,19 @@ export function combineLatestHigherOrderArray<T>(): OperatorFunction<
   Observable<T>[],
   T[]
 > {
-  return higherOrder =>
-    new Observable<T[]>(observer => {
+  return (higherOrder) =>
+    new Observable<T[]>((observer) => {
       let lasts: Source<T>[] = [];
       let nexts: Source<T>[] = [];
       let higherOrderCompleted = false;
       const higherOrderSubscription = new Subscription();
       higherOrderSubscription.add(
         higherOrder.subscribe(
-          observables => {
+          (observables) => {
             const subscribes: (() => void)[] = [];
-            nexts = observables.map(observable => {
+            nexts = observables.map((observable) => {
               const index = lasts.findIndex(
-                last => last.observable === observable
+                (last) => last.observable === observable
               );
               if (index !== -1) {
                 const next = lasts[index];
@@ -46,19 +46,19 @@ export function combineLatestHigherOrderArray<T>(): OperatorFunction<
               const next: Source<T> = {
                 completed: false,
                 nexted: false,
-                observable
+                observable,
               };
               subscribes.push(() => {
                 if (higherOrderSubscription.closed) {
                   return;
                 }
                 next.subscription = next.observable.subscribe(
-                  value => {
+                  (value) => {
                     next.nexted = true;
                     next.value = value;
                     combine(nexts, observer);
                   },
-                  error => observer.error(error),
+                  (error) => observer.error(error),
                   () => {
                     next.completed = true;
                     if (
@@ -80,9 +80,9 @@ export function combineLatestHigherOrderArray<T>(): OperatorFunction<
             });
             lasts = nexts;
             combine(nexts, observer);
-            subscribes.forEach(subscribe => subscribe());
+            subscribes.forEach((subscribe) => subscribe());
           },
-          error => observer.error(error),
+          (error) => observer.error(error),
           () => {
             if (lasts.every(({ completed }) => completed)) {
               observer.complete();

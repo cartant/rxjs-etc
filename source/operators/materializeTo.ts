@@ -9,7 +9,7 @@ import { dematerialize, materialize, mergeMapTo } from "rxjs/operators";
 export function materializeTo<T, I>(
   innerObservable: ObservableInput<I>
 ): OperatorFunction<T, I> {
-  return source =>
+  return (source) =>
     source.pipe(
       mergeMapTo(from(innerObservable).pipe(materialize())),
       dematerialize()

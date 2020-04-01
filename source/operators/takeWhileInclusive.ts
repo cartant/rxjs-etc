@@ -11,16 +11,16 @@ export function takeWhileInclusive<T>(
 ): MonoTypeOperatorFunction<T> {
   // https://stackoverflow.com/a/44644237/6680611
 
-  return source =>
+  return (source) =>
     source.pipe(
       multicast(
         () => new ReplaySubject<T>(1),
-        sharedSource =>
+        (sharedSource) =>
           concat(
             sharedSource.pipe(takeWhile(predicate)),
             sharedSource.pipe(
               take(1),
-              filter(value => !predicate(value))
+              filter((value) => !predicate(value))
             )
           )
       )

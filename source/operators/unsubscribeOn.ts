@@ -10,7 +10,7 @@ import {
   Operator,
   SchedulerLike,
   Subscriber,
-  TeardownLogic
+  TeardownLogic,
 } from "rxjs";
 
 export function unsubscribeOn<T>(

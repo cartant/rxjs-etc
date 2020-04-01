@@ -7,7 +7,7 @@ import {
   concat,
   MonoTypeOperatorFunction,
   Observable,
-  OperatorFunction
+  OperatorFunction,
 } from "rxjs";
 import { publish, take } from "rxjs/operators";
 
@@ -41,9 +41,9 @@ export function subsequent<T, R>(
     operator = countOrOperator;
   }
 
-  return source =>
+  return (source) =>
     source.pipe(
-      publish(published =>
+      publish((published) =>
         concat(published.pipe(take(count)), published.pipe(operator!))
       )
     );

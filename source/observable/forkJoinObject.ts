@@ -20,7 +20,7 @@ export function forkJoinObject<T>(
     isObservable(value) ? value : of(value)
   );
   return forkJoinArray(observables).pipe(
-    map(values =>
+    map((values) =>
       values.reduce(
         (acc, value, index) => ({ ...acc, [entries[index][0]]: value }),
         {} as T

@@ -10,20 +10,20 @@ import {
   map,
   mapTo,
   publish,
-  scan
+  scan,
 } from "rxjs/operators";
 
 export function zipPadded<T>(
   sources: Observable<T>[],
   padValue?: any
 ): Observable<T[]> {
-  return new Observable<T[]>(observer => {
+  return new Observable<T[]>((observer) => {
     const publishedSources = sources.map(
-      source => source.pipe(publish()) as ConnectableObservable<T>
+      (source) => source.pipe(publish()) as ConnectableObservable<T>
     );
 
     const indices = merge(
-      ...publishedSources.map(source =>
+      ...publishedSources.map((source) =>
         source.pipe(map((unused, index) => index))
       )
     ).pipe(
@@ -33,13 +33,13 @@ export function zipPadded<T>(
     ) as ConnectableObservable<number>;
 
     const subscription = zip(
-      ...publishedSources.map(source =>
+      ...publishedSources.map((source) =>
         concat(source, indices.pipe(mapTo(padValue)))
       )
     ).subscribe(observer);
 
     subscription.add(indices.connect());
-    publishedSources.forEach(source => subscription.add(source.connect()));
+    publishedSources.forEach((source) => subscription.add(source.connect()));
     return subscription;
   });
 }

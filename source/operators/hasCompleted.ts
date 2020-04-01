@@ -7,5 +7,5 @@ import { concat, of, OperatorFunction } from "rxjs";
 import { ignoreElements } from "rxjs/operators";
 
 export function hasCompleted<T>(): OperatorFunction<T, boolean> {
-  return source => concat(source.pipe(ignoreElements()), of(true));
+  return (source) => concat(source.pipe(ignoreElements()), of(true));
 }

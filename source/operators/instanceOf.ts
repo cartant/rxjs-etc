@@ -15,8 +15,8 @@ export function instanceOf<
 >(ctors: R): OperatorFunction<T, InstanceType<R[keyof R]>>;
 export function instanceOf<T>(arg: any): OperatorFunction<T, any> {
   return typeof arg === "function"
-    ? filter<any>(value => value instanceof arg)
-    : filter<any>(value =>
-        Object.keys(arg).some(key => value instanceof arg[key])
+    ? filter<any>((value) => value instanceof arg)
+    : filter<any>((value) =>
+        Object.keys(arg).some((key) => value instanceof arg[key])
       );
 }

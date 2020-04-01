@@ -9,7 +9,7 @@ import {
   Observer,
   Subject,
   Subscription,
-  zip
+  zip,
 } from "rxjs";
 
 import { first, map, publish } from "rxjs/operators";
@@ -23,7 +23,7 @@ export class NotificationQueue extends Observable<number> {
     super((observer: Observer<number>) => {
       const index = this._count++;
       const subscription = this._notifications
-        .pipe(first(value => value === index))
+        .pipe(first((value) => value === index))
         .subscribe(observer);
       this._indices.next(index);
       return subscription;

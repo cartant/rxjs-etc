@@ -12,7 +12,7 @@ import {
   ObservableInput,
   of,
   OperatorFunction,
-  Subject
+  Subject,
 } from "rxjs";
 
 import { expand, ignoreElements, mergeMap, tap } from "rxjs/operators";
@@ -50,14 +50,14 @@ export function traverse<T, M, R>({
   concurrency = 1,
   factory,
   operator = identity,
-  notifier
+  notifier,
 }: {
   concurrency?: number;
   factory: TraverseFactory<T, M>;
   operator?: OperatorFunction<T, T | R>;
   notifier?: Observable<any>;
 }): Observable<T | R> {
-  return new Observable<T | R>(observer => {
+  return new Observable<T | R>((observer) => {
     let queue: NotificationQueue;
     let queueOperator: MonoTypeOperatorFunction<M | undefined>;
 
@@ -67,7 +67,7 @@ export function traverse<T, M, R>({
     } else {
       const subject = new Subject<any>();
       queue = new NotificationQueue(subject);
-      queueOperator = markers => {
+      queueOperator = (markers) => {
         subject.next();
         return markers;
       };
@@ -82,13 +82,13 @@ export function traverse<T, M, R>({
           expand(
             (marker: M | undefined) =>
               queue.pipe(
-                mergeMap(index =>
+                mergeMap((index) =>
                   factory(marker, index).pipe(
                     mergeMap(({ markers, values }) =>
                       concat(
                         from(values).pipe(
                           operator,
-                          tap(value => destination.next(value)),
+                          tap((value) => destination.next(value)),
                           ignoreElements()
                         ),
                         from(markers)
@@ -103,7 +103,7 @@ export function traverse<T, M, R>({
         )
         .subscribe({
           complete: () => destination.complete(),
-          error: error => destination.error(error)
+          error: (error) => destination.error(error),
         })
     );
     return subscription;

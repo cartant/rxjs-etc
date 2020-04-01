@@ -9,13 +9,13 @@ import { tap } from "rxjs/operators";
 export function materializeTap<T>(
   next: (notification: Notification<T>) => void
 ): MonoTypeOperatorFunction<T> {
-  return source =>
+  return (source) =>
     source.pipe(
       tap({
         complete: () => next(new Notification("C")),
-        error: error =>
+        error: (error) =>
           next(new Notification("E", undefined as T | undefined, error)),
-        next: value => next(new Notification("N", value))
+        next: (value) => next(new Notification("N", value)),
       })
     );
 }

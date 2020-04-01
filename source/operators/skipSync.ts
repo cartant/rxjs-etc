@@ -6,11 +6,11 @@
 import { Observable, OperatorFunction } from "rxjs";
 
 export function skipSync<T>(): OperatorFunction<T, T> {
-  return source =>
-    new Observable<T>(subscriber => {
+  return (source) =>
+    new Observable<T>((subscriber) => {
       let subscribed = false;
       const subscription = source.subscribe(
-        value => subscribed && subscriber.next(value),
+        (value) => subscribed && subscriber.next(value),
         subscriber.error.bind(subscriber),
         subscriber.complete.bind(subscriber)
       );

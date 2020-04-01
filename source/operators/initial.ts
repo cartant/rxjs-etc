@@ -7,7 +7,7 @@ import {
   merge,
   MonoTypeOperatorFunction,
   Observable,
-  OperatorFunction
+  OperatorFunction,
 } from "rxjs";
 import { publish, skip, take } from "rxjs/operators";
 
@@ -41,9 +41,9 @@ export function initial<T, R>(
     operator = countOrOperator;
   }
 
-  return source =>
+  return (source) =>
     source.pipe(
-      publish(published =>
+      publish((published) =>
         merge(
           published.pipe(take(count), operator!),
           published.pipe(skip(count))

@@ -8,12 +8,12 @@ import { map, mapTo, scan } from "rxjs/operators";
 
 export function bufferRecent<T>(count: number): OperatorFunction<T, T[]> {
   if (count < 1) {
-    return source => source.pipe(mapTo([]));
+    return (source) => source.pipe(mapTo([]));
   }
   if (count === 1) {
-    return source => source.pipe(map(value => [value]));
+    return (source) => source.pipe(map((value) => [value]));
   }
-  return source =>
+  return (source) =>
     source.pipe(
       scan((acc: T[], value: T) => [...acc.slice(1 - count), value], [])
     );

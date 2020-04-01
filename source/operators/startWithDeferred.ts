@@ -9,7 +9,7 @@ export function startWithDeferred<T, S = T>(
   factory: () => S,
   scheduler?: SchedulerLike
 ): OperatorFunction<T, S | T> {
-  return source =>
+  return (source) =>
     concat(
       defer(() => {
         const value = factory();

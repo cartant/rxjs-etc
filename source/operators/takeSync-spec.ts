@@ -12,7 +12,7 @@ describe("takeSync", () => {
   it("should take synchronous values", (done: Mocha.Done) => {
     const source = merge(from([42]), scheduled([54], asapScheduler));
     const values: number[] = [];
-    source.pipe(takeSync()).subscribe(value => values.push(value));
+    source.pipe(takeSync()).subscribe((value) => values.push(value));
     asapScheduler.schedule(() => {
       expect(values).to.deep.equal([42]);
       done();

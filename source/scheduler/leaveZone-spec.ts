@@ -13,7 +13,7 @@ describe("leaveZone", () => {
   it("should run outside Angular's zone", () => {
     const zone = {
       run: sinon.stub(),
-      runOutsideAngular: sinon.stub()
+      runOutsideAngular: sinon.stub(),
     };
 
     of(1, leaveZone(zone)).subscribe();

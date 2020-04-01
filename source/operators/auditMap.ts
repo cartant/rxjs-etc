@@ -9,7 +9,7 @@ import { concat, last, mergeMap, tap } from "rxjs/operators";
 export function auditMap<T, R>(
   project: (value: T, index: number) => ObservableInput<R>
 ): OperatorFunction<T, R> {
-  return source => {
+  return (source) => {
     let pending = false;
     let queued: [T, number] | undefined = undefined;
     return source.pipe(
@@ -33,7 +33,7 @@ export function auditMap<T, R>(
           ),
           last(),
           tap({
-            complete: () => (pending = false)
+            complete: () => (pending = false),
           })
         );
       })

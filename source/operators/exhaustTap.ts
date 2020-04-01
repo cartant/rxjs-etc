@@ -9,7 +9,7 @@ import {
   from,
   MonoTypeOperatorFunction,
   NEVER,
-  ObservableInput
+  ObservableInput,
 } from "rxjs";
 import {
   exhaustMap,
@@ -17,18 +17,18 @@ import {
   mergeAll,
   publishReplay,
   takeUntil,
-  toArray
+  toArray,
 } from "rxjs/operators";
 import { endWith } from "./endWith";
 
 export function exhaustTap<T>(
   next: (value: T) => ObservableInput<any>
 ): MonoTypeOperatorFunction<T> {
-  return source =>
+  return (source) =>
     source.pipe(
-      publishReplay(1, undefined, published =>
+      publishReplay(1, undefined, (published) =>
         published.pipe(
-          exhaustMap(value =>
+          exhaustMap((value) =>
             concat(published, NEVER).pipe(
               takeUntil(
                 from(next(value)).pipe(ignoreElements(), endWith(null))

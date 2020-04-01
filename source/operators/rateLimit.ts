@@ -8,7 +8,7 @@ import {
   MonoTypeOperatorFunction,
   Observable,
   of,
-  SchedulerLike
+  SchedulerLike,
 } from "rxjs";
 import { concatMap, delay, map, scan } from "rxjs/operators";
 
@@ -53,7 +53,7 @@ export function rateLimit<T>(
         const now = scheduler.now();
         const since = now - period;
 
-        emissions = emissions.filter(emission => emission.until > since);
+        emissions = emissions.filter((emission) => emission.until > since);
         if (emissions.length >= definedCount) {
           const leastRecentEmission = emissions[0];
           const mostRecentEmission = emissions[emissions.length - 1];
@@ -67,13 +67,13 @@ export function rateLimit<T>(
                 ? until - now
                 : until - mostRecentEmission.until,
             until,
-            value
+            value,
           });
         } else {
           emissions.push({
             delay: 0,
             until: now,
-            value
+            value,
           });
         }
         return emissions;

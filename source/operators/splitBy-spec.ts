@@ -11,21 +11,21 @@ import { compiler } from "../compiler-spec";
 import { timeout } from "../timeout-spec";
 import { splitBy } from "./splitBy";
 
-describe("splitBy", function() {
+describe("splitBy", function () {
   /*tslint:disable-next-line:no-invalid-this*/
   this.timeout(timeout);
 
   it(
     "should split values",
-    marbles(m => {
+    marbles((m) => {
       const source = m.cold(" --a-b-c-a-b-c-|");
       const x = m.cold("      --a-----a-----|");
       const y = m.cold("      ----b-c---b-c-|");
       const expected = "      (xy)----------|";
 
       const split = source.pipe(
-        splitBy(value => value === "a"),
-        mergeMap(splits => splits)
+        splitBy((value) => value === "a"),
+        mergeMap((splits) => splits)
       );
       m.expect(split).toBeObservable(expected, { x, y });
     })
@@ -33,7 +33,7 @@ describe("splitBy", function() {
 
   if (!(global as any).window) {
     const expectSnippet = expecter(
-      code => `
+      (code) => `
         import { Observable, of } from "rxjs";
         import { splitBy } from "./source/operators/splitBy";
         ${code}

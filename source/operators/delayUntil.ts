@@ -9,20 +9,20 @@ import { publish } from "rxjs/operators";
 export function delayUntil<T>(
   notifier: Observable<any>
 ): OperatorFunction<T, T> {
-  return source =>
+  return (source) =>
     source.pipe(
-      publish(published => {
-        const delayed = new Observable<T>(subscriber => {
+      publish((published) => {
+        const delayed = new Observable<T>((subscriber) => {
           let buffering = true;
           const buffer: T[] = [];
           const subscription = new Subscription();
           subscription.add(
             notifier.subscribe(
               () => {
-                buffer.forEach(value => subscriber.next(value));
+                buffer.forEach((value) => subscriber.next(value));
                 subscriber.complete();
               },
-              error => subscriber.error(error),
+              (error) => subscriber.error(error),
               () => {
                 buffering = false;
                 buffer.length = 0;
@@ -34,8 +34,8 @@ export function delayUntil<T>(
           });
           subscription.add(
             published.subscribe(
-              value => buffering && buffer.push(value),
-              error => subscriber.error(error)
+              (value) => buffering && buffer.push(value),
+              (error) => subscriber.error(error)
             )
           );
           return subscription;

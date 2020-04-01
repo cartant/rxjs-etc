@@ -21,7 +21,7 @@ export function tapWithIndex<T>(
   error?: (error: any) => void,
   complete?: () => void
 ): MonoTypeOperatorFunction<T> {
-  return source =>
+  return (source) =>
     defer(() => {
       /*tslint:disable-next-line:no-unused-declaration*/
       let index = -1;
@@ -42,8 +42,8 @@ export function tapWithIndex<T>(
       }
       return source.pipe(
         tap(
-          value => handleNext.call(context, [value, ++index]),
-          error => handleError.call(context, error),
+          (value) => handleNext.call(context, [value, ++index]),
+          (error) => handleError.call(context, error),
           () => handleComplete.call(context)
         )
       );

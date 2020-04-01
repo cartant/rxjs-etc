@@ -10,13 +10,13 @@ import { CloseKind } from "../kinds";
 export function finalizeWithKind<T>(
   callback: (kind: CloseKind) => void
 ): MonoTypeOperatorFunction<T> {
-  return source =>
+  return (source) =>
     defer(() => {
       let kind: CloseKind = "U";
       return source.pipe(
         tap({
           complete: () => (kind = "C"),
-          error: () => (kind = "E")
+          error: () => (kind = "E"),
         }),
         finalize(() => callback(kind))
       );

@@ -10,7 +10,7 @@ import {
   concatAll,
   switchMap,
   takeUntil,
-  windowToggle
+  windowToggle,
 } from "rxjs/operators";
 import { toggle } from "./toggle";
 

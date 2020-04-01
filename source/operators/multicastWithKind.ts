@@ -8,7 +8,7 @@ import {
   Observable,
   OperatorFunction,
   Subject,
-  UnaryFunction
+  UnaryFunction,
 } from "rxjs";
 import { multicast } from "rxjs/operators";
 import { CloseKind } from "../kinds";
@@ -27,11 +27,11 @@ export function multicastWithKind<T, R>(
   factory: (kind?: CloseKind, subject?: Subject<T>) => Subject<T>,
   selector?: OperatorFunction<T, R>
 ): OperatorFunction<T, R> {
-  return source => {
+  return (source) => {
     let kind: CloseKind | undefined = undefined;
     let subject: Subject<T> | undefined = undefined;
     return source.pipe(
-      finalizeWithKind(k => (kind = k)),
+      finalizeWithKind((k) => (kind = k)),
       multicast(() => {
         subject = factory(kind, subject);
         kind = undefined;

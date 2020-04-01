@@ -10,7 +10,7 @@ import {
   Observable,
   SchedulerLike,
   Subscription,
-  timer
+  timer,
 } from "rxjs";
 
 import { debounce, mapTo, publish, startWith, switchMap } from "rxjs/operators";
@@ -20,11 +20,11 @@ export function debounceTimeWithinReason<T>(
   reasonableDuration: number,
   scheduler?: SchedulerLike
 ): MonoTypeOperatorFunction<T> {
-  return source =>
+  return (source) =>
     source.pipe(
       publish(
-        sharedSource =>
-          new Observable<T>(observer => {
+        (sharedSource) =>
+          new Observable<T>((observer) => {
             let reasonableTimer: ConnectableObservable<number>;
 
             const debounced = sharedSource.pipe(

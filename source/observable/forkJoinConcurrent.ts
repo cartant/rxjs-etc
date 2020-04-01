@@ -16,13 +16,13 @@ export function forkJoinConcurrent<T>(
       (observable, index) =>
         observable.pipe(
           last(),
-          map(value => ({ index, value }))
+          map((value) => ({ index, value }))
         ),
       concurrent
     ),
     toArray(),
-    map(pairs =>
-      pairs.sort((l, r) => l.index - r.index).map(pair => pair.value)
+    map((pairs) =>
+      pairs.sort((l, r) => l.index - r.index).map((pair) => pair.value)
     )
   );
 }

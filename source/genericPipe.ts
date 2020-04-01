@@ -8,7 +8,7 @@ import {
   MonoTypeOperatorFunction,
   Observable,
   pipe as _pipe,
-  UnaryFunction
+  UnaryFunction,
 } from "rxjs";
 
 /** @deprecated Inferring a generic can be unsafe; use genericOperator instead */

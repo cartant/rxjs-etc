@@ -9,5 +9,5 @@ import { buffer, concatAll } from "rxjs/operators";
 export function hold<T>(
   releaseNotifier: Observable<any>
 ): MonoTypeOperatorFunction<T> {
-  return source => source.pipe(buffer(releaseNotifier), concatAll());
+  return (source) => source.pipe(buffer(releaseNotifier), concatAll());
 }

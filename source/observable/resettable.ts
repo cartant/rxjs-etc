@@ -46,6 +46,6 @@ export function resettable<T, U extends any[]>(
     },
     get subject(): Subject<T> {
       return source;
-    }
+    },
   };
 }

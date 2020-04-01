@@ -10,9 +10,9 @@ import { endWith } from "./endWith";
 export function mergeTap<T>(
   next: (value: T) => ObservableInput<any>
 ): MonoTypeOperatorFunction<T> {
-  return source =>
+  return (source) =>
     source.pipe(
-      mergeMap(value =>
+      mergeMap((value) =>
         from(next(value)).pipe(ignoreElements(), endWith(value))
       )
     );

@@ -8,7 +8,7 @@ import {
   MonoTypeOperatorFunction,
   Observable,
   of,
-  SchedulerLike
+  SchedulerLike,
 } from "rxjs";
 
 import {
@@ -20,7 +20,7 @@ import {
   startWith,
   switchMap,
   take,
-  takeUntil
+  takeUntil,
 } from "rxjs/operators";
 
 export function throttleAfter<T>(
@@ -30,7 +30,7 @@ export function throttleAfter<T>(
 ): MonoTypeOperatorFunction<T> {
   return (source: Observable<T>) =>
     source.pipe(
-      publish(sharedSource =>
+      publish((sharedSource) =>
         notifier.pipe(
           switchMap(() =>
             concat(of(true), delay<boolean>(duration, scheduler)(of(false)))

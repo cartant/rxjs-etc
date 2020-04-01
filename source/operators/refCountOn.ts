@@ -9,7 +9,7 @@ import {
   Observable,
   SchedulerLike,
   Subscription,
-  using
+  using,
 } from "rxjs";
 
 export function refCountOn<T>(
@@ -37,7 +37,7 @@ export function refCountOn<T>(
                 subscription = null;
               }
             });
-          }
+          },
         };
       },
       () => source

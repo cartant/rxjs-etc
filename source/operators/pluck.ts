@@ -67,5 +67,5 @@ export function pluck<T, R>(
 ): OperatorFunction<T, R>;
 
 export function pluck<T>(...keys: any[]): OperatorFunction<T, any> {
-  return source => untypedPluck(...keys)(source);
+  return (source) => untypedPluck(...keys)(source);
 }

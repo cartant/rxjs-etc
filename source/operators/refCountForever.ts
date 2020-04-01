@@ -8,7 +8,7 @@ import {
   MonoTypeOperatorFunction,
   Observable,
   Subscription,
-  using
+  using,
 } from "rxjs";
 
 export function refCountForever<T>(): MonoTypeOperatorFunction<T> {
@@ -22,7 +22,7 @@ export function refCountForever<T>(): MonoTypeOperatorFunction<T> {
           subscription = connectable.connect();
         }
         return {
-          unsubscribe: () => {}
+          unsubscribe: () => {},
         };
       },
       () => source

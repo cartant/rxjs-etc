@@ -12,7 +12,7 @@ describe("skipSync", () => {
   it("should skip synchronous values", (done: Mocha.Done) => {
     const source = merge(from([42]), scheduled([54], asapScheduler));
     const values: number[] = [];
-    source.pipe(skipSync()).subscribe(value => values.push(value));
+    source.pipe(skipSync()).subscribe((value) => values.push(value));
     asapScheduler.schedule(() => {
       expect(values).to.deep.equal([54]);
       done();

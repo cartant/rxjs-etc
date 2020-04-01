@@ -46,27 +46,27 @@ export function progress<
   ) => Observable<T>,
   sourceSelector?: SourceSelector
 ): Observable<T> {
-  return new Observable(subscriber => {
+  return new Observable((subscriber) => {
     let finalized = 0;
     let nexted = 0;
     const total = observables.length;
     const state = new Subject<ProgressState>();
     const shared = new Subject<any>();
     const source = (sourceSelector || forkJoin)(
-      observables.map(o =>
+      observables.map((o) =>
         o.pipe(
           tap(() =>
             state.next({
               finalized,
               nexted: ++nexted,
-              total
+              total,
             })
           ),
           finalize(() => {
             state.next({
               finalized: ++finalized,
               nexted,
-              total
+              total,
             });
             if (finalized === total) {
               state.complete();

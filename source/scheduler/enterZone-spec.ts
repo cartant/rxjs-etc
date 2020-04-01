@@ -13,7 +13,7 @@ describe("enterZone", () => {
   it("should run inside Angular's zone", () => {
     const zone = {
       run: sinon.stub(),
-      runOutsideAngular: sinon.stub()
+      runOutsideAngular: sinon.stub(),
     };
 
     of(1, enterZone(zone)).subscribe();

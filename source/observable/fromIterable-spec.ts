@@ -10,7 +10,7 @@ import { fromIterable } from "./fromIterable";
 describe("fromIterable", () => {
   it(
     "should accept an iterable",
-    marbles(m => {
+    marbles((m) => {
       const map = new Map<string, number>();
       map.set("a", 1);
       map.set("b", 2);

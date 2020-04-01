@@ -10,6 +10,7 @@
     "rxjs-no-connectable": { "severity": "off" },
     "rxjs-no-subclass": { "severity": "off" },
     "rxjs-no-unsafe-scope": { "severity": "off" },
+    "trailing-comma": { "severity": "off" },
     "typedef": {
       "options": [
         "parameter",

@@ -11,7 +11,7 @@ import {
   Operator,
   Subscriber,
   Subscription,
-  TeardownLogic
+  TeardownLogic,
 } from "rxjs";
 
 /** @deprecated Use finalizeWithKind */

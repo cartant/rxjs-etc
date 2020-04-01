@@ -13,7 +13,7 @@ import {
   Subject,
   Subscription,
   timer,
-  using
+  using,
 } from "rxjs";
 
 import { scan, switchMap, tap } from "rxjs/operators";
@@ -37,7 +37,7 @@ export function refCountDelay<T>(
     const notifier = new Subject<number>();
     const connector = notifier.pipe(
       scan((count, step) => count + step, 0),
-      switchMap(count => {
+      switchMap((count) => {
         if (count === 0) {
           return timer(duration, scheduler).pipe(
             tap(() => {

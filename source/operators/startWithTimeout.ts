@@ -9,7 +9,7 @@ import {
   OperatorFunction,
   race,
   SchedulerLike,
-  timer
+  timer,
 } from "rxjs";
 import { mapTo, publish } from "rxjs/operators";
 
@@ -19,11 +19,11 @@ export function startWithTimeout<T, S = T>(
   scheduler?: SchedulerLike
 ): OperatorFunction<T, S | T> {
   if (duration === 0 && !scheduler) {
-    return source =>
-      new Observable<T | S>(subscriber => {
+    return (source) =>
+      new Observable<T | S>((subscriber) => {
         let nexted = false;
         const subscription = source.subscribe(
-          value => {
+          (value) => {
             nexted = true;
             subscriber.next(value);
           },
@@ -36,9 +36,9 @@ export function startWithTimeout<T, S = T>(
         return subscription;
       });
   }
-  return source =>
+  return (source) =>
     source.pipe(
-      publish(published =>
+      publish((published) =>
         race(
           published,
           concat(timer(duration, scheduler).pipe(mapTo(value)), published)
