@@ -20,9 +20,11 @@ export function splitBy<T>(
   predicate: (value: T, index: number) => boolean,
   subjectSelector: () => Subject<T> = () => new Subject<T>()
 ): OperatorFunction<T, [Observable<T>, Observable<T>]> {
-  return bucketBy(
-    2,
-    (value, index) => (predicate(value, index) ? 0 : 1),
-    subjectSelector
-  ) as OperatorFunction<T, [Observable<T>, Observable<T>]>;
+  return (
+    bucketBy(
+      2,
+      (value, index) => (predicate(value, index) ? 0 : 1),
+      subjectSelector
+    ) as OperatorFunction<T, [Observable<T>, Observable<T>]>
+  );
 }

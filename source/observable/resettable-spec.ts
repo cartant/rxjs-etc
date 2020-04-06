@@ -11,11 +11,12 @@ import { resettable } from "./resettable";
 
 describe("resettable", () => {
   it("should next the factory-created subject", () => {
-    const mockSubject: Subject<number> = {
-      complete: sinon.stub(),
-      error: sinon.stub(),
-      next: sinon.stub(),
-    } as any;
+    const mockSubject: Subject<number> =
+      {
+        complete: sinon.stub(),
+        error: sinon.stub(),
+        next: sinon.stub(),
+      } as any;
 
     const { subject } = resettable(() => mockSubject);
     subject.next(1);

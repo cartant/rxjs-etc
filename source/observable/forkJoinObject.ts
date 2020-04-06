@@ -12,10 +12,8 @@ export function forkJoinObject<T>(
   instance: { [K in keyof T]: T[K] | Observable<T[K]> }
 ): Observable<T> {
   type K = keyof T;
-  const entries = Object.entries(instance) as [
-    string,
-    T[K] | Observable<T[K]>
-  ][];
+  const entries =
+    Object.entries(instance) as [string, T[K] | Observable<T[K]>][];
   const observables = entries.map(([, value]) =>
     isObservable(value) ? value : of(value)
   );

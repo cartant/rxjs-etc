@@ -33,12 +33,13 @@ export function debounceTimeWithinReason<T>(
               )
             );
 
-            reasonableTimer = debounced.pipe(
-              mapTo(undefined),
-              startWith(undefined),
-              switchMap(() => timer(reasonableDuration, scheduler)),
-              publish()
-            ) as ConnectableObservable<number>;
+            reasonableTimer =
+              debounced.pipe(
+                mapTo(undefined),
+                startWith(undefined),
+                switchMap(() => timer(reasonableDuration, scheduler)),
+                publish()
+              ) as ConnectableObservable<number>;
 
             const subscription = new Subscription();
             subscription.add(reasonableTimer.connect());
