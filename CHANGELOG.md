@@ -1,3 +1,10 @@
+<a name="9.8.0"></a>
+### [9.8.0](https://github.com/cartant/rxjs-etc/compare/v9.7.4...v9.8.0) (2020-04-15)
+
+### Features
+
+* Add the `dispose` operator. ([070a9c1](https://github.com/cartant/rxjs-etc/commit/070a9c1))
+
 <a name="9.7.4"></a>
 ### [9.7.4](https://github.com/cartant/rxjs-etc/compare/v9.7.3...v9.7.4) (2020-02-25)
 
