@@ -1,3 +1,11 @@
+<a name="10.0.0"></a>
+### [10.0.0](https://github.com/cartant/rxjs-etc/compare/v9.8.0...v10.0.0) (2020-04-15)
+
+### Breaking Changes
+
+* The distribution now includes CommonJS and ES modules that contain non-transpiled - i.e. ES2020 - code.
+* FWIW, 9.8.0 was not published because I remembered that I'd made the above change when I was about to publish it.
+
 <a name="9.8.0"></a>
 ### [9.8.0](https://github.com/cartant/rxjs-etc/compare/v9.7.4...v9.8.0) (2020-04-15)
 
