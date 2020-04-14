@@ -103,6 +103,10 @@ source.pipe(endWith("this is the end"))
 
     Delays a source's value notifications until a signal is received from a notifier.
 
+* [dispose](./source/operators/dispose.ts)
+
+    Like `finalize`, but calls a child subscription's callback for its parent's.
+
 * [endWith](./source/operators/endWith.ts)
 
     Like `startWith`, but for the other end.

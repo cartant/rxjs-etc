@@ -13,6 +13,7 @@ export * from "./debounceTimeSubsequent";
 export * from "./defaultObservableIfEmpty";
 export * from "./deferFinalize";
 export * from "./delayUntil";
+export * from "./dispose";
 export * from "./endWith";
 export * from "./exhaustTap";
 export * from "./finalizeWithKind";
