@@ -95,5 +95,5 @@
   "sideEffects": false,
   "types": "./dist/esm/index.d.ts",
   "unpkg": "./bundles/rxjs-etc.min.umd.js",
-  "version": "9.7.4"
+  "version": "9.8.0"
 }
