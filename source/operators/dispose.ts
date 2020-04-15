@@ -23,7 +23,7 @@ class DisposeOperator<T> implements Operator<T, T> {
 }
 
 class DisposeSubscriber<T> extends Subscriber<T> {
-  constructor(destination: Subscriber<T>, private callback: () => void) {
+  constructor(destination: Subscriber<T>, private callback?: () => void) {
     super(destination);
   }
   unsubscribe() {
@@ -31,7 +31,7 @@ class DisposeSubscriber<T> extends Subscriber<T> {
     const { callback } = this;
     if (callback) {
       callback();
-      this.callback = undefined!;
+      this.callback = undefined;
     }
   }
 }
