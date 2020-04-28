@@ -91,6 +91,10 @@ source.pipe(endWith("this is the end"))
 
     Debounce the source observable, but only after the notifier emits a value.
 
+* [debounceSync](./source/operators/debounceSync.ts)
+
+    Debounces synchronously emitted values from a source.
+
 * [debounceTimeSubsequent](./source/operators/debounceTimeSubsequent.ts)
 
     Debounce the source observable, but don't debounce the first `count` notifications - only the subsequent notifications.
@@ -163,6 +167,10 @@ source.pipe(endWith("this is the end"))
 
     Emits values using the specified scheduler.
 
+* [skipSync](./source/operators/skipSync.ts)
+
+    Skips the initial, synchronously emitted values from a source.
+
 * [splitBy](./source/operators/splitBy.ts)
 
     Splits an observable stream into two streams. Values that satisfy a predicate are fed into the first stream and values that don't are fed into the second. It's a (better) replacement for `partition` - which did not multicast the source. See `bucketBy` for the general case of splitting a stream into a specific number of 'buckets'.
@@ -174,6 +182,10 @@ source.pipe(endWith("this is the end"))
 * [subsequent](./source/operators/subsequent.ts)
 
     Apply the operator to the source observable, but don't select the first `count` notifications - only the subsequent notifications.
+
+* [takeSync](./source/operators/takeSync.ts)
+
+    Takes the initial, synchronously emitted values from a source and then completes.
 
 * [takeWhileInclusive](./source/operators/takeWhileInclusive.ts)
 
