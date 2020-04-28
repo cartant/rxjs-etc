@@ -9,6 +9,7 @@ export * from "./bufferRecent";
 export * from "./concatIfEmpty";
 export * from "./concatTap";
 export * from "./debounceAfter";
+export * from "./debounceSync";
 export * from "./debounceTimeSubsequent";
 export * from "./defaultObservableIfEmpty";
 export * from "./deferFinalize";
