@@ -1,3 +1,11 @@
+<a name="10.1.0"></a>
+### [10.1.0](https://github.com/cartant/rxjs-etc/compare/v10.0.0...v10.1.0) (2020-04-28)
+
+### Changes
+
+* Add the `debounceSync` operator. ([a62cff0](https://github.com/cartant/rxjs-etc/commit/a62cff0)).
+* Add `skipSync` and `takeSync` to `README.md`.
+
 <a name="10.0.0"></a>
 ### [10.0.0](https://github.com/cartant/rxjs-etc/compare/v9.8.0...v10.0.0) (2020-04-15)
 
