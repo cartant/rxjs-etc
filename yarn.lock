@@ -44,9 +44,9 @@
   integrity sha512-PZLDFDqdnnK2EBCYHe5gBCvxWM2En/MeS3jsJKVRhUnovCjbu2WPOWC2TrRJcWBjmKOKuLAlWp5Zqb3aRmWBAw==
 
 "@cartant/tslint-config-rxjs@^2.0.0":
-  version "2.0.3"
-  resolved "https://registry.yarnpkg.com/@cartant/tslint-config-rxjs/-/tslint-config-rxjs-2.0.3.tgz#2ee9c3a1c86992e344115cc1a6da264aa149c37e"
-  integrity sha512-u54COeHtoFRNJHjnsdgHk9ryywPOVV//OKArQDtNIl/0dsrACQUrB86CN56WmS/NeWoRv2gXKnj5SbrlBGG4Qg==
+  version "2.0.4"
+  resolved "https://registry.yarnpkg.com/@cartant/tslint-config-rxjs/-/tslint-config-rxjs-2.0.4.tgz#124c5d24750bc353f6e25317f3fa1cd53eff59aa"
+  integrity sha512-MWTQgt9j+PZpoUpO3TC/AHIjAuyxPg3rN8MDrVnKlNm57Bp8Bmv7OcYb/6NSXKiQMgHLKLCREYx/RGNGIm4GlQ==
 
 "@cartant/tslint-config@^2.0.0":
   version "2.0.6"
