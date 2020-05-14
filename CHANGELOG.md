@@ -1,3 +1,10 @@
+<a name="10.1.2"></a>
+### [10.1.2](https://github.com/cartant/rxjs-etc/compare/v10.1.1...v10.1.2) (2020-05-15)
+
+### Fixes
+
+* Add `dispose` call back to subscription after `subscribe`. ([7f3dc40](https://github.com/cartant/rxjs-etc/commit/7f3dc40)).
+
 <a name="10.1.1"></a>
 ### [10.1.1](https://github.com/cartant/rxjs-etc/compare/v10.1.0...v10.1.1) (2020-05-05)
 
