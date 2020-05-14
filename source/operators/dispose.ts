@@ -18,20 +18,8 @@ export function dispose<T>(callback: () => void): OperatorFunction<T, T> {
 class DisposeOperator<T> implements Operator<T, T> {
   constructor(private callback: () => void) {}
   call(subscriber: Subscriber<T>, source: any): TeardownLogic {
-    return source.subscribe(new DisposeSubscriber(subscriber, this.callback));
-  }
-}
-
-class DisposeSubscriber<T> extends Subscriber<T> {
-  constructor(destination: Subscriber<T>, private callback?: () => void) {
-    super(destination);
-  }
-  unsubscribe() {
-    super.unsubscribe();
-    const { callback } = this;
-    if (callback) {
-      callback();
-      this.callback = undefined;
-    }
+    const subscription = source.subscribe(subscriber);
+    subscription.add(this.callback);
+    return subscription;
   }
 }
