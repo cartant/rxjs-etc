@@ -16,6 +16,7 @@ export * from "./deferFinalize";
 export * from "./delayUntil";
 export * from "./dispose";
 export * from "./endWith";
+export * from "./equals";
 export * from "./exhaustTap";
 export * from "./finalizeWithKind";
 export * from "./guard";
