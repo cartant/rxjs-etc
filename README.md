@@ -115,6 +115,10 @@ source.pipe(endWith("this is the end"))
 
     Like `startWith`, but for the other end.
 
+* [equals](./source/operators/equals.ts)
+
+    Like `filter`, but takes a value - rather than a function - and performs a reference equality check.
+
 * [guard](./source/operators/guard.ts)
 
     Applies the specified TypeScript guard to change the source observable's type and perform a runtime check. Emits an error notification if the guard rejects a value.
