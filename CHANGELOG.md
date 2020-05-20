@@ -1,3 +1,10 @@
+<a name="10.2.1"></a>
+### [10.2.1](https://github.com/cartant/rxjs-etc/compare/v10.2.0...v10.2.1) (2020-05-20)
+
+### Fixes
+
+* Add `equals` export to the index. ([057e1f2](https://github.com/cartant/rxjs-etc/commit/057e1f2)).
+
 <a name="10.2.0"></a>
 ### [10.2.0](https://github.com/cartant/rxjs-etc/compare/v10.1.2...v10.2.0) (2020-05-20)
 
