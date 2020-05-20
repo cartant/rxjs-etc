@@ -1,3 +1,10 @@
+<a name="10.2.0"></a>
+### [10.2.0](https://github.com/cartant/rxjs-etc/compare/v10.1.2...v10.2.0) (2020-05-20)
+
+### Features
+
+* Add `equals` operator. ([9337584](https://github.com/cartant/rxjs-etc/commit/9337584)).
+
 <a name="10.1.2"></a>
 ### [10.1.2](https://github.com/cartant/rxjs-etc/compare/v10.1.1...v10.1.2) (2020-05-15)
 
