@@ -24,5 +24,5 @@ export * from "./separate";
 export * from "./toggle";
 export * from "./traverse";
 export * from "./zipArray";
-export * from "./zipPadded";
 export * from "./zipObject";
+export * from "./zipPadded";
