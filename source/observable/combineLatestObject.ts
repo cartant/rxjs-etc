@@ -12,19 +12,16 @@ export function combineLatestObject<T>(
   instance: { [K in keyof T]: T[K] | Observable<T[K]> }
 ): Observable<T> {
   type K = keyof T;
-  const entries = Object.entries(instance) as [
-    string,
-    T[K] | Observable<T[K]>
-  ][];
+  const entries = Object.entries(instance) as [K, T[K] | Observable<T[K]>][];
   const observables = entries.map(([, value]) =>
     isObservable(value) ? value : of(value)
   );
   return combineLatestArray(observables).pipe(
     map((values) =>
-      values.reduce(
-        (acc, value, index) => ({ ...acc, [entries[index][0]]: value }),
-        {} as T
-      )
+      values.reduce((acc, value, index) => {
+        acc[entries[index][0]] = value;
+        return acc;
+      }, {} as T)
     )
   );
 }
