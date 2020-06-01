@@ -30,11 +30,10 @@ export class NotificationQueue extends Observable<number> {
     });
 
     this._indices = new Subject<number>();
-    this._notifications =
-      zip(notifier, this._indices).pipe(
-        map(([, index]) => index),
-        publish()
-      ) as ConnectableObservable<number>;
+    this._notifications = zip(notifier, this._indices).pipe(
+      map(([, index]) => index),
+      publish()
+    ) as ConnectableObservable<number>;
   }
 
   connect(): Subscription {

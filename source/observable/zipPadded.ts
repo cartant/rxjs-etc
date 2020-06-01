@@ -22,16 +22,15 @@ export function zipPadded<T>(
       (source) => source.pipe(publish()) as ConnectableObservable<T>
     );
 
-    const indices =
-      merge(
-        ...publishedSources.map((source) =>
-          source.pipe(map((unused, index) => index))
-        )
-      ).pipe(
-        scan((max, index) => Math.max(max, index), 0),
-        distinctUntilChanged(),
-        publish()
-      ) as ConnectableObservable<number>;
+    const indices = merge(
+      ...publishedSources.map((source) =>
+        source.pipe(map((unused, index) => index))
+      )
+    ).pipe(
+      scan((max, index) => Math.max(max, index), 0),
+      distinctUntilChanged(),
+      publish()
+    ) as ConnectableObservable<number>;
 
     const subscription = zip(
       ...publishedSources.map((source) =>
