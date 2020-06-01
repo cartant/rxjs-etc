@@ -1,3 +1,10 @@
+<a name="10.3.1"></a>
+### [10.3.1](https://github.com/cartant/rxjs-etc/compare/v10.3.0...v10.3.1) (2020-06-01)
+
+### Changes
+
+* Mutate the accumulators in `combineLatestObject`, `forkJoinObject` and `zipObject` operator. ([d87ad0e](https://github.com/cartant/rxjs-etc/commit/d87ad0e)).
+
 <a name="10.3.0"></a>
 ### [10.3.0](https://github.com/cartant/rxjs-etc/compare/v10.2.1...v10.3.0) (2020-06-01)
 
