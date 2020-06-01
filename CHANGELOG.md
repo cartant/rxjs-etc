@@ -1,3 +1,10 @@
+<a name="10.3.0"></a>
+### [10.3.0](https://github.com/cartant/rxjs-etc/compare/v10.2.1...v10.3.0) (2020-06-01)
+
+### Features
+
+* Add `zipObject` operator. ([8840d66](https://github.com/cartant/rxjs-etc/commit/8840d66)).
+
 <a name="10.2.1"></a>
 ### [10.2.1](https://github.com/cartant/rxjs-etc/compare/v10.2.0...v10.2.1) (2020-05-20)
 
