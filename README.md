@@ -37,9 +37,9 @@ npm install rxjs-etc --save
 
     Higher-order variants of `combineLatestArray` - that takes `Observable<Observable<T>[]>` and returns `Observable<T[]>` - and `combineLatestObject`.
 
-* [combineLatestObject](./source/observable/combineLatestObject.ts), [forkJoinObject](./source/observable/forkJoinObject.ts)
+* [combineLatestObject](./source/observable/combineLatestObject.ts), [forkJoinObject](./source/observable/forkJoinObject.ts), [zipObject](./source/observable/zipObject.ts)
 
-    Like the array versions, but these take objects. Observable properties are combined using either `combineLatest` or `forkJoin`.
+    Like the array versions, but these take objects. Observable properties are combined using either `combineLatest`, `forkJoin` or `zip`.
 
 * [forkJoinConcurrent](./source/observable/forkJoinConcurrent.ts)
 
