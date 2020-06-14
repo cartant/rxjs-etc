@@ -27,6 +27,9 @@ class IdleAction<T> extends Subscription {
     super();
   }
   schedule(state?: T, delay?: number) {
+    if (this.closed) {
+      return this;
+    }
     return idleScheduler.schedule(this.work, delay, state);
   }
 }
