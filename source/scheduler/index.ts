@@ -5,5 +5,6 @@
 
 export * from "./enterZone";
 export * from "./EnterZoneScheduler";
+export * from "./idleScheduler";
 export * from "./leaveZone";
 export * from "./LeaveZoneScheduler";
