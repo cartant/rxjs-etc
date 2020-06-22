@@ -1,3 +1,10 @@
+<a name="10.3.2"></a>
+### [10.3.2](https://github.com/cartant/rxjs-etc/compare/v10.3.1...v10.3.2) (2020-06-22)
+
+### Changes
+
+* Added `rxjs-report-usage`.
+
 <a name="10.3.1"></a>
 ### [10.3.1](https://github.com/cartant/rxjs-etc/compare/v10.3.0...v10.3.1) (2020-06-01)
 
