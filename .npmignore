@@ -1,5 +1,4 @@
 /build
-/bundles
 /node_modules
 /temp
 yarn.lock
