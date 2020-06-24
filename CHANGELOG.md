@@ -1,3 +1,12 @@
+<a name="10.3.3"></a>
+### [10.3.3](https://github.com/cartant/rxjs-etc/compare/v10.3.2...v10.3.3) (2020-06-24)
+
+### Changes
+
+* Use tilde versions for dependencies.
+* Don't distribute the `yarn.lock` file.
+* Include the `bundles` directory in the distribution.
+
 <a name="10.3.2"></a>
 ### [10.3.2](https://github.com/cartant/rxjs-etc/compare/v10.3.1...v10.3.2) (2020-06-22)
 
