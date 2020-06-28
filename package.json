@@ -57,7 +57,10 @@
   ],
   "license": "MIT",
   "lint-staged": {
-    "*.{js,ts}": "prettier --write"
+    "*.{js,ts}": [
+      "tslint --project tsconfig.json",
+      "prettier --write"
+    ]
   },
   "main": "./dist/cjs/index.js",
   "module": "./dist/esm/index.js",
@@ -75,7 +78,7 @@
     "url": "https://github.com/cartant/rxjs-etc.git"
   },
   "scripts": {
-    "dist": "yarn run dist:clean && yarn run dist:build && yarn run dist:copy",
+    "dist": "yarn lint && yarn run dist:clean && yarn run dist:build && yarn run dist:copy",
     "dist:build": "yarn run dist:build:cjs && yarn run dist:build:esm && yarn run dist:build:bundle",
     "dist:build:bundle": "webpack --config webpack.config.js && webpack --config webpack.config.js --env.production",
     "dist:build:cjs": "tsc -p tsconfig-dist-cjs.json",
@@ -86,12 +89,12 @@
     "prepublishOnly": "yarn run test && yarn run dist",
     "prettier": "prettier --write \"./source/**/*.{js,json,ts}\"",
     "prettier:ci": "prettier --check \"./source/**/*.{js,json,ts}\"",
-    "test": "yarn run lint && yarn run test:build && yarn run test:mocha && yarn run test:karma",
+    "test": "yarn run test:build && yarn run test:mocha && yarn run test:karma",
     "test:build": "yarn run test:clean && tsc -p tsconfig.json",
     "test:clean": "rimraf build",
     "test:karma": "karma start --single-run",
     "test:mocha": "mocha \"./build/**/*-spec.js\"",
-    "test:watch": "yarn run lint && yarn run test:build && karma start"
+    "test:watch": "yarn run test:build && karma start"
   },
   "sideEffects": false,
   "types": "./dist/esm/index.d.ts",

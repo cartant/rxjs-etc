@@ -8,6 +8,7 @@ export * from "./bucketBy";
 export * from "./bufferRecent";
 export * from "./concatIfEmpty";
 export * from "./concatTap";
+export * from "./concatMapEager";
 export * from "./debounceAfter";
 export * from "./debounceSync";
 export * from "./debounceTimeSubsequent";
