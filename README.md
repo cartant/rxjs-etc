@@ -87,6 +87,10 @@ source.pipe(endWith("this is the end"))
 
     Like `defaultIfEmpty`, but it takes a default observable instead of a default value.
 
+* [concatMapEager](./source/operators/concatMapEager.ts)
+
+    Like the RxJava `concatMapEager` operator. It accepts a concurrency and eagerly subscribes to its inner observables, buffering their values and then emitting them in the `concatMap` order.
+
 * [debounceAfter](./source/operators/debounceAfter.ts)
 
     Debounce the source observable, but only after the notifier emits a value.
