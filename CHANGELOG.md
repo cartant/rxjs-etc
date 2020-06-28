@@ -1,3 +1,10 @@
+<a name="10.4.0"></a>
+### [10.4.0](https://github.com/cartant/rxjs-etc/compare/v10.3.3...v10.4.0) (2020-06-28)
+
+### Features
+
+* Add `concatMapEager` operator. ([18952f9](https://github.com/cartant/rxjs-etc/commit/18952f9)).
+
 <a name="10.3.3"></a>
 ### [10.3.3](https://github.com/cartant/rxjs-etc/compare/v10.3.2...v10.3.3) (2020-06-24)
 
