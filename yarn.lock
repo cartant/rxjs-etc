@@ -4831,10 +4831,10 @@ ts-node@^9.0.0:
     source-map-support "^0.5.17"
     yn "3.1.1"
 
-ts-snippet@^4.0.0:
-  version "4.3.0"
-  resolved "https://registry.yarnpkg.com/ts-snippet/-/ts-snippet-4.3.0.tgz#719a2e635ecb512ae85a2429acfa198333c9468a"
-  integrity sha512-at9G0NYJXj6+6GEPSK+b4GWW15rACCupBoyvAIOa7sRGQfSdku5+DPN5q2R5xY3l08a759uC3VbpfDmxFLWlQQ==
+ts-snippet@^5.0.0:
+  version "5.0.0"
+  resolved "https://registry.yarnpkg.com/ts-snippet/-/ts-snippet-5.0.0.tgz#dfc02acb372f7c4152242143d34c540294fdac88"
+  integrity sha512-jb4mRrNf2EY9iDWcxe2unCVzbB9dINTdIaBeUP5YaZE6L1zR82bjJVEgXQywky4PWIwGHYTS0SCpu1cuzc59cg==
   dependencies:
     tsutils "^3.0.0"
 

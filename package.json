@@ -37,7 +37,7 @@
     "sinon": "^9.0.0",
     "ts-loader": "^8.0.0",
     "ts-node": "^9.0.0",
-    "ts-snippet": "^4.0.0",
+    "ts-snippet": "^5.0.0",
     "tslint": "^6.0.0",
     "tslint-etc": "^1.2.0",
     "typescript": "~4.0.0",
