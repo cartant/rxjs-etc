@@ -69,7 +69,7 @@ class BucketBySubscriber<T> extends Subscriber<T> {
     try {
       const hash = hashSelector(value, this.index++);
       index = Math.abs(Math.floor(hash)) % count;
-    } catch (error) {
+    } catch (error: unknown) {
       this.error(error);
       return;
     }
