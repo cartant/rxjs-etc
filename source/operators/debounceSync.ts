@@ -9,34 +9,33 @@ import {
   Observable,
   Subscription,
 } from "rxjs";
+import { OperatorSubscriber } from "../OperatorSubscriber";
 
 export function debounceSync<T>(): MonoTypeOperatorFunction<T> {
   return (source) =>
-    new Observable<T>((observer) => {
+    new Observable<T>((subscriber) => {
       let actionSubscription: Subscription | undefined;
       let actionValue: T | undefined;
-      const rootSubscription = new Subscription();
-      rootSubscription.add(
-        source.subscribe({
+      source.subscribe(
+        new OperatorSubscriber(subscriber, {
           complete: () => {
             if (actionSubscription) {
-              observer.next(actionValue);
+              subscriber.next(actionValue);
             }
-            observer.complete();
+            subscriber.complete();
           },
-          error: (error) => observer.error(error),
+          error: (error) => subscriber.error(error),
           next: (value) => {
             actionValue = value;
             if (!actionSubscription) {
               actionSubscription = asapScheduler.schedule(() => {
-                observer.next(actionValue);
+                subscriber.next(actionValue);
                 actionSubscription = undefined;
               });
-              rootSubscription.add(actionSubscription);
+              subscriber.add(actionSubscription);
             }
           },
         })
       );
-      return rootSubscription;
     });
 }
