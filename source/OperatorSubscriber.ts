@@ -5,6 +5,13 @@
 
 import { Subscriber } from "rxjs";
 
+// @ts-ignore
+const defaultComplete = Subscriber.prototype._complete;
+// @ts-ignore
+const defaultError = Subscriber.prototype._error;
+// @ts-ignore
+const defaultNext = Subscriber.prototype._next;
+
 export class OperatorSubscriber<
   TSource,
   TDestination = TSource
@@ -35,34 +42,34 @@ export class OperatorSubscriber<
   ) {
     super(destination);
     const { complete, error, next } = handlers;
-    if (complete) {
-      this._complete = () => {
-        try {
-          complete();
-        } catch (caught: unknown) {
-          destination.error(caught);
+    this._complete = complete
+      ? () => {
+          try {
+            complete();
+          } catch (caught: unknown) {
+            destination.error(caught);
+          }
+          this.unsubscribe();
         }
-        this.unsubscribe();
-      };
-    }
-    if (error) {
-      this._error = (received) => {
-        try {
-          error(received);
-        } catch (caught: unknown) {
-          destination.error(caught);
+      : defaultComplete;
+    this._error = error
+      ? (received) => {
+          try {
+            error(received);
+          } catch (caught: unknown) {
+            destination.error(caught);
+          }
+          this.unsubscribe();
         }
-        this.unsubscribe();
-      };
-    }
-    if (next) {
-      this._next = (value: TSource) => {
-        try {
-          next(value);
-        } catch (caught: unknown) {
-          destination.error(caught);
+      : defaultError;
+    this._next = next
+      ? (value: TSource) => {
+          try {
+            next(value);
+          } catch (caught: unknown) {
+            destination.error(caught);
+          }
         }
-      };
-    }
+      : defaultNext;
   }
 }
