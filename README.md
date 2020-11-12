@@ -61,6 +61,10 @@ npm install rxjs-etc --save
 
     Works like `zipArray`, but if some sources complete whilst others continue to emit values, those the complete are 'padded' with the specified `padValue` (which defaults to `undefined`).
 
+* [percolate](./source/observable/percolate.ts)
+
+    Runs a sequence of observables in order until an observable completes successfully.
+
 ### Functions for use with `pipe` or `let`
 
 A bunch of functions that can be passed to the `let` operator. Use them like this:
