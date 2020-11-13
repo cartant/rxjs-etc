@@ -11,10 +11,10 @@ describe("percolate", () => {
     "finds the first successfully completed observable from a set",
     marbles((m) => {
       const firstObs$ = m.cold("--#");
-      const secondObs$ = m.cold("--z--#");
-      const thirdObs$ = m.cold("--x--y|");
+      const secondObs$ = m.cold(" --z--#");
+      const thirdObs$ = m.cold("       --x--y|");
 
-      const expected = "----z----x--y|";
+      const expected = "        ----z----x--y|";
 
       m.expect(percolate(firstObs$, secondObs$, thirdObs$)).toBeObservable(
         expected
@@ -26,10 +26,10 @@ describe("percolate", () => {
     "expands an array of observables",
     marbles((m) => {
       const firstObs$ = m.cold("--#");
-      const secondObs$ = m.cold("--z--#");
-      const thirdObs$ = m.cold("--x--y|");
+      const secondObs$ = m.cold(" --z--#");
+      const thirdObs$ = m.cold("       --x--y|");
 
-      const expected = "----z----x--y|";
+      const expected = "        ----z----x--y|";
 
       m.expect(percolate([firstObs$, secondObs$, thirdObs$])).toBeObservable(
         expected
@@ -41,10 +41,10 @@ describe("percolate", () => {
     "completes on the first successful observable",
     marbles((m) => {
       const firstObs$ = m.cold("--y#");
-      const secondObs$ = m.cold("--z--|");
-      const thirdObs$ = m.cold("--x--#");
+      const secondObs$ = m.cold("  --z--|");
+      const thirdObs$ = m.cold("   --x--#");
 
-      const expected = "--y--z--|";
+      const expected = "        --y--z--|";
 
       m.expect(percolate(firstObs$, secondObs$, thirdObs$)).toBeObservable(
         expected
@@ -59,10 +59,10 @@ describe("percolate", () => {
       const lastError = new Error("last error");
 
       const firstObs$ = m.cold("--y#", { y: 1 }, firstError);
-      const secondObs$ = m.cold("z--#", { z: 2 });
-      const thirdObs$ = m.cold("--x--#", { x: 3 }, lastError);
+      const secondObs$ = m.cold("  z--#", { z: 2 });
+      const thirdObs$ = m.cold("      --x--#", { x: 3 }, lastError);
 
-      const expected = "--yz----x--#";
+      const expected = "        --yz----x--#";
       const expectedValues = { y: 1, z: 2, x: 3 };
 
       m.expect(percolate(firstObs$, secondObs$, thirdObs$)).toBeObservable(
