@@ -1,3 +1,11 @@
+<a name="10.5.0"></a>
+### [10.5.0](https://github.com/cartant/rxjs-etc/compare/v10.4.0...v10.5.0) (2020-11-13)
+
+### Features
+
+* Add `OperatorSubscriber`. ([1fb14a7](https://github.com/cartant/rxjs-etc/commit/1fb14a7)).
+* Add `percolate` operator. ([e38da9e](https://github.com/cartant/rxjs-etc/commit/e38da9e)).
+
 <a name="10.4.0"></a>
 ### [10.4.0](https://github.com/cartant/rxjs-etc/compare/v10.3.3...v10.4.0) (2020-06-28)
 
