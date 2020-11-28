@@ -45,6 +45,13 @@
     "webpack-cli": "^3.0.0",
     "webpack-rxjs-externals": "^2.0.0"
   },
+  "files": [
+    "dist",
+    "observable",
+    "operators",
+    "scheduler",
+    "source"
+  ],
   "homepage": "https://github.com/cartant/rxjs-etc",
   "husky": {
     "hooks": {
