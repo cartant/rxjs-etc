@@ -1,3 +1,10 @@
+<a name="10.5.1"></a>
+### [10.5.1](https://github.com/cartant/rxjs-etc/compare/v10.5.0...v10.5.1) (2020-11-28)
+
+### Changes
+
+* Use `files` in `package.json` instead of `.npmignore`. ([2dd8e91](https://github.com/cartant/rxjs-etc/commit/2dd8e91)).
+
 <a name="10.5.0"></a>
 ### [10.5.0](https://github.com/cartant/rxjs-etc/compare/v10.4.0...v10.5.0) (2020-11-13)
 
