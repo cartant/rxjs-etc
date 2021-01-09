@@ -19,6 +19,7 @@ export * from "./dispose";
 export * from "./endWith";
 export * from "./equals";
 export * from "./exhaustTap";
+export * from "./filterNullable";
 export * from "./finalizeWithKind";
 export * from "./guard";
 export * from "./hold";
