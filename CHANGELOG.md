@@ -1,3 +1,10 @@
+<a name="10.5.2"></a>
+### [10.5.2](https://github.com/cartant/rxjs-etc/compare/v10.5.1...v10.5.2) (2021-01-17)
+
+### Fixes
+
+* Export the `percolate` operator. ([64c8560](https://github.com/cartant/rxjs-etc/commit/64c8560)).
+
 <a name="10.5.1"></a>
 ### [10.5.1](https://github.com/cartant/rxjs-etc/compare/v10.5.0...v10.5.1) (2020-11-28)
 
