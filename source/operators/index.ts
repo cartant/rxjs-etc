@@ -34,6 +34,7 @@ export * from "./mergeTap";
 export * from "./multicastWithKind";
 export * from "./pairwiseStartWith";
 export * from "./pause";
+export * from "./percolate";
 export * from "./pluck";
 export * from "./prioritize";
 export * from "./rateLimit";
