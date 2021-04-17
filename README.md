@@ -95,6 +95,10 @@ source.pipe(endWith("this is the end"))
 
     Like the RxJava `concatMapEager` operator. It accepts a concurrency and eagerly subscribes to its inner observables, buffering their values and then emitting them in the `concatMap` order.
 
+* [continueWith](./source/operators/continueWith.ts)
+
+    Mirrors the source, but sends the _last_ received value to a project function and merges the `ObservableInput` that it returns.
+
 * [debounceAfter](./source/operators/debounceAfter.ts)
 
     Debounce the source observable, but only after the notifier emits a value.
