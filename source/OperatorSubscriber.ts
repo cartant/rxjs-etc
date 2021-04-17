@@ -14,26 +14,10 @@ const defaultNext = Subscriber.prototype._next;
 
 export class OperatorSubscriber<
   TSource,
-  TDestination = TSource
+  TDestination
 > extends Subscriber<TSource> {
   constructor(
-    destination: Subscriber<TSource>,
-    handlers: {
-      next?: undefined;
-      error?: (error: unknown) => void;
-      complete?: () => void;
-    }
-  );
-  constructor(
     destination: Subscriber<TDestination>,
-    handlers: {
-      next: (value: TSource) => void;
-      error?: (error: unknown) => void;
-      complete?: () => void;
-    }
-  );
-  constructor(
-    destination: Subscriber<TSource | TDestination>,
     handlers: {
       next?: (value: TSource) => void;
       error?: (error: unknown) => void;
