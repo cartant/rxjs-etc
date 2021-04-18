@@ -2,6 +2,7 @@
  * @license Use of this source code is governed by an MIT-style license that
  * can be found in the LICENSE file at https://github.com/cartant/rxjs-etc
  */
+/*tslint:disable:rxjs-no-nested-subscribe*/
 
 import {
   from,
@@ -23,12 +24,6 @@ export const continueWith = <T, O extends ObservableInput<any>>(
 
     subscription.add(
       source$.subscribe({
-        next: (val) => {
-          observer.next((latestValue = val));
-        },
-        error: (e) => {
-          observer.error(e);
-        },
         complete: () => {
           if (latestValue === NO_VAL) {
             observer.complete();
@@ -36,6 +31,12 @@ export const continueWith = <T, O extends ObservableInput<any>>(
             const nextObservable$ = from(mapper(latestValue));
             subscription.add(nextObservable$.subscribe(observer));
           }
+        },
+        error: (e) => {
+          observer.error(e);
+        },
+        next: (val) => {
+          observer.next((latestValue = val));
         },
       })
     );
