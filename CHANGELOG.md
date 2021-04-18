@@ -1,3 +1,10 @@
+<a name="10.6.0"></a>
+### [10.6.0](https://github.com/cartant/rxjs-etc/compare/v10.5.2...v10.6.0) (2021-04-18)
+
+### Features
+
+* Add the `continueWith` operator. ([bf71a05](https://github.com/cartant/rxjs-etc/commit/bf71a05)).
+
 <a name="10.5.2"></a>
 ### [10.5.2](https://github.com/cartant/rxjs-etc/compare/v10.5.1...v10.5.2) (2021-01-17)
 
