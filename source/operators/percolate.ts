@@ -38,7 +38,7 @@ export function percolate<R>(
       }
     };
 
-    return from(first).subscribe({
+    return from(first as Observable<any>).subscribe({
       complete: () => {
         subscriber.complete();
       },
