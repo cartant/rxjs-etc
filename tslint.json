@@ -8,6 +8,7 @@
   "rules": {
     "deprecation": { "severity": "off" },
     "rxjs-no-connectable": { "severity": "off" },
+    "rxjs-no-create": { "severity": "off" },
     "rxjs-no-subclass": { "severity": "off" },
     "rxjs-no-unsafe-scope": { "severity": "off" },
     "trailing-comma": { "severity": "off" },
