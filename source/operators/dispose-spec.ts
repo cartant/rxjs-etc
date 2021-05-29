@@ -41,6 +41,6 @@ describe("dispose", () => {
 
     expect(completed, "unexpected complete order").to.deep.equal([3, 2, 1]);
     expect(disposed, "unexpected dispose order").to.deep.equal([3, 2, 1]);
-    expect(finalized, "unexpected finalize order").to.deep.equal([1, 2, 3]);
+    expect(finalized, "unexpected finalize order").to.deep.equal([3, 2, 1]);
   });
 });

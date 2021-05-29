@@ -47,8 +47,8 @@ describe("traverse", () => {
       "should complete if there is no data",
       marbles(m => {
         const notifier = m.hot("  --n----|");
-        const notifierSubs = "    ^---!";
-        const expected = m.cold(" ----|");
+        const notifierSubs = "    ^-!     ";
+        const expected = m.cold(" --|     ");
 
         const factory = createFactory(-1, 1, m.time("--|"), m.scheduler);
         const traversed = traverse({ factory, notifier });
@@ -113,7 +113,7 @@ describe("traverse", () => {
     it(
       "should traverse without a notifier",
       marbles(m => {
-        const expected = m.cold("----0---1---2---|");
+        const expected = m.cold("----0---1---(2|)");
         const factory = createFactory(2, 1, m.time("----|"), m.scheduler);
         const traversed = traverse({ factory });
         m.expect(traversed).toBeObservable(expected);
@@ -129,7 +129,7 @@ describe("traverse", () => {
           "                       --------(^!)-----",
           "                       ------------(^!)-"
         ];
-        const expected = m.cold(" ----0---1---2---|");
+        const expected = m.cold(" ----0---1---(2|) ");
 
         const factory = createFactory(2, 1, m.time("----|"), m.scheduler);
         const traversed = traverse({
@@ -325,7 +325,7 @@ describe("traverse", () => {
 
     describe("with notifier", () => {
       it("should traverse the pages", (callback: any) => {
-        const notifier = new Subject<any>();
+        const notifier = new Subject<void>();
         const urls = traverse({
           factory: (marker?: string) =>
             get(marker || "https://api.github.com/users/cartant/repos").pipe(

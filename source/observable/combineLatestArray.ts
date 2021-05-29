@@ -29,5 +29,5 @@ export function combineLatestArray<T, R>(
     applyArgs.push((...values: any[]) => project(values));
   }
   /*tslint:disable-next-line:deprecation*/
-  return combineLatest.apply(null, applyArgs) as any;
+  return combineLatest.apply(null, applyArgs as any) as any;
 }

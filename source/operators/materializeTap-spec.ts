@@ -28,7 +28,7 @@ describe("materializeTap", () => {
     const tapped = source.pipe(materializeTap(notification => subject.next(notification)));
     m.expect(tapped).toBeObservable(source);
     m.expect(subject).toBeObservable(expected, {
-      n: new Notification("E", undefined as string | undefined, "error")
+      n: new Notification("E", undefined, "error")
     });
   }));
 

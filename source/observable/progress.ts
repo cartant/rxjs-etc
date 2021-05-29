@@ -73,7 +73,7 @@ export function progress<
             }
           })
         )
-      ) as Observables
+      ) as any
     );
     const result = resultSelector(state, shared as any);
     const subscription = result.subscribe(subscriber);

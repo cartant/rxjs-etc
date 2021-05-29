@@ -66,7 +66,7 @@ export function traverse<T, M, R>({
       queue = new NotificationQueue(notifier);
       queueOperator = identity;
     } else {
-      const subject = new Subject<any>();
+      const subject = new Subject<void>();
       queue = new NotificationQueue(subject);
       queueOperator = (markers) => {
         subject.next();

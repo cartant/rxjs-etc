@@ -22,7 +22,7 @@ describe("genericOperator", function(): void {
       "should pipe a mono-type operator",
       marbles(m => {
         const source = m.cold(" -a-|");
-        const expected = "       --a-|";
+        const expected = "      --a|";
 
         const duration = m.time("-|");
         const operator = genericOperator(delay(duration));
@@ -35,7 +35,7 @@ describe("genericOperator", function(): void {
       "should pipe multiple mono-type operators",
       marbles(m => {
         const source = m.cold(" -a-a-|");
-        const expected = "      --a---|";
+        const expected = "      --a--|";
 
         const duration = m.time("-|");
         const operator = genericOperator(

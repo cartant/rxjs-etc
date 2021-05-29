@@ -13,8 +13,7 @@ export function materializeTap<T>(
     source.pipe(
       tap({
         complete: () => next(new Notification("C")),
-        error: (error) =>
-          next(new Notification("E", undefined as T | undefined, error)),
+        error: (error) => next(new Notification("E", undefined, error)),
         next: (value) => next(new Notification("N", value)),
       })
     );

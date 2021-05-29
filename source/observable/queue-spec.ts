@@ -4,31 +4,14 @@
  */
 /*tslint:disable:no-unused-expression*/
 
-import { expect } from "chai";
-import { of, queueScheduler } from "rxjs";
 import { expecter } from "ts-snippet";
 import { compiler } from "../compiler-spec";
 import { timeout } from "../timeout-spec";
-import { queue } from "./queue";
 
 // prettier-ignore
 describe("queue", function(): void {
   /*tslint:disable-next-line:no-invalid-this*/
   this.timeout(timeout);
-
-  it("should observe the sources using the queue scheduler", () => {
-    const a = of("a");
-    const b = of("b");
-    const sources = queue(a, b);
-
-    expect(sources).to.have.length(2);
-    sources.forEach(source => {
-      expect(source).to.have.property("operator");
-      /*tslint:disable-next-line:deprecation*/
-      const { operator } = source;
-      expect(operator).to.have.property("scheduler", queueScheduler);
-    });
-  });
 
   if (!(global as any).window) {
     describe("types", () => {
@@ -79,7 +62,7 @@ describe("queue", function(): void {
         // https://github.com/Microsoft/TypeScript/issues/4130
 
         const snippet = expectSnippet(`
-          const m2 = merge<p.T1 | p.T2>(...queue(p.o1, p.o2), 1);
+          const m2 = merge(...queue(p.o1, p.o2), 1);
         `);
         snippet.toInfer("m2", "Observable<T1 | T2>");
       });

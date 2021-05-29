@@ -18,7 +18,7 @@ export function resettable<T, U extends any[]>(
   reset(...args: U): void;
   unsubscribe(): void;
 } {
-  const resetter = new Subject<any>();
+  const resetter = new Subject<void>();
   const source = new Subject<T>();
   let destination = factory(...args);
   let subscription = source.subscribe(destination);

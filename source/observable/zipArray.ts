@@ -27,5 +27,5 @@ export function zipArray<T, R>(
     applyArgs.push((...values: any[]) => project(values));
   }
   /*tslint:disable-next-line:deprecation*/
-  return zip.apply(null, applyArgs) as any;
+  return zip.apply(null, applyArgs as any) as any;
 }
