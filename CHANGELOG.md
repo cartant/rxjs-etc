@@ -1,3 +1,10 @@
+<a name="10.6.1"></a>
+### [10.6.1](https://github.com/cartant/rxjs-etc/compare/v10.6.0...v10.6.1) (2021-05-29)
+
+### Changes
+
+* Widen peer range to include RxJS version 7. ([2e9465e](https://github.com/cartant/rxjs-etc/commit/2e9465e)).
+
 <a name="10.6.0"></a>
 ### [10.6.0](https://github.com/cartant/rxjs-etc/compare/v10.5.2...v10.6.0) (2021-04-18)
 
