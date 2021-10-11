@@ -14,7 +14,7 @@ describe("progress", () => {
     const a = m.cold("        a|         ");
     const b = m.cold("        --b|       ");
     const c = m.cold("        ----c|     ");
-    const expected = m.cold(" ijklm(rn|) ", {
+    const expected = m.cold(" ijklm(nr|) ", {
       i: { finalized: 0, nexted: 1, total: 3 },
       j: { finalized: 1, nexted: 1, total: 3 },
       k: { finalized: 1, nexted: 2, total: 3 },
@@ -34,7 +34,7 @@ describe("progress", () => {
     const a = m.cold("        a|         ");
     const b = m.cold("        --b|       ");
     const c = m.cold("        ----c|     ");
-    const expected = m.cold(" ijklm(rn|) ", {
+    const expected = m.cold(" ijklm(nr|) ", {
       i: { finalized: 0, nexted: 1, total: 3 },
       j: { finalized: 1, nexted: 1, total: 3 },
       k: { finalized: 1, nexted: 2, total: 3 },
