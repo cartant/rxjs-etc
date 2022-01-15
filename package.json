@@ -4,8 +4,7 @@
     "url": "https://github.com/cartant/rxjs-etc/issues"
   },
   "dependencies": {
-    "memoize-resolver": "~1.0.0",
-    "rxjs-report-usage": "~1.0.4"
+    "memoize-resolver": "~1.0.0"
   },
   "description": "Observables and operators for RxJS",
   "devDependencies": {

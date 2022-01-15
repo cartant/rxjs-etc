@@ -4061,7 +4061,7 @@ rxjs-marbles@^7.0.0:
     fast-equals "^2.0.0"
     rxjs-report-usage "^1.0.4"
 
-rxjs-report-usage@^1.0.4, rxjs-report-usage@~1.0.4:
+rxjs-report-usage@^1.0.4:
   version "1.0.6"
   resolved "https://registry.yarnpkg.com/rxjs-report-usage/-/rxjs-report-usage-1.0.6.tgz#6e06034d9e1592e8a45bee877631638e4bac2576"
   integrity sha512-omv1DIv5z1kV+zDAEjaDjWSkx8w5TbFp5NZoPwUipwzYVcor/4So9ZU3bUyQ1c8lxY5Q0Es/ztWW7PGjY7to0Q==
