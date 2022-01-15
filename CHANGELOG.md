@@ -1,3 +1,10 @@
+<a name="10.6.2"></a>
+### [10.6.2](https://github.com/cartant/rxjs-etc/compare/v10.6.1...v10.6.2) (2022-01-15)
+
+### Changes
+
+* Remove the `rxjs-report-usage` dependency. ([6ba4141](https://github.com/cartant/rxjs-etc/commit/6ba4141)).
+
 <a name="10.6.1"></a>
 ### [10.6.1](https://github.com/cartant/rxjs-etc/compare/v10.6.0...v10.6.1) (2021-05-29)
 
