@@ -5,6 +5,7 @@
 
 export * from "./auditMap";
 export * from "./bucketBy";
+export * from "./bufferCountWithTimeout";
 export * from "./bufferRecent";
 export * from "./concatIfEmpty";
 export * from "./concatTap";
